@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:github.com)",
       "WebFetch(domain:api.anthropic.com)",
-      "WebFetch(domain:http-intake.logs.us5.datadoghq.com)"
+      "WebFetch(domain:http-intake.logs.us5.datadoghq.com)",
+      "Bash(claude mcp *)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": ["google-calendar"]
 }
