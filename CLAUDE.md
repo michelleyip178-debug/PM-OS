@@ -198,7 +198,7 @@ This workspace can connect to Model Context Protocol (MCP) servers to extend cap
 
 | MCP | Purpose | Category | Used In | Key Tools |
 |-----|---------|----------|---------|-----------|
-| _None connected yet_ | Run `/connect-mcps connect to [tool]` to get started | - | - | - |
+| Google Calendar | Fetch today's/tomorrow's meetings, attendees, free blocks | Calendar | daily-plan, weekly-plan, meeting-agenda, meeting-notes | list_events, get_event, create_event, check_availability |
 
 <!-- After connecting MCPs, entries will appear like this:
 | Amplitude | Product analytics | Analytics | feature-metrics, impact-sizing, retention-analysis | query_insights, get_funnels, cohort_analysis |
@@ -208,6 +208,13 @@ This workspace can connect to Model Context Protocol (MCP) servers to extend cap
 ### Intelligent Query Routing
 
 When you ask natural language questions, I automatically route them to the right MCP or file based on the query pattern:
+
+**Calendar & Schedule Queries** → Google Calendar MCP
+- "What meetings do I have today?"
+- "When is my next free block?"
+- "Schedule a sync with [person] next week"
+- "What's on my calendar tomorrow?"
+- **Fallback**: Ask user to list meetings manually
 
 **Analytics Queries** → Analytics MCPs (Amplitude, Mixpanel, Posthog, Pendo)
 - "Give me metrics on the login feature"
