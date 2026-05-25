@@ -1,101 +1,73 @@
 # Personal Context: PM Background
 
-## Your PM Experience
+## Current Role
 
-**Current Role:**
-- Title: [Your Title]
-- Company: [Your Company]
-- Duration: [How long you've been in this role]
-- Team size: [Who reports to you or who you work with]
+**Title:** Product Manager
+**Team:** Pathfinder
+**Programme:** CareerCompass (working name: OTEP)
+**Type:** Apprenticeship — first PM role
+**Started:** 1 April 2026
+**Reports to:** Jace → Adrian Ang (Product Owner)
 
-**Previous Roles:**
-1. [Role] at [Company] ([Duration]) - [What you owned]
-2. [Role] at [Company] ([Duration]) - [What you owned]
-3. [Role] at [Company] ([Duration]) - [What you owned]
+**What I own:**
+- Opportunities Listing (STIPs, Gigs, Internal Jobs)
+- FormSG Integration
+- WOG Authentication
+- POCDEX (Public Officer Core Data Exchange)
 
-**Total PM Experience:** [Years]
-
-**Industries:** [Industries you've worked in]
-
-**Product Types:** [Types of products you've built - e.g., B2B, B2C, PLG, Enterprise]
+**My pod:** 1 designer, 1 tech lead (Pow Hwee), 2 full stack engineers
 
 ---
 
-## Your Expertise
+## PM Experience
 
-**Strong Areas:**
-- [Strength 1]
-- [Strength 2]
-- [Strength 3]
-- [Strength 4]
+**Total PM experience:** Early career (apprenticeship)
+**Background:** Government / public sector
+**Product type:** Internal platform, B2G (government users)
 
-**Learning Areas:**
-- [Area you're developing 1]
-- [Area you're developing 2]
-- [Area you're developing 3]
+**This is my first PM role.** Context matters: I'm building PM instincts in parallel with shipping a real product.
 
 ---
 
-## Your PM Philosophy
+## Working Style
 
-**Product approach:**
-[Describe your general approach to building products - user-first, data-driven, etc.]
-
-**Decision-making style:**
-[How you make decisions - data-heavy, intuition-guided, collaborative, etc.]
-
-**Prioritization framework:**
-[What frameworks or methods you use to prioritize work]
-
-**Research approach:**
-[How you approach user research and discovery]
+**Documentation:** Thorough with full context — I'd rather over-document than leave gaps
+**Decisions:** Gather more before deciding — I want confidence before committing
+**Meetings:** Async-first — I prefer written communication and structured agendas over ad-hoc calls
 
 ---
 
-## Your Preferences
+## PM Philosophy
 
-**Communication style:** [How you communicate - direct, diplomatic, data-supported, etc.]
-**Working style:** [How you prefer to work - async, collaborative, deep focus, etc.]
-**Documentation preference:** [Concise PRDs, detailed specs, visual docs, etc.]
-**Meeting preference:** [Async-first, structured agendas, short meetings, etc.]
+**How I approach decisions:** I like to have the full picture before committing. I'm comfortable saying "I need more information" and following up async rather than deciding on the spot.
 
----
+**How I work with my team:** Collaborative. I bring context and write things down so engineers and designers have what they need without chasing me.
 
-## Your Context
-
-**Why you're using this system:**
-[What you hope to get out of PM OS - time savings, better quality, etc.]
-
-**What you want AI to help with most:**
-1. [Top use case]
-2. [Second use case]
-3. [Third use case]
-
-**What you DON'T want AI to do:**
-- [Boundary 1]
-- [Boundary 2]
-- [Boundary 3]
+**What I'm developing:** PM fundamentals — discovery, prioritisation, stakeholder management, writing tighter PRDs.
 
 ---
 
-## Your Current Focus
+## Current Focus (Q2 2026)
 
-**This quarter ([Quarter Year]):**
-- [Priority 1]
-- [Priority 2]
-- [Priority 3]
-- [Priority 4]
-
-**This year:**
-- [Annual goal 1]
-- [Annual goal 2]
-- [Annual goal 3]
-
-**Career goals:**
-- [Career goal 1]
-- [Career goal 2]
-- [Career goal 3]
+- Ship OTEP MVP with WOG Auth, Opportunities Listing, and FormSG integration working end-to-end
+- Resolve the FormSG pre-fill question (MVP vs R1 scope)
+- Complete WOG Auth PRD problem statement
+- Build the habit of using PM OS tools daily (daily-plan, meeting-notes, PRD draft)
 
 ---
 
-**Last updated:** [Date]
+## What I Want AI to Help With Most
+
+1. **PRD drafting** — especially problem statements and edge cases I might miss
+2. **Meeting prep** — what to bring, what stakeholders care about, open loops
+3. **Structured thinking** — when I have lots of context but need help deciding what matters
+
+## What I DON'T Want AI to Do
+
+- Make decisions for me without understanding the full context
+- Produce generic output that doesn't reflect OTEP's reality
+- Skip caveats when something is genuinely uncertain
+
+---
+
+**Last updated:** 2026-05-25
