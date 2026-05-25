@@ -94,7 +94,7 @@ Sprint 2 is active and building. The pressure is upstream: CSC SSO is a blocking
 - POCDEX Sprint 3 plumbing (OTEP-271, OTEP-203) is on track; any blockers surfaced
 
 **Key tasks:**
-- [ ] Reach out to Daryll to schedule a planning session — go-live support + support structure (Est: 15 min) - **Leverage**
+- [ ] Reach out to Daryll to schedule a planning session — go-live support + support structure (Est: 15 min) - **Leverage** *(Pow Hwee to arrange after Wednesday — session earliest Thu/Fri)*
 - [ ] Confirm OTEP-202 (seed database) timeline with POCDEX team — when will it be ready? (Est: async message) - **Leverage**
 - [ ] Check Sprint 3 POCDEX plumbing tickets (OTEP-271, OTEP-203) — any blockers to surface? (Est: 15 min) - **Neutral**
 

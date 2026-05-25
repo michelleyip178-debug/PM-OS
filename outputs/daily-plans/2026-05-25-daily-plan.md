@@ -3,20 +3,20 @@ date: 2026-05-25
 day: Monday
 week: 2026-W22
 mcps_used: [Google Calendar via direct API]
-updated: afternoon refresh
+updated: evening refresh
 ---
 
-# Daily Plan - Monday, May 25, 2026 (Afternoon Refresh)
+# Daily Plan - Monday, May 25, 2026 (Evening Refresh)
 
 ## TL;DR
 
-- **Meetings:** Standup 11:00 (upcoming) | AC Servicing 14:00 (personal, offline)
-- **P0 Tasks:** 2 remaining — Pow Hwee CSC SSO ping, design review prep for tomorrow
-- **Key Focus:** Close today's open loops before tomorrow's design review with Xian Zhang + Jacky
+- **Meetings:** Standup ✅ | AC Servicing ✅ | BO Strategic Review 16:30 (in progress / upcoming)
+- **P0 Tasks:** 1 remaining — Pow Hwee CSC SSO ping (send before EOD)
+- **Key Focus:** BO meeting at 16:30, then close Pow Hwee loop for tomorrow's design review
 
 ---
 
-## Morning: What Got Done ✅
+## What Got Done Today ✅
 
 - [x] Foundational context filled — business info, PM background, stakeholder profiles
 - [x] WOG Auth PRD problem statement written and scoped
@@ -26,16 +26,18 @@ updated: afternoon refresh
 - [x] Mid-year check-in prep saved (`outputs/meeting-notes/2026-06-mid-year-check-in-prep.md`)
 - [x] Responded to Adrian's metrics/dashboard Slack message — committed to closing WOG Auth metrics gap
 - [x] APA E-Learning: completed
+- [x] CSC SSO feasibility plan documented — Sy En (CSC IT) confirmed SSO is technically possible (OIDC/SAML, deep links supported). Step 2 pending Pow Hwee. Saved: `outputs/analyses/2026-05-25-csc-sso-feasibility-plan.md`
+- [x] LD team situation analysed — Gemma's three uncertainties mapped, response framing ready (pending Jace/Adrian alignment). Saved: `outputs/analyses/2026-05-25-ld-posting-exercise-thread.md`
+- [x] Design review prep done — CSC SSO recommendation ready for tomorrow's 14:00 with Xian Zhang + Jacky. Saved: `outputs/meeting-notes/2026-05-26-design-review-prep.md`
+- [x] BO Strategic Review prep completed — North Star, OKR roadmap, R1-R2 revised scope, connections to active work. Saved: `outputs/meeting-notes/2026-05-25-bo-strategic-review-prep.md`
 
 ---
 
-## Afternoon: Today's Three
+## Evening: Still To Do
 
-*Remaining for today — after AC Servicing:*
-
-1. [ ] **Ping Pow Hwee on CSC SSO feasibility** — needs to land before tomorrow 14:00 design review. Send now, before going offline. (Est: 10 min)
-2. [ ] **Design review prep for tomorrow** — flows and decision points for Xian Zhang + Jacky. CSC SSO recommendation ready, even if Pow Hwee hasn't replied. (Est: 45-60 min, after AC)
-3. [ ] **Define WOG Auth success metrics** — committed to Adrian today; close this before end of week. If time allows this afternoon, start now. (Est: 30 min)
+1. [ ] **Ping Pow Hwee on CSC SSO Step 2** — updated question: does "OTEP builds its own SSO" mean WOG Auth (already in scope), or is additional identity provider work needed? Send before EOD. (Est: 5 min)
+2. [ ] **BO Strategic Review — 16:30 to 17:30** — track sticky placement decisions on Opportunities and Courses rows; capture R1/R2 rationale (left blank in deck); note if North Star modified. Run `/meeting-notes` after.
+3. [ ] **WOG Auth success metrics** — deferred to this week. Grounded in Dec'26 OKR baselines from today's deck. Start Thursday at the latest.
 
 ---
 
@@ -43,13 +45,11 @@ updated: afternoon refresh
 
 | Time | Event | Type | Status |
 |------|-------|------|--------|
-| 11:00 | OTEP Team 2 Standup | Work | Upcoming |
-| 14:00 | AC Servicing | Personal | Offline |
-| 15:00+ | Async / deep work | Work | Design review prep + Pow Hwee follow-up |
-
-### Free Blocks (Afternoon)
-
-- **15:00 - 18:00** → Design review prep + WOG Auth metrics if time allows
+| 11:00 | OTEP Team 2 Standup | Work | ✅ Done |
+| 14:00 | AC Servicing | Personal | ✅ Done |
+| 15:00+ | Async / deep work | Work | ✅ Done — CSC SSO, LD analysis, design review prep, BO meeting prep |
+| 16:30 | BO Strategic Review (Xian Zhang, Jacky, Adrian) | Work | Upcoming |
+| 17:30+ | Post-meeting — capture notes | Work | After BO meeting |
 
 ---
 
@@ -83,11 +83,13 @@ updated: afternoon refresh
 
 ## Heads Up
 
-⚠️ **CSC SSO answer needed by tomorrow 9am** — if Pow Hwee doesn't respond by tonight, follow up first thing tomorrow. Don't walk into the design review without a position.
+⚠️ **Pow Hwee CSC SSO Step 2 still unsent** — send tonight or first thing tomorrow. The question has changed: confirm whether WOG Auth covers the SSO layer DLE needs, or if additional build is required.
 
-⚠️ **WOG Auth success metrics are still undefined** — you committed to Adrian today. Close this by end of week. Start Thursday at the latest.
+⚠️ **BO meeting at 16:30** — prep doc is ready. Watch for: sticky placement decisions (Opportunities + Courses rows), R1/R2 verbal rationale (blank in deck), and any North Star modifications. Run `/meeting-notes` immediately after.
 
-⚠️ **POCDEX: Daryll session not yet scheduled** — this is Priority 3 for the week. Reach out async today or tomorrow.
+⚠️ **WOG Auth success metrics still undefined** — committed to Adrian today. Grounded in Dec'26 OKR baselines from today's deck (% who registered for a course via CareerCompass). Start Thursday at the latest.
+
+⚠️ **Do NOT respond to Gemma (LD team) without Jace/Adrian alignment** — you now have the strategic substance from today's deck; raise with Jace first.
 
 ---
 
@@ -95,7 +97,8 @@ updated: afternoon refresh
 
 | Item | Owner | Due | Status |
 |------|-------|-----|--------|
-| CSC SSO feasibility | Pow Hwee | Tomorrow AM | Pending ping |
+| CSC SSO feasibility (Step 1) | Sy En (CSC IT) | Done | ✅ Confirmed — SSO technically possible via OIDC |
+| CSC SSO feasibility (Step 2) | Pow Hwee | Tomorrow AM | Pending ping — does WOG Auth cover DLE's SSO layer? |
 | Full integration task list | Pow Hwee (via Rama) | Before next standup | Rama to follow up |
 | Additional resource beyond Fanxu | Rama + Barry Lim | This sprint | In progress |
 | Fullstack developer Sprint 4 | Rama | Sprint 4 | ✅ Confirmed — 3 fullstack engineers from Sprint 4 |
@@ -105,5 +108,17 @@ updated: afternoon refresh
 
 ---
 
-*Updated: 2026-05-25 afternoon*
-*Next: Run `/meeting-notes` after tomorrow's design review. Run `/weekly-review` Friday May 29.*
+## Standup Notes (2026-05-25)
+
+- **CSC Authentication** — No answer from Pow Hwee yet. Still pending before tomorrow's design review.
+- **POCDEX API integration** — Pow Hwee to arrange meeting with Daryll after Wednesday. Planning session earliest Thursday.
+- **Leo** — OTEP-313 in progress
+- **Thomas** — OTEP-325, OTEP-326 in progress
+- **Rathika** — Pending COMET provisioning before she can start QA tasks
+- **Amber** — My Development design page, user interview prep (this afternoon), competency descriptions iteration
+- **Blockers** — None reported
+
+---
+
+*Updated: 2026-05-25 evening*
+*Next: Run `/meeting-notes` after BO meeting (tonight) and design review (tomorrow 14:00). Run `/weekly-review` Friday May 29.*
