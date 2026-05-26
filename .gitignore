@@ -5,3 +5,4 @@
 node_modules/
 __pycache__/
 .claude/settings.local.json
+outputs/meeting-notes/Meeting Notes Weekly Design Review with BO.pdf

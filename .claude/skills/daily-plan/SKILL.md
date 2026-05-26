@@ -61,9 +61,16 @@ Inspired by personal operating system patterns but tailored specifically for Pro
 1. `context-library/strategy/` - Quarter priorities, OKRs, North Star
 2. `outputs/weekly-plans/` - This week's priorities (if `/weekly-plan` was run)
 3. `outputs/prds/` - Active PRDs and their stages
-4. `context-library/stakeholder-*.md` - Stakeholder profiles and communication styles
+4. `context-library/stakeholder-profiles.md` - Stakeholder profiles and communication styles
 5. `outputs/meeting-notes/` - Recent meeting context
 6. `context-library/launches/` - Recently launched features (past 2 weeks)
+
+**External workspace** (`/Users/michelleyip/Documents/PM-skills-ALL-1/`):
+7. `00-hub/tasks-active.md` - Current active tasks
+8. `00-hub/sprint-status.md` - Sprint status and open blockers
+9. `03-stories/jira-sync/` - Jira tickets by sprint (check the most recent sprint folder)
+10. `04-ceremonies/` - Sprint checklists, ceremony prep, weekly stakeholder updates
+11. `06-skills-and-decisions/stakeholders/` - Extended stakeholder files
 
 **Integration Options (Multiple Paths):**
 
@@ -225,8 +232,9 @@ Filter by priority/labels:
 ```
 
 If MCP not available:
+- Read `/Users/michelleyip/Documents/PM-skills-ALL-1/00-hub/tasks-active.md` for current task list
+- Check `/Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/jira-sync/` - open the most recent sprint folder for ticket status
 - Scan `outputs/meeting-notes/` for unchecked action items
-- Look for task lists in recent notes
 
 Categorize:
 - **P0 (Must do today):** Blockers, urgent, time-sensitive
@@ -263,7 +271,8 @@ Flag:
 For each person you're meeting today:
 
 1. **Profile lookup:**
-   - Read `context-library/stakeholder-*.md` if exists
+   - Read `context-library/stakeholder-profiles.md` first
+   - Also check `/Users/michelleyip/Documents/PM-skills-ALL-1/06-skills-and-decisions/stakeholders/` for extended profiles
    - Extract: Role, communication style, priorities, pet peeves
 
 2. **Recent interaction history:**

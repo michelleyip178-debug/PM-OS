@@ -40,15 +40,20 @@ The PM has organized their knowledge into this workspace. Always reference:
 - `templates/` for empty templates only (not filled-out work)
 
 **External Workspace (linked, read-only reference):**
-- `/Users/michelleyip/Library/Mobile Documents/com~apple~CloudDocs/Documents/PM-skills-ALL-1/` is the PM's broader PM skills workspace. Key folders:
-  - `03-stories/jira-sync/` - Jira tickets synced by sprint (individual `.md` files per ticket, organized by sprint folder e.g. `OTEP-Pathfinder-Sprint-3/`)
-  - `03-stories/otep-stories/` - Story details and breakdowns
-  - `04-ceremonies/` - Sprint ceremonies, retrospectives, planning docs
-  - `04-ceremonies/archive-meetings/` - Past meeting notes
-  - `00-hub/` - Central hub and navigation
+- `/Users/michelleyip/Documents/PM-skills-ALL-1/` is the PM's broader PM skills workspace. Key folders:
+  - `00-hub/` - Central hub: `tasks-active.md`, `tasks-backlog.md`, `sprint-status.md`, `open-items.md`, `risks.md`
   - `01-discovery/` - Discovery and research
   - `02-prd/` - PRDs
-  - `06-skills-and-decisions/` - PM skills and decision logs
+  - `03-stories/jira-sync/` - Jira tickets synced by sprint (individual `.md` files per ticket, organized by sprint folder e.g. `OTEP-Core-Sprint-4/`, `OTEP-Pathfinder-Sprint-5/`)
+  - `03-stories/otep-stories/` - Story details and breakdowns
+  - `03-stories/story-pipeline/` - Story drafting pipeline stages (draft → internal groom → refine → backlog groom)
+  - `04-ceremonies/` - Sprint ceremonies, retrospectives, planning docs; key files: `sprint-calendar.md`, `sprint-allocation.md`, `sprint-checklists.md`
+  - `04-ceremonies/archive-meetings/` - Past meeting notes
+  - `04-ceremonies/post-meeting-capture/` - Post-meeting notes and captures
+  - `04-ceremonies/quarterly-planning/` - Quarterly planning docs
+  - `04-ceremonies/weekly-stakeholder-update/` - Stakeholder update drafts
+  - `05-prototypes/` - Prototype work and assets
+  - `06-skills-and-decisions/` - PM skills, decision log, OKRs, stakeholder files; key files: `decisions-log.md`, `otep-roadmap-okrs-2627.md`, `dor-dod-guidelines.md`
   - Always check `03-stories/jira-sync/` when the PM asks about Jira tickets, sprint contents, or story status
 
 ### 2. Output Philosophy

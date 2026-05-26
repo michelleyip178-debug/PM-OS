@@ -3,6 +3,7 @@ date: 2026-05-26
 day: Tuesday
 week: 2026-W22
 mcps_used: [none — file-based context]
+updated: 2026-05-26 (refreshed post-morning)
 ---
 
 # Daily Plan - Tuesday, May 26, 2026
@@ -10,8 +11,8 @@ mcps_used: [none — file-based context]
 ## TL;DR
 
 - **Meetings:** 4 today — OTEP Squad Sync (09:30), standup/dental conflict (11:00), Design Review (14:00)
-- **P0 Tasks:** 3 — BO notes (unfiled from last night), CSC SSO ping status, design review follow-up
-- **Key Focus:** Design review at 14:00 is the focal point. Leave with decisions on CSC SSO and flow sign-offs. Everything else is in service of that.
+- **P0 Tasks:** 2 remaining — CSC SSO Step 2 answer + design review follow-up (BO notes done ✅)
+- **Key Focus:** Design review at 14:00 is the focal point. CSC SSO Step 1 is confirmed — bring Step 2 answer from Pow Hwee and surface the FormSG/native form issue.
 
 ---
 
@@ -19,11 +20,11 @@ mcps_used: [none — file-based context]
 
 *If I only accomplish three things today:*
 
-1. [ ] **Write BO Strategic Review notes** — context from last night's 16:30 session is fading. Do before standup.
-2. [ ] **14:00 Design Review — surface CSC SSO decision and get flow sign-offs** — week's key milestone
+1. [x] ~~**Write BO Strategic Review notes**~~ — ✅ Done (filed 08:45, `outputs/meeting-notes/2026-05-25-bo-strategic-review-notes.md`)
+2. [ ] **14:00 Design Review — brief BO on FormSG descoping + CSC SSO update + flow sign-offs** — FormSG pre-fill is out of MVP (Squad Sync decision). Native in-OTEP form is R1 direction. Get Xian Zhang + Jacky acknowledgment today so it's on record. CSC SSO Step 1 confirmed — bring Pow Hwee's Step 2 answer.
 3. [ ] **Send post-design review async follow-up to Xian Zhang + Jacky** — they value it; it locks in decisions
 
-*Why these three:* The design review is where scope decisions get made for Sprint 3+. Everything this week feeds into or flows from it. The BO notes are the one carry-over that'll be lost if not captured today.
+*Why these three:* BO notes are done — that frees up your morning fully. The design review is where scope decisions get made for Sprint 3+. The FormSG/native form issue is now a higher-stakes conversation after both BO meeting and Pow Hwee's technical flag align on the same problem.
 
 ---
 
@@ -38,10 +39,10 @@ mcps_used: [none — file-based context]
 
 ### Free Blocks
 
-- **Before 09:30** (early morning) → Write BO Strategic Review notes from last night — do this first
-- **10:30–11:00** (30 min) → Confirm Pow Hwee CSC SSO ping sent; final design review mental prep
-- **12:00–14:00** (2 hrs) → Post-dental buffer; last review of design review talking points
-- **15:00 onwards** → Post-design review: async follow-up for Xian Zhang + Jacky; capture meeting notes
+- **Before 09:30** (early morning) → ~~BO notes~~ ✅ Done. Use this time to confirm Pow Hwee Step 2 answer + check with Amber on Jacky LEE attendance
+- **10:30–11:00** (30 min) → Final design review talking points prep; fold in FormSG/native form framing
+- **12:00–14:00** (2 hrs) → Post-dental buffer; review design review framing; have async follow-up structure ~80% ready
+- **15:00 onwards** → Post-design review: async follow-up for Xian Zhang + Jacky; run `/meeting-notes`
 
 ---
 
@@ -66,14 +67,17 @@ mcps_used: [none — file-based context]
 - **Xian Zhang** (Business Stakeholder) — comes prepared to decide, not just advise. Expects explicit option-and-tradeoff framing. Values async follow-up after the review.
 - **Jacky** (Business Stakeholder) — same as Xian Zhang. Both are in the room to make calls.
 
-**Prep done (from yesterday):**
-- CSC SSO recommendation ready: deprioritise = officers log in twice, manageable friction, relieves October pressure. If Pow Hwee confirms infeasibility, the decision is made by default — present cleanly.
+**Updated prep (post morning context):**
+- **CSC SSO Step 1 confirmed** — Sy En (CSC IT) confirmed: WOG AD / OIDC / deep links all supported. Seamless experience is technically possible. Step 2 pending: does WOG Auth cover the SSO layer DLE needs, or is additional build required? Pow Hwee's answer shapes the scope call.
+- **New: FormSG fragility flag** — Pow Hwee flagged that FormSG pre-fill via URL params is brittle. If an agency changes any field, the pre-fill breaks. This connects directly to the BO "no OTG redirect" constraint — native in-platform form may be the only viable stable path. Pow Hwee wants a Sprint 3 spike. Bring this as a connected issue, not a separate one.
 - Flows for active features — know the open decision points so you can facilitate, not just observe.
 - Post-meeting note structure ready to fill quickly after.
 
 **What to bring explicitly:**
-- [ ] CSC SSO: Cut from MVP or keep? (State Pow Hwee's answer if received; present Michelle's position if not)
+- [ ] CSC SSO: Step 1 confirmed. Step 2 answer from Pow Hwee — scope decision follows from it
+- [ ] Application form: FormSG fragility + BO "no OTG redirect" = native in-platform form case. Flag to Xian Zhang and Jacky. Is this MVP or R1?
 - [ ] Any deferred design decisions — table them now
+- [ ] Check with Amber before 14:00: does Jacky LEE need to attend? (action from BO notes)
 - [ ] Written follow-up draft — have it 80% ready before the meeting ends
 
 **Your goal:** Leave with decisions, not open loops. For anything that can't be decided today — get a named owner and a date.
@@ -88,14 +92,19 @@ mcps_used: [none — file-based context]
 
 ### P0 — Must Do Today
 
-- [ ] **Write BO Strategic Review notes** — meeting was last night (16:30 Mon). Notes not yet filed. Key things to capture: sticky placement decisions on Opportunities and Courses rows, R1/R2 rationale (verbal), any North Star modifications. Context is fading — do this first.
-  - Time estimate: 30–45 min
-  - Suggested time: 9:00–9:45am
-  - Save to: `outputs/meeting-notes/2026-05-25-bo-strategic-review-notes.md`
+- [x] ~~**Write BO Strategic Review notes**~~ — ✅ Filed at 08:45. `outputs/meeting-notes/2026-05-25-bo-strategic-review-notes.md`
 
-- [ ] **Confirm Pow Hwee CSC SSO ping was sent** — yesterday's evening plan listed it as unsent. If not sent, send now before standup. Updated question: does WOG Auth cover the SSO layer DLE needs, or is additional build required?
-  - Time estimate: 5 min
-  - Do first thing
+- [ ] **Confirm Pow Hwee CSC SSO Step 2 answer** — Step 1 confirmed by Sy En (CSC IT). Remaining question: does WOG Auth cover the SSO layer DLE needs to integrate with, or is additional build required? Pow Hwee's answer determines the scope call at 14:00.
+  - Time estimate: 5 min to check / follow up
+  - Do before 09:30 Squad Sync
+
+- [ ] **Check with Amber on Jacky LEE attendance** — action item from BO Strategic Review notes. Does Jacky need to attend today's 14:00 design review?
+  - Time estimate: 2 min Slack
+  - Do before 09:30 or immediately after
+
+- [x] ~~**OTEP-85: resolve visibility rule conflict (open item #28)**~~ — ✅ Already resolved 2026-05-19. Clean split confirmed: OTEP-85 shows all `closing_date > today`; OTEP-129 owns "Closing soon" badge (within 7 days).
+
+- [x] ~~**OTEP-289: add ACs and timebox to filter spike**~~ — ✅ Already resolved 2026-05-19. 2-day timebox (19–20 May), ACs cover C@G + OTG taxonomy mapping, output = written recommendation + go/no-go.
 
 - [ ] **Post-design review async follow-up** — Xian Zhang values this. Draft before 14:00 (structure only), fill in immediately after.
   - Time estimate: 15 min prep + 15 min post-meeting
@@ -103,13 +112,22 @@ mcps_used: [none — file-based context]
 
 ### P1 — Important This Week
 
-- [ ] **Reach out to Daryll to schedule POCDEX planning session** — action from Pow Hwee adhoc (Mon). Pow Hwee to arrange after Wednesday; session earliest Thu/Fri. Check with Pow Hwee if he's sent this or if you need to.
+- [ ] **Update FormSG PRD — remove pre-fill from MVP scope** — Squad Sync decision. Note R1 native form direction. Also update OTEP-130 Jira ticket scope.
+  - Deadline: This week (before next grooming)
+
+- [ ] **Reach out to Pathfinder team — get current build URL + run through with Amber** — check design was implemented as intended before sharing with users. Share URL with team after Amber confirms.
+  - Deadline: This week
+
+- [ ] **PostHog — design OKR and metrics measurement** — tooling evaluation already done by Rama. Focus: how to instrument PostHog to measure OTEP's OKRs and North Star (50% officers complete a development action by Dec '28). Work with Rama on event taxonomy and metric definitions.
+  - Deadline: W/c 1 Jun
+
+- [ ] **Reach out to Daryll to schedule POCDEX planning session** — action from Pow Hwee adhoc (Mon). Session earliest Thu/Fri. Check if Pow Hwee has already sent this.
   - Deadline: This week (W22)
 
-- [ ] **Check with Acacia on POCDEX data model familiarity** — flagged by Pow Hwee. Want to go into Daryll session prepared on the data side.
+- [ ] **Check with Acacia on POCDEX data model familiarity** — flagged by Pow Hwee. Go into Daryll session prepared on the data side.
   - Deadline: Before Daryll session (Thu/Fri)
 
-- [ ] **OTEP-87 and OTEP-318 AC alignment** — needed before Sprint 3 grooming. Depends on Designer availability. If no design review slot covers this today, schedule a separate async with Designer.
+- [ ] **OTEP-87 and OTEP-318 AC alignment** — needed before Sprint 3 grooming. If today's design review doesn't cover it, schedule async with Designer.
 
 ### P2 — If Time Allows
 
@@ -120,15 +138,23 @@ mcps_used: [none — file-based context]
 
 ## Heads Up
 
-⚠️ **Standup/dental conflict at 11:00** — OTEP standup (11:00–11:15) overlaps with dental (11:00–12:00). Options: join standup first 15 min before leaving, or send async Slack update to team before 11:00.
+✅ ~~**BO Strategic Review notes not filed**~~ — Done. Filed at 08:45.
 
-⚠️ **Pow Hwee CSC SSO ping status unknown** — last night's plan listed it as still unsent at 16:30. Confirm before Squad Sync at 09:30. If not sent, send now — you need his answer before 14:00.
+⚠️ **Standup/dental conflict at 11:00** — OTEP standup (11:00–11:15) overlaps with dental (11:00–12:00). Options: join first 15 min before leaving, or send async Slack update before 11:00.
 
-⚠️ **BO Strategic Review notes not filed** — the 16:30 meeting happened but no notes file exists. Do this before the day accelerates. A prep doc exists at `outputs/meeting-notes/2026-05-25-bo-strategic-review-prep.md` — use it as a scaffold.
+⚠️ **CSC SSO Step 2 still pending** — Step 1 confirmed (CSC supports SSO). But scope call hinges on Pow Hwee's Step 2 answer: does WOG Auth cover the SSO layer, or is additional build needed? If no answer by 14:00, bring the confirmed Step 1 data and present the open scope question explicitly. Don't present as "pending — unknown." Present as "CSC is ready; question is our build scope."
 
-⚠️ **CSC SSO answer may still be pending at 14:00** — if Pow Hwee hasn't responded by then, Michelle's position (deprioritise, manageable friction) is the default recommendation. Don't wait — present it cleanly with "pending Pow Hwee confirmation."
+⚠️ **FormSG/native form is now a design review agenda item** — Pow Hwee's technical flag (URL param fragility) plus the BO "no OTG redirect" constraint have converged. This is no longer a quiet backlog item — it needs a decision signal from Xian Zhang and Jacky at 14:00. Scope: MVP or R1?
 
-⚠️ **Thursday job family model discussion (WD x DO)** — action item from Monday's Pow Hwee adhoc. Attend/track. POCDEX requirements depend on its outcome.
+⚠️ **Jacky LEE attendance unconfirmed** — action from BO notes: check with Amber before 14:00. Don't wait until you're in the meeting room.
+
+⚠️ **Thursday job family model discussion (WD x DO)** — attend/track. POCDEX requirements depend on its outcome.
+
+⚠️ **Sprint 2 ends Friday — 4 days left, multiple tickets still Backlog** — Key risks surfaced in standup prep:
+  - OTEP-193 (data model) owner unconfirmed — confirm it's Leo today
+  - OTEP-295 (mock detail endpoint) blocks Thomas's OTEP-314 — check Leo's status
+  - OTEP-170 MR in progress — Thomas sole FE, everything frontend funnels through him
+  - OTEP-85 and OTEP-289 ✅ already resolved (open-items log, 2026-05-19) — not blockers
 
 ⚠️ **Do NOT respond to Gemma (LD team) without Jace/Adrian alignment** — carry-over from yesterday.
 
@@ -138,8 +164,10 @@ mcps_used: [none — file-based context]
 
 | Item | Owner | Due | Status |
 |------|-------|-----|--------|
-| CSC SSO feasibility (Step 2) | Pow Hwee | Before 14:00 today | ❓ Ping sent? Confirm first thing |
-| BO Strategic Review notes | Michelle | Today | ❌ Not filed — do now |
+| CSC SSO feasibility (Step 2) | Pow Hwee | Before 14:00 today | ⏳ Step 1 confirmed. Waiting on Pow Hwee Step 2 answer |
+| BO Strategic Review notes | Michelle | Today | ✅ Filed 08:45 |
+| Check Jacky LEE attendance (design review) | Michelle | Before 14:00 today | ❌ Not done — check with Amber now |
+| FormSG/native form — get decision signal | Michelle + Xian Zhang + Jacky | 14:00 design review | 🆕 New item — surface at design review |
 | Full integration task list | Pow Hwee (via Rama) | Before next standup | Pending |
 | Additional resource beyond Fanxu | Rama + Barry Lim | This sprint | In progress |
 | Fullstack developer Sprint 4 | Rama | Sprint 4 | ✅ Confirmed — 3 fullstack engineers |
@@ -148,6 +176,9 @@ mcps_used: [none — file-based context]
 | WOGAD domain submission status | Michelle | Confirm | Sent, pending CIO approval |
 | Check with Acacia (POCDEX data model) | Michelle | Before Daryll session | Not started |
 | OTEP-87 + OTEP-318 ACs | Michelle + Designer | Before Sprint 3 grooming | Not started |
+| OTEP-85 visibility rule conflict (open item #28) | Michelle | — | ✅ Resolved 2026-05-19 — clean split confirmed |
+| OTEP-289 spike ACs + timebox | Michelle + Pow Hwee | — | ✅ Resolved 2026-05-19 — 2-day timebox + ACs defined |
+| OTEP-193 data model owner | Michelle (confirm with Leo) | Today | ❓ Owner listed as Leo — confirm |
 
 ---
 
@@ -167,6 +198,7 @@ mcps_used: [none — file-based context]
 
 ---
 
-*Generated: 2026-05-26 morning*
+*Generated: 2026-05-26 morning | Updated: 2026-05-26 post standup prep + sprint ticket review*
 *MCPs used: Google Calendar API (token refresh via refresh_token)*
-*Next: Run `/meeting-notes` after standup and design review. Write BO notes first thing.*
+*Updates: BO notes done ✅; CSC SSO Step 1 confirmed; FormSG pre-fill descoped in Squad Sync; PostHog + Pathfinder check-in added; design review agenda updated*
+*Next: Run `/meeting-notes` after 14:00 design review. Update FormSG PRD this week.*
