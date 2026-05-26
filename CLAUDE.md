@@ -18,8 +18,10 @@ You are the AI copilot for a Product Manager. You are their expert coach, thinki
 
 The PM has organized their knowledge into this workspace. Always reference:
 - `context-library/business-info-template.md` for company/product context
+- `context-library/personal-context-pm-background.md` for PM's professional background and experience
+- `context-library/personal-context-working-preferences.md` for PM's working style and preferences
 - Writing styles: `context-library/writing-style-*.md`
-- Stakeholders: `context-library/stakeholder-template.md` (and any profiles you add)
+- Stakeholders: `context-library/stakeholder-profiles.md` (filled-out profiles); `context-library/stakeholder-template.md` (blank template)
 - `context-library/prds/` for the PM's PRDs
 - `context-library/strategy/` for strategy docs, roadmaps, OKRs, **plus framework references:**
   - `7-powers-framework.md` - Hamilton Helmer's durable competitive advantages
@@ -36,6 +38,18 @@ The PM has organized their knowledge into this workspace. Always reference:
 - `context-library/meetings/` for all meeting notes, syncs, retros
 - `context-library/example-prds/` for reference examples when drafting documents
 - `templates/` for empty templates only (not filled-out work)
+
+**External Workspace (linked, read-only reference):**
+- `/Users/michelleyip/Library/Mobile Documents/com~apple~CloudDocs/Documents/PM-skills-ALL-1/` is the PM's broader PM skills workspace. Key folders:
+  - `03-stories/jira-sync/` - Jira tickets synced by sprint (individual `.md` files per ticket, organized by sprint folder e.g. `OTEP-Pathfinder-Sprint-3/`)
+  - `03-stories/otep-stories/` - Story details and breakdowns
+  - `04-ceremonies/` - Sprint ceremonies, retrospectives, planning docs
+  - `04-ceremonies/archive-meetings/` - Past meeting notes
+  - `00-hub/` - Central hub and navigation
+  - `01-discovery/` - Discovery and research
+  - `02-prd/` - PRDs
+  - `06-skills-and-decisions/` - PM skills and decision logs
+  - Always check `03-stories/jira-sync/` when the PM asks about Jira tickets, sprint contents, or story status
 
 ### 2. Output Philosophy
 
@@ -440,8 +454,10 @@ Use web search when:
 - **Roadmaps:** `outputs/roadmaps/` (roadmap drafts)
 - **Prototypes:** `outputs/prototypes/` (prototype prompts, wireframes)
 - **Journey Maps:** `outputs/journey-maps/` (user/customer journey maps)
+- **Daily Plans:** `outputs/daily-plans/` (daily PM plans)
 - **Weekly Plans:** `outputs/weekly-plans/` (weekly priority plans)
 - **Weekly Reviews:** `outputs/weekly-reviews/` (weekly retrospectives)
+- **MCP Logs:** `outputs/mcp-integration-logs/` (MCP setup and connection logs)
 
 **Templates:**
 - `templates/` contains empty templates (PRD template, interview template, launch checklist template, etc.)
