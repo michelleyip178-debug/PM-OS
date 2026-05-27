@@ -1,0 +1,167 @@
+---
+date: 2026-05-27
+day: Wednesday
+week: 2026-W22
+mcps_used: [file-based context — Hari Raya Haji, Google Calendar MCP not queried]
+---
+
+# Daily Plan - Wednesday, May 27, 2026
+
+## TL;DR
+
+- **Meetings:** 0 — Hari Raya Haji public holiday. Standup cancelled. Team is off.
+- **P0 Tasks:** 3 — async follow-up (overdue from yesterday), OTEP-87/318 ACs for Thursday Sprint Planning, FormSG PRD update
+- **Key Focus:** Sprint Planning is tomorrow. Use this uninterrupted day to close all AC work and doc updates before the engineering team returns.
+
+**End of day status:** OTEP ACs done and in Jira (87, 86, 317, 319, 192). Sprint Planning prep doc ready. Async follow-up to Xian Zhang + Jacky and FormSG PRD still outstanding.
+
+---
+
+## Strategic Context
+
+**Quarter Goal:** Ship OTEP MVP end-to-end by October 2026.
+**This Week's Priority:** CSC SSO scope decided, Sprint 3 grooming items have clear ACs, POCDEX planning session scheduled.
+**Sprint 2 Status:** Ends Friday May 29. 2 business days left (Thu + Fri). Multiple stories still in Backlog. Sprint Planning + Review/Retro both Thursday.
+
+**Active PRDs:**
+
+| Initiative | Stage | Next Milestone | Owner |
+|------------|-------|----------------|-------|
+| Opportunities Listing | Sprint 2 active | Sprint 3 Planning Thu 29 May | Michelle |
+| WOG Authentication | Sprint 4+ | OTEP-87/318 ACs before Planning | Michelle |
+| FormSG Integration | Scoping | PRD update + OTEP-130 Jira rescope | Michelle |
+| POCDEX Integration | Sprint 3 plumbing | Daryll session Thu/Fri this week | Michelle |
+
+---
+
+## Today's Three
+
+*If I only accomplish three things today:*
+
+1. [ ] **Send async follow-up to Xian Zhang + Jacky** — overdue from yesterday's design review. Decisions made, open items with owners, next steps. They value this; it locks the record.
+2. [x] ~~**OTEP-87 + OTEP-318 ACs**~~ — ✅ Done. OTEP-87, 86, 317, 319 ACs updated and synced to Jira. OTEP-192 rewritten as groomable story and synced. Sprint Planning prep doc created (`outputs/analyses/sprint-3-planning-prep-2026-05-29.md`). OTEP-318 remains conditional on OTEP-289 spike output.
+3. [ ] **Update FormSG PRD + OTEP-130 Jira** — Squad Sync decision from yesterday. Remove pre-fill from MVP, note R1 native form direction. Clean this up before Sprint 3 scoping.
+
+*Why these three:* The async follow-up is overdue and takes 30 min — do it first. AC work is the hard blocker for tomorrow's Sprint Planning. The PRD update cleans up a scoping decision that's already made; leaving it undone creates drift.
+
+---
+
+## Schedule & Meeting Prep
+
+**No meetings today.** Hari Raya Haji — Singapore public holiday. Standup cancelled per sprint calendar.
+
+### Free Blocks (Full Day)
+
+| Time | Suggested Use |
+|------|--------------|
+| Morning | Async follow-up to Xian Zhang + Jacky (P0 — do first) |
+| Mid-morning | OTEP-87 ACs — Jira/PRD mismatch alignment |
+| Late morning | OTEP-318 ACs — filter by category |
+| Afternoon | FormSG PRD update + OTEP-130 Jira rescope |
+| Late afternoon | Daryll outreach + Acacia check + sprint 2 board cleanup |
+
+---
+
+## Tasks by Priority
+
+### P0 — Must Do Today
+
+- [ ] **Send async follow-up to Xian Zhang + Jacky** — was due yesterday post-design review. Decisions made (MVP-first principle, show all roles, gap emphasis), key open items (ranking logic, proficiency, N roles to display), named owners (Imelda for feature logic, Amber for designs). Keep it tight — bullet points only.
+  - Time estimate: 30 min
+  - Who to send to: Xian Zhang + Jacky (BO) + Amber (CC)
+  - Note: You are not owning any My Development feature work — just closing the loop on what was discussed.
+
+- [x] ~~**OTEP-87 ACs**~~ — ✅ Reconciled to apply CTA only. Competency section explicitly out of scope. In Jira.
+- [x] ~~**OTEP-86 ACs**~~ — ✅ Type filter only. Category (OTEP-318) and clear-all (OTEP-317) separated. In Jira.
+- [x] ~~**OTEP-317 ACs**~~ — ✅ Ready. In Jira.
+- [x] ~~**OTEP-319 ACs**~~ — ✅ Pre-fill resolved as out of scope. One open question on tracking params. In Jira.
+- [x] ~~**OTEP-192**~~ — ✅ Rewritten as groomable user story. Staging table (OTEP-313) noted as sub-task. Open questions tabled for Planning. In Jira.
+- [ ] **OTEP-318 ACs** — conditional on OTEP-289 spike output. No ACs until Pow Hwee confirms go/no-go tomorrow morning.
+
+### P1 — Important This Week
+
+- [ ] **Update FormSG PRD** — remove pre-fill from MVP scope; note R1 native form direction. Squad Sync decision from yesterday is already locked. This is just getting the doc to match.
+  - File: `context-library/prds/formsg-integration.md` (review) → updates go in `outputs/prds/`
+  - Time estimate: 30 min
+
+- [ ] **Update OTEP-130 in Jira** — re-scope to MVP: basic FormSG redirect + webhook only, no pre-fill. Add a comment referencing the Squad Sync decision date.
+  - Time estimate: 15 min
+
+- [ ] **Reach out to Daryll to schedule POCDEX planning session** — session earliest Thu/Fri per Pow Hwee. Must happen before Sprint 4 planning. Loop Pow Hwee in. Two squads competing for Daryll's team (ours + Imelda's) — make this clear in the message so he knows the context.
+  - Time estimate: 15 min (Slack or email)
+
+- [ ] **Check with Acacia on POCDEX data model** — Pow Hwee flagged she has stronger data model familiarity. Ping her before the Daryll session so you go in prepared.
+  - Time estimate: 5 min Slack
+
+- [ ] **Demo script** — Sprint Review + Retro is Friday. Demo script is due EOD Thursday. Start it today while context is fresh. Sprint goal: officer can open OTEP, see all published OTG opportunities on listing, click into detail page. Keep it brief.
+  - Time estimate: 45–60 min to draft
+  - Note: Engineering team is off today — confirm with Thomas/Leo tomorrow what's actually demo-able.
+
+### P2 — If Time Allows
+
+- [ ] **Create high-level dependency stories in Jira** — Pow Hwee asked for placeholder stories (one each for POCDEX go-live prep, WOG AD onboarding, CSC SSO). Titles and sprint-window targets only, no ACs yet.
+- [ ] **Reach out to Pathfinder team** — get current build URL. Run-through with Amber to verify design intent. (Amber is off today, so initiate the outreach now; review happens when she's back.)
+- [ ] Begin WOG Auth success metrics outline — committed to Adrian this week, due Thursday at latest.
+
+---
+
+## Heads Up
+
+⚠️ **Async follow-up to Xian Zhang + Jacky is overdue** — was listed as P1 "today post-meeting" in yesterday's plan. Do this before anything else this morning.
+
+⚠️ **Sprint Planning is tomorrow (Thu 29 May)** — OTEP-87 and OTEP-318 ACs must be ready before the session starts. If they're not done today, there's no time tomorrow morning.
+
+⚠️ **Demo script due EOD tomorrow (Thu 28 May)** — this is a hard deadline from the sprint calendar. Drafting today avoids a crunch tomorrow when you also have WD×DO job family discussion and Sprint Planning.
+
+⚠️ **WD×DO job family model discussion is tomorrow** — attend/track. POCDEX requirements depend on its outcome. Capture any implications for the Daryll planning session.
+
+⚠️ **Sprint 2 ends Friday with multiple stories in Backlog** — confirm with Pow Hwee / Leo tomorrow what will realistically ship vs. carry over. OTEP-193 (data model), OTEP-313, OTEP-314, OTEP-316 are all Backlog. Thomas is sole FE — everything frontend routes through him.
+
+⚠️ **Do NOT respond to Gemma (LD team) without Jace/Adrian alignment** — carry-over standing instruction.
+
+---
+
+## Open Loops (Status Update)
+
+| Item | Owner | Due | Status |
+|------|-------|-----|--------|
+| Async follow-up to Xian Zhang + Jacky | Michelle | Yesterday | ❌ Overdue — carry to tomorrow |
+| FormSG PRD update | Michelle | This week | ❌ Not done — carry to tomorrow |
+| OTEP-130 Jira rescope | Michelle | This week | ❌ Not done — carry to tomorrow |
+| OTEP-87 ACs | Michelle | Before Sprint Planning | ✅ Done — in Jira |
+| OTEP-86 ACs | Michelle | Before Sprint Planning | ✅ Done — in Jira |
+| OTEP-317 ACs | Michelle | Before Sprint Planning | ✅ Done — in Jira |
+| OTEP-319 ACs | Michelle | Before Sprint Planning | ✅ Done — in Jira |
+| OTEP-192 story | Michelle | Before Sprint Planning | ✅ Done — in Jira |
+| Sprint Planning prep doc | Michelle | Before Sprint Planning | ✅ Done — `outputs/analyses/sprint-3-planning-prep-2026-05-29.md` |
+| OTEP-318 ACs | Michelle | Conditional | ⏳ Waiting on OTEP-289 spike output from Pow Hwee |
+| Demo script | Michelle | EOD tomorrow (28 May) | ❌ Not started |
+| POCDEX planning session (Daryll) | Michelle | This week | ❌ Not started — carry to tomorrow |
+| Check with Acacia (POCDEX data model) | Michelle | Before Daryll session | ❌ Not started |
+| WOG Auth success metrics | Michelle | This week (Thursday at latest) | ❌ Not started |
+| Pathfinder team outreach | Michelle | This week | ❌ Not started |
+| CSC SSO Step 2 answer | Pow Hwee | Ongoing | ❓ Status unclear — check when team is back |
+
+---
+
+## Strategic Alignment Check
+
+**How today advances W22 priorities:**
+- Priority 1 (CSC SSO scope + WOG Auth Sprint 4 prep): Pow Hwee is off today. Move WOG Auth success metrics draft forward so it's ready when needed.
+- Priority 2 (Design review prep + Sprint 3 grooming foundation): OTEP-87 + OTEP-318 ACs close this today — this is the most impactful use of today.
+- Priority 3 (POCDEX risk containment): Daryll outreach today sets up the session for Thu/Fri.
+
+**Week milestone check:**
+> *"By Friday, CSC SSO scope is decided, Sprint 3 grooming items have clear ACs, and POCDEX go-live support has a plan"*
+
+- CSC SSO: Blocked on Pow Hwee (team off today). Can't close today.
+- Sprint 3 ACs: OTEP-87 + OTEP-318 — must land today. ← This is today's job.
+- POCDEX session: Reach out to Daryll today; session Thu/Fri. On track.
+
+---
+
+*Generated: 2026-05-27 morning | Updated: 2026-05-27 end of day*
+*MCPs used: file-based context (Hari Raya Haji — standup cancelled, no calendar events)*
+*Key context: Sprint calendar confirms public holiday; Sprint Planning + Review/Retro both Thursday 29 May*
+*Done today: OTEP-87, 86, 317, 319 ACs in Jira; OTEP-192 rewritten; Sprint Planning prep doc created; standup + adhoc Pow Hwee meeting notes processed*
+*Carrying to Thursday: async follow-up to Xian Zhang + Jacky, FormSG PRD, demo script, Daryll outreach*
