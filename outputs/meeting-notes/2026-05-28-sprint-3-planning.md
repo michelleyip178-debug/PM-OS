@@ -1,7 +1,7 @@
 # Meeting Notes: Sprint 3 Planning
 
 **Date:** 2026-05-28
-**Sprint:** Sprint 3 (1–12 Jun 2026)
+**Sprint:** Sprint 3 (2–12 Jun 2026)
 **Meeting type:** Sprint Planning
 **Attendees:** Michelle (PM), Pow Hwee (Tech Lead), Rama, Amber (Designer), Kingsley, Radhika, Soumya, Fang Zhu, Victor (AI track), Pathfinder team
 **Facilitator:** Michelle
@@ -10,7 +10,7 @@
 
 ## Summary
 
-Sprint 3 scope is locked across three tracks. Core team shifts focus from foundations (Sprint 2) to functional completeness of competency management: add, delete, and hide flows with a separate competency search API. Pathfinder team continues opportunity listing work — type filtering, filter state persistence, and Careers@GovTech redirect flow. AI track defers the feedback loop (no clarity on data model yet) and focuses on environment setup and evaluation layer. Design lock deadline is Wednesday 2 June.
+Sprint 3 scope is locked across three tracks. Core team shifts focus from foundations (Sprint 2) to functional completeness of competency management: add, delete, and hide flows with a separate competency search API. Pathfinder team continues opportunity listing work — type filtering, filter state persistence, and Careers@GovTech redirect flow. AI track defers the feedback loop (no clarity on data model yet) and focuses on environment setup and evaluation layer. Design lock deadline is Wednesday 3 June.
 
 ---
 
@@ -59,7 +59,7 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 - **Sequence:** Michelle validates internally with team → share with Jacky and Mark
 - **Framing:** Manage expectations — iterative product, not final state
 
-### 7. Design locked Wednesday 2 June (end of Sprint 3 day 2)
+### 7. Design locked Wednesday 3 June (end of Sprint 3 day 2)
 - **Why:** Engineers need a single "final" Figma to avoid building against moving targets
 - **Constraint:** Engineers must not start UI development until Amber signs off final version
 - **Risk if missed:** Dev starts building against intermediate designs, causing rework
@@ -86,13 +86,13 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 
 ## Open Questions
 
-- [ ] **OTG sync cadence:** How frequently should OTG data be refreshed after initial import? Weekly? Monthly? Who triggers it? -- Owner: Michelle + Pow Hwee -- By: w/c 1 Jun
-- [ ] **New vs existing officers:** How do we identify officers who joined after the initial bulk import? Do they get an OTG sync on first login regardless? -- Owner: Fang Zhu + Kingsley -- By: w/c 1 Jun
+- [ ] **OTG sync cadence:** How frequently should OTG data be refreshed after initial import? Weekly? Monthly? Who triggers it? -- Owner: Michelle + Pow Hwee -- By: w/c 2 Jun
+- [ ] **New vs existing officers:** How do we identify officers who joined after the initial bulk import? Do they get an OTG sync on first login regardless? -- Owner: Fang Zhu + Kingsley -- By: w/c 2 Jun
 - [ ] **Pilot agency restriction:** Should we restrict OTG competency import to pilot agencies only in Sprint 3? -- Owner: Michelle -- By: Sprint 3 start
 - [ ] **"Next role" definition logic:** How do we determine what an officer's next role is? This blocks the AI track's progression features -- Owner: Michelle + Pow Hwee -- By: Sprint 4 planning
-- [ ] **Hide vs delete API:** One combined endpoint or separate endpoints for hide and delete? -- Owner: Kingsley -- By: API design session w/c 1 Jun
+- [ ] **Hide vs delete API:** One combined endpoint or separate endpoints for hide and delete? -- Owner: Kingsley -- By: API design session w/c 2 Jun
 - [ ] **Backend pagination:** When do we introduce backend-side pagination? Frontend handling 20 results is a short-term workaround -- Owner: Pow Hwee -- By: Sprint 4 planning
-- [ ] **Competency descriptions:** Retrieved via profile API or separate call? -- Owner: Kingsley -- By: API design session w/c 1 Jun
+- [ ] **Competency descriptions:** Retrieved via profile API or separate call? -- Owner: Kingsley -- By: API design session w/c 2 Jun
 - [ ] **AI feedback loop:** What user interaction data to collect? Batch vs real-time processing? -- Owner: Victor -- By: end of Sprint 3
 
 ---
@@ -116,7 +116,7 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 - Confirm OTG data refresh cadence and pilot agency restriction before sprint kicks off
 - Victor documents initial requirements for feedback loop data model (even if deferred)
 
-**Sprint 3 (1–12 Jun):**
+**Sprint 3 (2–12 Jun):**
 - Core: Competency add/hide/delete + OTG migration
 - Pathfinder: Type filter, filter state, redirect flow, no-results page, tooltip
 - AI: Environment setup + evaluation layer (feedback loop deferred)

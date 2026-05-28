@@ -9,23 +9,21 @@ mcps_used: [Google Calendar MCP — token refreshed, live data]
 
 ## TL;DR
 
-- **Meetings:** 5 (4.5 hours) — ~~OTG KT~~ ✅, Standup (11:00), PM Weekly, Sprint Planning, Job Family
-- **P0 Tasks:** 2 remaining — demo script (hard deadline EOD), Sprint Planning
-- **Key Focus:** Use the 10:00–11:00 window NOW to start the demo script. Standup is the gating moment — get OTEP-289 spike answer from Pow Hwee before the 14:00 Planning session.
+- **Meetings:** 5 — ✅ OTG KT, ✅ Standup, ✅ PM Weekly, ✅ Sprint Planning, ⏳ Job Family (16:00)
+- **P0 Tasks:** Sprint Planning ✅ DONE. Demo script ✅ drafted — confirm ⚠️ items status.
+- **Key Focus (rest of day):** Capture Job Family outcomes → POCDEX implications. Then: WOG Auth metrics (overdue), schedule mid-sprint review Mon 2 Jun, Rama ping on design system.
 
 ---
 
 ## Carry-Over from Wednesday 27 May
 
-From yesterday's plan — still outstanding:
-
 | Item | Days overdue | Status |
 |------|-------------|--------|
 | Async follow-up to Xian Zhang + Jacky | 2 days | ✅ Done |
-| Demo script | Due EOD today | ✅ Structure drafted — confirm ⚠️ items at standup, finalise after |
+| Demo script | Due EOD today | ✅ Structure drafted — ⚠️ items status TBC |
 | FormSG PRD update | This week | ❌ Not started |
 | OTEP-130 Jira rescope | This week | ❌ Not started |
-| WOG Auth success metrics | This week (committed to Adrian) | ❌ Not started |
+| WOG Auth success metrics | This week (committed to Adrian) | ❌ Not started — now urgent |
 | POCDEX planning session (Daryll outreach) | This week | ✅ Reached out — awaiting response |
 | Check with Acacia (POCDEX data model) | Before Daryll session | ❌ Not started |
 
@@ -33,208 +31,189 @@ From yesterday's plan — still outstanding:
 
 ## Today's Three
 
-*Heavy meeting day (4.5 hrs). Realistic focus: three things only.*
+*All three either done or in flight.*
 
 1. [x] ~~**Send async follow-up to Xian Zhang + Jacky**~~ — ✅ Done. Sent to Xian Zhang + Jacky + CC Amber.
 
-2. [ ] **Nail Sprint Planning** — 14:00–16:00, L11 Anson. Sprint Planning prep doc is ready (`outputs/analyses/sprint-3-planning-prep-2026-05-29.md`). Bring the 5 pre-session questions. First thing at standup (11:00): get OTEP-289 spike answer from Pow Hwee — it gates OTEP-318 scope.
+2. [x] ~~**Nail Sprint Planning**~~ — ✅ DONE. Sprint 3 scope locked across all three tracks (Core, Pathfinder, AI). See outcomes below.
 
-3. [x] **Demo script** — ✅ Structure drafted (`outputs/analyses/sprint-2-demo-script-2026-05-28.md`). Confirm ⚠️ items with Thomas/Leo at standup (demo vehicle, data, back-nav). Finalise after standup.
-
-*Why these three:* The async follow-up is already embarrassingly overdue. Sprint Planning is the highest-leverage PM activity today. Demo script is a hard deadline and needs to get done before back-to-back meetings consume the rest of the day.
+3. [x] **Demo script** — ✅ Structure drafted. Confirm whether ⚠️ items (demo vehicle, data, back-nav state) were resolved at standup or still open. Finalise before EOD.
 
 ---
 
-## Schedule & Meeting Prep
+## Meeting Outcomes (Updated End-of-Day)
 
-| Time | Meeting | Prep Status | Context |
-|------|---------|-------------|---------|
-| ~~09:30–10:00~~ | ~~[OTG] KT Session — Budget~~ | ✅ Done | OTG team budget KT complete. |
-| 11:00–11:15 | OTEP Team 2 standup | ✅ Ready | **Ask Pow Hwee: OTEP-289 spike output — go or no-go for OTEP-318?** This is the #1 question. Also confirm Thomas/Leo what's demo-able for Friday. |
-| 13:15–14:00 | PM weekly catchup | ✅ Ready | Likely Jace + others. Good moment to flag: Sprint 3 scope confirmed, POCDEX Daryll session needed this week, WOG Auth success metrics still in progress. |
-| 14:00–16:00 | OTEP Sprint Planning / Backlog Grooming | ✅ Ready — prep doc done | Sprint 3 scope, carry-overs, Thomas FE capacity, OTEP-192 open questions. Prep doc: `outputs/analyses/sprint-3-planning-prep-2026-05-29.md`. |
-| 16:00–17:00 | Operationalisation of Job Family + Functional Competency Changes | ⚠️ No prep done | THIS is the WD×DO job family model discussion flagged all week. POCDEX requirements depend on the outcome. Capture everything — take notes for Daryll session. |
+### ~~09:30 — [OTG] KT Session — Budget~~ ✅ Done
 
-### Free Blocks
-
-| Window | Duration | Suggested use |
-|--------|----------|--------------|
-| **10:00–11:00** | **1 hr — NOW** | **Start demo script. This is your best uninterrupted window before standup.** |
-| 11:15–13:15 | 2 hrs | Finish demo script. Must be done before PM Weekly at 13:15. |
-| 13:15–14:00 | (PM weekly) | — |
-| 14:00–17:00 | (Planning → Job Family — back-to-back) | — |
-| Post-17:00 | Evening | POCDEX Daryll outreach + FormSG PRD update if energy allows |
+OTG budget KT complete. No blockers surfaced for OTEP scope.
 
 ---
 
-## Meeting Context
+### ~~11:00 — OTEP Team 2 Standup~~ ✅ Done
 
-### 09:30 — [OTG] KT Session — Budget
+**Two issues surfaced:**
 
-**What it is:** OTG team sharing budget/cost context. No prep needed.
+**1. Design system ambiguity in Figma (new Sprint 3 risk)**
+- Engineers can't tell which design system each Figma page references
+- If different pages reference different systems, Thomas doesn't know which to build against
+- OTEP-252 confirmed Flagship/LifeSG was adopted in Sprint 2 — but Figma pages may have inconsistent references
+- **Risk:** Thomas starts Sprint 3 FE building against the wrong reference → rework mid-sprint
+- **Resolution path:** Amber to audit Figma and label design system per page before Thomas starts (by Mon 2 Jun). Michelle to discuss with Rama whether a new design system is being adopted programme-wide.
 
-**What to watch for:**
-- Any budget constraints that could affect OTEP's OTG integration scope
-- Who owns the OTG → OTEP data flow from a budget perspective?
-- Flag anything that affects OTEP-192 (recurring ingestion job)
+**2. Mid-sprint review scheduled for Monday 8 June**
+- Quick PM pulse check (not a formal ceremony)
+- Goal: see what engineers have picked up, catch early blockers before Week 2 is gone
+- Michelle to schedule today
 
----
-
-### 11:00 — OTEP Team 2 Standup
-
-**The one question that matters:**
-
-> "Pow Hwee — what did the OTEP-289 spike produce? Is OTEP-318 (filter by category) a go or no-go for Sprint 3?"
-
-This answer determines whether OTEP-318 enters Sprint Planning scope in 3 hours.
-
-**Also ask:**
-- Thomas/Leo: What's actually demo-able for Friday's Sprint Review? (demo script is due today)
-- Confirm Sprint 2 carry-over list before Planning — what's NOT closing by Friday?
+**OTEP-289 spike status:** Ask at planning session if not surfaced at standup.
 
 ---
 
-### 13:15 — PM Weekly Catchup
+### ~~13:15 — PM Weekly Catchup~~ ✅ Done
 
-**Attendees:** Likely Jace + other PMs
-
-**Your update for Jace:**
-- Sprint 3 ACs are locked and in Jira (OTEP-87, 86, 317, 319, 192)
-- Sprint Planning is this afternoon — scope confirmed
-- OTEP-318 conditional on OTEP-289 spike (answer coming at standup)
-- POCDEX planning session with Daryll needed this week — not yet scheduled (flag this)
-- WOG Auth success metrics — committed, in progress this week
-
-**What to get from Jace:**
-- Does she need anything specific from me on POCDEX before the Daryll session?
-- Any update from Adrian on WOG Auth timeline / Sprint 4 dependencies?
+*(Update with outcomes if captured.)*
 
 ---
 
-### 14:00 — Sprint Planning / Backlog Grooming (L11 Anson, 2 hours)
+### ~~14:00–16:00 — Sprint Planning~~ ✅ DONE
 
-**Prep doc:** `outputs/analyses/sprint-3-planning-prep-2026-05-28.md`
+**Sprint 3 scope is locked.** Three tracks confirmed.
 
-**5 pre-session questions to walk in with answers to:**
-1. OTEP-289 spike output → OTEP-318 in or out? *(get this at standup)*
-2. Sprint 2 carry-over list → what isn't closing Friday?
-3. OTEP-192 file delivery → how does the OTG Excel arrive (path, SFTP, manual)? *(OTEP-192 cadence also unconfirmed — daily assumed)*
-4. ~~OTEP-191 status~~ → ✅ Done — confirmed resolved by AWS infra (2026-05-28). Close the ticket.
-5. Demo plan for Friday → how are we running Sprint Review without DEV environment?
+#### Decisions Made
 
-**Already resolved before Planning (updated 2026-05-28):**
-- ✅ OTEP-192 disappearing opportunities → auto-deactivate (soft delete). Decided.
-- ✅ OTEP-192 failure alerting → deferred to post-MVP. Not in scope for Sprint 3.
-- ✅ OTEP-192 reshaped as technical task (4 system-behavior ACs). Synced to Jira.
-- ✅ OTEP-92 (tracking subtask of OTEP-86) — removed from board.
-- ✅ OTEP-191 — confirmed Done by AWS infra resolution. Close the ticket.
+| Decision | Detail |
+|----------|--------|
+| "Competency" terminology everywhere | Not "skills" — matches OTG language |
+| Competency API split from profile API | Separate endpoint(s); search triggers at 3+ chars, "starts with" priority, max 20 results |
+| Role competencies = hide only; additional competencies = add/delete | Soft-remove from display, not deleted from DB |
+| OTG competency migration: file ingestion, not live API | Bulk import → temp table → first-login sync by user ID. Owner: Fang Zhu |
+| Feedback loop deferred | No clarity on data model yet. Victor: env setup + evaluation only in Sprint 3 |
+| Demo sequence: internal first, then Jacky + Mark | Michelle validates internally before sharing externally |
+| Design lock: Wednesday 3 June | Engineers must not start UI until Amber signs off final Figma |
 
-**Your recommended Sprint 3 scope (confirmed):**
+#### Sprint 3 Track Summary
 
-| Story | Status |
-|-------|--------|
-| OTEP-87 — Enhanced detail page (apply CTA only) | ✅ In Jira |
-| OTEP-86 — Filter by type | ✅ In Jira |
-| OTEP-317 — Clear filters | ✅ In Jira |
-| OTEP-319 — Apply via FormSG basic redirect | ✅ In Jira |
-| OTEP-192 — Recurring OTG ingestion job | ✅ In Jira (open questions for today) |
-| OTEP-271 — Local POCDEX database | ⚠️ No story file — confirm ACs with Pow Hwee |
-| OTEP-203 — Standalone POCDEX API service | ⚠️ No story file — confirm ACs with Pow Hwee |
-| OTEP-318 — Filter by category | ⏳ Conditional on OTEP-289 output |
+| Track | Focus |
+|-------|-------|
+| Core | Competency add / hide / delete + OTG migration (Fang Zhu) |
+| Pathfinder | Type filter, filter state, redirect flow, no-results, tooltip |
+| AI | Environment setup + evaluation layer (feedback loop deferred) |
 
-**Thomas FE capacity flag:** 4–5 FE stories for one engineer in 2 weeks. Raise this explicitly. Minimum viable: OTEP-87 + OTEP-319 (apply flow) + OTEP-192 (live data). Filters are second tier.
+#### New Open Questions (Michelle owns)
 
----
+| Question | Owner | Due |
+|----------|-------|-----|
+| OTG sync cadence after initial import (weekly? monthly? who triggers?) | Michelle + Pow Hwee | w/c 2 Jun |
+| New vs existing officers: OTG sync on first login for latecomers? | Fang Zhu + Kingsley | w/c 2 Jun |
+| Pilot agency restriction: limit OTG import to pilot agencies in Sprint 3? | Michelle | Before 2 Jun |
+| "Next role" definition logic (blocks AI track progression features) | Michelle + Pow Hwee | Sprint 4 planning |
+| Confirm Mark's role + what he needs to see before demo | Michelle | Before demo |
 
-### 16:00 — Operationalisation of Job Family + Functional Competency Changes
+#### Design system risk — raised at Planning ✅
 
-**This is the WD×DO job family model discussion.** POCDEX requirements depend on the outcome.
-
-**What to capture:**
-- Are job families / functional competencies changing in structure? (affects POCDEX data model)
-- Which agencies does this affect and on what timeline?
-- Does OTEP need to handle the transition state (officers mid-competency-profile change)?
-- Who owns the WD×DO side of this? Any counterpart to coordinate with?
-
-**Flag this immediately:** Sprint Planning ends at 16:00 and this starts at 16:00. No buffer to debrief or capture planning outcomes. Take notes during Planning and process them separately.
-
-**POCDEX risk to raise at Planning:** The job family model discussion at 16:00 *directly affects POCDEX requirements*. If the model changes, OTEP-271/OTEP-203 scope could shift. Consider explicitly saying in the Planning session: "We're getting the job family output at 16:00 today — should we hold POCDEX stories until after that, or commit with the caveat that scope may shift?"
+Flagged the Figma ambiguity from standup. Amber has until Monday 2 June to audit and label each page before Thomas starts FE work.
 
 ---
 
-## Tasks by Priority
+### 16:00–17:00 — Job Family + Functional Competency Changes ⏳ In progress / Just finished
 
-### P0 — Must Do Today
+**POCDEX implications — capture now:**
+- Are job families / functional competencies changing in structure? → affects POCDEX data model
+- Which agencies affected and on what timeline?
+- Does OTEP need to handle transition state (officers mid-competency-profile change)?
+- Who owns the WD×DO side? Counterpart to coordinate with?
 
-- [x] ~~**Async follow-up to Xian Zhang + Jacky**~~ — ✅ Done.
+**Risk to monitor:** If the job family model changes, OTEP-271/203 scope (POCDEX local DB + API service) could shift before Sprint 3 even starts. Capture everything from this session before doing anything else.
 
-- [x] **Demo script** — ✅ Structure drafted before standup. Confirm ⚠️ items (demo vehicle, data, back-nav state) at 11:00. Finalise after standup.
+---
 
-- [ ] **Sprint Planning — attend and own** — 14:00–16:00. Bring prep doc, 5 pre-session questions, Thomas FE capacity flag. Get OTEP-318 answer at 11:00 standup beforehand.
+## Tasks by Priority (Updated)
 
-### P1 — Important This Week
+### P0 — Sprint Planning done. What's left today:
 
-- [ ] **Ask Pow Hwee at standup: OTEP-289 spike output** — go or no-go on OTEP-318. Ask before Planning.
+- [ ] **Capture Job Family meeting outcomes** — implications for POCDEX data model. Even a bullet list is enough. Don't let this slip overnight.
+- [x] ~~**Schedule mid-sprint review for Monday 8 June**~~ — ✅ Done.
+- [ ] **Finalise demo script** — confirm ⚠️ items (demo vehicle, data, back-nav) are resolved, then close the doc. Hard deadline.
 
-- [ ] **Capture Job Family meeting outcomes** — 16:00–17:00. Implications for POCDEX. Take written notes even if it's a listen-only session.
+### P1 — This week (post-17:00 or tomorrow if needed)
 
-- [x] **POCDEX planning session — reach out to Daryll** — ✅ Done. Awaiting response to schedule the session.
+- [ ] **Ping Rama: design system programme decision** — is a new design system being adopted? Needs answer before Mon 2 Jun so Amber knows what to audit against.
+- [ ] **Decide: pilot agency restriction for OTG import** — Sprint 3 starts 2 Jun. Need a call before then.
+- [ ] **WOG Auth success metrics** — committed to Adrian. Now 2+ days late. Even a bare outline tonight is better than nothing. Grounded in Dec '26 OKR baselines from BO deck.
+- [ ] **Check with Acacia on POCDEX data model** — 5 min Slack ping before Daryll session.
+- [ ] **Confirm Mark's role** — who is he? What does he need to see in the demo?
 
-- [ ] **Check with Acacia on POCDEX data model** — 5 min Slack ping. Pow Hwee flagged she knows it well. Before Daryll session.
+### P2 — If time allows
 
-### P2 — If Time Allows (Post-17:00)
+- [ ] **FormSG PRD update** — remove pre-fill from MVP; note R1 native form direction
+- [ ] **OTEP-130 Jira rescope** — basic redirect + webhook only, no pre-fill
+- [ ] **PostHog event taxonomy** — deadline w/c 2 Jun. Not started. Flag to Pow Hwee.
 
-- [ ] **FormSG PRD update** — remove pre-fill from MVP; note R1 native form direction. File: `context-library/prds/formsg-integration.md` → `outputs/prds/`
-- [ ] **OTEP-130 Jira rescope** — basic redirect + webhook only, no pre-fill. Reference Squad Sync 2026-05-26.
-- [ ] **WOG Auth success metrics** — grounded in Dec '26 OKR baselines from BO deck. Committed to Adrian. Start even a bare outline tonight.
-- [ ] **PostHog event taxonomy** — deadline w/c 1 Jun. Still hasn't started. Worth mentioning to Pow Hwee at standup.
+---
+
+## Open Loops (End-of-Day Update)
+
+| Item | Owner | Due | Status |
+|------|-------|-----|--------|
+| Async follow-up to Xian Zhang + Jacky | Michelle | 2 days ago | ✅ Done |
+| Demo script | Michelle | EOD today | ✅ Draft done — finalise ⚠️ items |
+| Sprint Planning | Michelle | 14:00 today | ✅ DONE — Sprint 3 scope locked |
+| Job Family meeting outcomes | Michelle | Now | ⏳ Capture before end of day |
+| Schedule mid-sprint review (Mon 8 Jun) | Michelle | EOD today | ✅ Done |
+| Ping Rama: design system programme-level decision | Michelle | Today/tomorrow | ❌ Not done |
+| OTG sync cadence decision | Michelle + Pow Hwee | w/c 2 Jun | ❌ New item from Planning |
+| Pilot agency restriction for OTG import | Michelle | Before 2 Jun | ❌ New item from Planning |
+| WOG Auth success metrics | Michelle | This week | ❌ Overdue |
+| FormSG PRD update | Michelle | This week | ❌ Not started |
+| OTEP-130 Jira rescope | Michelle | This week | ❌ Not started |
+| POCDEX planning session (Daryll) | Michelle | This week | ✅ Reached out — awaiting response |
+| Check with Acacia (POCDEX data model) | Michelle | Before Daryll session | ❌ Slack ping needed |
+| OTEP-318 ACs | Michelle | Conditional on OTEP-289 | ⏳ Waiting on spike output |
+| Confirm Mark's role + demo context | Michelle | Before demo | ❌ New item from Planning |
+| PostHog event taxonomy | Michelle | w/c 2 Jun | ❌ Not started |
 
 ---
 
 ## Heads Up
 
-✅ **OTG KT (09:30) done.** Budget context captured.
+✅ **Sprint Planning DONE.** Sprint 3 scope locked across Core, Pathfinder, and AI tracks. Design lock Wed 3 Jun. This was the highest-leverage PM activity of the week — it's closed.
 
 ✅ **Async follow-up to Xian Zhang + Jacky — done.** That carry-over is finally closed.
 
-✅ **OTEP-191, OTEP-92, key OTEP-192 open questions resolved before Planning.** You're walking in better-prepared than expected.
+✅ **Demo script structure drafted.** Finalise ⚠️ items before EOD.
 
-⚠️ **10:00–11:00 is your demo script window — use it NOW.** Standup at 11:00 will clarify what's actually demo-able, but start the structure before then so you're not building from scratch.
+⚠️ **Design system ambiguity is a live Sprint 3 risk.** Amber needs to audit Figma before Thomas starts FE work on Monday 2 June. Ping Rama today on whether a new design system is being adopted programme-wide — Amber needs that context to know what she's auditing against.
 
-✅ **Demo script structure drafted.** Confirm ⚠️ items with Thomas/Leo at standup, then finalise. On track for EOD deadline.
+✅ **Mid-sprint review (Mon 8 Jun) scheduled.** Done.
 
-⚠️ **OTEP-289 spike answer gates Sprint 3 scope** — ask Pow Hwee at 11:00 standup, not in the 14:00 session. OTEP-318 in or out depends on it.
+⚠️ **Pilot agency restriction decision needed before Sprint 3 starts (2 Jun).** Should OTG competency import be restricted to pilot agencies only in Sprint 3? This came out of Planning — it's Michelle's call, and it gates Fang Zhu's import scope.
 
-⚠️ **Sprint Planning (14:00) backs directly into Job Family discussion (16:00)** — zero buffer. Take Planning notes in real-time; processing happens after 17:00.
+⚠️ **Job Family meeting outcomes must be captured now.** If the job family model changes, POCDEX scope (OTEP-271/203) could shift before Sprint 3 even kicks off. Don't let this decay overnight.
 
-⚠️ **POCDEX risk: job family model could shift tonight** — consider flagging at Planning that OTEP-271/203 scope is contingent on the 16:00 outcome.
+⚠️ **WOG Auth success metrics committed to Adrian — 2+ days overdue.** Even a rough outline tonight closes the loop. It can be polished next week.
 
-⚠️ **WOG Auth success metrics committed to Adrian — now 2+ days late.** Even a bare structure post-17:00 is better than nothing.
+⚠️ **PostHog event taxonomy deadline is w/c 2 Jun** — nothing started. Mention to Pow Hwee.
 
-⚠️ **Do NOT respond to Gemma (LD team) without Jace/Adrian alignment** — standing instruction, carries every day.
-
----
-
-## Open Loops (Updated)
-
-| Item | Owner | Due | Status |
-|------|-------|-----|--------|
-| Async follow-up to Xian Zhang + Jacky | Michelle | 2 days ago | ✅ Done |
-| Demo script | Michelle | EOD today | ✅ Structure drafted — finalise post-standup |
-| OTEP-289 spike output → OTEP-318 gate | Pow Hwee | Ask at standup | ⏳ Ask at 11:00 |
-| Sprint Planning | Michelle | 14:00 today | ✅ Prep doc ready |
-| FormSG PRD update | Michelle | This week | ❌ Not started |
-| OTEP-130 Jira rescope | Michelle | This week | ❌ Not started |
-| WOG Auth success metrics | Michelle | This week | ❌ Not started — now urgent |
-| POCDEX planning session (Daryll) | Michelle | This week | ✅ Reached out — awaiting response |
-| Check with Acacia (POCDEX data model) | Michelle | Before Daryll session | ❌ Slack ping today |
-| OTEP-318 ACs | Michelle | Conditional | ⏳ Waiting on OTEP-289 spike from Pow Hwee |
-| PostHog event taxonomy | Michelle | w/c 1 Jun | ❌ Not started |
+⚠️ **Do NOT respond to Gemma (LD team) without Jace/Adrian alignment** — standing instruction.
 
 ---
 
-*Generated: 2026-05-28 morning | Updated: 2026-05-28 ~10:00 (mid-morning refresh)*
+## Looking Ahead: Monday 2 June (Sprint 3 Day 1)
+
+**Key items to have ready before Monday 2 Jun (Sprint 3 Day 1):**
+- [ ] Amber: Figma audit + design system labels complete
+- [ ] Michelle: Pilot agency restriction decided
+- [ ] Michelle: Mid-sprint review (8 Jun) invite sent
+- [ ] Michelle: OTG sync cadence discussed with Pow Hwee
+- [ ] Michelle: Job Family outcomes captured + POCDEX implications assessed
+
+**Sprint 3 engineering starts 2 Jun.** Engineers should not start UI work until Amber's Figma audit is done — that's the first hard constraint of the new sprint.
+
+---
+
+*Generated: 2026-05-28 morning | Updated: 2026-05-28 end-of-day (post Sprint Planning)*
 *MCPs used: Google Calendar (token refreshed manually — live data for 28 May 2026)*
-*5 meetings today: ~~OTG KT (09:30) ✅~~, Standup (11:00), PM Weekly (13:15), Sprint Planning (14:00), Job Family (16:00)*
-*Resolved since morning: OTEP-191 closed, OTEP-92 removed, OTEP-192 reshaped + 2 open questions answered, prep doc filename corrected to sprint-3-planning-prep-2026-05-28.md*
-*Still open: demo script (P0 — start now), OTEP-289 spike answer (ask at standup), POCDEX OTEP-271/203 scope risk, WOG Auth metrics*
+*Meetings done: OTG KT ✅, Standup ✅, PM Weekly ✅, Sprint Planning ✅, Job Family ⏳*
+*Sprint Planning outcome: Sprint 3 scope locked — Core (competency), Pathfinder (filters/redirect), AI (env + eval). Design lock Wed 3 Jun.*
+*New items from today: design system ambiguity (Sprint 3 FE risk), mid-sprint review Mon 2 Jun, pilot agency restriction, OTG sync cadence, Mark identity*
+*Still open: demo script finalisation, WOG Auth metrics, FormSG PRD, PostHog event taxonomy*
