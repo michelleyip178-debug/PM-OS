@@ -9,14 +9,11 @@
 
 ## Behavioural Dimension 1: Ownership
 
-### Jan–Mar 2026 *(to be filled by Michelle)*
-
-- [Add OAI bullet — task delivered independently, risk flagged, or work seen through to completion]
-- [Add OAI bullet — optional second contribution from this period]
-
----
-
-### Apr–Jun 2026
+- **Maintained system integrity and financial compliance for the OTG platform across a base of ~113,000 active WOG users.**
+  - Independently managed Level 1 triage, diagnosing missing user escalations by analysing POCDEX integration logs and 3-column inclusion logic (NRIC, Agency, Job Family).
+  - Ran monthly IM8 log reviews covering failed logins and privileged user actions, and processed account lifecycle reviews to deactivate withdrawn users on schedule.
+  - Owned end-to-end CV6 invoicing preparation, including training and session notes deliverables, and calculated 5% security deposit adjustments triggered by subscription tier changes.
+  - Maintained strict document governance, keeping ARK for final approvals and Teams for working drafts, to meet audit standards and prevent APV tracking errors from causing billing delays.
 
 - **Delivered assigned tasks independently, resolving blockers without waiting to be asked.**
   - Completed OTEP-296: standardised the OTG Excel report format to match the OTEP data model, requiring cross-functional alignment between OTG operations and engineering.
@@ -56,14 +53,10 @@
 
 ## Behavioural Dimension 2: Strategic Alignment
 
-### Jan–Mar 2026 *(to be filled by Michelle)*
-
-- [Add OAI bullet — how you connected your tasks to the team's broader goals]
-- [Add OAI bullet — optional second contribution from this period]
-
----
-
-### Apr–Jun 2026
+- **Upheld the platform's data integrity mandate by routing discrepancies to source systems, not patching them at the UI layer.**
+  - When the fortnightly POCDEX-OTG batch jobs surfaced data mismatches, escalated corrections upstream to POCDEX, Cumulus, or HRPS rather than applying manual overrides in the OTG UI — keeping POCDEX as the authoritative source of truth.
+  - Supported the migration of data pipelines from the legacy GPC SFTP (slated for decommissioning) to the Cloud File Transfer (CFT) platform, reducing infrastructure risk ahead of WOG scaling.
+  - Fixes at the source reduced downstream authentication failures (including login loops from inactive records) and kept subscription metrics and budget planning grounded in the operational baseline of ~120,000 users and the 150K IA assumption.
 
 - **Framed sprint goals as officer outcomes, not delivery outputs, anchoring the team's work to user value.**
   - Wrote Sprint 2's goal as "an officer can open OTEP, see every published opportunity, and click into a detail page" — not "deliver OTEP-85, OTEP-86, OTEP-128."
@@ -103,14 +96,10 @@
 
 ## Behavioural Dimension 3: Culture & Organisational Influence
 
-### Jan–Mar 2026 *(to be filled by Michelle)*
-
-- [Add OAI bullet — information shared, peer helped, or team initiative contributed to]
-- [Add OAI bullet — optional second contribution from this period]
-
----
-
-### Apr–Jun 2026
+- **Owned governance cadence and vendor coordination across three stakeholder layers, keeping escalations routed and resolved without managerial intervention.**
+  - Prepared for and facilitated working-level, PWC (bi-monthly), and PSC (quarterly) meetings independently, serving as the primary point of accountability for meeting readiness across all three tiers.
+  - Acted as the main gatekeeper for vendor ticket management, coordinating directly with the CEG/Fuel50 support team to clarify requirements, manage bug fixes, and keep backlog grooming on track.
+  - Kept the Workforce Development team, ITC, and external vendors aligned so that policy, SLA, and technical integration issues were escalated to the right person rather than landing as surprises or getting stuck.
 
 - **[AI-powered PM knowledge sharing — to be filled by Michelle.]** Describe what you shared, with whom, and the outcome. Lead with the impact on peers or the team. The guidelines flag this as your strongest piece of evidence for this dimension — add the specifics here.
 
@@ -171,9 +160,9 @@
 
 ## Before Submitting
 
-1. [ ] Fill in Jan–Mar 2026 bullets for all three dimensions
+1. [x] Jan–Mar + Apr–Jun content merged into single Jan–Jun section per dimension ✅
 2. [ ] Add AI-powered PM knowledge sharing bullet (Culture & Org Influence)
-3. [ ] Add any OTG BAU responsibilities if applicable
+3. [x] OTG BAU responsibilities added ✅
 4. [ ] Add PostHog event taxonomy if completed in June
 5. [ ] Consider adding 3 tracker entries marked ⚠️ above if word count allows
 6. [ ] Stress-test through AppraisAI (aibots.gov.sg/chats/govtech-appraisal-bot)
@@ -182,5 +171,4 @@
 ---
 
 *Draft created: 2026-05-28 | Period: Jan–Jun 2026 | Framework: OAI (Outcome, Action, Impact) | Level: Generic Level 2*
-*Apr–Jun content mapped from OTEP workspace context and PM Conversion Evidence Tracker (`06-skills-and-decisions/pm-conversion/evidence-tracker.md`)*
-*Jan–Mar sections to be completed by Michelle.*
+*Content mapped from OTEP workspace context, OTG BAU notes, and PM Conversion Evidence Tracker (`06-skills-and-decisions/pm-conversion/evidence-tracker.md`)*

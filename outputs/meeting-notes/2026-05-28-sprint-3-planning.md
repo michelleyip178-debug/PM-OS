@@ -3,7 +3,7 @@
 **Date:** 2026-05-28
 **Sprint:** Sprint 3 (2–12 Jun 2026)
 **Meeting type:** Sprint Planning
-**Attendees:** Michelle (PM), Pow Hwee (Tech Lead), Rama, Amber (Designer), Kingsley, Radhika, Soumya, Fang Zhu, Victor (AI track), Pathfinder team
+**Attendees:** Michelle (PM), Pow Hwee (Tech Lead), Rama, Amber (Designer), Kingsley, Radhika, Soumya, Fanxu, Victor (AI track), Pathfinder team
 **Facilitator:** Michelle
 
 ---
@@ -47,7 +47,7 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
   - On first login: pull officer's OTG competencies using user ID
   - Mapping logic: if competency already in role → ignore; else → add as "additional competency"
 - **Sync limitations:** No ongoing automatic updates; subsequent syncs are manual
-- **Owner:** Fang Zhu
+- **Owner:** Fanxu
 - **Note:** This is separate from POCDEX (OTEP-271/203) — that's the job family/competency catalog for the ringfencing feature; this migration is about officer-level personal competency data
 
 ### 5. Feedback loop deferred to a later sprint
@@ -73,7 +73,7 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 | Lock and publish final Figma for competency management flows | Amber | Wed 2026-06-04 | High |
 | Implement competency search API (separate from profile API) | Kingsley | Sprint 3 | High |
 | Implement add / hide / delete competency endpoints | Kingsley | Sprint 3 | High |
-| OTG bulk competency import (temp table + first-login sync logic) | Fang Zhu | Sprint 3 | High |
+| OTG bulk competency import (temp table + first-login sync logic) | Fanxu | Sprint 3 | High |
 | QA across Core, Pathfinder, and AI tracks | Radhika | Sprint 3 | High |
 | Continue infrastructure spillover tasks | Soumya | Sprint 3 | Medium |
 | Define feedback loop data requirements and evaluation data model | Victor | Sprint 3 | Medium |
@@ -86,8 +86,8 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 
 ## Open Questions
 
-- [ ] **OTG sync cadence:** How frequently should OTG data be refreshed after initial import? Weekly? Monthly? Who triggers it? -- Owner: Michelle + Pow Hwee -- By: w/c 2 Jun
-- [ ] **New vs existing officers:** How do we identify officers who joined after the initial bulk import? Do they get an OTG sync on first login regardless? -- Owner: Fang Zhu + Kingsley -- By: w/c 2 Jun
+- [x] **OTG sync cadence:** ✅ Resolved 2026-05-29 — initial one-time port only, no ongoing sync. Pilot agencies will be driven to adopt Compass directly. See D-016.
+- [ ] **New vs existing officers:** How do we identify officers who joined after the initial bulk import? Do they get an OTG sync on first login regardless? -- Owner: Fanxu + Kingsley -- By: w/c 2 Jun
 - [ ] **Pilot agency restriction:** Should we restrict OTG competency import to pilot agencies only in Sprint 3? -- Owner: Michelle -- By: Sprint 3 start
 - [ ] **"Next role" definition logic:** How do we determine what an officer's next role is? This blocks the AI track's progression features -- Owner: Michelle + Pow Hwee -- By: Sprint 4 planning
 - [ ] **Hide vs delete API:** One combined endpoint or separate endpoints for hide and delete? -- Owner: Kingsley -- By: API design session w/c 2 Jun
@@ -99,9 +99,9 @@ Sprint 3 scope is locked across three tracks. Core team shifts focus from founda
 
 ## Context Notes
 
-**Cross-track dependency to watch:** Fang Zhu's OTG migration (Core) and Pathfinder's data pipeline work are both feeding into the same officer-facing experience. Coordinate on any shared DB tables.
+**Cross-track dependency to watch:** Fanxu's OTG migration (Core) and Pathfinder's data pipeline work are both feeding into the same officer-facing experience. Coordinate on any shared DB tables.
 
-**POCDEX clarification:** The OTG competency migration (Fang Zhu) is officer-level data: importing each officer's personal competencies from OTG. POCDEX (OTEP-271/203, Leo + Pow Hwee) is reference catalog data: job families and competency definitions used by the ringfencing feature in Sprint 4. These are different tables, different owners, different consumers — don't conflate them.
+**POCDEX clarification:** The OTG competency migration (Fanxu) is officer-level data: importing each officer's personal competencies from OTG. POCDEX (OTEP-271/203, Leo + Pow Hwee) is reference catalog data: job families and competency definitions used by the ringfencing feature in Sprint 4. These are different tables, different owners, different consumers — don't conflate them.
 
 **Stakeholder context:**
 - **Jacky** will see the demo after internal validation. Design decisions and scope calls go through Jacky. Expectations should be set clearly — this is iterative.

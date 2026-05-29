@@ -3,102 +3,93 @@
 ## Communication Preferences
 
 **Email:**
-- Length: [Preference - e.g., Short, max 5 sentences for asks]
-- Frequency: [How often you check - e.g., 3x/day]
-- Tone: [e.g., Professional but warm]
+- Length: Short — 5 sentences max for asks. Get to the point.
+- Tone: Professional but warm
 
 **Slack:**
-- Response time: [e.g., Within 2 hours during work hours]
-- Thread usage: [e.g., Always use threads]
-- Notification boundaries: [e.g., Work hours only, 9am-6pm]
+- Response time: Within work hours; not expected to respond outside 8:30am–5:30pm SGT
+- Notification boundaries: Work hours only
 
 **Meetings:**
-- Preference: [e.g., Async-first, meetings for decisions only]
-- Best times: [e.g., Mornings for deep work, afternoons for meetings]
-- Default length: [e.g., 30 min]
-- Recording: [e.g., Always for customer interviews, optional for internal]
+- Preference: Async-first. Meetings for decisions and alignment, not status updates.
+- Best times: Afternoons for meetings; protect mornings for deep work
+- Default length: 30 min
 
 ---
 
 ## Work Schedule
 
 **Typical hours:**
-- Start: [Time and timezone]
-- End: [Time and timezone]
-- Time zone: [Your timezone]
+- Start: 8:30am SGT
+- End: 5:30pm SGT
+- Time zone: Singapore (SGT / UTC+8)
 
 **Deep work blocks:**
-- [Day/time blocks you protect for focused work]
-
-**Meeting windows:**
-- [Day]: [Available times]
-- [Day]: [Available times]
-- [Day]: [Available times]
+- Mornings — best thinking happens before meetings start. Protect this time for writing, PRDs, and structured thinking.
 
 ---
 
 ## Output Preferences
 
 **Document Length:**
-- PRDs: [e.g., Concise, 1-2 pages max]
-- Emails: [e.g., Brief, 5 sentences or less]
-- Strategy docs: [e.g., Moderate detail with executive summary]
-- Updates: [e.g., Bullets only]
+- PRDs: Enough detail for engineering to build without chasing. Full ACs and edge cases. Not padded — but complete.
+- Strategy docs: Same as PRDs — thorough where it matters, cut the rest
+- Emails: Short, max 5 sentences for asks
+- Status updates: Bullets only
+- Slack messages: Direct, no fluff
 
 **Format Preferences:**
-- Structure: [e.g., Bullets over paragraphs]
-- Visuals: [e.g., Tables for comparisons, simple diagrams]
-- Examples: [e.g., Real user quotes preferred]
+- Default: BLUF (bottom line up front), then supporting detail
+- Structure: Scannable bullets for most output; tables for comparisons
+- Examples: Real quotes, real numbers, real names preferred over generic placeholders
+- No filler: Cut "it's worth noting that" and similar padding
 
 **Tone:**
-- Internal docs: [e.g., Casual but sharp]
-- Customer-facing: [e.g., Friendly and clear]
-- Executive updates: [e.g., Concise and data-heavy]
+- Internal docs: Direct and action-oriented. "We" not "I."
+- Executive updates: Numbers first, so-what second, ask clear
+- Customer/user-facing: Simple, empathetic, benefits before features
 
 ---
 
 ## Decision-Making
 
-**How you decide:**
-- Data weight: [e.g., Heavy, moderate, light]
-- Team input: [e.g., Collaborative, autonomous, consultative]
-- Risk tolerance: [e.g., Conservative, moderate, aggressive]
-- Speed: [e.g., Fast decisions within 48 hours]
+**How I decide:**
+- Context-dependent — not a fixed style. Sometimes gather more info first (especially for technical or scoping decisions). Sometimes fast and iterate. Collaborative input valued but not required for every call.
+- Comfortable saying "I need more information" and following up async rather than deciding on the spot.
+- Risk tolerance: Conservative to moderate — government/public sector context, low tolerance for surprises.
 
 ---
 
 ## Tools & Setup
 
 **Primary tools:**
-- PM: [Tools you use for project management]
-- Docs: [Documentation tools]
-- Design: [Design tools]
-- Communication: [Communication tools]
-- Data: [Analytics tools]
-- Research: [Research tools]
-
-**AI tools you use:**
-- Writing: [AI writing tools]
-- Coding: [AI coding tools]
-- Research: [AI research tools]
-- Design: [AI design tools]
+- PM: Jira (sprint tracking, tickets)
+- Docs: Confluence (sprint summaries, programme docs), PM-OS (personal context and outputs)
+- Design: Figma (design review — not primary creator)
+- Communication: Slack
+- Analytics: PostHog (being set up)
+- AI: Claude / PM-OS (daily planning, meeting notes, PRD drafting)
 
 ---
 
 ## AI Usage Preferences
 
 **When to be verbose:**
-- [Situations where you want detailed output]
+- PRD drafting — full ACs, edge cases, rationale
+- Meeting prep — full context on attendees, open loops, what I need to get out of the meeting
+- Decision docs — options with trade-offs, not just a recommendation
 
 **When to be brief:**
-- [Situations where you want concise output]
+- Daily plans — TL;DR first, then detail
+- Slack drafts — 3 sentences max
+- Status check-ins — bullets only
 
 **Format for analysis:**
-- [Preferred format - e.g., BLUF, executive summary + details]
+- BLUF first, then detail. If I need to scan it in 30 seconds, I should be able to.
 
 **Format for recommendations:**
-- [Preferred format - e.g., 2-3 options with clear recommendation]
+- 2–3 options max with clear trade-offs. Call out the recommended option and why. Don't hedge.
 
 ---
 
-**Last updated:** [Date]
+**Last updated:** 2026-05-29

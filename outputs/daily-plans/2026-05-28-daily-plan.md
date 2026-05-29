@@ -86,7 +86,7 @@ OTG budget KT complete. No blockers surfaced for OTEP scope.
 | "Competency" terminology everywhere | Not "skills" — matches OTG language |
 | Competency API split from profile API | Separate endpoint(s); search triggers at 3+ chars, "starts with" priority, max 20 results |
 | Role competencies = hide only; additional competencies = add/delete | Soft-remove from display, not deleted from DB |
-| OTG competency migration: file ingestion, not live API | Bulk import → temp table → first-login sync by user ID. Owner: Fang Zhu |
+| OTG competency migration: file ingestion, not live API | Bulk import → temp table → first-login sync by user ID. Owner: Fanxu |
 | Feedback loop deferred | No clarity on data model yet. Victor: env setup + evaluation only in Sprint 3 |
 | Demo sequence: internal first, then Jacky + Mark | Michelle validates internally before sharing externally |
 | Design lock: Wednesday 3 June | Engineers must not start UI until Amber signs off final Figma |
@@ -95,7 +95,7 @@ OTG budget KT complete. No blockers surfaced for OTEP scope.
 
 | Track | Focus |
 |-------|-------|
-| Core | Competency add / hide / delete + OTG migration (Fang Zhu) |
+| Core | Competency add / hide / delete + OTG migration (Fanxu) |
 | Pathfinder | Type filter, filter state, redirect flow, no-results, tooltip |
 | AI | Environment setup + evaluation layer (feedback loop deferred) |
 
@@ -104,7 +104,7 @@ OTG budget KT complete. No blockers surfaced for OTEP scope.
 | Question | Owner | Due |
 |----------|-------|-----|
 | OTG sync cadence after initial import (weekly? monthly? who triggers?) | Michelle + Pow Hwee | w/c 2 Jun |
-| New vs existing officers: OTG sync on first login for latecomers? | Fang Zhu + Kingsley | w/c 2 Jun |
+| New vs existing officers: OTG sync on first login for latecomers? | Fanxu + Kingsley | w/c 2 Jun |
 | Pilot agency restriction: limit OTG import to pilot agencies in Sprint 3? | Michelle | Before 2 Jun |
 | "Next role" definition logic (blocks AI track progression features) | Michelle + Pow Hwee | Sprint 4 planning |
 | Confirm Mark's role + what he needs to see before demo | Michelle | Before demo |
@@ -186,7 +186,7 @@ Flagged the Figma ambiguity from standup. Amber has until Monday 2 June to audit
 
 ✅ **Mid-sprint review (Mon 8 Jun) scheduled.** Done.
 
-⚠️ **Pilot agency restriction decision needed before Sprint 3 starts (2 Jun).** Should OTG competency import be restricted to pilot agencies only in Sprint 3? This came out of Planning — it's Michelle's call, and it gates Fang Zhu's import scope.
+⚠️ **Pilot agency restriction decision needed before Sprint 3 starts (2 Jun).** Should OTG competency import be restricted to pilot agencies only in Sprint 3? This came out of Planning — it's Michelle's call, and it gates Fanxu's import scope.
 
 ⚠️ **Job Family meeting outcomes must be captured now.** If the job family model changes, POCDEX scope (OTEP-271/203) could shift before Sprint 3 even kicks off. Don't let this decay overnight.
 
