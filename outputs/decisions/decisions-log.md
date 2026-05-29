@@ -16,6 +16,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 | # | Decision | Date | Area | Status |
 |---|----------|------|------|--------|
+| D-017 | Demo format: squad-by-squad for working sessions (Jace); consolidated cross-squad narrative for Mark + GK | 2026-05-29 | Process | ✅ Final |
 | D-016 | OTG competency porting: initial one-time port only; no ongoing sync — pilot agencies driven to Compass | 2026-05-29 | Data / Ingestion | ✅ Final |
 | D-015 | OTG disappearing opportunities → auto-deactivate (soft delete) | 2026-05-28 | Data / Ingestion | ✅ Final |
 | D-014 | Failure alerting for ingestion job → deferred to post-MVP | 2026-05-28 | Data / Ingestion | ✅ Final |
@@ -36,6 +37,20 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ---
 
 ## Decision Detail
+
+---
+
+### D-017 — Demo format: squad-by-squad for working sessions; consolidated for Mark + GK
+
+**Date:** 2026-05-29
+**Area:** Process / Stakeholder management
+**Status:** ✅ Final
+
+**Decision:** Regular sprint demos run squad-by-squad — each squad presents their own work. Working-level attendees (Jace) should expect "working sessions" covering the previous sprint only. For Mark and GK sessions, the two squads consolidate into a single coherent narrative to present as one team.
+
+**Rationale:** Regular demos reduce mental bandwidth — presenters only need to know their own part deeply enough to answer questions live. Mark/GK sessions are higher-stakes and need a "one team" story that doesn't look fragmented.
+
+**Source:** Imelda (aligned with Rama), confirmed with Michelle 2026-05-29.
 
 ---
 

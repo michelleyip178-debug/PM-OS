@@ -84,5 +84,35 @@ WD's stated design principle is to minimise retagging ("lift and shift where pos
 
 ---
 
+---
+
+## OTEP / POCDEX Implications
+
+*For: OTEP-271 (Local POCDEX DB) and OTEP-203 (Standalone POCDEX API) — both in Sprint 3*
+
+**Bottom line:** Build the Sprint 3 POCDEX infrastructure against the current job family model, but design the schema to accommodate changes. The effective date (31 Dec 2026) overlaps with OTEP's MVP window — we can't design as if the model is frozen.
+
+### What this means for Sprint 3
+
+| Item | Implication |
+|------|------------|
+| OTEP-271 schema design | Don't hard-code current job family names/codes as constants. Store job family and competency data as reference data that can be updated, not as enum values baked into migrations. |
+| OTEP-203 API endpoints | Confirm with Pow Hwee: does the API need to serve job family metadata (names, codes), or just IDs? If metadata, the API needs to handle a model update in Dec 2026 without a schema rewrite. |
+| Competency data in Sprint 3/4 | OTEP will be built against the current competency model. The 2027 re-tagging will require an OTEP update — flag this as known future work, not a Sprint 3 block. |
+| Seeding approach for local dev | Seed using current POCDEX data, but don't assume it's permanent. Note in the seeding scripts that the model is under active review. |
+
+### What's not yet resolved (may affect OTEP)
+
+- **Retagging feasibility:** WD assumes "lift and shift" is possible. System teams pushed back — they don't think it is. If this stays unresolved, the competency mapping OTEP surfaces could shift mid-implementation.
+- **Job family codes vs names:** If job family codes change as part of the new model, any OTEP data keyed on current codes will need migration.
+- **Timeline risk:** Dec 31 deadline is aspirational until system teams return effort estimates. If it slips to mid-2027, OTEP's competency view stays on current model longer — not a blocker, just a planning assumption to hold loosely.
+
+### Ask before Sprint 3 ends
+
+Confirm with Pow Hwee / Acacia (POCDEX data owner): which job family model version is OTEP-271/203 building against, and what's the plan for updating OTEP's local copy when the new model lands?
+
+---
+
 *Processed: 2026-05-29*
+*Updated: 2026-05-29 — OTEP/POCDEX implications added post-meeting*
 *Next: System teams to return effort estimates ASAP. WD to kick off FL engagement by mid-June. Reconvene before end of June to resolve open items once sizing is in.*
