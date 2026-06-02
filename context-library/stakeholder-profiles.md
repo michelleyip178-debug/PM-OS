@@ -145,6 +145,23 @@
 
 ---
 
+## Michelle Chen — Resource Counterpart (R1)
+
+**Role:** Leads a team that may contribute design/delivery capacity to R1 (exact remit TBC)
+**Seen in:** PM Weekly 2026-06-02 — Adrian to discuss R1 resourcing with her
+**Relationship to Michelle:** Indirect so far — Adrian is the channel
+
+**Cares about (inferred — confirm):**
+- Her own team's capacity and commitments
+- What she'd be signing her people up for
+
+**How to work with Michelle Chen:**
+- For now, route the R1 resource ask *through Adrian* — he owns that conversation
+- When it comes direct: bring the specific, sized ask (the three R1 net-new builds, one FE) so she can judge what her side can realistically take
+- ⚠️ **Profile is a stub** — capture her actual role, team, and what she optimises for once her R1 involvement firms up. Distinct from Barry Lim (also a resourcing contact, but via Rama for headcount).
+
+---
+
 ## Communication Matrix
 
 | Stakeholder | Frequency | Format | What to share |
