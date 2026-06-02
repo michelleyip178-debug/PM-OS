@@ -145,7 +145,7 @@ When the PM uses a skill command (e.g., `/prd-draft`, `/meeting-notes`), Claude 
 
 All skills are registered as native slash commands. You can invoke them by typing `/skill-name` or Claude may auto-load them when relevant.
 
-**Available Skills (42 total - fully context-aware and cross-integrated):**
+**Available Skills (43 total - fully context-aware and cross-integrated):**
 
 All skills now check your workspace context first, reference related analyses, and connect insights like a real PM would.
 
