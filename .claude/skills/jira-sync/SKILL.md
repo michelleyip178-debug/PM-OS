@@ -10,24 +10,32 @@ user-invocable: true
 **What to provide:** Nothing, or a sprint scope. Run it before a planning ceremony or whenever the cache feels behind.
 
 ```
-/jira-sync              → Sync active + next sprint tickets, fix clear field drift, flag the rest
-/jira-sync all          → Reconcile every sprint folder + Backlog (all ~198 tickets)
-/jira-sync Sprint 4     → Sync a named sprint folder only
+/jira-sync              → Sync the active sprint on BOTH boards (open tickets only), fix field drift, flag the rest
+/jira-sync pathfinder   → Active Pathfinder sprint only (board 12541)
+/jira-sync core         → Active Core sprint only (board 13640)
+/jira-sync Sprint 4     → A named sprint folder only
+/jira-sync all          → Every folder + Backlog (all ~198 files, incl. closed-Done)
 /jira-sync --dry-run    → Report drift only, change nothing
 /jira-sync --commit     → Sync, then commit the corrected files
 ```
 
 **What you get:** Your local Jira ticket files and sprint allocation docs brought back in line with live Jira. Structured fields (status, assignee, points, sprint) fixed inline, moved tickets relocated to the right folder, duplicates and judgement calls flagged for your decision, and a `*Synced from Jira: YYYY-MM-DD*` stamp on every file touched.
 
-**Time:** 3-5 minutes for active + next sprint; longer for a full sweep.
+**The skill works diff-first:** it builds a one-line-per-ticket manifest, compares it to the live Jira pull in memory, and only opens/rewrites the files that actually changed. A typical daily run touches a handful of tickets, not the whole cache.
+
+**Time:** 1-2 minutes for the default (active sprint, open tickets, diff-only); 5-10 for a full `all` sweep.
 
 ---
 
 ## Purpose
 
-You keep a local cache of ~198 Jira tickets as `.md` files in `03-stories/jira-sync/`, one per ticket, foldered by sprint. Sprint planning lives in `04-ceremonies/sprint-allocation.md` and rollups in `00-hub/sprint-status.md`. Daily plans, standups, status updates, and `/stale-check` all read from this cache.
+You keep a local cache of ~198 Jira ticket `.md` files in `03-stories/jira-sync/`, one per ticket, foldered by sprint across **two boards** (OTEP-Core 13640, OTEP-Pathfinder 12541) plus a `Backlog/` folder. Sprint planning lives in `04-ceremonies/sprint-allocation.md` and rollups in `00-hub/sprint-status.md`. Daily plans, standups, status updates, and `/stale-check` all read from this cache.
 
-The cache drifts. A ticket changes status or owner in Jira, gets moved to a different sprint, gets re-pointed, or closes, but the `.md` file never catches up. Ticket files carry no sync stamp, so there's no way to tell which ones are behind. Tickets that moved sprints leave a stale file in the old folder, sometimes duplicated into the new one.
+The cache drifts. A ticket changes status or owner in Jira, gets moved to a different sprint, gets re-pointed, or closes, but the `.md` file never catches up. Tickets that moved sprints leave a stale file in the old folder, often duplicated into the new one — **~75 ticket keys currently exist in two folders at once, and the copies have diverged.** Ticket files carry no sync stamp, so there's no way to tell which ones are behind.
+
+**Two facts shape the optimization:**
+- Most files don't change between runs. Closed-sprint Done tickets are stable; the active sprint is where churn lives. So the default scope is the **active sprint, open tickets only** — not the whole tree.
+- Re-reading ~198 files to find the few that drifted is the slow part. So the skill is **diff-first**: build a manifest, diff in memory, open only the deltas.
 
 This skill is the cache refresh. It pulls live Jira and rewrites the ticket files and allocation docs to match.
 
@@ -67,29 +75,34 @@ A ticket file is NOT stale just because it's old. A closed-sprint ticket marked 
 
 ## Workflow
 
-### Step 1: Establish ground truth first
+### Step 1: Determine scope (before any Jira call — keeps the pull small)
 
-Pull the authoritative facts before reading any file:
+- **default** — the **active sprint on both boards**, open tickets only (status ≠ Done). Derive the active sprint per board from the Jira pull (state = active), cross-checked with `sprint-calendar.md`.
+- **`pathfinder`** / **`core`** — the active sprint on just that board (12541 / 13640).
+- **a sprint name** (e.g. `Sprint 4`, `Pathfinder Sprint 3`) — just that folder, all statuses.
+- **`all`** — every folder + Backlog, all statuses including closed-Done (~198 files). Slow; use before quarterly planning or after a big re-shuffle.
 
-1. **Pull live Jira** (Atlassian MCP) for the in-scope sprint(s). For each issue get: `key, summary, status, assignee, story points, sprint`. For each sprint get: state (active/closed), dates, and the full issue list. Note the sprint ID.
-2. **Note today's date** for past-vs-future checks on freeform notes.
+**Why open-tickets-only by default:** closed-sprint Done tickets are stable and rarely change. Skipping them is the single biggest speed win. A Done ticket only re-syncs under `all` or a named-sprint run.
+
+### Step 2: Build the manifest, then pull Jira
+
+1. **Build a local manifest** of the in-scope files: one line per ticket — `key | folder | status | assignee | points`. Get these from the `**Field:**` headers without reading full file bodies (grep the header block, not the Description). This is the cheap snapshot you diff against.
+2. **Pull live Jira** (Atlassian MCP) for the in-scope sprint(s). For each issue: `key, summary, status, assignee, story points, sprint`. For each sprint: state, dates, full issue list, sprint ID.
+3. **Diff manifest vs. Jira in memory.** The output is three small sets: **changed** (a field differs), **moved** (Jira sprint ≠ folder), **gone/new** (in one source, not the other). Everything else is already in sync and never gets opened.
+4. **Note today's date** for past-vs-future checks on freeform notes.
 
 If the MCP is down, stop and say so. Unlike `/stale-check`, this skill has no file-only fallback for the ticket refresh, it needs live data. (It can still flag past-dated allocation entries from the date alone, so offer that as a partial run.)
 
-### Step 2: Determine in-scope folders
+### Step 3: Apply only the deltas
 
-- **default** — the active sprint plus the next sprint. Derive the active sprint from the Jira pull (state = active) cross-checked with `sprint-calendar.md`.
-- **`all`** — every sprint folder plus Backlog (~198 tickets).
-- **a sprint name** (e.g. `Sprint 4`, `Pathfinder Sprint 3`) — just that folder. Match it to the folder name in `03-stories/jira-sync/`.
+Open and rewrite **only** the files in the changed/moved sets from Step 2:
 
-### Step 3: Diff each ticket file against its Jira issue
+- **Changed:** rewrite the differing `Status` / `Assignee` / `Story Points` / `Sprint` header field(s). Each rewrite must trace to a specific Jira value. Leave the rest of the file alone.
+- **Moved:** relocate the file to the folder matching its live Jira sprint and update the `Sprint:` field. Then handle duplicates in batch (below) — don't open them one at a time.
+- **Leave freeform sections** (`Description`, `Acceptance Criteria`, `Note`, `Risk`) untouched, but **flag** when one names a date that has passed or a condition that's since resolved.
+- **Stamp** every file you changed or moved with a `*Synced from Jira: YYYY-MM-DD*` footer. If the stamp exists, bump the date. (New stamps are what make the *next* run able to skip unchanged files by date.)
 
-For every `OTEP-*.md` in scope:
-
-- **Compare structured fields** (`Status`, `Assignee`, `Story Points`, `Sprint`) to the live Jira issue. Rewrite any that differ. Each rewrite must trace to a specific Jira value.
-- **Sprint moved?** When the Jira sprint differs from the file's folder: relocate the file to the folder matching its live Jira sprint, update the `Sprint:` field, and **flag** any duplicate copy of the same ticket key sitting in another folder for you to delete. Keep one file per ticket.
-- **Leave freeform sections** (`Description`, `Acceptance Criteria`, `Note`, `Risk`) untouched, but **flag** when a `Note` / `ACs TBC` / risk line names a date that has passed or a condition that's since resolved (e.g. "confirm at Sprint 3 Planning (2026-05-28)" when that date is now past).
-- **Stamp** every file you changed or moved with a `*Synced from Jira: YYYY-MM-DD*` footer. If the stamp exists, bump the date.
+**Duplicate handling (batched — the cache has ~75 dupes):** when a ticket key exists in more than one folder, the copy in the folder matching its **live Jira sprint is canonical**. For each duplicate, show a one-line content-diff summary of the stale copy, then ask **once** at the end: "Delete these N stale copies? [list]" — a single confirm, not N prompts. Relocating is automatic; deleting the old copy is the one confirm. Never silently delete.
 
 ### Step 4: Reconcile allocation + rollup files
 
@@ -105,7 +118,8 @@ Output one compact summary (no separate file unless asked):
 ```markdown
 ## Jira-sync — [date]
 
-**Ground truth:** Jira [active sprint, state, N issues] · scope [folders synced] · today [date]
+**Ground truth:** Jira [active sprint(s), state, N issues] · scope [folders synced] · today [date]
+**Diff:** [X] files in scope · [Y] changed · [Z] moved · [rest] already in sync (not opened)
 
 ### Field updates ([n])
 | Ticket | Field | Was → Now |
