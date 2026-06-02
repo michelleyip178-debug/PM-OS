@@ -145,7 +145,7 @@ When the PM uses a skill command (e.g., `/prd-draft`, `/meeting-notes`), Claude 
 
 All skills are registered as native slash commands. You can invoke them by typing `/skill-name` or Claude may auto-load them when relevant.
 
-**Available Skills (41 total - fully context-aware and cross-integrated):**
+**Available Skills (42 total - fully context-aware and cross-integrated):**
 
 All skills now check your workspace context first, reference related analyses, and connect insights like a real PM would.
 
@@ -201,6 +201,7 @@ All skills now check your workspace context first, reference related analyses, a
 
 **Development & Execution:**
 - `/create-tickets` - Create tickets via MCP or formatted text (links to PRDs, auto-populates context from meetings)
+- `/jira-sync` - Refresh stale Jira ticket files + sprint allocations from live Jira (inverse of stale-check: fixes the cache that everything reads)
 - `/launch-checklist` - Comprehensive product launch planning (prioritized checklist with owners, dependencies, critical path)
 - `/code-first-draft` - Initial feature implementation from PRD specs (explores codebase, creates implementation plan, writes code with tests)
 
