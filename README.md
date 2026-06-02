@@ -7,7 +7,7 @@ Your AI-powered copilot for modern product management. Built for Claude Code and
 Most PMs use AI the same way they use Google: one-off questions, zero context. This system works differently.
 
 - **Context over prompting.** AI is only as good as the context you give it. PM OS organizes your company knowledge, writing styles, stakeholder profiles, and past decisions so every output sounds like it came from someone who actually works there.
-- **Workflows, not chat.** 41 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, and retrospectives. Each one builds on the others.
+- **Workflows, not chat.** 43 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, and retrospectives. Each one builds on the others.
 - **Ship the draft, then iterate.** Documents are living artifacts. A 1-page PRD that ships Monday beats a 10-page spec that ships never.
 
 ## What You Get
@@ -64,7 +64,7 @@ pm-operating-system/
 ├── CLAUDE.md                    # Master instructions for Claude
 │
 ├── .claude/                     # Claude Code configuration
-│   └── skills/                  # 41 registered slash commands
+│   └── skills/                  # 43 registered slash commands
 │
 ├── setup/                       # Installation and configuration
 ├── context-library/             # Your company/product context
@@ -95,7 +95,7 @@ Unlike ChatGPT or regular Claude:
 ### Three Layers of Context
 
 1. **Project Knowledge** (`context-library/`) - Company info, writing styles, stakeholder profiles that apply across all your work
-2. **Skills** (`.claude/skills/`) - 41 registered slash commands for recurring tasks
+2. **Skills** (`.claude/skills/`) - 43 registered slash commands for recurring tasks
 3. **Sub-Agents** (`sub-agents/`) - Specialized reviewers for different perspectives
 
 When you ask Claude to draft a PRD, it automatically:
@@ -158,7 +158,7 @@ Claude will automatically route your question to the right tool and return resul
 - [ ] Customize the slash commands for your workflow
 - [ ] Add example PRDs from your company to `context-library/example-prds/`
 
-## Available Slash Commands (41 Total)
+## Available Slash Commands (43 Total)
 
 Type `/` in Claude Code to see autocomplete menu with all commands.
 
@@ -184,6 +184,10 @@ Type `/` in Claude Code to see autocomplete menu with all commands.
 - `/expansion-strategy` - Revenue expansion tactics
 - `/experiment-decision` - When to A/B test vs ship
 - `/experiment-metrics` - STEDII framework
+
+### Cache & Tracker Hygiene
+- `/jira-sync` - Refresh the local Jira ticket cache + sprint allocations from live Jira (diff-first; default = active sprint, open tickets only)
+- `/stale-check` - End-of-day sweep for stale facts across daily/weekly plans and hub trackers (cross-checks live Jira + decisions log)
 
 ### Specialized & Advanced
 - `/user-research-synthesis` - Research synthesis
@@ -223,6 +227,13 @@ Please review [prd-file.md] from the perspective of an engineer, designer, and e
 ```
 /prioritize
 ```
+
+### Keep your trackers honest (end of day / Friday)
+```
+/jira-sync       # refresh the ticket cache from live Jira (before ceremonies)
+/stale-check     # sweep plans + hub trackers for stale facts (EOD habit)
+```
+Run `/jira-sync` first, then `/stale-check` — the first fixes the source, the second fixes everything that reads it. See `00-hub/sync-workflow.md` for the full daily/weekly rhythm.
 
 ## Pro Tips
 
