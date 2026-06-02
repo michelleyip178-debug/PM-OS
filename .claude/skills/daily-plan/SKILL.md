@@ -302,6 +302,14 @@ When the PM runs `/daily-plan` without the `full` flag, generate a compact plan 
 
 This fits on one screen. No scrolling required.
 
+**One-screen cap rule (locked in 2026-06-02 — Michelle's preference):**
+- The **visible** plan (above any `<details>` appendix) is capped to these sections only: TL;DR, Today's Three, Schedule, Tasks (P0/P1/P2), Heads Up.
+- **Max one line per item.** No multi-line bullets in the visible plan.
+- **BAU / standing tasks do NOT go in the daily.** Link to the prioritised BAU block in `00-hub/tasks-active.md` (Up Next) with a one-line pointer naming only this week's P1s.
+- Anything else (strategic context, developments, radar, full Jira health check, alignment check) goes in a collapsed `<details>` appendix, never the visible plan.
+- When updating an existing plan, **trim resolved/struck-through items out of the visible part** — don't append status notes that grow the file. Resolution detail belongs in the appendix or the source tracker.
+- Target: visible plan ≤ ~75 lines.
+
 **Full Mode:**
 When the PM runs `/daily-plan full` or asks for "more detail," include ALL sections from the template below: TL;DR, Strategic Context, Today's Three, Schedule & Meeting Prep, detailed Meeting Context, Tasks by Priority, Metrics to Watch, Email/Communication Highlights, Heads Up, and Strategic Alignment Check.
 

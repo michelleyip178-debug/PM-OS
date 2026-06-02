@@ -19,28 +19,37 @@ WOG Auth is P0 for the MVP because every CareerCompass feature assumes a verifie
 ## Target users
 
 - **All public officers from onboarded agencies** logging into CareerCompass (any feature)
+- **MVP pilot = 6 agencies (~5,400 officers): PSD, ESG, MDDI, URA, MCCY, CAAS** — onboarded in staggered pairs (Implementation Details, 2026-06-02). Pilot access control (OTEP-111) restricts login to these agencies.
 
 **Out of scope for MVP auth:** MOE-Schools, MINDEF, ASTAR, DSTA — these agencies will not be onboarded for pilot. Non-WOG authentication paths (e.g. Singpass for MOE/MINDEF) are deferred post-MVP.
 
 ## Success metrics
 
-> ⚠️ No metrics defined in this PRD — sections are placeholders. PM to complete.
+> Defined 2026-06-02 (Michelle). Targets are pilot-starting proposals for the MVP-6 pilot agencies (PSD, ESG, MDDI, URA, MCCY, CAAS — ~5,400 officers) — baselines-first per Dec '26 OKRs; firm up before Sprint 4. Shared with Adrian for sign-off.
 
-**Input metrics (listed as examples in PRD — not yet targeted):**
-- Officer login rate (no baseline or target set)
-- Officer conversion rate from competency gap analysis to opportunity page (mismatched to this epic — likely a template carryover)
+**Framing:** Auth is foundational P0 — success = login works reliably, the right officer gets in, the wrong one stays out. Reliability + access, not growth.
 
-**Instrumentation events (from scope):**
-- `login_success`
-- `login_attempt`
-- `login_failed` (troubleshoot / retry)
-- `login_attempt_failed_access_denied`
+**Core metrics:**
 
-**Guardrails (placeholder — no thresholds set):**
-- Drop-off rate at login page
-- Auth error rate
-- Session expiry / timeout incidents
-- Latency / availability of COMET / Azure AD
+| Metric | Definition | Pilot target | Baseline |
+|--------|-----------|--------------|----------|
+| Login success rate | `login_success` / `login_attempt` | ≥ 98% | Set at pilot Day 1 |
+| Auth error rate | (`login_failed` + `access_denied`) / `login_attempt` | < 2% (access-denied only for genuine non-pilot/deactivated) | Set at pilot |
+| Pilot officer satisfaction | UAT survey, login experience | ≥ 3.5/5 (MVP OKR) | OKR target |
+
+**Guardrails (must-not-break):**
+- IM8 session compliance — 30-min inactivity + 12-hr max enforced in prod (binary)
+- Shared-computer logout integrity — next user cannot reach prior officer's data (zero tolerance)
+- POCDEX first-login pre-fill mismatch (name/email) < 5%
+- COMET / Azure AD availability + latency on the login path
+
+**Instrumentation events (PostHog — Rama):**
+- `login_attempt` · `login_success` · `login_failed` · `login_attempt_failed_access_denied`
+→ give login success rate + auth error rate directly. Satisfaction from pilot UAT survey.
+
+**Open dependencies for these metrics:**
+- OTEP-110: if WOG AD owns all error states, `login_failed` may not be an OTEP-side event — resolve at Sprint 4 grooming.
+- OTEP-111: pilot access check by agency name or ID — determines access-denied accuracy.
 
 ## Scope — MVP user stories
 
@@ -51,7 +60,7 @@ WOG Auth is P0 for the MVP because every CareerCompass feature assumes a verifie
 | OTEP-72 | New Officer account creation | Sprint 1 ✓ |
 | OTEP-110 ⚠️ | Login failure troubleshooting and retry for pilot users | **Sprint 4+**. **Jira ACs mismatch** — Jira: WOG AD handles all errors. PRD: OTEP shows error UI. Resolve at grooming. Absorbs WOG-12 + WOG-13; WOG-15 is NFR. |
 | OTEP-111 | Access denied message for non-pilot users and deactivated POCDEX profiles | Sprint 1 ✓. Confirm it covers WOG-08 + WOG-09. Backend check method TBC: agency name or agency ID |
-| OTEP-305 | Logout: session end, back-button prevention, URL-redirect to login; shared-computer edge case | **Sprint 4+**. Multi-device logout behaviour: depends on session architecture (TBD) |
+| OTEP-305 | Login + logout pages: session end, back-button prevention, URL-redirect to login; shared-computer edge case | **Pages buildable NOW (Sprint 3) against Keycloak stub; WOG AD swaps in S4+** (D 2026-06-02). Multi-device logout depends on session architecture (TBD). Needs owner. |
 | WOG-10 | Resolve agency from AD identity | **Sprint 4+** (Needs ticket). Blocked on Pow Hwee agency-resolution decision. |
 | WOG-06 | First-time login + profile setup (name only) | **Sprint 4+** (Needs ticket). Trimmed to name-only; absorbs WOG-19 + WOG-20. |
 | WOG-17 | Complete logout on shared devices | **Sprint 4+** (Needs ticket). Pairs with OTEP-305. |
@@ -83,6 +92,9 @@ Key risks:
 - **POCDEX:** Identity and profile data source for ringfencing and first-login pre-fill; links to [../../../knowledge/product/features/pocdex.md](../../../knowledge/product/features/pocdex.md)
 - **CSC:** ~4 weeks after documentation submission for SSO setup (from existing feature notes)
 - **IM8 policy:** Low-risk cloud plan governs session parameters
+
+## Interim approach — build now against Keycloak (2026-06-02)
+- **WOG AD domain submission still pending (#26), but auth FE work proceeds in parallel.** Build the actual login/logout pages now using the existing Keycloak stub (OTEP-190) as the interim identity provider; swap to WOG AD once onboarding completes. OTEP-305 = real login/logout UI + session/logout behaviour against Keycloak. This de-risks the Sprint 4+ slip by getting the pages built early without waiting on the 2–4 week approval clock. (Decision 2026-06-02.)
 
 ## Integration Risks (Sprint 4)
 - **Domain name approval — partially unblocked (2026-05-21):** Decision made to submit `careercompass.gov.sg` as the intranet URL. Pow Hwee confirmed viable subject to policy (informal, not formally verified). Michelle is the action owner for submission. Internet URL question deferred. See [decisions/2026-05-21-wogad-domain-careercompass.md](../../../decisions/2026-05-21-wogad-domain-careercompass.md).

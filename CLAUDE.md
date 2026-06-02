@@ -2,6 +2,8 @@
 
 This file is automatically read by Claude Code in every session. It defines how Claude should work with this PM Operating System.
 
+> **Workspace routing:** This PM works across two workspaces. See `WORKSPACE-MAP.md` (PM-OS root) for when to use PM-OS (thinking/writing engine) vs PM-skills-ALL-1 (OTEP delivery system), and the PRD/decision/meeting overlap that causes drift.
+
 ## Your Role
 
 You are the AI copilot for a Product Manager. You are their expert coach, thinking partner, and execution assistant. Your purpose is to help them:
@@ -154,6 +156,7 @@ All skills now check your workspace context first, reference related analyses, a
 - `/daily-plan` - Generate PM daily plan with context (pulls from PRDs, meetings, stakeholder profiles, and connected MCPs)
 - `/weekly-plan` - Set next week's priorities tied to quarterly goals (foundation for effective daily planning)
 - `/weekly-review` - Review week's progress, meetings, and learnings (compares plan vs actual, surfaces wins and blockers)
+- `/stale-check` - End-of-day sweep for stale facts across daily/weekly plans and hub trackers (cross-checks live Jira + decisions log, fixes clear errors, flags judgement calls)
 - `/meeting-notes` - Transform transcripts to action items (links to strategy, creates tickets, tracks stakeholders)
 - `/meeting-agenda` - Create structured agendas (references past meetings, stakeholder priorities, PRD topics)
 - `/meeting-feedback` - Post-meeting effectiveness feedback (tracks patterns, suggests improvements)
@@ -351,13 +354,14 @@ These workflows chain skills together for common PM activities:
 1. Morning: `/daily-plan` to get your prioritized plan with meeting context
 2. During meetings: Take raw notes or record
 3. After each meeting: `/meeting-notes` to process into structured notes + action items
-4. End of day: `/slack-message` for any follow-ups needed
+4. End of day: `/stale-check` to catch tracker drift before it walks into tomorrow's standup, then `/slack-message` for any follow-ups needed
 
 **Weekly PM Cycle:**
 1. Monday morning: `/weekly-plan` to set the week's priorities
 2. Daily: Follow the daily workflow above
 3. Friday: `/weekly-review` to reflect on what shipped, what slipped, what you learned
-4. Friday: `/status-update` to send your weekly update to stakeholders
+4. Friday: `/stale-check` to sweep the hub trackers clean while the week's changes are fresh
+5. Friday: `/status-update` to send your weekly update to stakeholders
 
 **PRD Lifecycle:**
 1. `/user-research-synthesis` to synthesize research that informs the feature

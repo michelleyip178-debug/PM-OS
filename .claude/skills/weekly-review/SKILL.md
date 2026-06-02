@@ -598,10 +598,13 @@ After generating review, prompt user with contextual suggestions:
 **Always offer:**
 > "Week synthesized and saved! Next steps:
 >
-> 1. **Plan next week?** Run `/weekly-plan` (5-10 min) - I've drafted initial priorities above
-> 2. **Share with team?** I can format this as a stakeholder update
+> 1. **Sweep stale trackers?** Run `/stale-check` (2-3 min) - this week's decisions and sprint changes may not have propagated to the hub trackers yet. Catch drift now while it's fresh, before it shows up in Monday's standup.
+> 2. **Plan next week?** Run `/weekly-plan` (5-10 min) - I've drafted initial priorities above
+> 3. **Share with team?** I can format this as a stakeholder update
 >
 > What would help?"
+
+*(Recommend `/stale-check` first: the review just surfaced what changed this week, so the trackers are most likely out of date right now. Cleaning them before `/weekly-plan` means next week's plan builds on accurate state.)*
 
 **If significant wins:**
 > "🎉 Nice work on [Achievement]! Worth documenting this:

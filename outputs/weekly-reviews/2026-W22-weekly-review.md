@@ -157,8 +157,8 @@ Both proposals are drafted and ready for Sprint 3 ceremonies.
 
 | Date | Event | Prep needed |
 |------|-------|------------|
-| Mon 1 Jun | Sprint 3 Day 1 | WoW overdue sends first thing |
-| Tue 2 Jun | Vesak Day (public holiday) | Standup cancelled |
+| Mon 1 Jun | Vesak Day (public holiday) | Standup cancelled — use for async sends |
+| Tue 2 Jun | Sprint 3 Day 1 | WoW overdue sends first thing |
 | Wed 3 Jun | Design lock | Amber must sign off Figma today |
 | Wed 3 Jun | Internal squad grooming | Share DoR proposal for discussion |
 | Thu 5 Jun | Sprint 3 Planning (S04) | Tech debt proposal as agenda item |

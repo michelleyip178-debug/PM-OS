@@ -62,6 +62,18 @@
 **How to work with Jacky:**
 - Similar to Xian Zhang — both are in the room to decide, not just advise
 - If you need a decision on a specific issue, surface it explicitly: "We need a call on X by end of review"
+- **Demos:** Jacky and the working level attend *regular* demos — framed as working sessions covering only the previous sprint's output (two-tier demo agreement, 2026-06-02). Don't over-polish for this audience; owner presents their own part. Save the consolidated narrative for Mark/GK.
+
+---
+
+## Mark & GK — Senior Demo Audience
+
+**Role:** Senior stakeholders above the working level. The high-stakes demo audience.
+**Seen in:** Special consolidated demo sessions (not regular sprint demos).
+
+**How to work with them (demo agreement, 2026-06-02):**
+- For Mark/GK sessions, the PMs consolidate into **one coherent narrative** — cover each other's parts, unified storyline, smoother Q&A. High prep, reserved for this tier.
+- ⚠️ **Profiles incomplete** — capture their specific priorities, communication style, and what "good" looks like to each before the next session. (Mark's role + demo needs was already an open prep item.)
 
 ---
 
