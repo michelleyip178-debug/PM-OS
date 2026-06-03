@@ -7,5 +7,18 @@
       "Bash(claude mcp *)"
     ]
   },
-  "enabledMcpjsonServers": ["google-calendar", "mcp-atlassian"]
+  "enabledMcpjsonServers": ["google-calendar", "mcp-atlassian"],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/format-md-check.py\""
+          }
+        ]
+      }
+    ]
+  }
 }

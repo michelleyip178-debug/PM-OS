@@ -1,0 +1,81 @@
+---
+date: 2026-06-03
+day: Wednesday
+week: 2026-W23
+sprint: Sprint 3, Day 2
+mcps_used: [Google Calendar (live), Jira (live)]
+---
+
+# Daily Plan — Wednesday, 3 June 2026 (Sprint 3, Day 2)
+
+## TL;DR
+
+- **Meetings:** Stand-up 11:00, lunch/LTA 11:30–14:00, SMRT briefing 16:30. 2pm internal sprint **cancelled verbally** (still shows confirmed on calendar — see Heads Up).
+- **P0 Tasks:** 1 left (drive design lock **async** — its venue is gone). ✅ BO notes done.
+- **Key Focus:** Design lock lost its meeting. Don't let the EOD-Wed gate slip — chase Amber's sign-off async in the freed afternoon.
+
+---
+
+## Today's Three
+
+1. [ ] **Drive design lock ASYNC** — the 2pm internal sprint sync was the venue and it's cancelled. Get Amber's Figma sign-off over Slack/Teams today so the EOD-Wed gate doesn't slip. Use the **14:00–16:30 freed block**.
+2. [x] **BO Working Level notes** — ✅ done → [notes](../meeting-notes/2026-06-02-bo-working-level-competency-architecture.md). Surfaced the **consumer-vs-system-of-record SSOT fork** (now a P1, below). Also clarified OTEP-87: competency section *is* in scope; the open question is data (does each C@G opp carry competencies — depends on ingestion landing first).
+3. [ ] **Review Pow Hwee's Sprint 3 Proposed Backlog** ([Confluence](https://sgtechstack.atlassian.net/wiki/spaces/OTEP/pages/2302903856/Pathfinder+-+Sprint+3+Proposed+Backlog)) — parked since yesterday; check vs the **now-49-issue** sprint, then act/comment.
+
+*Why these three: design lock lost its meeting, so it needs active async chasing or it slips past Wed; BO notes are done and threw off a strategic fork to chase; Pow Hwee's backlog has been parked one day.*
+
+---
+
+## Schedule & Meeting Prep
+
+> ✅ Live from Google Calendar (re-pulled 2026-06-03, 09:19). 2pm sprint cancelled per your word (calendar invite still live).
+
+| Time | Meeting | Prep Status | Context |
+|------|---------|-------------|---------|
+| **now–11:00** | *(free — desk block)* | — | Pow Hwee review + chase Amber/Rama on design lock. BO notes ✅ done. |
+| ~~11:00–11:15~~ | OTEP Team 2 stand-up — **DONE** | ✅ | Ran → [notes](../meeting-notes/2026-06-03-daily-standup.md). Demo confirmed tomorrow (4 Jun). OTG import errors surfaced → became the logic task below. |
+| 11:30–14:00 | [Pathfinder] Team Lunch + LTA Officer registration | ✅ | Social/admin — no prep. ~2.5h out. |
+| ~~14:00–16:00~~ | ~~[Biweekly] Pathfinder Internal Sprint sync~~ — **CANCELLED (verbal)** | — | Freed block. Drive design lock async + Sprint 4 AC prep solo. ⚠️ Invite still on calendar — decline it so the team knows. |
+| 16:30–17:00 | Briefing for the move to SMRT | ✅ | Office-move logistics — no prep. |
+
+---
+
+## Tasks by Priority
+
+### P0 — Must Do Today
+- [ ] **Drive design lock async** (Amber sign-off on Figma over Slack/Teams) — the EOD-Wed gate; its meeting is gone, so chase it actively.
+- [ ] **Define OTG import label logic** — unblocks Leo + tomorrow's demo. Decide per unmatched label: map / add to ref list / bucket. Normalize casing dupes (`[Public Service for/For Good]`, `[Other]`/`[Others]`); rule for blank Agency; confirm `[SJR]` shouldn't import (S3 excludes SJRs). See [standup notes](../meeting-notes/2026-06-03-daily-standup.md).
+- [ ] **Confirm OTEP-87 / OTEP-319 status** — the BO notes show this *wasn't* covered yesterday as expected. 2-min check: resolved or still open?
+- [x] ~~BO Working Level notes~~ — ✅ done.
+
+### P1 — Important This Week (the 5 Leverage items)
+- [ ] **Feed Adrian the R1 resource ask** — shortest runway (his Michelle Chen conversation): 3 net-new R1 builds, 1 FE dev.
+- [ ] **Drive R1 design alignment with the designers** — move R1 from PM-solo to XFN with Amber (+ Michelle Chen).
+- [ ] **Force the ATS fork (C1)** — World A vs B decision doc.
+- [ ] **CSC SSO feasibility deep-dive** (Pow Hwee/Fabian) — before Sprint 5 (~2 Jul).
+- [ ] **Finish WOG Auth metrics → Adrian** — committed this week, grounded in Dec '26 OKR baselines.
+- [ ] **Share DoR update proposal** (Slack) — already drafted (~10 min). Grooming's off, but team still needs it.
+- [ ] **OTEP-305 owner + OTEP-289 go/no-go** — carry to today's standup.
+- [ ] **🆕 SSOT decision doc** (consumer vs system-of-record) — from BO notes; the fork that gates Compass positioning. Run `/decision-doc`, then raise with leadership.
+
+### P2 — If Time Allows
+- [ ] Update FormSG PRD (remove pre-fill from MVP) + OTEP-130 rescope in Jira — before next grooming.
+- [ ] Jobelle handover — share Phoebe's copy (she joins today, 3 Jun).
+- [ ] Full BAU block (Imelda CSC/ref data, Daryll DQ, Jira housekeeping) → [tasks-active.md Up Next](../../../PM-skills-ALL-1/00-hub/tasks-active.md).
+
+---
+
+## Heads Up
+
+- 🔴 **Design lock lost its venue** — the 2pm internal sprint sync was where it was going to lock, and it's cancelled. The EOD-Wed gate (weekly plan) slips unless you drive Amber's Figma sign-off async today. Day's biggest risk.
+- 🔴 **Demo tomorrow (4 Jun)** — runs on Thomas's localhost (API conflict unresolved), QA setup only started today. Tight. Name it as the local build, not the integrated path. Mid-sprint review Mon 8 Jun needs the integrated story solid.
+- ⚠️ **Cancelled invite still on your calendar** — the 2pm internal sprint shows `confirmed`. Decline/cancel it so the team isn't expecting it. (No prep needed either way.)
+- ⚠️ **Amber's Figma audit depended on Rama's reply** — confirm that landed; without it there's nothing to sign off. Check first thing.
+- 🆕 **BO notes threw off a strategic fork** — consumer vs system-of-record for Compass (SSOT). Bigger than today, but the leadership ask starts this week. Added as P1.
+- ⚠️ **BO ratification of creation-in-R1 still open** — you reversed the 2026-05-12 BO call; needs an explicit yes.
+- ⚠️ **Jobelle joins today** — handover materials (Phoebe's copy) not yet shared.
+- 🔑 **Live tokens** (Jira + Google) pasted in chat earlier — rotate when convenient.
+
+---
+
+*Updated: 2026-06-03 (post-standup refresh) · Live data: Google Calendar + Jira · Standup + OTG import errors processed · Next: `/decision-doc` for the SSOT fork*

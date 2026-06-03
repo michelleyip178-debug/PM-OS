@@ -66,11 +66,12 @@ Inspired by personal operating system patterns but tailored specifically for Pro
 6. `context-library/launches/` - Recently launched features (past 2 weeks)
 
 **External workspace** (`/Users/michelleyip/Documents/PM-skills-ALL-1/`):
-7. `00-hub/tasks-active.md` - Current active tasks
-8. `00-hub/sprint-status.md` - Sprint status and open blockers
-9. `03-stories/jira-sync/` - Jira tickets by sprint (check the most recent sprint folder)
-10. `04-ceremonies/` - Sprint checklists, ceremony prep, weekly stakeholder updates
-11. `06-skills-and-decisions/stakeholders/` - Extended stakeholder files
+7. **Live Jira scripts** (`03-stories/scripts/jira-sprint.sh` + `jira-sync.py`) — primary source for sprint state; run these for current data (see Step 2D)
+8. `00-hub/tasks-active.md` - Current active tasks
+9. `00-hub/sprint-status.md` - Sprint status and open blockers (cache; the scripts above are fresher)
+10. `03-stories/jira-sync/` - Jira tickets by sprint (refreshed by jira-sync.py)
+11. `04-ceremonies/` - Sprint checklists, ceremony prep, weekly stakeholder updates
+12. `06-skills-and-decisions/stakeholders/` - Extended stakeholder files
 
 **Integration Options (Multiple Paths):**
 
@@ -220,21 +221,29 @@ Cross-reference with `context-library/strategy/`:
 
 ---
 
-**D. Tasks & Action Items (Linear/Jira MCP or files):**
+**D. Tasks & Sprint State (live Jira scripts → cache → MCP):**
 
-If Linear/Jira MCP available:
-```
-Query: Get tasks assigned to user, status != Done
-Filter by priority/labels:
-- P0 or "urgent" or "blocker"
-- P1 or "important"
-- P2 or default
+**Primary path — run the live Jira scripts** (these read from the active sprint on Jira directly, so they're always current; prefer them over cached files):
+
+```bash
+# Active sprint snapshot: name, dates, goal, issues grouped by status
+bash /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh
+
+# Refresh per-issue files + write a .changes.md diff since last sync
+python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sync.py
 ```
 
-If MCP not available:
-- Read `/Users/michelleyip/Documents/PM-skills-ALL-1/00-hub/tasks-active.md` for current task list
-- Check `/Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/jira-sync/` - open the most recent sprint folder for ticket status
-- Scan `outputs/meeting-notes/` for unchecked action items
+- `jira-sprint.sh` gives the sprint header (name, dates, goal) and a status breakdown (To Do / In Progress / QA / Done counts) with assignees — use this for the **Sprint Pulse** and to flag WIP overload (one person with multiple In Progress) and late-sprint Backlog items.
+- `jira-sync.py` refreshes `03-stories/jira-sync/Sprint-*/` and writes `.changes.md`. Read `.changes.md` verbatim for **what moved since the last plan**.
+- Board defaults to OTEP-Pathfinder (12541). For OTEP-Core, prefix with `JIRA_BOARD_ID=<id>` (see [reference_jira](../../../projects/-Users-michelleyip-Documents-PM-OS/memory/reference_jira.md) for board IDs).
+- If a script fails (no `.env`, network, sandbox), note it and fall back to the cache below — don't block the plan.
+
+**Fallback — cached files** (use if scripts fail or you only need a quick read):
+- `/Users/michelleyip/Documents/PM-skills-ALL-1/00-hub/tasks-active.md` — current task list + this-week focus
+- `/Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/jira-sync/` — most recent sprint folder for ticket status
+- `outputs/meeting-notes/` — unchecked action items
+
+**MCP (optional):** if a Linear/Jira MCP is connected, query `assigned to user, status != Done` as an alternative to the scripts. The scripts are the default for this workspace.
 
 Categorize:
 - **P0 (Must do today):** Blockers, urgent, time-sensitive
@@ -298,12 +307,14 @@ When the PM runs `/daily-plan` without the `full` flag, generate a compact plan 
 1. **TL;DR** (3 lines max: meetings count, P0 count, key focus)
 2. **Today's Three** (or Two/Four based on meeting load)
 3. **Schedule with Meeting Context** (time, title, attendees, one-line context)
-4. **Heads Up** (flags and risks only)
+4. **Standup Lens** (sprint days only — 2-3 bullets on what to actively listen for in standup)
+5. **Heads Up** (flags and risks only)
+6. **Growth Nudge** (one line)
 
 This fits on one screen. No scrolling required.
 
 **One-screen cap rule (locked in 2026-06-02 — Michelle's preference):**
-- The **visible** plan (above any `<details>` appendix) is capped to these sections only: TL;DR, Today's Three, Schedule, Tasks (P0/P1/P2), Heads Up.
+- The **visible** plan (above any `<details>` appendix) is capped to these sections only: TL;DR, Today's Three, Schedule, Tasks (P0/P1/P2), Standup Lens (sprint days), Heads Up, Growth Nudge.
 - **Max one line per item.** No multi-line bullets in the visible plan.
 - **BAU / standing tasks do NOT go in the daily.** Link to the prioritised BAU block in `00-hub/tasks-active.md` (Up Next) with a one-line pointer naming only this week's P1s.
 - Anything else (strategic context, developments, radar, full Jira health check, alignment check) goes in a collapsed `<details>` appendix, never the visible plan.
@@ -335,6 +346,16 @@ If light meeting day (< 2 hours):
 - P0 task due today but no time blocked (flag in "Heads Up")
 - Meeting requires prep but no prep time available
 - Stakeholder needs decision but you're missing input
+
+**Standup Lens (sprint days only):**
+On a day with a standup, generate 2-3 bullets on what to actively listen for, derived from the live Jira pull (Step 2D) + open items + risks:
+- Engineers blocked on a PM decision or AC clarification (you own the unblock)
+- WIP overload (one person with multiple In Progress) or late-sprint Backlog items
+- An open item from `00-hub/risks.md` likely to surface as a blocker today
+Lead with PM-owned blockers — items where *Michelle* owns the next move come first.
+
+**Growth Nudge:**
+One sentence connecting today's work to one of Michelle's three growth areas: outcomes thinking / stakeholder influence / roadmapping and prioritisation. Keep it specific to today, not generic.
 
 ---
 
@@ -876,8 +897,8 @@ Total time: 2 minutes
 - Offer: "Want email context in future? Run `/connect-mcps connect to gmail`"
 
 **If Linear/Jira MCP not connected:**
-- Scan `outputs/meeting-notes/` for unchecked action items
-- Ask: "What tasks are on your plate today?"
+- No problem — this workspace doesn't need it. Run the live Jira scripts instead (Step 2D): `jira-sprint.sh` + `jira-sync.py`.
+- If the scripts also fail, read the `00-hub/tasks-active.md` cache and scan `outputs/meeting-notes/` for unchecked action items.
 
 **If Analytics MCP not connected:**
 - Note: "Metrics check needed for [Feature] - I don't have analytics access"

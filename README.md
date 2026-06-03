@@ -16,7 +16,7 @@ This operating system transforms Claude Code into your personal PM copilot:
 
 - **Pre-built context library** - Templates for company info, writing styles, stakeholder profiles
 - **Slash commands** - One-line prompts for common PM tasks (PRDs, meeting notes, Slack messages)
-- **Sub-agents** - Specialized reviewers (engineer, designer, exec, legal perspectives)
+- **Sub-agents** - Specialized reviewers (engineer, designer, exec, legal perspectives), plus the spawnable `sprint-trio` agent that analyzes a live sprint through PM + Tech Lead + Designer lenses
 - **Example PRDs** - Real-world templates demonstrating modern best practices
 - **Workflows** - End-to-end processes for user research, PRD creation, competitive intel
 
@@ -107,6 +107,8 @@ When you ask Claude to draft a PRD, it automatically:
 ### 5. Connect Your Tools (MCPs)
 
 Connect Model Context Protocol (MCP) servers for real-time data access from your tools.
+
+> **Connected (live):** Google Calendar and Jira (Atlassian). `/daily-plan` pulls real meetings; `/jira-sync` and the sprint workflows pull live ticket state. Jira works via the MCP *or* the REST API directly (basic auth) — if the MCP isn't loaded in a session, the live pull still works.
 
 **Common PM Tools to Connect:**
 - **Analytics**: Amplitude, Mixpanel, Posthog, Pendo, Heap
@@ -234,6 +236,16 @@ Please review [prd-file.md] from the perspective of an engineer, designer, and e
 /stale-check     # sweep plans + hub trackers for stale facts (EOD habit)
 ```
 Run `/jira-sync` first, then `/stale-check` — the first fixes the source, the second fixes everything that reads it. See `00-hub/sync-workflow.md` for the full daily/weekly rhythm.
+
+### Prep for sprint grooming / planning
+```
+Use the sprint-trio agent to review the active sprint.
+```
+Pulls live Jira, analyzes the sprint through PM + Tech Lead + Designer lenses, then synthesizes where the three agree (do without debate), conflict (your calls), and have blind spots — ending with grooming-ready actions (what to assign, decide, defer). Best before grooming, planning, or a mid-sprint review.
+
+## Behind the scenes
+
+- **Markdown formatting backstop.** A `PostToolUse` hook (`.claude/hooks/format-md-check.py`, in both PM-OS and PM-skills-ALL-1) auto-fixes blank-line separators on every `.md` write, so generated docs and trackers stay readable. Silent when files are clean.
 
 ## Pro Tips
 

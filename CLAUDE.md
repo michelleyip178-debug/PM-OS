@@ -330,6 +330,8 @@ When asked to review from multiple perspectives, use the sub-agents in `sub-agen
 - `skeptic.md` - Devil's advocate, challenge assumptions
 - `customer-voice.md` - Simulate user perspective
 
+**Spawnable agent:** `sprint-trio` (`.claude/agents/sprint-trio.md`) - sprint manager that pulls live Jira and analyzes the active sprint through the product trio (PM + Tech Lead + Designer), synthesizing where they agree/conflict; use before grooming, planning, or mid-sprint review.
+
 **Easter Egg:** `/ralph-wiggum` is a devil's advocate PRD reviewer that challenges assumptions with humor and sharp critique. Feed it any PRD or document and it will find the logical gaps, questionable assumptions, and missing data, all delivered with personality. It's also listed as a full skill above.
 
 When spawning sub-agents:
