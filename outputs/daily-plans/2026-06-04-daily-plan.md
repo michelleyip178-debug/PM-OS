@@ -4,107 +4,105 @@ day: Thursday
 week: 2026-W23
 sprint: Sprint 3, Day 3
 mcps_used: [Google Calendar (live, direct API), Jira (live)]
+updated: 2026-06-04 (afternoon refresh — post 9am meeting, demo + grooming prepped)
 ---
 
 # Daily Plan — Thursday, 4 June 2026 (Sprint 3, Day 3) — DEMO + S4 GROOMING
 
 ## TL;DR
 
-- **Meetings:** 4 (~3.75 hrs) — demo huddle 09:00, standup 11:00, **Sprint planning/grooming 14:00–16:00**, Retro+Demo 16:00–17:00.
-- **P0 Tasks:** 2 (heavy meeting day → Today's Two). Demo + S4 grooming both need prep this morning.
-- **Key Focus:** Two big sessions back-to-back this afternoon — walk into grooming with the Sprint 4 agenda, then demo cleanly.
+- **Where the day is:** 9am meeting done (3 decisions logged), demo + grooming both prepped. Afternoon = run grooming 14:00, demo 16:00.
+- **P0 left:** 2 — land the S4 grooming, demo cleanly. Both prep is done; now it's execution.
+- **Key Focus:** Walk into grooming and lock the Sprint 4 goal + the do-without-debate three; then demo the spine honestly.
 
 ---
 
-## Carrying over from yesterday (06-03)
+## Done this session (was P0/carry this morning)
 
-- **Design lock async** — Amber's Figma sign-off. Was the EOD-Wed gate; overdue if it didn't land. Chase before the 09:00 huddle.
-- **OTG import label logic** — standup blocker for Leo + clean demo data. Map/add/bucket per unmatched label.
-- **OTEP-305 owner + OTEP-289 go/no-go** — standup carry → raise at 11:00.
+- ✅ **9am meeting** — logged 3 decisions: UAT in Compass UAT env / QA env for AC verification; sprint closes when **BO** moves stories UAT→Done (eng moves sub-tasks); OTEP-348 sharpen flagged.
+- ✅ **Demo prepped** — [run sheet](../meeting-notes/2026-06-04-sprint2-demo-runsheet.md) with goal-vs-achieved scorecard + "spine proven, not goal met" framing.
+- ✅ **Grooming prepped** — [grooming brief](../analyses/grooming-brief-2026-06-04.md) (readiness scorecard, Pow Hwee Q&A, OTEP-348 sharpened ACs + test plan) + [S4 anticipated scope](../analyses/2026-06-04-sprint4-anticipated-scope.md).
+- ✅ **Jira-sync Pathfinder S4** — board reshaped: OTEP-71 dropped out; 283/284 in; 328/329/386 new. C@G/apply carry-over not on the board yet (S3-dependent).
 
 ---
 
-## Today's Two
+## Today's Two (this afternoon)
 
-*(Heavy meeting day — ~3.75 hrs booked. Two, done well.)*
+1. [ ] **Land the 14:00 grooming** — lock the Sprint 4 goal (still undecided — see Heads Up), confirm the 3 do-without-debate (apply-first OTEP-319, split OTEP-87, demote Stream B), assign dependency-gate owners. Bring the [grooming brief](../analyses/grooming-brief-2026-06-04.md).
+2. [ ] **Demo lands cleanly at 16:00** — working-level, eng demos own parts. Claim the spine as proven; name "in QA vs Done" once. [Run sheet](../meeting-notes/2026-06-04-sprint2-demo-runsheet.md).
 
-1. [ ] **Walk into 14:00 grooming with the Sprint 4 agenda** — the [S4 grooming agenda](../analyses/2026-06-03-sprint4-grooming-agenda.md) is ready. Land the 3 "do-without-debate" items (apply-first OTEP-319, split OTEP-87, demote Stream B) + the 3 decisions. This is the highest-leverage session today.
-2. [ ] **Demo lands cleanly at 16:00** — localhost build (API conflict open). Frame as the local build, not integrated. Prep at the 09:00 huddle.
-
-*Why these two: grooming sets Sprint 4's whole intake and the agenda's already built — your job is to land it; the demo is a stakeholder-influence moment that needs honest framing. Everything else flexes around these.*
+*Why these two: both prep is done — the rep now is in the room, not the doc. Grooming sets all of Sprint 4's intake; the demo is the stakeholder-influence moment.*
 
 ---
 
 ## Schedule & Meeting Prep
 
-> ✅ Live from Google Calendar (direct API pull, 2026-06-04).
-
 | Time | Meeting | Prep | Context |
 |------|---------|------|---------|
-| 09:00–09:30 | Compass PMs huddle on demo | ⚠️ | Align on demo framing + who shows what. Set the localhost expectation here. |
-| 11:00–11:15 | OTEP Team 2 stand-up | ✅ | Carry: OTEP-305 owner, OTEP-289 go/no-go, OTG logic status. Push apply-first (OTEP-319). |
-| 14:00–16:00 | **[Weekly] Sprint planning / Backlog grooming** | ✅ | **Bring the [S4 grooming agenda](../analyses/2026-06-03-sprint4-grooming-agenda.md).** Land do-without-debate + the 3 decisions + dependency-gate owners. |
-| 16:00–17:00 | [Bi-Weekly] OTEP Retro and Demo | ⚠️ | The demo. Two-tier format (working level) — each owner presents their own part. Localhost framing. |
+| ~~09:00~~ | ~~PMs demo huddle~~ | ✅ done | Framing aligned; run sheet built. |
+| 11:00–11:15 | OTEP Team 2 stand-up | ✅ | Push apply-first (OTEP-319 still Backlog/unassigned). Carry: OTEP-305 owner, OTEP-289 go/no-go. |
+| 14:00–16:00 | **[Weekly] Sprint planning / Backlog grooming** | ✅ | **Lock the S4 goal + do-without-debate three.** Fix OTEP-87 AC conflict in Jira *before* this. |
+| 16:00–17:00 | [Bi-Weekly] OTEP Retro and Demo | ✅ | Demo (spine proven) + retro (one improvement: Done=journey-to-BO not foundation-to-QA; one win: Thomas solo FE vs design lock). |
 
 ---
 
 ## Standup Lens
 
-- **OTEP-85 still unassigned + In Progress** (critical-path listing) — who owns it? PM call to make.
-- **OTEP-319 (apply) still Backlog/unassigned** — the trio's apply-first call: push to assign Thomas ahead of filters.
-- **Demo readiness** — listen for what's *not* demo-able yet; manage the localhost framing live.
+- **OTEP-319 (apply) still Backlog/unassigned** — push to assign Thomas ahead of filters *before* grooming, so apply-first is locked not debated. Highest-leverage PM move.
+- **OTEP-85 still In Progress, unassigned** (critical-path listing cards) — who owns it?
+- **BO-Done gate (new today):** confirm who the BO ticket-mover is per pipeline, or stories pile up "ready for BO" and the sprint can't close.
 
 ---
 
 ## Tasks by Priority
 
-### P0 — Must Do Today
-- [ ] S4 grooming prep — review the [agenda](../analyses/2026-06-03-sprint4-grooming-agenda.md) before 14:00; pre-assign OTEP-319 to Thomas so apply-first is real, not just proposed.
-- [ ] Demo readiness — confirm what's showable, set localhost framing at the 09:00 huddle.
-- [ ] Design lock sign-off (Amber) — if still open from yesterday; blocks UI work.
-- [ ] OTG import label logic — unblock Leo.
+### P0 — Before 14:00
+- [ ] **Fix OTEP-87 AC conflict in Jira** — remove FormSG, point C@G CTA to deep-link (OTEP-89). Pow Hwee flagged it twice; land it before he catches it a third time.
+- [ ] **Assign OTEP-319 to Thomas** — makes apply-first real, not proposed.
+- [ ] **Decide the Sprint 4 goal** — react to the drafted options (breadth-led vs honest-catch-up). Needed to open grooming with an outcome.
 
-### P1 — Important This Week (carried — the Leverage set)
-- [ ] **WOG Auth metrics → Adrian** — "this week" for 3+ days; sending closes the loop.
-- [ ] **Feed Adrian the R1 resource ask** — 3 net-new R1 builds, 1 FE dev.
-- [ ] **Drive R1 design alignment** with Amber (+ Michelle Chen).
+### P1 — Important This Week (carried)
+- [ ] **WOG Auth metrics → Adrian** — "this week" for 3+ days; close the loop.
+- [ ] **R1 resource ask → Adrian** — 3 net-new R1 builds, 1 FE dev.
 - [ ] **Force the ATS fork (C1)** — World A vs B decision doc.
-- [ ] **Share DoR update proposal** (Slack, ~10 min, already drafted).
-- [ ] **🆕 SSOT decision doc** (consumer vs system-of-record) — run `/decision-doc`.
+- [ ] **SSOT decision doc** (consumer vs system-of-record) — gates OTEP-87 competency block.
+- [ ] **Confirm Sprint 4 dates** — allocation says 16–27 Jun; live Jira Sprint 34618 = 14–28 Jun (sync flagged).
 
 ### P2 — If Time Allows
-- [ ] Jobelle handover — Phoebe's copy (she joined 3 Jun).
+- [ ] Fold the 5 new S4 board tickets (283/284/328/329/386) into the anticipated-scope doc as a net-new stream.
 - [ ] Full BAU block → [tasks-active.md Up Next](../../../PM-skills-ALL-1/00-hub/tasks-active.md).
 
 ---
 
 ## Heads Up
 
-- 🔴 **14:00→16:00→17:00 is back-to-back** — grooming straight into demo, no gap. Do grooming prep + demo prep this morning (use the 09:00 huddle + the gaps before 11:00 and after). You won't get prep time after lunch.
-- 🔴 **Demo at 16:00 on localhost** — API conflict (Thomas) still open. Frame as local build. Mon 8 Jun mid-sprint review needs the integrated story solid.
-- 🔴 **Cumulus Phase 3 confirmation was due 4 Jun (today)** — open-item #36. Did the confirmation to Rama happen? Overdue if not.
-- ⚠️ **Design lock** — if Amber's sign-off didn't land yesterday, engineers shouldn't start UI; it's blocking.
-- ⚠️ **OTEP-85 + OTEP-319 unassigned** on the live board — assign OTEP-319 *before* grooming so apply-first is locked, not debated.
-- 🔑 **Rotate the Jira token** — the one in chat is live but plaintext-exposed; regenerate + update `.env` and `.mcp.json`.
+- 🔴 **No Sprint 4 goal locked** — you're about to groom S4 without the one sentence. Decide it before 14:00, or grooming sizes a ticket list instead of an outcome (the Sprint 2 plumbing-vs-promise trap).
+- 🔴 **16:00→17:00 demo, localhost build** — API conflict (Thomas) may still be open. Claim the spine as proven; don't oversell as integrated. Mon 8 Jun mid-sprint needs the integrated story.
+- 🔴 **Cumulus Phase 3 confirmation was due today** (open-item #36) — did the confirmation to Rama happen?
+- ⚠️ **OTEP-71 / date drift in sprint-allocation.md** — jira-sync flagged; allocation still lists OTEP-71 in S4 (Jira moved it out) and dates are off by 2 days.
+- ⚠️ **WOG AD UAT may now be unblocked** — the new UAT-env decision could weaken the "no WOG AD UAT" reason auth was deferred to S5. Worth a check, not a reopen.
+- 🔑 **Rotate the Jira token** — exposed plaintext in chat; regenerate + update `.env` and `.mcp.json`.
 
 ---
 
 ## Growth Nudge
 
-Demo day is a stakeholder-influence rep: frame the localhost build honestly (what works, what's next) rather than overselling — managing expectations *is* the PM move here.
+Roadmapping rep today: the Sprint 4 goal call. You've framed carry-over as "anticipated" (right honesty) — but don't let that defer the goal decision. Pick the outcome, commit, then let the tickets flex under it.
 
 ---
 
 <details><summary>Appendix</summary>
 
-**Sprint Pulse (live 2026-06-04):** OTEP-Pathfinder Sprint 3 (2–14 Jun), 49 issues — 6 In Progress, 12 QA, 4 Done, 27 Backlog. No story changes since last sync.
+**Sprint Pulse (live 2026-06-04 PM):** OTEP-Pathfinder Sprint 3 (34617, 2–14 Jun), 49 issues — **4 Done, 6 In Progress, 12 QA, 27 Backlog.** Unchanged since this morning — no goal-spine movement (319 apply, 86 filter, 192 ingest all still Backlog).
 
-**Recently Completed (git, since 06-03):** Sprint 3 story/task files committed (91a2e53); sprint-status + sync-workflow + tasks-active updated; daily-plan live-Jira merge.
+**Sprint 4 board (live, Sprint 34618, future, 14–28 Jun, 7 issues):** OTEP-110, 304 (auth), 329 (Keycloak secret, Pow Hwee), 328 (OpenTelemetry), 283 (Ministry icons), 284 ("closing soon"), 386 (type tooltip). **None of the C@G/apply carry-over on the board yet** — lands at S3 close.
 
-**This week's Top 3 (W23):** (1) Sprint 3 launch + close WoW overdue, (2) Sprint 3 ceremonies — DoR update + tech-debt proposal, (3) Stakeholder + data foundations (Clarissa, PostHog, POCDEX).
+**Session artifacts created today:** demo run sheet · grooming brief (+ OTEP-348 sharpen) · S4 anticipated-scope doc · 3 decisions logged · S4 jira-sync.
+
+**This week's Top 3 (W23):** (1) Sprint 3 launch + close WoW overdue, (2) Sprint 3 ceremonies — DoR + tech-debt proposal, (3) Stakeholder + data foundations (Clarissa, PostHog, POCDEX).
 
 </details>
 
 ---
 
-*Generated 2026-06-04 · Live Jira + Google Calendar (direct API) both pulled · Heavy meeting day → Today's Two · Next: `/meeting-notes` after grooming + the demo*
+*Updated 2026-06-04 afternoon · Live Jira + Calendar pulled · Reflects post-9am-meeting state · Next: `/meeting-notes` after grooming + demo*

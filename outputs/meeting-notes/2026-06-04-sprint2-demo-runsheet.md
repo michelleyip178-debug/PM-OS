@@ -23,6 +23,23 @@ Lead with the working demo, name the QA status once, move on. Don't over-apologi
 
 ---
 
+## Goal vs. achieved (the honest scorecard)
+
+**Goal:** an officer can open OTEP, see every published OTG opportunity (newest first), and click into a detail page — proving the Listing → Detail journey works end-to-end.
+
+**Achieved:** the journey is **clickable**, but what reached *Done* was the foundation, not the journey. The journey screens landed in QA, and the cards aren't yet on real OTG data (OTEP-85 was In Progress at close). Plain version: **we hit the plumbing, not the promise** — the spine works as a build, but "Done" didn't cover the user-facing outcome the goal was written around.
+
+| Goal promise | Delivers via | Status at close |
+|---|---|---|
+| Foundation: data model, backend, pagination, design system | OTEP-193, 288, 267, 252, (+194 spike, 296) | ✅ **Done (6)** |
+| "See every opportunity on a listing page" | OTEP-170 layout · OTEP-85 cards on **real OTG data** | ⚠️ 170 QA · 85 **In Progress** |
+| "Click into a detail page" | OTEP-128 · 314 · 327 | ⚠️ all **QA** |
+| Empty / error states | OTEP-268 · 325 · 326 | ⚠️ all **QA** |
+
+**If asked "did we hit the goal?"** → "The journey works end-to-end as a clickable build — you saw it. What's still Done-pending is QA verification and the cards on live OTG data. So: spine proven, verification finishing in Sprint 3." Don't claim the goal as met; claim the spine as proven.
+
+---
+
 ## Running order (≈15 min demo)
 
 | # | What | Who demos | Done/QA | Framing line |
@@ -58,8 +75,9 @@ Lead with the working demo, name the QA status once, move on. Don't over-apologi
 
 Come with **one specific improvement** and **one win**. Not generic.
 
-**Improvement (pick one, specific):**
-- *"We closed the plumbing as Done but the user-facing journey landed in QA, not Done. The Sprint 2 goal was the journey — next time let's define 'Done' for a journey sprint as the clickable path, not the foundation, so our burndown matches the goal."* (This is honest, specific, and it's a real process insight — exactly the BA→PM move of naming the gap rather than smoothing it.)
+**Improvement (lead with this one — it's specific, honest, and already half-solved):**
+- *"Sprint 2's goal was the listing → detail journey, but what closed as Done was the foundation — the journey screens landed in QA, and the cards weren't on real OTG data yet (OTEP-85). We measured Done as ticket-completion of the plumbing, not the outcome the goal named. The good news: this morning's call — BO moves stories to Done from UAT — fixes it. None of those journey screens could have been called Done under that rule, because they never reached UAT. Let's make that the standard: for a journey sprint, Done = the clickable journey reaching the BO, not the foundation reaching QA, so the burndown matches the goal."*
+- Why this lands: it names the gap instead of smoothing it (the BA→PM move), and it ties the fix to a decision the team *already made today* — so it's not a complaint, it's reinforcing a good call.
 
 **Win (recognise the team):**
 - *"Thomas is the sole FE and the design system + listing screens still came together against a Wed design lock — that's a real lift on a single-threaded FE."* (Names a person, names the constraint.)

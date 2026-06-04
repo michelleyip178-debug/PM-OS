@@ -35,7 +35,7 @@ No dedicated S4 goal is set yet — S4 is a **catch-up sprint** to finish the S3
 | **OTEP-368** | Session-expiry redirect | ⚠️ subtask | ❌ none | — | ⚠️ | ⚠️ | ❌ no desc | ❌ |
 | **OTEP-369** | Custom login page | ⚠️ subtask | ❌ none | — | ⚠️ mock | ❌ on 350 | ❌ no desc, In Prog | ❌ |
 | **OTEP-370** | Provider logout redirect | ⚠️ subtask | ❌ none | — | ⚠️ | ⚠️ | ❌ no desc | ❌ |
-| **OTEP-348** | Ingestion scheduler/obs | ✅ (BE) | ✅ | ✅ | n/a | ⚠️ on 192 | ⚠️ cadence TBC | ⚠️ |
+| **OTEP-348** | Ingestion scheduler/obs | ✅ (BE) | ⚠️ TBC-gated | ⚠️ untestable | n/a | ⚠️ on 192 | ❌ PH: sharpen + how to test | ❌ sharpen first |
 | **OTEP-192** | Recurring ingestion job | ✅ (BE) | ✅ | ✅ | n/a | ✅ | ⚠️ cadence TBC; parse errors (Léo) | ⚠️ |
 | **OTEP-130** | Full FormSG apply (webhook) | ✅ | ⚠️ | ❌ heavy mechanism | ❌ confirmation UX | ❌ on 319 | ❌ no webhook contract | ❌ not ready |
 | **OTEP-374** | Expose source/agency fields (API) | n/a eng-task | ❌ none | — | n/a | — | — | ⚠️ size only |
@@ -117,9 +117,10 @@ Pre-empted so you're not caught off guard. He catches **(1) AC rule conflicts, (
 > *"'OTEP captures a click-to-CG event at the point of redirect' — that's describing the system, not the officer."*
 - **Your answer:** Already rewritten (see below). The observable AC is "the officer reaches the right Careers@Gov opportunity in a new tab"; the event-capture is an engineering note, not an AC.
 
-**OTEP-192 / 348 — the cadence and the parse failures:**
+**OTEP-192 / 348 — the cadence and the parse failures (he's asked to sharpen 348 + how to test):**
 > *"What's the ingestion cadence? And Léo flagged 72 of ~200 rows fail to parse — is that a data problem or a transform problem?"*
 - **Your answer:** Cadence is TBC by design — bring it to a decision this session (recommend daily, matching the OTG export). On parse: it's the OTEP-358 nil-date spike territory — flag it as the reason the spike needs to run before S4 ingestion is sized clean.
+- **For 348 specifically:** bring the sharpened ACs + test plan below (**[OTEP-348 — Sharpen with Pow Hwee](#otep-348--sharpen-with-pow-hwee-ingestion-scheduler--observability)**). The bad-row test uses Léo's real 72/200 failing dataset, which answers his data-vs-transform question directly.
 
 **OTEP-305 / 369 — login underspecced (his comment):**
 > *"Login is underspecified — what happens when WOG AD auth fails? And doesn't this depend on OTEP-350?"*
@@ -140,6 +141,36 @@ Pre-empted so you're not caught off guard. He catches **(1) AC rule conflicts, (
 
 **OTEP-87 — rule conflict (not mechanism, but same fix-first urgency):**
 - Two ACs define different apply behaviour for C@G: one says FormSG redirect, the scope says C@G deep-link. Resolve to deep-link-only for C@G before the session.
+
+---
+
+## OTEP-348 — Sharpen with Pow Hwee (ingestion scheduler & observability)
+
+> Pow Hwee commented that this needs sharpening **together, including how to test.** He's right — every AC is gated on a TBC, and you can't write a test for a TBC. Bring this draft as positions; let Léo/Pow Hwee confirm the three numbers (cadence, threshold, channel). *Paste his exact comment over this note once synced — the cached ticket file is stale and doesn't carry it yet.*
+
+**Why it's not groomable as written:** "cadence TBC," "threshold TBC," and "alerts" (undefined) make three of four ACs untestable. The fix is to turn each TBC into a proposed decision and pair every AC with an observable test.
+
+**Sharpened ACs (paste into Jira):**
+
+1. The ingestion job runs automatically on a **daily schedule at [time — propose 6am SGT]**, no manual trigger.
+2. Every run writes a **run-summary record**: timestamp, records read / inserted / updated / skipped / errored, and run status (success / partial / failed).
+3. A run with invalid rows **completes as partial** — bad rows skipped and listed, good rows still loaded, run does not abort.
+4. After **[N — propose 3] consecutive failed runs**, an alert fires to **[channel — propose Teams ops]** naming the job and the failure count.
+5. The run summary is **retrievable by an engineer after the run** (queryable table or log location, not console-only).
+
+**How to test (the part he asked for):**
+
+| AC | Test | Pass bar |
+|---|---|---|
+| 1 schedule | Deploy, let the scheduled window pass | A run row exists at the scheduled time, no manual trigger |
+| 2 summary | Run against the ~200-row OTG export | Counts reconcile against the file (read = total; inserted/updated/skipped add up) |
+| 3 bad-row resilience | Feed the **"00/01/1900" nil-date rows** (the 72/200 Léo flagged) | Run = partial, bad rows in skip list, good rows loaded, no abort |
+| 4 failure alert | Point the job at an unreachable source 3× | Alert fires after the 3rd run, names job + count |
+| 5 retrievable log | Query the summary location as an engineer post-run | Summary returned without redeploy or console access |
+
+**The strong move:** AC 3's test isn't hypothetical — it's the **real failing dataset** (Léo's 72-of-200 "00/01/1900" rows). Naming it ties OTEP-348 to the OTEP-358 nil-date spike: 358 fixes the parse, 348 proves the pipeline survives a bad row. Bring them as a pair.
+
+**Three calls to land in the session (engineering's to confirm):** daily cadence + time · 3-failure alert threshold · alert channel. They're TBCs because they're real decisions, not because they're vague — surface them as decisions-to-make, not gaps.
 
 ---
 
