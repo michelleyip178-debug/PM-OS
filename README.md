@@ -64,7 +64,9 @@ pm-operating-system/
 ├── CLAUDE.md                    # Master instructions for Claude
 │
 ├── .claude/                     # Claude Code configuration
-│   └── skills/                  # 43 registered slash commands
+│   ├── skills/                  # 43 registered PM skills
+│   ├── commands/                # 14 OTEP delivery commands (sprint/ceremony/daily rhythm)
+│   └── agents/                  # sprint-trio (spawnable sprint analysis)
 │
 ├── setup/                       # Installation and configuration
 ├── context-library/             # Your company/product context
@@ -95,8 +97,9 @@ Unlike ChatGPT or regular Claude:
 ### Three Layers of Context
 
 1. **Project Knowledge** (`context-library/`) - Company info, writing styles, stakeholder profiles that apply across all your work
-2. **Skills** (`.claude/skills/`) - 43 registered slash commands for recurring tasks
-3. **Sub-Agents** (`sub-agents/`) - Specialized reviewers for different perspectives
+2. **Skills** (`.claude/skills/`) - 43 registered PM skills for recurring tasks
+3. **Commands** (`.claude/commands/`) - 14 OTEP delivery commands for the sprint/ceremony/daily rhythm (e.g. `/groom`, `/retro`, `/week`). These operate on the linked PM-skills-ALL-1 workspace.
+4. **Sub-Agents** (`sub-agents/` + `.claude/agents/`) - Specialized reviewers, plus the spawnable `sprint-trio` agent
 
 When you ask Claude to draft a PRD, it automatically:
 - References your company's business info
@@ -108,7 +111,7 @@ When you ask Claude to draft a PRD, it automatically:
 
 Connect Model Context Protocol (MCP) servers for real-time data access from your tools.
 
-> **Connected (live):** Google Calendar and Jira (Atlassian). `/daily-plan` pulls real meetings; `/jira-sync` and the sprint workflows pull live ticket state. Jira works via the MCP *or* the REST API directly (basic auth) — if the MCP isn't loaded in a session, the live pull still works.
+> **Connected (live):** Google Calendar and Jira (Atlassian). `/daily-plan` pulls real meetings *and* live sprint state (via the `jira-sprint.sh` / `jira-sync.py` scripts in PM-skills-ALL-1); `/jira-sync` and the sprint workflows refresh the ticket cache. Jira works via the MCP *or* the REST API directly (basic auth) — if the MCP isn't loaded in a session, the live pull still works. Note: the scripts need a valid token in `03-stories/.env` and run with the sandbox disabled.
 
 **Common PM Tools to Connect:**
 - **Analytics**: Amplitude, Mixpanel, Posthog, Pendo, Heap

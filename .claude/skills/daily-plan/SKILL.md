@@ -236,7 +236,8 @@ python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-syn
 - `jira-sprint.sh` gives the sprint header (name, dates, goal) and a status breakdown (To Do / In Progress / QA / Done counts) with assignees — use this for the **Sprint Pulse** and to flag WIP overload (one person with multiple In Progress) and late-sprint Backlog items.
 - `jira-sync.py` refreshes `03-stories/jira-sync/Sprint-*/` and writes `.changes.md`. Read `.changes.md` verbatim for **what moved since the last plan**.
 - Board defaults to OTEP-Pathfinder (12541). For OTEP-Core, prefix with `JIRA_BOARD_ID=<id>` (see [reference_jira](../../../projects/-Users-michelleyip-Documents-PM-OS/memory/reference_jira.md) for board IDs).
-- If a script fails (no `.env`, network, sandbox), note it and fall back to the cache below — don't block the plan.
+- **Two environmental requirements** (verified 2026-06-03): (1) run with the **sandbox disabled** — `sgtechstack.atlassian.net` is allowlisted but the sandbox proxy still 502s the connection; (2) a **valid token** in `03-stories/.env` (`JIRA_API_TOKEN=`). A 401 means the token expired — rotate at id.atlassian.com/manage-profile/security/api-tokens.
+- If a script fails (network, sandbox, expired token), note it and fall back to the cache below — don't block the plan.
 
 **Fallback — cached files** (use if scripts fail or you only need a quick read):
 - `/Users/michelleyip/Documents/PM-skills-ALL-1/00-hub/tasks-active.md` — current task list + this-week focus
@@ -323,6 +324,35 @@ This fits on one screen. No scrolling required.
 
 **Full Mode:**
 When the PM runs `/daily-plan full` or asks for "more detail," include ALL sections from the template below: TL;DR, Strategic Context, Today's Three, Schedule & Meeting Prep, detailed Meeting Context, Tasks by Priority, Metrics to Watch, Email/Communication Highlights, Heads Up, and Strategic Alignment Check.
+
+**Compact-mode visible skeleton** (the default — one line per item, ≤ ~75 lines):
+
+```markdown
+## TL;DR
+- Meetings / P0 count / key focus
+
+## Today's Three
+1–3 items, each one line
+
+## Schedule & Meeting Prep
+table: time | meeting | prep | one-line context
+
+## Standup Lens
+*(sprint days only)*
+- [what to listen for — PM-owned blockers first]
+
+## Heads Up
+- [flags and risks only]
+
+## Growth Nudge
+[one line tying today to a growth area]
+
+<details><summary>Appendix</summary>
+Strategic context · git-log Recently Completed · full Sprint Stories table · Story Changes (.changes.md) · alignment check
+</details>
+```
+
+Appendix-only (never in the visible plan): **Recently Completed** from `git log --since="yesterday" --name-only` (concrete deliverables shipped in last 24–48h), the **full Sprint Stories** table, and **Story Changes Since Last Sync** (verbatim from `.changes.md`).
 
 ---
 

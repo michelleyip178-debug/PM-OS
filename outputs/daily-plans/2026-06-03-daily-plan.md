@@ -74,8 +74,8 @@ mcps_used: [Google Calendar (live), Jira (live)]
 - 🆕 **BO notes threw off a strategic fork** — consumer vs system-of-record for Compass (SSOT). Bigger than today, but the leadership ask starts this week. Added as P1.
 - ⚠️ **BO ratification of creation-in-R1 still open** — you reversed the 2026-05-12 BO call; needs an explicit yes.
 - ⚠️ **Jobelle joins today** — handover materials (Phoebe's copy) not yet shared.
-- 🔑 **Live tokens** (Jira + Google) pasted in chat earlier — rotate when convenient.
+- 🔑 **Rotate the Jira token again** — the new one pasted in chat today is live and working, but it's now in the transcript in plaintext. Regenerate at id.atlassian.com and update both `03-stories/.env` and `.mcp.json`.
 
 ---
 
-*Updated: 2026-06-03 (post-standup refresh) · Live data: Google Calendar + Jira · Standup + OTG import errors processed · Next: `/decision-doc` for the SSOT fork*
+*Updated: 2026-06-03 (afternoon refresh) · Live data: Google Calendar + Jira (live pull confirmed working — Sprint 3, 6 In Progress / 12 QA / 4 Done / 27 Backlog) · `/daily-plan` now pulls live Jira via the OTEP scripts (merged in the old `/daily` today) · Next: `/decision-doc` for the SSOT fork*
