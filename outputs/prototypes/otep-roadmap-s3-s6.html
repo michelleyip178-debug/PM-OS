@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerCompass — Sprint Roadmap S3→S6</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#1a2129; --ink:#e8edf2; --muted:#8a97a6;
+    --line:#2a333d; --s3:#3b82f6; --s4:#10b981; --s5:#f59e0b; --s6:#a855f7;
+    --gate:#ef4444; --chipbg:#222c36;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);padding:32px;line-height:1.45}
+  .wrap{max-width:1240px;margin:0 auto}
+  header{margin-bottom:24px}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px}
+  .legend{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .col .top{padding:14px 16px;border-top:4px solid}
+  .col.s3 .top{border-color:var(--s3)} .col.s4 .top{border-color:var(--s4)}
+  .col.s5 .top{border-color:var(--s5)} .col.s6 .top{border-color:var(--s6)}
+  .sprint{font-size:18px;font-weight:700}
+  .dates{font-size:11px;color:var(--muted);margin-top:2px}
+  .state{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:8px;display:inline-block;padding:2px 8px;border-radius:20px}
+  .state.active{background:rgba(59,130,246,.18);color:#7eb3ff}
+  .state.next{background:rgba(16,185,129,.16);color:#5fe0b0}
+  .state.future{background:rgba(255,255,255,.06);color:var(--muted)}
+
+  .goal{padding:12px 16px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line);font-size:12.5px}
+  .goal b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px}
+  .body{padding:14px 16px;flex:1}
+  .stream{margin-bottom:12px}
+  .stream h4{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:6px}
+  .chip{display:inline-block;background:var(--chipbg);border:1px solid var(--line);border-radius:7px;padding:3px 8px;font-size:11.5px;margin:0 5px 5px 0}
+  .chip.cut{text-decoration:line-through;opacity:.45}
+  .chip.r1{border-color:#6b4d8a;color:#c9a6e8}
+
+  .gates{margin-top:8px;border-top:1px dashed var(--line);padding-top:10px}
+  .gate{display:flex;align-items:flex-start;gap:7px;font-size:11.5px;margin-bottom:6px;color:#f3c5c5}
+  .gate .g{color:var(--gate);font-weight:700;flex-shrink:0}
+
+  .note{font-size:11px;color:var(--muted);font-style:italic;padding:10px 16px;border-top:1px solid var(--line)}
+  .narrative{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0 4px}
+  .nstep{text-align:center;font-size:12px;color:var(--muted);position:relative}
+  .nstep b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .nstep:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:0;color:var(--line);font-size:16px}
+  footer{margin-top:22px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+  .amend{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:8px 12px;font-size:11.5px;color:#f5d99a;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>CareerCompass — Sprint Roadmap S3 → S6</h1>
+    <div class="sub">Plan of record: Pow Hwee's "Planning draft for sprint 3 and after" (adopted 2026-06-04) · Updated post-grooming 4 Jun · Live Jira 4 Jun · MVP Go-Live 16 Oct</div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--s3)"></i>S3 active</span>
+      <span><i class="dot" style="background:var(--s4)"></i>S4 next</span>
+      <span><i class="dot" style="background:var(--s5)"></i>S5</span>
+      <span><i class="dot" style="background:var(--s6)"></i>S6</span>
+      <span><i class="dot" style="background:var(--gate)"></i>External gate (Michelle → owner)</span>
+    </div>
+  </header>
+
+  <div class="narrative">
+    <div class="nstep"><b>Prove the loop</b>find + apply, OTG, live data</div>
+    <div class="nstep"><b>Widen the sources</b>add Careers@Gov breadth</div>
+    <div class="nstep"><b>Make it real</b>WOG AD login + C@G detail</div>
+    <div class="nstep"><b>Production-ready</b>CSC SSO + admin + polish</div>
+  </div>
+
+  <div class="grid">
+    <!-- S3 -->
+    <div class="col s3">
+      <div class="top">
+        <div class="sprint">Sprint 3</div>
+        <div class="dates">2 – 14 Jun · 49 issues</div>
+        <div class="state active">Active · Day 3</div>
+      </div>
+      <div class="goal"><b>Goal</b>Find opportunities via filters + initiate an application to any active OTG opportunity (except SJRs), on live imported data.</div>
+      <div class="body">
+        <div class="stream"><h4>Discovery + Apply (the spine)</h4>
+          <span class="chip">86 filter</span><span class="chip">317 clear</span>
+          <span class="chip">87 C@G detail</span><span class="chip">319 apply</span></div>
+        <div class="stream"><h4>Data + POCDEX</h4>
+          <span class="chip">192 ingest</span><span class="chip">348 scheduler</span>
+          <span class="chip">352 POCDEX</span></div>
+      </div>
+      <div class="note">⚠️ Spine (319/192/86/87) all Backlog/unassigned at Day 3 — most of it carries into S4. <b>OTG data risk:</b> unrecognised type prefixes ("others", "public service for good") + 72/200 parse failures — left out pending DevOps fix (grooming 4 Jun).</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="col s4">
+      <div class="top">
+        <div class="sprint">Sprint 4</div>
+        <div class="dates">14 – 28 Jun</div>
+        <div class="state next">Next · catch-up</div>
+      </div>
+      <div class="goal"><b>Goal (catch-up)</b>OTG discovery-to-apply verified Done + Careers@Gov appears in the listing with a working apply path.</div>
+      <div class="body">
+        <div class="stream"><h4>Careers@Gov (the new capability)</h4>
+          <span class="chip">88 listing</span><span class="chip">89 deep-link</span>
+          <span class="chip">87 detail (core)</span><span class="chip">374–379 API</span>
+          <span class="chip cut">87 competency</span></div>
+        <div class="stream"><h4>Carry-over spine + detail polish</h4>
+          <span class="chip">319 apply</span><span class="chip">283 ministry icons</span>
+          <span class="chip">284 closing-soon</span><span class="chip">348 ingest</span></div>
+        <div class="stream"><h4>Auth — best case only</h4>
+          <span class="chip">328 OTel</span><span class="chip">329 KC secret</span>
+          <span class="chip cut">127 ringfence</span><span class="chip cut">130 webhook</span>
+          <span class="chip r1">native apply → R1</span></div>
+      </div>
+      <div class="note">+1 full-stack dev (~1.5 FE). 70/30 FE split. Pull 127/130 (un-contracted). Auth not committed.</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="col s5">
+      <div class="top">
+        <div class="sprint">Sprint 5</div>
+        <div class="dates">28 Jun – 12 Jul</div>
+        <div class="state future">Gate-dependent</div>
+      </div>
+      <div class="goal"><b>Goal (draft)</b>Officer logs in with real WOG AD credentials + views full C@G opportunity details before applying — with CSC SSO scoped and started.</div>
+      <div class="body">
+        <div class="stream"><h4>Auth — realistic landing</h4>
+          <span class="chip">71 login</span><span class="chip">110 login fail</span>
+          <span class="chip">304 session</span><span class="chip">305 logout</span>
+          <span class="chip">127 ringfence</span></div>
+        <div class="stream"><h4>C@G detail + confirmation</h4>
+          <span class="chip">89 C@G summary</span><span class="chip">US-10 confirmation</span></div>
+        <div class="stream"><h4>Back-end stitching (grooming 4 Jun)</h4>
+          <span class="chip">WOG AD domain linkage</span><span class="chip">Productionalise profile API</span>
+          <span class="chip">OTG upload UI (ops) → S5/6</span></div>
+        <div class="gates">
+          <div class="gate"><span class="g">●</span>WOG AD onboarding — Fabian (#26) · 2+ wk lead</div>
+          <div class="gate"><span class="g">●</span>POCDEX planning — Daryll (#31)</div>
+          <div class="gate"><span class="g">●</span>Competency SSOT — Imelda (#18)</div>
+        </div>
+      </div>
+      <div class="note">De-scope if WOG AD slips → "C@G detail + CSC SSO scoped"; auth carries to S6. S5 = mostly back-end + WOG AD (grooming 4 Jun).</div>
+    </div>
+
+    <!-- S6 -->
+    <div class="col s6">
+      <div class="top">
+        <div class="sprint">Sprint 6</div>
+        <div class="dates">12 – 26 Jul</div>
+        <div class="state future">Future</div>
+      </div>
+      <div class="goal"><b>Goal (outline)</b>CSC SSO complete, Careers@Gov deep-links live, and agency-admin foundations in place.</div>
+      <div class="body">
+        <div class="stream"><h4>CSC SSO</h4>
+          <span class="chip">CSC SSO integration (2/2)</span></div>
+        <div class="stream"><h4>C@G + admin</h4>
+          <span class="chip">133 C@G / EDM deep-link</span>
+          <span class="chip">WOG-02 agency admin</span><span class="chip">WOG-07 RBAC</span></div>
+        <div class="stream"><h4>Stabilise</h4>
+          <span class="chip">Bug fixes + polish (S2–5)</span></div>
+        <div class="gates">
+          <div class="gate"><span class="g">●</span>CSC SSO ownership + reqs (#30) · 6-wk chain</div>
+        </div>
+      </div>
+      <div class="note">Lands ahead of MVP UAT (10 Aug) + VAPT (early Aug). Feature freeze end-S8.</div>
+    </div>
+  </div>
+
+  <div class="amend">⚑ To R1 (decided 4 Jun): <b>native apply</b> (not an S4 spike — MVP apply stays the FormSG redirect, OTEP-319) <b>and the interim apply form</b> Xian Zhang raised for OTG-only agencies. Both land in R1's end-to-end opportunity/apply scope, gated on the ATS discussion (Adrian, June).</div>
+
+  <footer>
+    <b>Post-grooming (4 Jun):</b> the OTG/ingestion + S5 direction was groomed; the S4 C@G + apply backlog (319/86/87/88/89/348) still needs a focused Pathfinder grooming before Sprint Planning (Thu wk 2). The 4 external gates are <b>Michelle → someone</b> sessions and gate S5/S6 directly — book this week (WOG AD has a 2+ wk lead). Source: live Jira + adopted Confluence plan + grooming 4 Jun. Goals proposed/draft.
+  </footer>
+</div>
+</body>
+</html>

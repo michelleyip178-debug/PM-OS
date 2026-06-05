@@ -57,19 +57,24 @@ updated: 2026-06-04 (afternoon refresh — post 9am meeting, demo + grooming pre
 ## Tasks by Priority
 
 ### P0 — Before 14:00
+- [x] **Sprint 4 goal locked** — breadth-led: officer sees OTG + C@G in one listing, right apply path for each (FormSG / deep-link). In [sprint-status.md](../../../PM-skills-ALL-1/00-hub/sprint-status.md). *Fallback ready if 319 carries.*
 - [ ] **Fix OTEP-87 AC conflict in Jira** — remove FormSG, point C@G CTA to deep-link (OTEP-89). Pow Hwee flagged it twice; land it before he catches it a third time.
 - [ ] **Assign OTEP-319 to Thomas** — makes apply-first real, not proposed.
-- [ ] **Decide the Sprint 4 goal** — react to the drafted options (breadth-led vs honest-catch-up). Needed to open grooming with an outcome.
+- [ ] **Confirm 319 trend** — landing Done in S3 (→ breadth-led goal holds) or carrying as real work (→ switch to fallback catch-up goal).
 
-### P1 — Important This Week (carried)
+### P1 — S5 gates (book this week — lead times; full block in [tasks-active.md](../../../PM-skills-ALL-1/00-hub/tasks-active.md))
+- [ ] **WOG AD session → Fabian** (#26) — gates ALL S5 auth; 2+ wk lead, zero movement. Book now.
+- [ ] **POCDEX session → Daryll** (#31) — gates S5 ringfencing; no date yet.
+- [ ] **CSC SSO requirements + owner** (#30) — S5 start per adopted plan; 6-wk chain.
+- [ ] **Competency SSOT → Imelda** (#18) — gates full OTEP-87 / C@G competency block.
+
+### P1 — Other (carried)
 - [ ] **WOG Auth metrics → Adrian** — "this week" for 3+ days; close the loop.
 - [ ] **R1 resource ask → Adrian** — 3 net-new R1 builds, 1 FE dev.
 - [ ] **Force the ATS fork (C1)** — World A vs B decision doc.
-- [ ] **SSOT decision doc** (consumer vs system-of-record) — gates OTEP-87 competency block.
-- [ ] **Confirm Sprint 4 dates** — allocation says 16–27 Jun; live Jira Sprint 34618 = 14–28 Jun (sync flagged).
 
 ### P2 — If Time Allows
-- [ ] Fold the 5 new S4 board tickets (283/284/328/329/386) into the anticipated-scope doc as a net-new stream.
+- [ ] Send the plan-adoption note to Pow Hwee (in [reconciliation doc](../analyses/2026-06-04-adopt-powhwee-plan-reconciliation.md)) — tells him native apply→R1, asks him to refresh his page.
 - [ ] Full BAU block → [tasks-active.md Up Next](../../../PM-skills-ALL-1/00-hub/tasks-active.md).
 
 ---
@@ -79,7 +84,7 @@ updated: 2026-06-04 (afternoon refresh — post 9am meeting, demo + grooming pre
 - 🔴 **No Sprint 4 goal locked** — you're about to groom S4 without the one sentence. Decide it before 14:00, or grooming sizes a ticket list instead of an outcome (the Sprint 2 plumbing-vs-promise trap).
 - 🔴 **16:00→17:00 demo, localhost build** — API conflict (Thomas) may still be open. Claim the spine as proven; don't oversell as integrated. Mon 8 Jun mid-sprint needs the integrated story.
 - 🔴 **Cumulus Phase 3 confirmation was due today** (open-item #36) — did the confirmation to Rama happen?
-- ⚠️ **OTEP-71 / date drift in sprint-allocation.md** — jira-sync flagged; allocation still lists OTEP-71 in S4 (Jira moved it out) and dates are off by 2 days.
+- 🟡 **OTEP-71 churning on the board** — flipped sprint 3× today, now has *no sprint* (live). Someone (likely Pow Hwee) is restructuring per the adopted plan. Don't re-add; confirm auth S4-vs-S5 in the room. *(date drift now fixed in allocation.)*
 - ⚠️ **WOG AD UAT may now be unblocked** — the new UAT-env decision could weaken the "no WOG AD UAT" reason auth was deferred to S5. Worth a check, not a reopen.
 - 🔑 **Rotate the Jira token** — exposed plaintext in chat; regenerate + update `.env` and `.mcp.json`.
 
@@ -95,9 +100,11 @@ Roadmapping rep today: the Sprint 4 goal call. You've framed carry-over as "anti
 
 **Sprint Pulse (live 2026-06-04 PM):** OTEP-Pathfinder Sprint 3 (34617, 2–14 Jun), 49 issues — **4 Done, 6 In Progress, 12 QA, 27 Backlog.** Unchanged since this morning — no goal-spine movement (319 apply, 86 filter, 192 ingest all still Backlog).
 
-**Sprint 4 board (live, Sprint 34618, future, 14–28 Jun, 7 issues):** OTEP-110, 304 (auth), 329 (Keycloak secret, Pow Hwee), 328 (OpenTelemetry), 283 (Ministry icons), 284 ("closing soon"), 386 (type tooltip). **None of the C@G/apply carry-over on the board yet** — lands at S3 close.
+**Sprint 4 board (live, Sprint 34618, 14–28 Jun, 9 issues — churning):** OTEP-110, 304 (auth), 329 (Keycloak secret, Pow Hwee), 328 (OpenTelemetry), 127 (ringfencing), 130 (full FormSG webhook), 283 (Ministry icons), 284 ("closing soon"), 386 (type tooltip). **OTEP-71 off again (no sprint). 127 + 130 added — both un-contracted, call in-or-out at grooming.** None of the C@G/apply spine on the board yet — lands at S3 close.
 
-**Session artifacts created today:** demo run sheet · grooming brief (+ OTEP-348 sharpen) · S4 anticipated-scope doc · 3 decisions logged · S4 jira-sync.
+**Plan of record (adopted 2026-06-04):** [Pow Hwee's Confluence plan](https://sgtechstack.atlassian.net/wiki/spaces/OTEP/pages/2293796526/Planning+draft+for+sprint+3+and+after) is the S2–S6 source of truth; native apply→R1. [Reconciliation](../analyses/2026-06-04-adopt-powhwee-plan-reconciliation.md).
+
+**Session artifacts today:** demo run sheet · grooming brief (+ OTEP-348 sharpen) · S4 anticipated-scope · plan-adoption reconciliation · 4 decisions logged · S4 jira-sync.
 
 **This week's Top 3 (W23):** (1) Sprint 3 launch + close WoW overdue, (2) Sprint 3 ceremonies — DoR + tech-debt proposal, (3) Stakeholder + data foundations (Clarissa, PostHog, POCDEX).
 
