@@ -1,0 +1,154 @@
+---
+date: 2026-06-05
+day: Friday
+week: 2026-W23
+sprint: Sprint 3, Day 4
+mcps_used: [Jira (live — jira-sprint.sh + jira-sync.py), Google Calendar (live API)]
+---
+
+# Daily Plan — Friday, 5 June 2026 (Sprint 3, Day 4)
+
+## TL;DR
+
+- **Meetings:** 6 today — OKR/Roadmap sharing (9am), Squad Sync (10am), CareerCompass OKR Brief w/ Adrian (10:30), Standup (11am), Design Review w/ BO (2pm), Sprint 3 Retro (4pm)
+- **P0 Count:** 3 — S4 grooming booking, WOG AD (Fabian), POCDEX (Daryll)
+- **Key Focus:** Book the S4 C@G/apply grooming + unblock the 3 S5 gate sessions — all 4 have a lead-time cliff. Today is the last easy day to book them before next week fills.
+
+---
+
+## Today's Three
+
+1. [ ] **Book the S4 C@G/apply grooming** — skipped Thu; Sprint Planning is Thu 11 Jun. If not booked today, it's a crisis Sunday night.
+2. [ ] **WOG Auth metrics → Adrian** — "this week" for 4 days. Send whatever you have; a draft closes the loop better than silence.
+3. [ ] **Book WOG AD session → Fabian** (#26) — 2+ wk lead time; gates all of S5 auth. Zero movement as of yesterday.
+
+
+
+---
+
+## Schedule & Meeting Prep
+
+| Time | Meeting | Prep | Context |
+|------|---------|------|---------|
+| 9:00–10:00 | CareerCompass OKR and Roadmap sharing (GK) | ⚠️ Needs prep | GK is CIO + SteerCo. Notes → consolidated into 10:30 meeting notes. |
+| 10:00–10:30 | OTEP Squad Sync | ✅ | Dev page discussion. Notes → subsumed into 2pm Design Review with BO. |
+| 10:30–11:15 | Brief on CareerCompass OKR and Roadmap R1–R3 (Mark) | ⚠️ Needs prep | Mark is SteerCo + Jacky/Xian Zhang's boss. Consolidated notes file covers both 9am + 10:30 sessions. |
+| 11:15–11:30 | OTEP Team 2 Standup | ✅ | QA tail (Rathika gated on Thomas's apply-URL fix). Ask: is it merged? |
+| 14:00–15:00 | [Weekly] Design Review with BO | ⚠️ Needs prep | First design review post-demo. Likely: demo findings + S4 design priorities. Bring: secondment-flag UX, C@G badge differentiation. |
+| 16:00–16:30 | Sprint 3 Weekly Retro | ✅ | Signal-Sense-Shift. One win: spine proven on real data. One improvement: Done = journey-to-BO, not foundation-to-QA. |
+
+**Free blocks:** 11:30–14:00 (2h 30min — best window for P0 bookings), 15:00–16:00 (1h)
+
+---
+
+## Standup Lens
+
+- **Rathika closing QA today** (gated on Thomas) — ask Thomas: is apply-URL crash fix in? Rathika can't close until it is.
+- **OTEP-85 still In Progress, unassigned** — 4 days into Sprint 3, listing cards w/ real data not moving. Who owns it?
+- **OTEP-319 (apply) still Backlog** — this is the floor the S4 breadth-led goal sits on. If it's not in progress, the S4 goal needs the fallback framing.
+
+---
+
+## Tasks by Priority
+
+### P0 — Must do before Thu 11 Jun (Sprint Planning gate)
+
+- [ ] **Confirm C@G payload with Pow Hwee** — source field, detail fields, deep-link URL, ingestion status. Slack drafted. Blocks all of OTEP-87/88/89 estimation.
+- [ ] **Book S4 C@G/apply grooming** — prep is done; need a slot before Thu 11 Jun. Invite: Pow Hwee + Thomas + Rathika.
+- [ ] **Book WOG AD session → Fabian** (#26) — 2+ wk lead time; gates S5 auth.
+- [ ] **Book POCDEX session → Daryll** (#31) — CP item #2 due 13 Jun.
+- [ ] **Assign owners for OTEP-374, 377, 378, 379** — all unowned, all C@G critical path. Thomas stalls week 1 without these.
+- [ ] **Rewrite OTEP-88 AC** — Pow Hwee flagged twice (May 28 + Jun 2), still unactioned.
+- [ ] **Confirm OTEP-317 scoped to type-filter-only** — lock in AC so it doesn't look blocked on OTEP-318.
+
+### P1 — Fix before QA closes (tickets in QA now)
+
+- [ ] **Split OTEP-128 error AC → 500 vs 404** — Pow Hwee flagged in May; Rathika has no test case for 500 path.
+- [ ] **Fix OTEP-326 missing spec reference** — paste LifeSG error page reference; QA testing against `<MISSING_FIGMA_LINK>`.
+- [ ] **Add filter-zero-results empty state to OTEP-268/325** — distinct copy from global empty, not currently covered.
+- [ ] **Add SGT timezone AC to OTEP-85** — BE closing-date comparison must run in Asia/Singapore. Story still in progress.
+
+### P1 — Design alignment (Amber)
+
+- [ ] **Clarify "incomplete profile" listing state with Amber** — competency match is R1, this state doesn't exist in MVP.
+- [ ] **Confirm OTEP-390 eligible indicator spec** — AC2 is loose; Amber to propose visual treatment.
+- [ ] **Close OTEP-133 in Jira** — absorbed into OTEP-390 today.
+
+### P2 — Before S5 planning
+
+- [ ] **OTEP-318 category filter go/no-go** — depends on OTEP-289 spike output; set a deadline if spike hasn't closed.
+- [ ] **Resolve FormSG pre-fill (open item #14)** — blocks OTEP-130 scope clarity for S5.
+- [ ] **Confirm secondment classification with BO** — distinct type or sub-type of SJR? Affects OTEP-86 filter scope.
+- [ ] **Add missing-deep-link-URL AC to OTEP-89** — mirror OTEP-319 missing-`formsg_url` pattern.
+
+### Monday 8 Jun — prep for Amber
+
+- [ ] **Churn out answers to listing + detail page edge cases and error states** — full state map (OTG + C@G): which states exist in MVP, which are R1, which won't happen. Use today's product trio verdict as the base. Bring to Amber discussion ready.
+
+### P2 — Before July SteerCo (strategic deliverables)
+
+- [ ] **Draft OTG → CareerCompass transition plan** — Mark's #1 ask; informal target next week. Joint ITC + WD. Start with trigger conditions + dual-system cost framing.
+- [ ] **Prepare North Star brief for SteerCo** — two options (Application vs Completion) with ownership implications of each. GK needs this to make the call in July.
+- [ ] **Re-evaluate gap analysis with Adrian** — Mark flagged directly; needs timeline + trade-off options, not just "deprioritised." Due before July SteerCo.
+- [ ] **Share roadmap with CDG team** — Adrian / Michelle, due this week.
+- [ ] **Prepare consolidated SteerCo view** — joint ITC + WD + Business; due before July SteerCo.
+
+### Done today ✅
+
+- [x] OTEP-87 AC rewritten + synced to Jira
+- [x] OTEP-127 redrafted + synced to Jira (Sprint 5)
+- [x] OTEP-390 created (ringfenced detail page states, Sprint 5)
+- [x] OTEP-133 marked absorbed → OTEP-390
+- [x] PRD updated: OTEP-91 (search), OTEP-284 (closing soon), OTEP-132 (R1), SJR (R1)
+- [x] Jira field syncs: OTEP-192, OTEP-380, OTEP-368, OTEP-305, OTEP-363
+- [x] S4 grooming analysis saved → outputs/analyses/2026-06-05-sprint-4-grooming.md
+- [x] R1 scope brief saved → outputs/decisions/r1-scope-brief-2026-06-05.md
+- [x] C@G payload Slack message drafted for Pow Hwee
+- [x] Meeting notes: OKR + Roadmap Review (GK + Mark) → outputs/meeting-notes/2026-06-05-okr-roadmap-gk-mark.md
+- ~~**WOG Auth metrics → Adrian**~~ — dropped, not required.
+
+---
+
+## Heads Up
+
+- 🔴 **S4 C@G/apply stories unsized** — 4 grooming stories (OTEP-86, 87, 88, 89, 319, 348) never ran in grooming. Sprint Planning Thu 11 Jun. If you don't book the ad-hoc grooming today, it's a crunch Sunday or Monday.
+- 🔴 **QA tail gated on Thomas** — Rathika closes today only if Thomas's apply-URL fix is merged. Worth a check at standup; don't assume it's happening.
+- 🟡 **S5 gate sessions all unbooked** — all 4 (Fabian #26, Daryll #31, Imelda #18, CSC SSO #30) need booking this week. Lead times are 2+ weeks. Treat this like a mini-sprint of calendar tetris.
+- 🟡 **Open-items #36–39 need source verification** — 4 flagged items (Cumulus Phase 3, POCDEX loop, SWDA merger, SIT/UAT timeline) added from email radar and marked "verify source." Don't act on them until confirmed real.
+- ⚠️ **W23 closes today** — last chance to run `/weekly-review` before week goes stale.
+
+---
+
+## Growth Nudge
+
+Stakeholder influence rep: every booking you make today is a forcing function on someone else's calendar. The session you *don't* book this week is the dependency that causes a sprint-miss in July.
+
+---
+
+<details><summary>Appendix</summary>
+
+**Sprint Pulse (live 2026-06-05):** OTEP-Pathfinder Sprint 3 (2–14 Jun) — **4 Done, 7 In Progress, 12 QA, 26 Backlog.** Unchanged since yesterday. QA tail is the story today — Rathika gated on Thomas.
+
+**Changes since last sync (.changes.md):** OTEP-128 got a new comment from Rathika Ramalingam (2026-06-04) — full test-case suite posted for the detail page (8 scenarios). This is positive: QA is ready and specific, not vague. Review if you own AC sign-off.
+
+**Full Sprint Stories table:** [sprint-status.md](../../../PM-skills-ALL-1/00-hub/sprint-status.md)
+
+**Carry-over from Thu 4 Jun (unresolved P0s):**
+- OTEP-87 AC conflict (FormSG → deep-link) — not done
+- Book S4 grooming — not done
+- Book WOG AD session (Fabian) — not done
+- WOG Auth metrics → Adrian — not done
+- Confirm OTG prefix defaulting → DevOps/DT — not done
+
+**W23 weekly priorities check:**
+- Priority 1 (Sprint 3 launch + WoW overdue close) — Sprint 3 running, but 4 carries from P0 list
+- Priority 2 (Sprint 3 ceremonies — DoR + tech debt) — grooming done (with gap), demo done
+- Priority 3 (Stakeholder + data foundations) — Clarissa ✅; PostHog + POCDEX sessions not yet booked
+
+**Alignment check:** Today's Three maps directly to W23 priorities and S4/S5 gate sequence. No conflicts.
+
+</details>
+
+---
+
+*Generated 2026-06-05 · Live Jira pulled (jira-sprint.sh + jira-sync.py) · Google Calendar synced via API (5 events) · Next: `/weekly-review` end of day · `/retro` at 16:00*

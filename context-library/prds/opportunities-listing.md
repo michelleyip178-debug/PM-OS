@@ -58,16 +58,17 @@ Host agencies face the reverse: no operational visibility into applicants, manua
 | OTEP-295 | Mock detail endpoint for opportunity | Sprint 2 (Leo) |
 | OTEP-296 | Prepare defined report format matching data model | Sprint 2 (Michelle) |
 | OTEP-128 | Opportunity detail page (absorbs OTEP-285) | Sprint 2 |
-| OTEP-129 | Open/closed status; "Closing soon" (≤7 days) | Sprint 2 |
+| OTEP-129 | Closed opportunity state (deep-link) | Sprint 3 (split into OTEP-362/363) |
+| OTEP-284 | "Closing soon" label (≤7 days) — card + detail | Sprint 4 |
 | OTEP-127 | Ringfencing via POCDEX | Sprint 3 |
-| ⚠️ No Jira | US-02: Keyword search | Scope TBC; may be deferred |
+| OTEP-91 | US-02: Keyword search | Backlog (confirmed 2026-06-05) |
 | OTEP-86 | Filter opportunities by type | Sprint 3 (deferred from Sprint 2) |
 | OTEP-318 | Filter by category | Sprint 3 (no ACs yet) |
 | OTEP-317 | Clear all filters | Sprint 3 |
 | OTEP-319 | Apply via FormSG — basic redirect (STIPs, Gigs, Internal Jobs) | Sprint 3 (`formsg_url` confirmed ✓) |
 | OTEP-130 | Apply via FormSG — full with webhook | Sprint 4 |
 | OTEP-87 ⚠️ | Detail page: apply CTA + competencies | Sprint 3 (Jira ACs mismatch — reconcile) |
-| OTEP-132 ⚠️ | Apply via OTG redirect — SJRs / Internal Jobs | Sprint TBD (Note: US-19 for SJR apply via OTG was dropped 2026-05-13. Confirm if this ticket is also dropped) |
+| OTEP-132 | Apply via OTG redirect — SJRs / Internal Jobs | **Deferred to R1.** SJRs also shifted to R1. (Confirmed 2026-06-05.) |
 | OTEP-88 | C@G listing label on card | Sprint 5 |
 | OTEP-89 | C@G deep-link apply CTA | Sprint 5 |
 | OTEP-133 ⚠️ | EDM deep-link landing | Sprint 5 (Jira title mismatch) |
@@ -87,14 +88,14 @@ Key risks:
 - **Systems:** OTG (daily export → OTEP schema, confirm with Rama); Careers@Gov (deep-links only, no data return); Email delivery service (Fabian/Infra)
 - **Auth:** POCDEX integration for ringfencing (confirm session handling with POCDEX owner)
 - **Exclude:** 2026 SJR opportunities from MVP
-- **Deferred to R1:** Competency match ratio / personalisation on detail page; agency/grade/commitment filters; faceted search
+- **Deferred to R1:** Competency match ratio / personalisation on detail page; agency/grade/commitment filters; faceted search; SJR opportunities; OTEP-132 (OTG redirect apply)
 - **Confirmed decision (12 March 2026):** Replace FormSG as front-door with OTEP-hosted application flow
 - **Need:** Backend mapping of opportunity competencies to competency bank (avoid inconsistencies)
 
 ## Timeline
 
 - Sprint 3 grooming: OTEP-87 Jira reconciliation, OTEP-318 AC definition, search scope decision
-- Sprint 4 planning: OTEP-132 sprint assignment
+- ~~Sprint 4 planning: OTEP-132 sprint assignment~~ Resolved: OTEP-132 deferred to R1 (2026-06-05)
 - Sprint 5: OTEP-130 (FormSG full + webhook)
 
 ## Evidence
@@ -109,7 +110,7 @@ Key risks:
 
 ## Open questions
 
-- Search scope (US-02): confirm at Sprint 3 grooming — defer or build?
+- ~~Search scope (US-02): confirm at Sprint 3 grooming — defer or build?~~ Resolved: OTEP-91 in Backlog (2026-06-05)
 - OTEP-87: reconcile Jira ACs with actual US-08 intent (missing-FormSG-link) before Sprint 3
 - OTEP-318 (filter by category): ACs TBC at Sprint 3 grooming
 - FormSG pre-fill via URL params (Pow Hwee open item #14): unresolved — blocks OTEP-130 scope clarity

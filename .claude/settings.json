@@ -4,10 +4,19 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:api.anthropic.com)",
       "WebFetch(domain:http-intake.logs.us5.datadoghq.com)",
-      "Bash(claude mcp *)"
+      "Bash(claude mcp *)",
+      "Read(//usr/local/**)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(k, ':', v\\) for k,v in d.get\\('mcpServers',{}\\).items\\(\\) if 'calendar' in k.lower\\(\\)]\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); servers=d.get\\('mcpServers',{}\\); [print\\(k,':',json.dumps\\(v\\)[:300]\\) for k,v in servers.items\\(\\) if 'calendar' in k.lower\\(\\)]\")",
+      "Bash(bash /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d.get\\('key','?'\\), d.get\\('self','?'\\)\\)\")",
+      "Bash(bash scripts/jira-sprint.sh)"
     ]
   },
-  "enabledMcpjsonServers": ["google-calendar", "mcp-atlassian"],
+  "enabledMcpjsonServers": [
+    "google-calendar",
+    "mcp-atlassian"
+  ],
   "hooks": {
     "PostToolUse": [
       {
