@@ -591,7 +591,37 @@ quarter: Q[X] YYYY
 
 ---
 
-### Step 5: Follow-Up Prompts
+### Step 5: Archive the Week's Notes
+
+After saving the weekly review file, archive that week's working files to keep `outputs/` clean.
+
+**Archive folder:** `outputs/archive/YYYY-WXX/` (use the same week identifier as the review)
+
+**Move these files** (match by date — only files dated within that week's Mon–Sun range):
+- `outputs/daily-plans/YYYY-MM-DD-daily-plan.md` → `outputs/archive/YYYY-WXX/daily-plans/`
+- `outputs/meeting-notes/YYYY-MM-DD-*.md` → `outputs/archive/YYYY-WXX/meeting-notes/`
+- `outputs/weekly-plans/YYYY-WXX-weekly-plan.md` → `outputs/archive/YYYY-WXX/`
+
+**Leave in place** (reference docs, not ephemeral):
+- `outputs/weekly-reviews/YYYY-WXX-weekly-review.md` — the permanent artifact, stays where it is
+- `outputs/prds/`, `outputs/decisions/`, `outputs/analyses/` — not weekly ephemera, don't touch
+
+**How to move files:**
+Use Bash: `mv [source] [dest]` — create the archive subfolders first with `mkdir -p`.
+
+**Print a confirmation after archiving:**
+```
+Archived W[XX] notes to outputs/archive/YYYY-WXX/
+  daily-plans/   [N files]
+  meeting-notes/ [N files]
+  weekly-plan    [1 file / not found]
+```
+
+If no files matched the week's date range, print: `Nothing to archive for W[XX].` and move on without error.
+
+---
+
+### Step 6: Follow-Up Prompts
 
 After generating review, prompt user with contextual suggestions:
 

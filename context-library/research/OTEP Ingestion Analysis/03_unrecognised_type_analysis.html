@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP Ingestion — Unrecognised Type Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.5; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; }
+  .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: .5rem; }
+  .metric { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .9rem 1.1rem; }
+  .metric .val { font-size: 26px; font-weight: 500; line-height: 1; margin-bottom: 5px; }
+  .metric .lbl { font-size: 12px; color: #5f5e5a; }
+  .metric .sub { font-size: 11px; color: #888780; margin-top: 4px; }
+  .chart-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .chart-card h3 { font-size: 13px; font-weight: 500; margin-bottom: 1rem; color: #2c2c2a; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1rem; }
+  .bucket-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.1rem; }
+  .bucket-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .bucket-sub { font-size: 11px; color: #5f5e5a; margin-bottom: 12px; }
+  .field-row { display: flex; align-items: center; gap: 6px; font-size: 11px; margin-bottom: 5px; color: #5f5e5a; }
+  .fl { width: 72px; flex-shrink: 0; }
+  .bw { flex: 1; height: 5px; background: #f1efe8; border-radius: 3px; overflow: hidden; }
+  .bf { height: 100%; border-radius: 3px; }
+  .pct { font-size: 10px; min-width: 26px; text-align: right; color: #b4b2a9; }
+  .tag-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .tag-table th { font-size: 11px; font-weight: 500; color: #888780; text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid #e0dfd8; }
+  .tag-table th.r { text-align: right; padding-right: 0; }
+  .tag-table td { padding: 6px 8px 6px 0; border-bottom: 0.5px solid #f1efe8; vertical-align: middle; color: #1a1a18; }
+  .tag-table td.r { text-align: right; padding-right: 0; }
+  .tag-table tr:last-child td { border-bottom: none; }
+  .tag-table tr:hover td { background: #faf9f6; }
+  .cls { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 20px; font-weight: 500; }
+  .cls-exempt { background: #eaf3de; color: #3b6d11; }
+  .cls-gig { background: #e6f1fb; color: #185fa5; }
+  .cls-tbc { background: #faeeda; color: #854f0b; }
+  .cls-excl { background: #fcebeb; color: #a32d2d; }
+  .cls-elig { background: #f1efe8; color: #5f5e5a; }
+  .outcome-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 1rem; }
+  .outcome { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 8px; padding: .75rem; text-align: center; }
+  .outcome-num { font-size: 22px; font-weight: 500; }
+  .outcome-lbl { font-size: 11px; color: #5f5e5a; margin-top: 3px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Unrecognised Type Analysis</h1>
+    <p>163 open gigs whose type cannot be determined from the [prefix] tag &nbsp;·&nbsp; As at 9 June 2026</p>
+  </div>
+
+  <p class="section-title">Overview</p>
+  <div class="metric-row">
+    <div class="metric">
+      <div class="val" style="color:#7F77DD;">78</div>
+      <div class="lbl">No tag — no [prefix] in name</div>
+      <div class="sub">MSF 37 · EnterpriseGov 19 · MTI 7</div>
+    </div>
+    <div class="metric">
+      <div class="val" style="color:#EF9F27;">56</div>
+      <div class="lbl">Other (TBC) — prefix unrecognised</div>
+      <div class="sub">18 distinct tag variants</div>
+    </div>
+    <div class="metric">
+      <div class="val" style="color:#1D9E75;">29</div>
+      <div class="lbl">agilePSD (TBC) — all from PSD</div>
+      <div class="sub">13 sub-programme variants</div>
+    </div>
+  </div>
+
+  <p class="section-title">Field completeness by bucket</p>
+  <div class="three-col">
+    <div class="bucket-card">
+      <div class="bucket-title"><span class="dot" style="background:#7F77DD;"></span>No tag <span style="font-size:11px;color:#888780;font-weight:400;">n=78</span></div>
+      <div class="bucket-sub">No [prefix] — type classification impossible</div>
+      <div class="field-row"><span class="fl">TC</span><div class="bw"><div class="bf" style="width:18%;background:#7F77DD;"></div></div><span class="pct">18%</span></div>
+      <div class="field-row"><span class="fl">Start date</span><div class="bw"><div class="bf" style="width:78%;background:#7F77DD;"></div></div><span class="pct">78%</span></div>
+      <div class="field-row"><span class="fl">End date</span><div class="bw"><div class="bf" style="width:100%;background:#7F77DD;"></div></div><span class="pct">100%</span></div>
+      <div class="field-row"><span class="fl">Function</span><div class="bw"><div class="bf" style="width:79%;background:#7F77DD;"></div></div><span class="pct">79%</span></div>
+      <div class="field-row"><span class="fl">Business unit</span><div class="bw"><div class="bf" style="width:92%;background:#7F77DD;"></div></div><span class="pct">92%</span></div>
+      <div style="margin-top:10px;font-size:11px;color:#5f5e5a;">
+        <span style="color:#a32d2d;font-weight:500;">37%</span> stale &nbsp;·&nbsp; <span style="color:#a32d2d;font-weight:500;">54%</span> zero applicants<br>
+        <span style="color:#3b6d11;font-weight:500;">48</span> have no other field issues
+      </div>
+    </div>
+    <div class="bucket-card">
+      <div class="bucket-title"><span class="dot" style="background:#EF9F27;"></span>Other (TBC) <span style="font-size:11px;color:#888780;font-weight:400;">n=56</span></div>
+      <div class="bucket-sub">Has prefix but not in taxonomy</div>
+      <div class="field-row"><span class="fl">TC</span><div class="bw"><div class="bf" style="width:71%;background:#EF9F27;"></div></div><span class="pct">71%</span></div>
+      <div class="field-row"><span class="fl">Start date</span><div class="bw"><div class="bf" style="width:89%;background:#EF9F27;"></div></div><span class="pct">89%</span></div>
+      <div class="field-row"><span class="fl">End date</span><div class="bw"><div class="bf" style="width:98%;background:#EF9F27;"></div></div><span class="pct">98%</span></div>
+      <div class="field-row"><span class="fl">Function</span><div class="bw"><div class="bf" style="width:45%;background:#EF9F27;"></div></div><span class="pct">45%</span></div>
+      <div class="field-row"><span class="fl">Business unit</span><div class="bw"><div class="bf" style="width:59%;background:#EF9F27;"></div></div><span class="pct">59%</span></div>
+      <div style="margin-top:10px;font-size:11px;color:#5f5e5a;">
+        <span style="color:#a32d2d;font-weight:500;">39%</span> stale &nbsp;·&nbsp; <span style="color:#a32d2d;font-weight:500;">71%</span> zero applicants<br>
+        <span style="color:#3b6d11;font-weight:500;">11</span> have no other field issues
+      </div>
+    </div>
+    <div class="bucket-card">
+      <div class="bucket-title"><span class="dot" style="background:#1D9E75;"></span>agilePSD (TBC) <span style="font-size:11px;color:#888780;font-weight:400;">n=29</span></div>
+      <div class="bucket-sub">All from PSD — TC rule not confirmed</div>
+      <div class="field-row"><span class="fl">TC</span><div class="bw"><div class="bf" style="width:0%;background:#1D9E75;"></div></div><span class="pct">0%</span></div>
+      <div class="field-row"><span class="fl">Start date</span><div class="bw"><div class="bf" style="width:100%;background:#1D9E75;"></div></div><span class="pct">100%</span></div>
+      <div class="field-row"><span class="fl">End date</span><div class="bw"><div class="bf" style="width:100%;background:#1D9E75;"></div></div><span class="pct">100%</span></div>
+      <div class="field-row"><span class="fl">Function</span><div class="bw"><div class="bf" style="width:83%;background:#1D9E75;"></div></div><span class="pct">83%</span></div>
+      <div class="field-row"><span class="fl">Business unit</span><div class="bw"><div class="bf" style="width:100%;background:#1D9E75;"></div></div><span class="pct">100%</span></div>
+      <div style="margin-top:10px;font-size:11px;color:#5f5e5a;">
+        <span style="color:#3b6d11;font-weight:500;">0%</span> stale &nbsp;·&nbsp; 100% zero applicants<br>
+        If TC exempt: <span style="color:#3b6d11;font-weight:500;">24/29</span> unblock; 5 blocked by missing Function
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">Other (TBC) — tag-by-tag classification proposal</p>
+  <div class="chart-card">
+    <table class="tag-table">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th class="r" style="padding-right:10px;">Count</th>
+          <th style="padding-left:10px;">Proposed type</th>
+          <th class="r" style="padding-right:10px;">Stale</th>
+          <th class="r">Has TC</th>
+          <th style="padding-left:10px;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code style="font-size:11px;">[MDDI Internal Opportunity]</code></td><td class="r" style="padding-right:10px;">12</td><td style="padding-left:10px;"><span class="cls cls-exempt">Job / Secondment</span></td><td class="r" style="padding-right:10px;">1</td><td class="r">12</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">MDDI sub-programme</td></tr>
+        <tr><td><code style="font-size:11px;">[ITM]</code></td><td class="r" style="padding-right:10px;">6</td><td style="padding-left:10px;"><span class="cls cls-exempt">Secondment / Job</span></td><td class="r" style="padding-right:10px;color:#a32d2d;">5</td><td class="r">6</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Industry Transformation Map; 5/6 stale</td></tr>
+        <tr><td><code style="font-size:11px;">[KidSTART]</code></td><td class="r" style="padding-right:10px;">6</td><td style="padding-left:10px;"><span class="cls cls-exempt">Job / Secondment</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">0</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Social programme postings</td></tr>
+        <tr><td><code style="font-size:11px;">[NLB Project Marketplace/Green Office]</code></td><td class="r" style="padding-right:10px;">6</td><td style="padding-left:10px;"><span class="cls cls-gig">Gig</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">6</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">NLB short-term project work</td></tr>
+        <tr><td><code style="font-size:11px;">[PSFG]</code></td><td class="r" style="padding-right:10px;">5</td><td style="padding-left:10px;"><span class="cls cls-tbc">Still TBC</span></td><td class="r" style="padding-right:10px;color:#a32d2d;">5</td><td class="r">5</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">All stale — confirm with BO</td></tr>
+        <tr><td><code style="font-size:11px;">[Overseas Posting]</code></td><td class="r" style="padding-right:10px;">4</td><td style="padding-left:10px;"><span class="cls cls-exempt">Secondment</span></td><td class="r" style="padding-right:10px;">2</td><td class="r">2</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Overseas attachments</td></tr>
+        <tr><td><code style="font-size:11px;">[OCMO 2026]</code></td><td class="r" style="padding-right:10px;">4</td><td style="padding-left:10px;"><span class="cls cls-tbc">Still TBC</span></td><td class="r" style="padding-right:10px;color:#a32d2d;">4</td><td class="r">0</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">All stale; context unclear</td></tr>
+        <tr><td><code style="font-size:11px;">[NLB Project Marketplace]</code></td><td class="r" style="padding-right:10px;">3</td><td style="padding-left:10px;"><span class="cls cls-gig">Gig</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">3</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">NLB gig variant</td></tr>
+        <tr><td><code style="font-size:11px;">[Innofest] / [INNOFEST]</code></td><td class="r" style="padding-right:10px;">2</td><td style="padding-left:10px;"><span class="cls cls-gig">Gig</span></td><td class="r" style="padding-right:10px;color:#a32d2d;">2</td><td class="r">0</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Duplicate casing — merge into one tag</td></tr>
+        <tr><td><code style="font-size:11px;">[Contract - 1 Year]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-exempt">Job</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">1</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Fixed-term contract</td></tr>
+        <tr><td><code style="font-size:11px;">[MDDI Family Opportunity]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-exempt">Job / Secondment</span></td><td class="r" style="padding-right:10px;">1</td><td class="r">1</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">MDDI variant</td></tr>
+        <tr><td><code style="font-size:11px;">[Female Only]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-elig">Eligibility, not type</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">0</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Needs a separate eligibility field</td></tr>
+        <tr><td><code style="font-size:11px;">[For Grade 12/11] · [For MX13-equiv]</code></td><td class="r" style="padding-right:10px;">2</td><td style="padding-left:10px;"><span class="cls cls-elig">Eligibility, not type</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">2</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Grade filter misused as type</td></tr>
+        <tr><td><code style="font-size:11px;">[NEA]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-tbc">Still TBC</span></td><td class="r" style="padding-right:10px;">0</td><td class="r">1</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Agency name used as type tag</td></tr>
+        <tr><td><code style="font-size:11px;">[Others]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-tbc">Still TBC</span></td><td class="r" style="padding-right:10px;">1</td><td class="r">1</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">No context</td></tr>
+        <tr><td><code style="font-size:11px;">[Test]</code></td><td class="r" style="padding-right:10px;">1</td><td style="padding-left:10px;"><span class="cls cls-excl">Exclude</span></td><td class="r" style="padding-right:10px;color:#a32d2d;">1</td><td class="r">0</td><td style="padding-left:10px;font-size:11px;color:#5f5e5a;">Test/sandbox entry</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="section-title">Best-case resolution scenario — Other (TBC) 56 gigs</p>
+  <div class="outcome-row">
+    <div class="outcome"><div class="outcome-num" style="color:#3b6d11;">30</div><div class="outcome-lbl">Likely exempt<br>(Job / Secondment — TC not required)</div></div>
+    <div class="outcome"><div class="outcome-num" style="color:#185fa5;">11</div><div class="outcome-lbl">Likely Gig<br>(TC required)</div></div>
+    <div class="outcome"><div class="outcome-num" style="color:#854f0b;">14</div><div class="outcome-lbl">Still TBC<br>after analysis</div></div>
+    <div class="outcome"><div class="outcome-num" style="color:#a32d2d;">1</div><div class="outcome-lbl">Exclude<br>(test entry)</div></div>
+  </div>
+
+  <p class="section-title">Agency concentration — all 163 unrecognised gigs</p>
+  <div class="chart-card">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-size:11px;color:#5f5e5a;">
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#7F77DD;display:inline-block;"></span>No tag</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#EF9F27;display:inline-block;"></span>Other (TBC)</span>
+      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>agilePSD (TBC)</span>
+    </div>
+    <div style="position:relative;height:300px;">
+      <canvas id="agencyChart" role="img" aria-label="Stacked bar chart: MSF 43, PSD 33, EnterpriseGov 26, MDDI 13, NLB 10">Agency breakdown of 163 unrecognised open gigs</canvas>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9 June 2026
+  </div>
+</div>
+<script>
+const agencies = ['MSF','PSD','EnterpriseGov','MDDI','NLB','MTI','WSG','Others (9 agencies)'];
+const noTag =    [37, 2, 19, 0, 1, 7, 1, 11];
+const otherTbc = [ 6, 2,  7,13, 9, 0, 6, 13];
+const agileTbc = [ 0,29,  0, 0, 0, 0, 0,  0];
+new Chart(document.getElementById('agencyChart'), {
+  type: 'bar',
+  data: {
+    labels: agencies,
+    datasets: [
+      { label: 'No tag',         data: noTag,    backgroundColor: '#7F77DD', borderSkipped: false },
+      { label: 'Other (TBC)',    data: otherTbc, backgroundColor: '#EF9F27', borderSkipped: false },
+      { label: 'agilePSD (TBC)', data: agileTbc, backgroundColor: '#1D9E75', borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } },
+      y: { stacked: true, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' }, beginAtZero: true }
+    }
+  }
+});
+</script>
+</body>
+</html>

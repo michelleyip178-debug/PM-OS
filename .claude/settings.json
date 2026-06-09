@@ -16,7 +16,9 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['mcpServers']['google-calendar'], indent=2\\)\\)\")",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)\\)\")",
       "WebFetch(domain:claude.ai)",
-      "Bash(bash jira-sprint.sh)"
+      "Bash(bash jira-sprint.sh)",
+      "Edit(/.claude/skills/weekly-review/**)",
+      "Bash(python3 -c ' *)"
     ]
   },
   "enabledMcpjsonServers": [
