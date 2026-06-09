@@ -10,7 +10,13 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); servers=d.get\\('mcpServers',{}\\); [print\\(k,':',json.dumps\\(v\\)[:300]\\) for k,v in servers.items\\(\\) if 'calendar' in k.lower\\(\\)]\")",
       "Bash(bash /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d.get\\('key','?'\\), d.get\\('self','?'\\)\\)\")",
-      "Bash(bash scripts/jira-sprint.sh)"
+      "Bash(bash scripts/jira-sprint.sh)",
+      "Bash(python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('mcpServers',{}\\).keys\\(\\)\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['mcpServers']['google-calendar'], indent=2\\)\\)\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)\\)\")",
+      "WebFetch(domain:claude.ai)",
+      "Bash(bash jira-sprint.sh)"
     ]
   },
   "enabledMcpjsonServers": [
