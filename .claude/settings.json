@@ -18,7 +18,9 @@
       "WebFetch(domain:claude.ai)",
       "Bash(bash jira-sprint.sh)",
       "Edit(/.claude/skills/weekly-review/**)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)"
     ]
   },
   "enabledMcpjsonServers": [

@@ -21,8 +21,8 @@ sprint: Sprint 3 Week 2 (final week — ends Fri 12 Jun)
 Three P0 bookings slipped all of last week (calendar was dense, no protected blocks):
 
 - [ ] **Book S4 C@G/apply grooming session** — Sprint Planning is Thu 11 Jun. This is 3 days away.
-- [ ] **Book WOG AD session → Fabian** (#26) — 2+ wk lead time, gates all S5 auth. No movement.
-- [ ] **Book POCDEX session → Daryll** (#31) — CP item #2 due **Sat 13 Jun**. Book today.
+- [x] ~~**Book WOG AD session → Fabian** (#26)~~ — no longer required (resolved 2026-06-09).
+- [x] ~~**Book POCDEX session → Daryll** (#31)~~ — no longer required (resolved 2026-06-09).
 
 **Learning applied:** Booking tasks need a protected time slot, not a "next free block." Default: first 15 min of a free block this morning.
 
@@ -53,13 +53,14 @@ Three P0 bookings slipped all of last week (calendar was dense, no protected blo
 **Why this matters:** S5 (28 Jun–12 Jul) needs 4 external gates clear. Each requires a session with a specific person, and lead times are 2–6 weeks. W23 closed with zero booked. CP item #2 (POCDEX/Daryll) is due this Saturday — the chain slips if that meeting doesn't happen.
 
 **Success looks like:**
-- Daryll session confirmed (before Sat 13 Jun)
-- Fabian WOG AD session confirmed (any day this week)
+
+- WOG AD onboarding form filled in and submitted (#26)
 - Imelda sync on CSC SSO + competency SSOT booked
 
 **Key tasks:**
-- [ ] **Book Daryll (POCDEX)** — TODAY. CP item #2 due Sat. Loop Pow Hwee in. (#31)
-- [ ] **Book Fabian (WOG AD onboarding steps)** — TODAY or Tue. 2+ wk clock not started yet. (#26)
+
+- [x] ~~**Book Daryll (POCDEX)**~~ — no longer required (2026-06-09). Pow Hwee worked this out with Daryll directly. (#31)
+- [x] ~~**Book Fabian (WOG AD onboarding steps)**~~ — no longer required (2026-06-09). WOG AD form received; next action = Michelle fills it in (#26).
 - [ ] **Book Imelda (CSC SSO + competency SSOT)** — 4 asks: SSO ownership, data schema, API vs file, timeline. (#18, #30)
 
 **Dependencies:** All three are calendar-book tasks — no input needed before making the asks
