@@ -95,7 +95,7 @@ Three P0 bookings slipped all of last week (calendar was dense, no protected blo
 | Mon | 16:00–16:30 | Edge Cases & Error States discussion | ⚠️ Confirm scope |
 | Tue | 09:30–10:30 | OTEP Squad Sync | ✅ |
 | Tue | 11:00–11:15 | Standup | ✅ |
-| Tue | 14:00–15:00 | Design Review with BO | ⚠️ Bring: S4 design priorities, secondment flag UX |
+| Tue | 14:00–15:00 | ~~Design Review with BO~~ | ❌ Cancelled — OTEP-386/OTEP-393 decisions still open; raise at Planning Thu |
 | Tue | 16:00–17:00 | PM Weekly catchup | ⚠️ Flag: SteerCo deliverable ownership, R1 scope |
 | Wed | 11:00–11:15 | Standup | ✅ |
 | Wed | 13:00–14:00 | OTEP Product x BO (Senior level, bi-weekly) | ⚠️ Bring: sprint goal status, S4 goal framing |

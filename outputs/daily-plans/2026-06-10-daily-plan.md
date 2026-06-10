@@ -10,7 +10,7 @@ mcps_used: [Jira (live — jira-sprint.sh)]
 
 ## TL;DR
 
-- **Meetings:** 3 today — Standup (11:00) ✅, OTEP Product × BO Senior (13:00), Dependencies Sync-Up with Core team (16:00–16:45)
+- **Meetings:** 3 today — Standup (11:00) ✅, OTEP Product × BO Senior (13:00) ✅, Dependencies Sync-Up rescheduled → Thu 11 Jun
 - **P0 Count:** 3 — WOG AD form (today deadline), UI PRD scope (unblocks Hao Eng), S4 goal confirmed ✅
 - **Key Focus:** WOG AD form before EOD. Dependencies Sync at 16:00 — go in with Core API reviewed + four Imelda asks ready.
 
@@ -25,7 +25,7 @@ mcps_used: [Jira (live — jira-sprint.sh)]
 
 ## New from Standup (10 Jun)
 
-- [ ] **Fill WOG AD form** — Pow Hwee flagged as today deadline (open item #26)
+- [x] **Fill WOG AD form** — done by Pow Hwee 2026-06-10; 2-4 week approval clock running (open item #26)
 - [ ] **UI PRD scope** — Hao Eng holding UI work until Michelle provides PRD; define scope before S4 starts
 - [ ] **C@G description structure** — Thomas raised in standup; needs answer before Planning tomorrow (affects OTEP-87 ACs)
 
@@ -35,7 +35,7 @@ Outcomes from Tue unknown (no calendar MCP) — check if Design Review landed S4
 
 ## Today's Three
 
-1. [ ] **Fill WOG AD form** — Pow Hwee flagged as today deadline; Fabian already provided it (open item #26)
+1. [x] **Fill WOG AD form** — done by Pow Hwee 2026-06-10; 2-4 week approval clock running (open item #26)
 2. [ ] **Dependencies Sync (16:00): get Imelda answers on #18/#30** — review Core's API before 16:00; four asks ready
 3. [ ] **Define C@G description structure + UI PRD scope** — Thomas needs description structure before Planning; Hao Eng blocked on UI PRD
 
@@ -47,7 +47,7 @@ Outcomes from Tue unknown (no calendar MCP) — check if Design Review landed S4
 | ---- | ------- | ---- | ------- |
 | 11:00–11:15 | Standup | ✅ | Sprint 3 Day 7. Sprint goal (OTEP-86/319) still Backlog — listen for any pickup signal. Thomas has OTEP-381 (FE filtering) In Progress. OTEP-362 moved to QA since yesterday. |
 | 13:00–14:00 | OTEP Product × BO (Senior, bi-weekly) | ⚠️ Needs prep | Bring: sprint goal status (filters + apply = Backlog, 2 days to end), honest S4 goal framing. Frame it as "here's what we're prioritising and why" not a problem. |
-| 16:00–16:45 | Dependencies Sync-Up with Core team | ⚠️ Needs prep | Four Imelda asks: (1) integration method (#18), (2) schema + field names, (3) availability timeline, (4) C@G competency tag mapping. Also: CSC SSO ownership (#30). |
+| 16:00–16:45 | ~~Dependencies Sync-Up with Core team~~ | ↪ Rescheduled to Thu 11 Jun | Four Imelda asks still open (#18/#30): integration method, schema, timeline, competency mapping. |
 
 **Free blocks:** 09:00–11:00 (2h — OTG report + S4 goal review), 11:15–13:00 (1h 45min — S4 Planning prep), 14:00–16:00 (2h — story sizing / OTEP-87 Jira cleanup)
 
