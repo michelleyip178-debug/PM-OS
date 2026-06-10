@@ -342,10 +342,10 @@
   </div>
 
   <!-- Full analysis index -->
-  <p class="section-title">Full analysis — all files</p>
+  <p class="section-title">Overview</p>
   <div class="file-grid">
 
-    <a class="file-card" href="01_summary_dashboard.html" target="_blank">
+    <a class="file-card" href="01_summary_dashboard.html">
       <div class="file-card-head">
         <span class="file-num">01</span>
         <span class="file-name">Summary Dashboard</span>
@@ -354,34 +354,16 @@
       <p class="file-desc">Overall picture — 633 open opportunities, 473 blocked, 160 passing. Missing field counts, type distribution, and stale opportunity breakdown.</p>
     </a>
 
-    <a class="file-card" href="02_agency_breakdown.html" target="_blank">
+    <a class="file-card" href="17_product_discovery.html">
       <div class="file-card-head">
-        <span class="file-num">02</span>
-        <span class="file-name">Agency Breakdown</span>
-        <span class="file-audience fa-all">All</span>
-      </div>
-      <p class="file-desc">Blocked opportunities by agency. Enterprise Singapore accounts for 178 of 473. Per-agency issue chips and blocked-rate chart.</p>
-    </a>
-
-    <a class="file-card" href="03_unrecognised_type_analysis.html" target="_blank">
-      <div class="file-card-head">
-        <span class="file-num">03</span>
-        <span class="file-name">Unrecognised Type Deep-dive</span>
+        <span class="file-num">17</span>
+        <span class="file-name">Product Discovery</span>
         <span class="file-audience fa-pm">PM</span>
       </div>
-      <p class="file-desc">163 opportunities with no recognised type tag — the 78 with no prefix, 56 Other (TBC), 29 agilePSD. Resolution scenarios per variant.</p>
+      <p class="file-desc">TL;DR and structured brief — what we know, the 6 open decisions, catalogue scenarios, and recommended next steps before Sprint 5.</p>
     </a>
 
-    <a class="file-card" href="04_oqa_risks_assumptions.html" target="_blank">
-      <div class="file-card-head">
-        <span class="file-num">04</span>
-        <span class="file-name">Open Questions, Risks &amp; Assumptions</span>
-        <span class="file-audience fa-bo">BO</span>
-      </div>
-      <p class="file-desc">7 open questions for BO, 7 risks (high/medium/low), and 6 active assumptions baked into the ingestion logic.</p>
-    </a>
-
-    <a class="file-card" href="05_product_trio_prep.html" target="_blank">
+    <a class="file-card" href="05_product_trio_prep.html">
       <div class="file-card-head">
         <span class="file-num">05</span>
         <span class="file-name">Product Trio Working Session</span>
@@ -390,7 +372,12 @@
       <p class="file-desc">5 problem areas with PM / Designer / Engineer perspectives, HMW questions, tiered solution ideas, and a 90-min agenda.</p>
     </a>
 
-    <a class="file-card" href="06_bo_prep.html" target="_blank">
+  </div>
+
+  <p class="section-title" style="margin-top:1.75rem;">BO Decisions</p>
+  <div class="file-grid">
+
+    <a class="file-card" href="06_bo_prep.html">
       <div class="file-card-head">
         <span class="file-num">06</span>
         <span class="file-name">BO Briefing — Decision Document</span>
@@ -399,16 +386,16 @@
       <p class="file-desc">Non-technical deep-dive on all 4 decisions — options A/B/C for each, recommended defaults, and a 60-min meeting agenda.</p>
     </a>
 
-    <a class="file-card" href="07_dq_by_opportunity_type.html" target="_blank">
+    <a class="file-card" href="09_ingestion_rules.html">
       <div class="file-card-head">
-        <span class="file-num">07</span>
-        <span class="file-name">Data Quality by Opportunity Type</span>
-        <span class="file-audience fa-all">All</span>
+        <span class="file-num">09</span>
+        <span class="file-name">Ingestion Business Rules</span>
+        <span class="file-audience fa-bo">BO / PM</span>
       </div>
-      <p class="file-desc">Field completeness cards for all 8 types. Secondment most blocked (88%); agilePSD healthiest (17%); No tag 100% by definition.</p>
+      <p class="file-desc">11 rules across 3 phases. What triggers a BLOCKED, FLAGGED, EXCLUDED, or PASS outcome — in plain language for sign-off.</p>
     </a>
 
-    <a class="file-card" href="08_ingestion_schema.html" target="_blank">
+    <a class="file-card" href="08_ingestion_schema.html">
       <div class="file-card-head">
         <span class="file-num">08</span>
         <span class="file-name">Ingestion Schema</span>
@@ -417,13 +404,113 @@
       <p class="file-desc">Field mapping from OTG source to OTEP target. Validation matrix (field × type), exclusion logic, and known schema gaps.</p>
     </a>
 
-    <a class="file-card" href="09_ingestion_rules.html" target="_blank">
+    <a class="file-card" href="04_oqa_risks_assumptions.html">
       <div class="file-card-head">
-        <span class="file-num">09</span>
-        <span class="file-name">Ingestion Business Rules</span>
-        <span class="file-audience fa-bo">BO / PM</span>
+        <span class="file-num">04</span>
+        <span class="file-name">Open Questions, Risks &amp; Assumptions</span>
+        <span class="file-audience fa-bo">BO</span>
       </div>
-      <p class="file-desc">11 rules across 3 phases. What triggers a BLOCKED, FLAGGED, EXCLUDED, or PASS outcome — in plain language for sign-off.</p>
+      <p class="file-desc">7 open questions for BO, 7 risks (high/medium/low), and 6 active assumptions baked into the ingestion logic.</p>
+    </a>
+
+  </div>
+
+  <p class="section-title" style="margin-top:1.75rem;">Analysis</p>
+  <div class="file-grid">
+
+    <a class="file-card" href="02_agency_breakdown.html">
+      <div class="file-card-head">
+        <span class="file-num">02</span>
+        <span class="file-name">Agency Breakdown</span>
+        <span class="file-audience fa-all">All</span>
+      </div>
+      <p class="file-desc">Blocked opportunities by agency. Enterprise Singapore accounts for 178 of 473. Per-agency issue chips and blocked-rate chart.</p>
+    </a>
+
+    <a class="file-card" href="03_unrecognised_type_analysis.html">
+      <div class="file-card-head">
+        <span class="file-num">03</span>
+        <span class="file-name">Unrecognised Type Deep-dive</span>
+        <span class="file-audience fa-pm">PM</span>
+      </div>
+      <p class="file-desc">163 opportunities with no recognised type tag — the 78 with no prefix, 56 Other (TBC), 29 agilePSD. Resolution scenarios per variant.</p>
+    </a>
+
+    <a class="file-card" href="07_dq_by_opportunity_type.html">
+      <div class="file-card-head">
+        <span class="file-num">07</span>
+        <span class="file-name">Data Quality by Opportunity Type</span>
+        <span class="file-audience fa-all">All</span>
+      </div>
+      <p class="file-desc">Field completeness cards for all 8 types. Secondment most blocked (88%); agilePSD healthiest (17%); No tag 100% by definition.</p>
+    </a>
+
+    <a class="file-card" href="13_funnel_cohort.html">
+      <div class="file-card-head">
+        <span class="file-num">13</span>
+        <span class="file-name">Funnel &amp; Cohort Analysis</span>
+        <span class="file-audience fa-pm">PM</span>
+      </div>
+      <p class="file-desc">End-to-end ingestion funnel from source records to passing opportunities. Cohort breakdown by type and agency.</p>
+    </a>
+
+    <a class="file-card" href="14_engagement_insights.html">
+      <div class="file-card-head">
+        <span class="file-num">14</span>
+        <span class="file-name">Engagement Analysis</span>
+        <span class="file-audience fa-pm">PM</span>
+      </div>
+      <p class="file-desc">Applicant activity across opportunity types. Zero-applicant breakdown, demand signals, and engagement patterns by agency.</p>
+    </a>
+
+    <a class="file-card" href="15_agency_scorecard.html">
+      <div class="file-card-head">
+        <span class="file-num">15</span>
+        <span class="file-name">Agency Health Scorecard</span>
+        <span class="file-audience fa-all">All</span>
+      </div>
+      <p class="file-desc">Per-agency data quality score. Blocked rate, missing field profile, and remediation priority ranking across all posting agencies.</p>
+    </a>
+
+    <a class="file-card" href="16_data_source_reconciliation.html">
+      <div class="file-card-head">
+        <span class="file-num">16</span>
+        <span class="file-name">Data Source Reconciliation</span>
+        <span class="file-audience fa-eng">PM / Eng</span>
+      </div>
+      <p class="file-desc">Cross-checks between OTG source, ingestion pipeline output, and OTEP target DB. Identifies drift, deduplication issues, and count mismatches.</p>
+    </a>
+
+  </div>
+
+  <p class="section-title" style="margin-top:1.75rem;">Engineering</p>
+  <div class="file-grid">
+
+    <a class="file-card" href="10_pipeline_run.html">
+      <div class="file-card-head">
+        <span class="file-num">10</span>
+        <span class="file-name">Pipeline Run Report</span>
+        <span class="file-audience fa-eng">Eng</span>
+      </div>
+      <p class="file-desc">Step-by-step log of a full ingestion run — records read, inserted, updated, deactivated, skipped, and errors. Per-rule violation counts.</p>
+    </a>
+
+    <a class="file-card" href="11_rule_violations.html">
+      <div class="file-card-head">
+        <span class="file-num">11</span>
+        <span class="file-name">Rule Violation Analysis</span>
+        <span class="file-audience fa-eng">Eng</span>
+      </div>
+      <p class="file-desc">Which rules fired on how many records. Breakdown of BLOCKED vs EXCLUDED vs FLAGGED outcomes with per-rule counts and exemptions applied.</p>
+    </a>
+
+    <a class="file-card" href="12_remediation_queue.html">
+      <div class="file-card-head">
+        <span class="file-num">12</span>
+        <span class="file-name">Remediation Queue</span>
+        <span class="file-audience fa-eng">Eng / PM</span>
+      </div>
+      <p class="file-desc">Per-agency queue of blocked opportunities with the specific fields that need fixing. Formatted for sending directly to agency HR contacts.</p>
     </a>
 
   </div>
