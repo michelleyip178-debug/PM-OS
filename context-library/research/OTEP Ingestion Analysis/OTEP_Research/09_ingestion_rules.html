@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Ingestion Business Rules</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 2rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Outcome chips */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .chip { font-size: 12px; padding: 4px 12px; border-radius: 20px; border: 0.5px solid #e0dfd8; background: #fff; color: #5f5e5a; }
+  .chip strong { font-weight: 500; color: #1a1a18; }
+
+  /* Outcome legend */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5f5e5a; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Rule cards */
+  .rule-set { margin-bottom: 1.5rem; }
+  .rule-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+  .rule-card-header { display: flex; align-items: center; gap: 10px; padding: .85rem 1rem; border-bottom: 0.5px solid #f1efe8; }
+  .rule-number { font-size: 10px; font-weight: 600; background: #f1efe8; color: #888780; border-radius: 20px; padding: 2px 8px; flex-shrink: 0; }
+  .rule-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .outcome-pill { font-size: 10px; padding: 2px 10px; border-radius: 20px; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+  .op-block  { background: #FCEBEB; color: #A32D2D; }
+  .op-skip   { background: #f1efe8; color: #5f5e5a; }
+  .op-flag   { background: #FAEEDA; color: #854F0B; }
+  .op-pass   { background: #EAF3DE; color: #3B6D11; }
+  .op-tbc    { background: #e6f1fb; color: #185fa5; }
+
+  .rule-body { padding: .85rem 1rem; }
+  .rule-condition { font-size: 13px; color: #1a1a18; margin-bottom: 8px; line-height: 1.6; }
+  .rule-condition strong { font-weight: 500; }
+  .rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .rule-box { font-size: 11px; padding: 8px 10px; border-radius: 6px; line-height: 1.5; }
+  .rb-why  { background: #f8f7f3; color: #5f5e5a; }
+  .rb-exc  { background: #fdf9f3; border: 0.5px solid #f0e6d0; color: #5f5e5a; }
+  .rb-data { background: #F0F6FC; color: #5f5e5a; }
+  .rule-box strong { font-weight: 500; color: #1a1a18; display: block; margin-bottom: 2px; }
+
+  /* Decision table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; font-size: 12px; margin-bottom: 1.5rem; }
+  thead { background: #f8f7f3; }
+  th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; border-bottom: 1px solid #e0dfd8; }
+  td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; vertical-align: top; font-size: 12px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf7; }
+  .td-field { font-weight: 500; color: #1a1a18; font-size: 12px; }
+  .td-note { font-size: 11px; color: #5f5e5a; margin-top: 2px; }
+  .pill { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 20px; font-weight: 500; }
+  .p-block { background: #FCEBEB; color: #A32D2D; }
+  .p-flag  { background: #FAEEDA; color: #854F0B; }
+  .p-skip  { background: #f1efe8; color: #5f5e5a; }
+  .p-pass  { background: #EAF3DE; color: #3B6D11; }
+  .p-na    { color: #D3D1C7; font-size: 13px; }
+
+  /* Summary table — field × outcome */
+  .summary-table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; font-size: 11px; margin-bottom: 1.5rem; }
+  .summary-table th { padding: 8px 10px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; border-bottom: 1px solid #e0dfd8; text-align: center; background: #f8f7f3; }
+  .summary-table th.left { text-align: left; }
+  .summary-table td { padding: 8px 10px; border-bottom: 0.5px solid #f1efe8; text-align: center; }
+  .summary-table td.left { text-align: left; font-weight: 500; color: #1a1a18; }
+  .summary-table tr:last-child td { border-bottom: none; }
+
+  /* Pending decisions callout */
+  .pending-box { background: #F0F6FC; border: 0.5px solid #B0CAE8; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .pending-box h3 { font-size: 12px; font-weight: 500; color: #185fa5; margin-bottom: 8px; }
+  .pending-row { display: flex; gap: 8px; align-items: baseline; font-size: 12px; color: #5f5e5a; padding: 4px 0; border-bottom: 0.5px solid #dceaf5; }
+  .pending-row:last-child { border-bottom: none; }
+  .pending-row strong { font-weight: 500; color: #1a1a18; min-width: 24px; }
+  .pending-row .rule-ref { font-size: 10px; background: #dceaf5; color: #185fa5; padding: 1px 7px; border-radius: 20px; font-weight: 500; flex-shrink: 0; }
+
+  /* Flow visual */
+  .flow-strip { display: flex; align-items: center; gap: 0; overflow-x: auto; margin-bottom: 1.5rem; }
+  .flow-node { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 8px; padding: .7rem .9rem; min-width: 130px; flex: 1; font-size: 11px; }
+  .flow-node h4 { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 4px; }
+  .flow-node p { font-size: 11px; color: #5f5e5a; }
+  .flow-arrow { padding: 0 6px; color: #b4b2a9; font-size: 16px; flex-shrink: 0; }
+  .flow-node.red   { border-color: #F5C6C6; background: #FDF5F5; }
+  .flow-node.amber { border-color: #F5DDB8; background: #FDFAF3; }
+  .flow-node.green { border-color: #B8D8A0; background: #F5FAF0; }
+  .flow-node.blue  { border-color: #B0CAE8; background: #F0F6FC; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP — Ingestion Business Rules</h1>
+    <p>What passes, what fails, what gets flagged — and why &nbsp;·&nbsp; For BO / PM sign-off &nbsp;·&nbsp; Draft as at 10 June 2026</p>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><strong>4</strong> possible outcomes per gig</div>
+    <div class="chip"><strong>5</strong> pre-flight checks (applied in order)</div>
+    <div class="chip"><strong>7</strong> field validation rules</div>
+    <div class="chip"><strong>1</strong> extraction rule (non-blocking)</div>
+    <div class="chip"><strong>4</strong> rules pending BO decision to finalise</div>
+  </div>
+
+  <!-- Outcome legend -->
+  <p class="section-title">The 4 possible outcomes</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#E24B4A;"></div> <strong>BLOCKED</strong> — fails a required field check. Routed to remediation report for agency to fix.</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EF9F27;"></div> <strong>FLAGGED</strong> — passes required checks but has an amber condition (TBC field or stale). Still ingested unless BO rules otherwise.</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#888780;"></div> <strong>EXCLUDED</strong> — deliberately not ingested (test entry, wrong status, policy decision). Does not appear in remediation report.</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;"></div> <strong>PASSES</strong> — all required fields present, no exclusion triggers. Ingested into OTEP catalogue.</div>
+  </div>
+
+  <!-- Flow -->
+  <p class="section-title">Decision flow — applied to every gig</p>
+  <div class="flow-strip">
+    <div class="flow-node blue">
+      <h4>Start</h4>
+      <p>OTG gig from export</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node red">
+      <h4>Pre-flight</h4>
+      <p>Status, test, stale, no-tag, no-owner checks</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node blue">
+      <h4>Classify type</h4>
+      <p>Derive type from GigName prefix</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node red">
+      <h4>Validate fields</h4>
+      <p>Check required fields for that type</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node green">
+      <h4>Ingest</h4>
+      <p>PASSES → OTEP catalogue</p>
+    </div>
+  </div>
+  <p style="font-size:11px;color:#888780;margin-top:-10px;margin-bottom:1.5rem;">At any step, a gig can exit to BLOCKED, EXCLUDED, or FLAGGED. Rules below are applied in the order shown.</p>
+
+  <!-- Phase 1: Pre-flight -->
+  <p class="section-title">Phase 1 — Pre-flight exclusion checks</p>
+  <div class="rule-set">
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R1</span>
+        <span class="rule-name">Status must be Open</span>
+        <span class="outcome-pill op-skip">Excluded</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">A gig is only eligible for ingestion if its <strong>Status = "Open"</strong> at the time of the export. Any other status — Closed, Draft, Archived, Expired — is silently dropped before any other check runs.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-why"><strong>Why</strong>Non-Open gigs are not live opportunities. Ingesting them would surface unavailable roles to applicants.</div>
+          <div class="rule-box rb-data"><strong>Current data</strong>633 Open gigs in the export. All other statuses are excluded before this analysis — this is the starting population.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R2</span>
+        <span class="rule-name">Test entries must be excluded</span>
+        <span class="outcome-pill op-skip">Excluded</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">A gig is excluded if its <strong>GigName contains "Testing"</strong>, or if its GigID matches a known sandbox record. Currently: GigIDs <strong>13733, 14807, 14813</strong> are confirmed test entries with Open status.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-why"><strong>Why</strong>Test entries are sandbox records, not real opportunities. They must never appear on the OTEP platform.</div>
+          <div class="rule-box rb-exc"><strong>Exception handling</strong>The list of known test IDs should be maintained by the ingestion pipeline team and updated as new test entries are identified.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" style="border-color:#B0CAE8;">
+      <div class="rule-card-header" style="background:#f8fbff;">
+        <span class="rule-number">R3</span>
+        <span class="rule-name">Stale gig handling</span>
+        <span class="outcome-pill op-tbc">BO decision needed</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">A gig is <strong>stale</strong> when its <strong>end_date has passed</strong> but its Status is still Open. Currently <strong>346 gigs</strong> are stale; 255 of those have zero applicants; 74 expired over a year ago.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-why"><strong>BO must choose one of:</strong>
+            <br>A. Exclude all stale gigs (safest for applicant trust)
+            <br>B. Exclude stale + zero-applicant gigs only (255 excluded)
+            <br>C. Ingest stale gigs with a "closing soon" indicator
+            <br>D. Ingest all as-is (no stale logic)
+          </div>
+          <div class="rule-box rb-data"><strong>Impact of each option</strong>
+            <br>A → 346 fewer gigs in OTEP at launch
+            <br>B → 255 fewer gigs; 91 stale-but-active remain
+            <br>C → requires new field in OTEP schema
+            <br>D → applicants may apply to expired roles
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Phase 2: Classification -->
+  <p class="section-title">Phase 2 — Type classification</p>
+  <div class="rule-set">
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R4</span>
+        <span class="rule-name">Opportunity type is derived from the GigName prefix</span>
+        <span class="outcome-pill op-pass">Classification</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Every gig must have a <strong>[type prefix]</strong> at the start of its GigName — e.g. <em>[Gig] Data Analyst role at MTI</em>. The prefix is extracted and matched to one of 6 recognised types.</div>
+        <table style="margin-top:10px;margin-bottom:0;">
+          <thead>
+            <tr>
+              <th>OTEP type</th>
+              <th>Recognised prefixes (examples)</th>
+              <th>Time commitment required?</th>
+              <th>Open gigs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-field">Gig</td>
+              <td>[Gig], [GIG]</td>
+              <td><span class="pill p-block">Yes — hard required</span></td>
+              <td>36</td>
+            </tr>
+            <tr>
+              <td class="td-field">STIP</td>
+              <td>[STIP], [Stip]</td>
+              <td><span class="pill p-block">Yes — hard required</span></td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td class="td-field">Secondment</td>
+              <td>[Secondment], [SECONDMENT]</td>
+              <td><span class="pill p-pass">Not required</span></td>
+              <td>259</td>
+            </tr>
+            <tr>
+              <td class="td-field">Job</td>
+              <td>[Job], [IJP], [Internal Job Posting], [Careers@Gov], [PASTAP], [Internal Rotation]</td>
+              <td><span class="pill p-pass">Not required</span></td>
+              <td>129</td>
+            </tr>
+            <tr>
+              <td class="td-field">SJR</td>
+              <td>[SJR], [Sjr]</td>
+              <td><span class="pill p-pass">Not required</span></td>
+              <td>39</td>
+            </tr>
+            <tr>
+              <td class="td-field">agilePSD</td>
+              <td>[agilePSD]</td>
+              <td><span class="pill p-flag">TBC — BO decision needed</span></td>
+              <td>29</td>
+            </tr>
+            <tr>
+              <td class="td-field" style="color:#888780;">Other (unrecognised)</td>
+              <td>[KidSTART], [Female Only], [Innofest], [OCMO 2026] + 14 others</td>
+              <td><span class="pill p-flag">TBC — BO decision needed</span></td>
+              <td>56</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="rule-card" style="border-color:#B0CAE8;">
+      <div class="rule-card-header" style="background:#f8fbff;">
+        <span class="rule-number">R5</span>
+        <span class="rule-name">Gigs with no type prefix — handling TBC</span>
+        <span class="outcome-pill op-tbc">BO decision needed</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">If GigName does not start with a <strong>[prefix]</strong>, the gig cannot be typed. Currently <strong>78 gigs</strong> have no prefix — mostly from MSF (37) and Enterprise Singapore (19). Based on naming patterns, most are likely Jobs or Secondments.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-why"><strong>BO must choose one of:</strong>
+            <br>A. Hard block — route to remediation report, require agencies to add a prefix (recommended)
+            <br>B. Ingest as "Uncategorised" — display without type, no TC validation
+            <br>C. Attempt keyword inference — classify from GigName body (fragile, needs ongoing maintenance)
+          </div>
+          <div class="rule-box rb-data"><strong>Recommended: Option A</strong><br>Requiring a prefix enforces minimal data quality without guessing. Agencies already use the convention — these are outliers. A clear report message tells them exactly what to add.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Phase 3: Field validation -->
+  <p class="section-title">Phase 3 — Field validation rules</p>
+  <div class="rule-set">
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R6</span>
+        <span class="rule-name">Agency (LocationName) must be present — all types</span>
+        <span class="outcome-pill op-block">Blocked</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Every gig must have a named <strong>owning agency</strong>. A blank or null agency is a hard block — OTEP cannot display the gig without knowing who posted it, and there is no owner to contact for remediation.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>27 gigs across all types are missing agency. 7 are owned by a shared inbox (otg@psd.gov.sg) — technically present but effectively uncontactable.</div>
+          <div class="rule-box rb-exc"><strong>Note on shared inbox</strong>Gigs owned by otg@psd.gov.sg are not hard-blocked (agency field is populated) but are flagged in the remediation report as having no individual owner.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R7</span>
+        <span class="rule-name">Business Unit must be present — all types</span>
+        <span class="outcome-pill op-block">Blocked</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Every gig must have a <strong>Business Unit</strong> set. This is displayed on the OTEP listing and is required for organisational filtering.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>Worst in Other (TBC) type: 23 of 56 missing. Also present in Secondment (7), Job (7), Gig (4), and No tag (6).</div>
+          <div class="rule-box rb-why"><strong>Why</strong>Without BU, OTEP cannot route or filter the opportunity by organisational structure. It is a core metadata field.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" style="border-color:#B0CAE8;">
+      <div class="rule-card-header" style="background:#f8fbff;">
+        <span class="rule-number">R8</span>
+        <span class="rule-name">Function must be present — ruling to confirm</span>
+        <span class="outcome-pill op-tbc">BO to confirm</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Function is currently treated as <strong>required for all types</strong>. However, short-term gigs and STIPs may not map cleanly to a single function. BO to confirm whether a missing Function should hard-block ingestion for all types, or only for permanent/long-term opportunities.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>174 gigs missing Function across all types. Largest gaps: Other TBC (31), Secondment (52), Job (41), Gig (13). If confirmed required for all: all 174 remain blocked.</div>
+          <div class="rule-box rb-exc"><strong>Recommended position</strong>Require Function for all types. It is the primary discoverability filter on OTEP — without it, applicants cannot find the opportunity when browsing by function area.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" style="border-color:#B0CAE8;">
+      <div class="rule-card-header" style="background:#f8fbff;">
+        <span class="rule-number">R9</span>
+        <span class="rule-name">Start date must be present — Secondment/Job exceptions under discussion</span>
+        <span class="outcome-pill op-tbc">BO to confirm</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Start date is currently treated as <strong>required for all types</strong>. However, Secondments (200 missing) and some permanent Jobs may be evergreen — standing opportunities with no fixed start date. BO to rule whether these types may omit start date if the role is ongoing.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>288 gigs missing start date — the single largest blocker. Secondment accounts for 200 of these. If Secondments are exempted, the blocked count drops by up to 200.</div>
+          <div class="rule-box rb-exc"><strong>If exemption granted</strong>A new "evergreen" indicator would need to be added to the ingestion schema, or the exemption is applied at the type level only (Secondment = start date optional). Recommend the latter — simpler to implement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R10</span>
+        <span class="rule-name">End date must be present — all types</span>
+        <span class="outcome-pill op-block">Blocked</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Every gig must have an <strong>end date</strong>. This is used both for display on the OTEP listing and for staleness detection (Rule R3). No exceptions proposed for any type.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>51 gigs missing end date. Secondment accounts for 38. If start date is exempted for Secondments but end date is not, these remain blocked.</div>
+          <div class="rule-box rb-why"><strong>Why no exception</strong>Without an end date, OTEP cannot determine when to delist the opportunity. An open-ended role can still be given a far-future end date by the agency.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R11</span>
+        <span class="rule-name">Time commitment — required for Gig and STIP only</span>
+        <span class="outcome-pill op-block">Blocked (Gig/STIP) · TBC (others)</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">Time commitment is a <strong>hard required field for Gig and STIP</strong> — these are short-term assignments where duration is a core applicant expectation. It is <strong>not required</strong> for Secondment, Job, or SJR. For agilePSD and Other (TBC) types, the rule awaits BO confirmation.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-data"><strong>Current impact</strong>Gig: 5 missing TC (hard blocked). STIP: all 7 have TC (no block). agilePSD: 29 gigs with TC absent — if required, all 29 become blocked; if not, only 5 remain blocked (missing Function).</div>
+          <div class="rule-box rb-exc"><strong>Recommended position for TBC types</strong>Treat agilePSD as job/secondment-equivalent → TC not required. Treat Other (TBC) on a per-tag basis — some variants (e.g. Innofest) are likely project-based and should require TC.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Phase 4: Field extraction -->
+  <p class="section-title">Phase 4 — Field extraction (non-blocking)</p>
+  <div class="rule-set">
+
+    <div class="rule-card">
+      <div class="rule-card-header">
+        <span class="rule-number">R12</span>
+        <span class="rule-name">FormSG URL — extract from description, never blocks ingestion</span>
+        <span class="outcome-pill op-pass">Extract</span>
+      </div>
+      <div class="rule-body">
+        <div class="rule-condition">After a gig passes all field validation checks, the ingestion pipeline scans the <strong>description field</strong> for a FormSG URL matching the pattern <strong><code>https://form.gov.sg/[alphanumeric ID]</code></strong>. The first match is extracted and saved as <code>formsg_url</code>. This field is never a hard requirement — a missing URL is handled gracefully in the UI.</div>
+        <div class="rule-grid">
+          <div class="rule-box rb-why"><strong>If FormSG URL found</strong>Saved as <code>formsg_url</code> on the OTEP opportunity record. The "Apply via FormSG" button on the listing links directly to this URL, routing applicants to the application form.</div>
+          <div class="rule-box rb-exc"><strong>If no FormSG URL found</strong>The "Apply via FormSG" button is replaced with a message: <em>"No FormSG URL available. Please contact the agency who posted this opportunity."</em> The gig is still ingested and visible in OTEP.</div>
+        </div>
+        <div class="rule-grid" style="margin-top:8px;">
+          <div class="rule-box rb-data"><strong>What to look for</strong>FormSG URLs follow the format <code>https://form.gov.sg/XXXXXXXXXX</code> where the ID is alphanumeric. The description may contain it as a hyperlink, inline text, or labelled "Apply here:" — the regex extracts the URL regardless of surrounding text.</div>
+          <div class="rule-box rb-why"><strong>Action needed before implementation</strong>Confirm which OTG source column contains the opportunity description — this field index is not yet mapped. Check that the description column is included in the export used for ingestion.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Summary decision table -->
+  <p class="section-title">Rule summary — field × type outcome matrix</p>
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th class="left">Field / Rule</th>
+        <th>Gig</th>
+        <th>STIP</th>
+        <th>Secondment</th>
+        <th>Job</th>
+        <th>SJR</th>
+        <th>agilePSD</th>
+        <th>Other (TBC)</th>
+        <th>No tag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="left">R4 · Type prefix</td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-pass">✓</span></td>
+        <td><span class="pill p-flag">TBC</span></td>
+        <td><span class="pill p-block">Blocked</span></td>
+      </tr>
+      <tr>
+        <td class="left">R6 · Agency</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+      </tr>
+      <tr>
+        <td class="left">R7 · Business Unit</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+      </tr>
+      <tr>
+        <td class="left">R8 · Function</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+      </tr>
+      <tr>
+        <td class="left">R9 · Start date</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-flag">Pend</span></td>
+        <td><span class="pill p-flag">Pend</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+      </tr>
+      <tr>
+        <td class="left">R10 · End date</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+      </tr>
+      <tr>
+        <td class="left">R11 · Time commitment</td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-flag">TBC</span></td>
+        <td><span class="pill p-flag">TBC</span></td>
+        <td><span class="pill p-na">—</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#888780;margin-top:-10px;margin-bottom:1.5rem;">
+    <strong style="color:#A32D2D;">Req</strong> = missing → BLOCKED &nbsp;·&nbsp;
+    <strong style="color:#854F0B;">Pend / TBC</strong> = awaiting BO decision &nbsp;·&nbsp;
+    <span style="color:#D3D1C7;">—</span> = not applicable, no validation run &nbsp;·&nbsp;
+    ✓ = passes this check
+  </p>
+
+  <!-- Pending decisions -->
+  <p class="section-title">Decisions needed before rules can be finalised</p>
+  <div class="pending-box">
+    <h3>4 open items — BO sign-off required</h3>
+    <div class="pending-row">
+      <strong>D1</strong>
+      <span>Is time commitment required for <strong>agilePSD</strong> and <strong>Other (TBC)</strong> type gigs?</span>
+      <span class="rule-ref">R11</span>
+    </div>
+    <div class="pending-row">
+      <strong>D2</strong>
+      <span>Are <strong>Secondments</strong> (and permanent Jobs) exempt from the start date requirement?</span>
+      <span class="rule-ref">R9</span>
+    </div>
+    <div class="pending-row">
+      <strong>D3</strong>
+      <span>What happens to <strong>stale gigs</strong> (end_date past)? Skip all / skip stale+zero / flag / ingest as-is?</span>
+      <span class="rule-ref">R3</span>
+    </div>
+    <div class="pending-row">
+      <strong>D4</strong>
+      <span>What happens to gigs with <strong>no type prefix</strong>? Hard block / ingest as Uncategorised / keyword inference?</span>
+      <span class="rule-ref">R5</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Rules drafted: 10 June 2026 &nbsp;·&nbsp; Status: DRAFT — 4 rules pending BO sign-off &nbsp;·&nbsp; Part of OTEP_Research series (file 09 of 09)
+  </div>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

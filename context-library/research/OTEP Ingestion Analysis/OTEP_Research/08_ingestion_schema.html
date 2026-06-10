@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Ingestion Schema</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Header */
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+
+  /* Section */
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 2rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Summary chips */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .chip { font-size: 12px; padding: 4px 12px; border-radius: 20px; border: 0.5px solid #e0dfd8; background: #fff; color: #5f5e5a; }
+  .chip strong { font-weight: 500; color: #1a1a18; }
+
+  /* Field mapping table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; font-size: 12px; margin-bottom: 1.5rem; }
+  thead { background: #f8f7f3; }
+  th { text-align: left; padding: 9px 12px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; border-bottom: 1px solid #e0dfd8; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf7; }
+  .col-source { font-family: 'SF Mono', 'Menlo', monospace; font-size: 11px; color: #5f5e5a; }
+  .col-target { font-family: 'SF Mono', 'Menlo', monospace; font-size: 11px; font-weight: 500; color: #1a1a18; }
+  .col-type { font-size: 11px; color: #5f5e5a; }
+  .col-transform { font-size: 11px; color: #5f5e5a; line-height: 1.5; }
+  .col-notes { font-size: 11px; color: #5f5e5a; line-height: 1.5; }
+  .tag { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .tag-req   { background: #FCEBEB; color: #A32D2D; }
+  .tag-cond  { background: #FAEEDA; color: #854F0B; }
+  .tag-tbc   { background: #f1efe8; color: #5f5e5a; }
+  .tag-der   { background: #e6f1fb; color: #185fa5; }
+  .tag-meta  { background: #EAF3DE; color: #3B6D11; }
+  .tag-excl  { background: #f8f7f3; color: #888780; }
+
+  /* Validation matrix */
+  .matrix-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+  .matrix { border-collapse: collapse; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; font-size: 11px; min-width: 700px; }
+  .matrix th { text-align: center; padding: 8px 10px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; border-bottom: 1px solid #e0dfd8; white-space: nowrap; }
+  .matrix th.field-col { text-align: left; min-width: 130px; }
+  .matrix td { text-align: center; padding: 8px 10px; border-bottom: 0.5px solid #f1efe8; border-right: 0.5px solid #f1efe8; }
+  .matrix td.field-name { text-align: left; font-size: 11px; font-weight: 500; color: #1a1a18; font-family: 'SF Mono', 'Menlo', monospace; padding-left: 12px; border-right: 1px solid #e0dfd8; }
+  .matrix tr:last-child td { border-bottom: none; }
+  .cell-req  { background: #FCEBEB; color: #A32D2D; font-weight: 500; font-size: 10px; border-radius: 4px; padding: 2px 6px; }
+  .cell-na   { color: #D3D1C7; font-size: 16px; }
+  .cell-tbc  { background: #FAEEDA; color: #854F0B; font-weight: 500; font-size: 10px; border-radius: 4px; padding: 2px 6px; }
+  .cell-pend { background: #e6f1fb; color: #185fa5; font-weight: 500; font-size: 10px; border-radius: 4px; padding: 2px 6px; }
+
+  /* Exclusion rules */
+  .rule-list { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .rule-item { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; padding: 10px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-step { font-size: 11px; font-weight: 500; color: #b4b2a9; padding-top: 2px; }
+  .rule-body { font-size: 12px; line-height: 1.6; }
+  .rule-body strong { font-weight: 500; }
+  .rule-note { font-size: 11px; color: #5f5e5a; margin-top: 2px; }
+  .rule-badge { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 500; white-space: nowrap; align-self: center; }
+  .rb-block  { background: #FCEBEB; color: #A32D2D; }
+  .rb-skip   { background: #f1efe8; color: #5f5e5a; }
+  .rb-flag   { background: #FAEEDA; color: #854F0B; }
+  .rb-tbc    { background: #e6f1fb; color: #185fa5; }
+
+  /* Decision table */
+  .decision-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .decision-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem; }
+  .decision-card h3 { font-size: 12px; font-weight: 500; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .d-num { font-size: 10px; background: #f1efe8; color: #888780; border-radius: 20px; padding: 1px 7px; font-weight: 500; }
+  .decision-card p { font-size: 11px; color: #5f5e5a; margin-bottom: 6px; line-height: 1.5; }
+  .schema-impact { font-size: 11px; padding: 6px 9px; background: #f8f7f3; border-radius: 6px; border-left: 2px solid #EF9F27; color: #5f5e5a; }
+  .schema-impact strong { font-weight: 500; color: #1a1a18; }
+
+  /* Flow diagram */
+  .flow { display: flex; align-items: stretch; gap: 0; margin-bottom: 1.5rem; overflow-x: auto; }
+  .flow-step { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .9rem 1rem; min-width: 160px; flex: 1; }
+  .flow-arrow { display: flex; align-items: center; padding: 0 6px; color: #b4b2a9; font-size: 18px; flex-shrink: 0; }
+  .flow-step h4 { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 6px; }
+  .flow-step ul { list-style: none; }
+  .flow-step ul li { font-size: 11px; color: #5f5e5a; padding: 2px 0; display: flex; gap: 5px; }
+  .flow-step ul li::before { content: "·"; color: #b4b2a9; flex-shrink: 0; }
+  .flow-step.highlight { border-color: #B0CAE8; background: #F0F6FC; }
+  .flow-step.reject { border-color: #F5C6C6; background: #FDF5F5; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+  code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 11px; background: #f1efe8; padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP — Ingestion Schema</h1>
+    <p>Field mapping, validation rules, exclusion logic, and pending decisions &nbsp;·&nbsp; OTG → OTEP ingestion contract &nbsp;·&nbsp; Draft as at 10 June 2026</p>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><strong>11</strong> source fields mapped</div>
+    <div class="chip"><strong>7</strong> required fields in ingestion</div>
+    <div class="chip"><strong>5</strong> exclusion checks before validation</div>
+    <div class="chip"><strong>4</strong> BO decisions affect schema</div>
+    <div class="chip"><strong>1</strong> derived field (opportunity type)</div>
+  </div>
+
+  <!-- Pipeline flow -->
+  <p class="section-title">Ingestion pipeline — overview</p>
+  <div class="flow">
+    <div class="flow-step">
+      <h4>1 · Source extract</h4>
+      <ul>
+        <li>OTG gigs_v2_report export</li>
+        <li>Filter Status = Open</li>
+        <li>All 22 columns available</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step reject">
+      <h4>2 · Pre-flight exclusions</h4>
+      <ul>
+        <li>Remove test entries</li>
+        <li>Stale gig policy (TBC)</li>
+        <li>No-owner records flagged</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step highlight">
+      <h4>3 · Type classification</h4>
+      <ul>
+        <li>Regex on GigName [prefix]</li>
+        <li>8 type buckets</li>
+        <li>No tag → blocked</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step reject">
+      <h4>4 · Field validation</h4>
+      <ul>
+        <li>Type-conditional rules</li>
+        <li>Block if any hard field missing</li>
+        <li>AMBER if TBC field missing</li>
+      </ul>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step highlight">
+      <h4>5 · OTEP ingest</h4>
+      <ul>
+        <li>Field transform &amp; map</li>
+        <li>Write to OTEP catalogue</li>
+        <li>Rejected → report</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Field mapping -->
+  <p class="section-title">Field mapping — OTG source → OTEP target</p>
+  <table>
+    <thead>
+      <tr>
+        <th>OTEP field</th>
+        <th>OTG source column</th>
+        <th>Col index</th>
+        <th>Data type</th>
+        <th>Transform</th>
+        <th>Classification</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="col-target">opportunity_id</td>
+        <td class="col-source">GigID</td>
+        <td class="col-type">[0]</td>
+        <td class="col-type">Integer</td>
+        <td class="col-transform">Direct copy</td>
+        <td><span class="tag tag-meta">Identifier</span></td>
+        <td class="col-notes">Primary key. Always present — no NULLs observed.</td>
+      </tr>
+      <tr>
+        <td class="col-target">opportunity_type</td>
+        <td class="col-source">GigName</td>
+        <td class="col-type">[1]</td>
+        <td class="col-type">String → Enum</td>
+        <td class="col-transform">Regex: <code>^\[([^\]]+)\]</code> → tag → enum lookup</td>
+        <td><span class="tag tag-der">Derived</span> <span class="tag tag-req">Required</span></td>
+        <td class="col-notes">No dedicated type column in OTG. Classification entirely from name prefix. No tag = hard block. See type matrix below.</td>
+      </tr>
+      <tr>
+        <td class="col-target">title</td>
+        <td class="col-source">GigName</td>
+        <td class="col-type">[1]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Strip <code>[prefix]</code>, trim whitespace</td>
+        <td><span class="tag tag-der">Derived</span></td>
+        <td class="col-notes">Display title for OTEP listing card. Prefix removed after type classification.</td>
+      </tr>
+      <tr>
+        <td class="col-target">agency</td>
+        <td class="col-source">LocationName</td>
+        <td class="col-type">[9]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Trim whitespace</td>
+        <td><span class="tag tag-req">Required</span></td>
+        <td class="col-notes">Maps to owning agency. 5–27 gigs per type have blank/NULL agency — no owner to contact for remediation.</td>
+      </tr>
+      <tr>
+        <td class="col-target">business_unit</td>
+        <td class="col-source">BusinessUnit</td>
+        <td class="col-type">[6]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Trim whitespace</td>
+        <td><span class="tag tag-req">Required</span></td>
+        <td class="col-notes">Shown on OTEP listing. Widely missing in Other (TBC) type (23 of 56).</td>
+      </tr>
+      <tr>
+        <td class="col-target">function</td>
+        <td class="col-source">Function</td>
+        <td class="col-type">[7]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Trim whitespace</td>
+        <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
+        <td class="col-notes">174 gigs missing across all types. BO to confirm if truly required for all — short-term gigs may not map neatly to a function.</td>
+      </tr>
+      <tr>
+        <td class="col-target">start_date</td>
+        <td class="col-source">GigStart</td>
+        <td class="col-type">[12]</td>
+        <td class="col-type">DateTime → Date</td>
+        <td class="col-transform">Parse date, strip time component</td>
+        <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
+        <td class="col-notes">288 gigs missing — the single biggest blocker. Secondment alone: 200 missing. BO to rule if evergreen/standing opportunities can be exempt.</td>
+      </tr>
+      <tr>
+        <td class="col-target">end_date</td>
+        <td class="col-source">GigEnd</td>
+        <td class="col-type">[13]</td>
+        <td class="col-type">DateTime → Date</td>
+        <td class="col-transform">Parse date, strip time component</td>
+        <td><span class="tag tag-req">Required</span></td>
+        <td class="col-notes">Used for staleness check (end_date &lt; today = stale). 50 gigs missing across all types. Also drives stale exclusion logic.</td>
+      </tr>
+      <tr>
+        <td class="col-target">time_commitment</td>
+        <td class="col-source">TimeCommitment</td>
+        <td class="col-type">[11]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Trim whitespace</td>
+        <td><span class="tag tag-cond">Conditional</span> <span class="tag tag-tbc">BO decision</span></td>
+        <td class="col-notes">Required for Gig and STIP only (confirmed). Not required for Secondment, Job, SJR. TBC for agilePSD and Other — affects 109 gigs.</td>
+      </tr>
+      <tr>
+        <td class="col-target">applicant_count</td>
+        <td class="col-source">TotalNumberOfApplicants</td>
+        <td class="col-type">[18]</td>
+        <td class="col-type">Integer</td>
+        <td class="col-transform">Direct copy, default 0 if NULL</td>
+        <td><span class="tag tag-meta">Metadata</span></td>
+        <td class="col-notes">Not a validation field — informational only. Used for stale+zero-applicant flagging in remediation report.</td>
+      </tr>
+      <tr>
+        <td class="col-target">source_status</td>
+        <td class="col-source">Status</td>
+        <td class="col-type">[19]</td>
+        <td class="col-type">String</td>
+        <td class="col-transform">Filter: only pass "Open"</td>
+        <td><span class="tag tag-excl">Exclusion gate</span></td>
+        <td class="col-notes">Pre-flight filter — non-Open gigs never reach validation. Not stored in OTEP target (implicit from being in catalogue).</td>
+      </tr>
+      <tr>
+        <td class="col-target">formsg_url</td>
+        <td class="col-source">Description</td>
+        <td class="col-type">[TBD — confirm column index]</td>
+        <td class="col-type">String → URL or null</td>
+        <td class="col-transform">Regex: <code>https://form\.gov\.sg/[a-zA-Z0-9]+</code> — extract first match from description text</td>
+        <td><span class="tag tag-der">Derived</span> <span class="tag tag-meta">Non-blocking</span></td>
+        <td class="col-notes">Not a validation field — never blocks ingestion. If URL found: saved and surfaced on "Apply via FormSG" button. If not found: UI displays <em>"No FormSG URL available. Please contact the agency who posted this opportunity."</em> Description column index must be confirmed before implementation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Validation matrix -->
+  <p class="section-title">Validation matrix — required fields by opportunity type</p>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="field-col">Field</th>
+          <th>Gig</th>
+          <th>STIP</th>
+          <th>Secondment</th>
+          <th>Job</th>
+          <th>SJR</th>
+          <th>agilePSD</th>
+          <th>Other (TBC)</th>
+          <th>No tag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-name">opportunity_type</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">agency</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">business_unit</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">function</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">start_date</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-pend">PEND</span></td>
+          <td><span class="cell-pend">PEND</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">end_date</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+        </tr>
+        <tr>
+          <td class="field-name">time_commitment</td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-tbc">TBC</span></td>
+          <td><span class="cell-tbc">TBC</span></td>
+          <td><span class="cell-na">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:11px;color:#888780;margin-top:-10px;margin-bottom:1.5rem;">
+    <strong style="color:#A32D2D;">REQ</strong> = hard block if missing &nbsp;·&nbsp;
+    <strong style="color:#854F0B;">TBC</strong> = amber flag, awaiting BO ruling &nbsp;·&nbsp;
+    <strong style="color:#185fa5;">PEND</strong> = ruled required but Secondment/Job exceptions under discussion &nbsp;·&nbsp;
+    <span style="color:#D3D1C7;">—</span> = not applicable for this type
+  </p>
+
+  <!-- Exclusion logic -->
+  <p class="section-title">Exclusion logic — pre-validation checks (in order)</p>
+  <div class="rule-list">
+    <div class="rule-item">
+      <span class="rule-step">1</span>
+      <div class="rule-body">
+        <strong>Status filter</strong>
+        <div class="rule-note">Only records where <code>Status = "Open"</code> proceed. All others dropped silently — they are not errors, just inactive.</div>
+      </div>
+      <span class="rule-badge rb-skip">Skip</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-step">2</span>
+      <div class="rule-body">
+        <strong>Test entry exclusion</strong>
+        <div class="rule-note">GigName contains "Testing", "test entry", or GigID matches known sandbox IDs (13733, 14807, 14813). Hard exclude — must not appear in OTEP catalogue.</div>
+      </div>
+      <span class="rule-badge rb-block">Exclude</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-step">3</span>
+      <div class="rule-body">
+        <strong>Stale gig check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
+        <div class="rule-note"><code>end_date &lt; today</code> and <code>Status = Open</code>. 346 gigs currently affected. BO options: (A) skip all stale, (B) skip if stale AND zero applicants (255 gigs), (C) ingest with a "closing soon" flag, (D) ingest as-is.</div>
+      </div>
+      <span class="rule-badge rb-tbc">TBC</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-step">4</span>
+      <div class="rule-body">
+        <strong>No-type-tag check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
+        <div class="rule-note">GigName does not start with <code>[</code> — no prefix present. 78 gigs. BO options: (A) hard block and route to report, (B) ingest as "Uncategorised" type, (C) attempt fuzzy matching on GigName keywords.</div>
+      </div>
+      <span class="rule-badge rb-tbc">TBC</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-step">5</span>
+      <div class="rule-body">
+        <strong>No-owner flag</strong>
+        <div class="rule-note">Agency is blank or owned by <code>otg@psd.gov.sg</code> shared inbox (7 gigs). These proceed through validation but are flagged in the remediation report as uncontactable — no one to fix them.</div>
+      </div>
+      <span class="rule-badge rb-flag">Flag</span>
+    </div>
+  </div>
+
+  <!-- Type classification detail -->
+  <p class="section-title">Opportunity type — classification logic</p>
+  <table>
+    <thead>
+      <tr>
+        <th>OTEP type value</th>
+        <th>Regex match on [prefix]</th>
+        <th>Example tags observed</th>
+        <th>TC required?</th>
+        <th>n (open gigs)</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="col-target">Gig</td>
+        <td class="col-source">\bgig\b</td>
+        <td class="col-notes">[Gig], [GIG]</td>
+        <td><span class="tag tag-req">Yes</span></td>
+        <td class="col-type">36</td>
+        <td><span class="tag tag-meta">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">STIP</td>
+        <td class="col-source">stip</td>
+        <td class="col-notes">[STIP], [Stip]</td>
+        <td><span class="tag tag-req">Yes</span></td>
+        <td class="col-type">7</td>
+        <td><span class="tag tag-meta">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">Secondment</td>
+        <td class="col-source">secondment</td>
+        <td class="col-notes">[Secondment], [SECONDMENT]</td>
+        <td><span class="tag tag-excl">No</span></td>
+        <td class="col-type">259</td>
+        <td><span class="tag tag-meta">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">Job</td>
+        <td class="col-source">\bjob\b | ijp | internal job | internal rotation | careers@gov | pastap</td>
+        <td class="col-notes">[Job], [IJP], [Internal Job Posting], [Careers@Gov], [PASTAP]</td>
+        <td><span class="tag tag-excl">No</span></td>
+        <td class="col-type">129</td>
+        <td><span class="tag tag-meta">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">SJR</td>
+        <td class="col-source">sjr</td>
+        <td class="col-notes">[SJR], [Sjr]</td>
+        <td><span class="tag tag-excl">No</span></td>
+        <td class="col-type">39</td>
+        <td><span class="tag tag-meta">Confirmed</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">agilePSD</td>
+        <td class="col-source">^agilepsd</td>
+        <td class="col-notes">[agilePSD]</td>
+        <td><span class="tag tag-tbc">TBC</span></td>
+        <td class="col-type">29</td>
+        <td><span class="tag tag-cond">TC rule pending BO</span></td>
+      </tr>
+      <tr>
+        <td class="col-target">Other</td>
+        <td class="col-source">Any unmatched [prefix]</td>
+        <td class="col-notes">[KidSTART], [Female Only], [Innofest], [OCMO 2026], [Overseas Posting] + 13 others</td>
+        <td><span class="tag tag-tbc">TBC</span></td>
+        <td class="col-type">56</td>
+        <td><span class="tag tag-cond">TC rule pending BO</span></td>
+      </tr>
+      <tr>
+        <td class="col-target" style="color:#888780;">No tag</td>
+        <td class="col-source">No match (no <code>[</code> prefix)</td>
+        <td class="col-notes">Raw job titles with no bracket prefix</td>
+        <td><span class="tag tag-excl">N/A</span></td>
+        <td class="col-type">78</td>
+        <td><span class="tag tag-req">Hard blocked</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- BO decisions affecting schema -->
+  <p class="section-title">BO decisions that gate this schema</p>
+  <div class="decision-grid">
+    <div class="decision-card">
+      <h3><span class="d-num">D1</span> TC rule for agilePSD &amp; Other (TBC)</h3>
+      <p>Is time commitment required for uncertain-type gigs? Affects 109 gigs.</p>
+      <div class="schema-impact">
+        <strong>Schema impact:</strong> If yes — 109 more gigs become hard-blocked. If no — TC validation rule is marked N/A for these types. The matrix cell changes from TBC → REQ or —.
+      </div>
+    </div>
+    <div class="decision-card">
+      <h3><span class="d-num">D2</span> Start date exemptions</h3>
+      <p>Are evergreen/standing opportunities (e.g. Secondments, permanent roles) exempt from requiring a start date?</p>
+      <div class="schema-impact">
+        <strong>Schema impact:</strong> If Secondments exempt — 200 gigs unblock immediately. The PEND cell for Secondment in the matrix changes to —. Would require a new <code>is_evergreen</code> flag or type-level override in the schema.
+      </div>
+    </div>
+    <div class="decision-card">
+      <h3><span class="d-num">D3</span> Stale gig handling</h3>
+      <p>Should Open gigs with end_date in the past be ingested, skipped, or flagged?</p>
+      <div class="schema-impact">
+        <strong>Schema impact:</strong> Affects exclusion rule #3. If skipped — ingestion shrinks by up to 346 gigs. If flagged with status — OTEP schema needs an <code>is_stale</code> or <code>listing_status</code> field. If ingested as-is — no schema change needed.
+      </div>
+    </div>
+    <div class="decision-card">
+      <h3><span class="d-num">D4</span> No-tag gig handling</h3>
+      <p>Hard block, ingest as "Uncategorised", or attempt fuzzy type inference for 78 untagged gigs?</p>
+      <div class="schema-impact">
+        <strong>Schema impact:</strong> If Uncategorised allowed — OTEP type enum must include an "Uncategorised" value. If fuzzy inference — classification logic gains a fallback branch (keyword matching on GigName body). If hard block — no schema change.
+      </div>
+    </div>
+  </div>
+
+  <!-- Known schema gaps -->
+  <p class="section-title">Known gaps in the current OTG data model</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Gap</th>
+        <th>Root cause in OTG</th>
+        <th>Recommended fix</th>
+        <th>Owner</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-size:12px;font-weight:500;">No dedicated type column</td>
+        <td class="col-notes">Opportunity type embedded in GigName as [prefix] convention</td>
+        <td class="col-notes">Add a <code>Type</code> field to OTG creation form. Short-term: maintain regex classification; long-term: replace with form-enforced enum.</td>
+        <td class="col-type">OTG platform owner</td>
+      </tr>
+      <tr>
+        <td style="font-size:12px;font-weight:500;">No tag governance</td>
+        <td class="col-notes">Any agency can create a novel [prefix] — no canonical list enforced at source</td>
+        <td class="col-notes">Define and publish a canonical tag taxonomy. Gate new tags at OTG creation. Assign a tag registry owner to approve additions.</td>
+        <td class="col-type">Policy / OTG admin</td>
+      </tr>
+      <tr>
+        <td style="font-size:12px;font-weight:500;">Eligibility misused as type</td>
+        <td class="col-notes">[Female Only], [For Grade 12/11 equivalent] used as type tags instead of a separate eligibility field</td>
+        <td class="col-notes">Add a separate <code>Eligibility</code> field to OTG. These entries currently cannot be typed correctly — they have no opportunity type, only a filter condition.</td>
+        <td class="col-type">OTG platform owner</td>
+      </tr>
+      <tr>
+        <td style="font-size:12px;font-weight:500;">No staleness management</td>
+        <td class="col-notes">Status stays "Open" even after end_date passes — no auto-close logic in OTG</td>
+        <td class="col-notes">OTG should auto-delist or set Status = "Closed" when end_date passes. OTEP ingestion is the wrong place to make this judgment call at scale.</td>
+        <td class="col-type">OTG platform owner</td>
+      </tr>
+      <tr>
+        <td style="font-size:12px;font-weight:500;">Casing inconsistency</td>
+        <td class="col-notes">[Innofest] vs [INNOFEST] produce different classification results</td>
+        <td class="col-notes">Ingestion pipeline normalises all tags to lowercase before regex matching (already implemented). Long-term: OTG enforces canonical casing at source.</td>
+        <td class="col-type">Ingestion pipeline (done)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9–10 June 2026 &nbsp;·&nbsp; Schema status: DRAFT — pending 4 BO decisions &nbsp;·&nbsp; Part of OTEP_Research series (file 08 of 08)
+  </div>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP Ingestion — Agency Breakdown</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.5; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; }
+  .chart-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .chart-card h3 { font-size: 13px; font-weight: 500; margin-bottom: 1rem; color: #2c2c2a; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; font-size: 11px; color: #5f5e5a; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .legend-sq { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .agency-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: .5rem; }
+  .agency-table th { font-size: 11px; font-weight: 500; color: #888780; text-align: left; padding: 6px 10px 6px 0; border-bottom: 1px solid #e0dfd8; white-space: nowrap; }
+  .agency-table th.r { text-align: right; padding-right: 0; }
+  .agency-table td { padding: 7px 10px 7px 0; border-bottom: 0.5px solid #f1efe8; vertical-align: middle; color: #1a1a18; }
+  .agency-table td.r { text-align: right; padding-right: 0; font-weight: 500; }
+  .agency-table tr:last-child td { border-bottom: none; }
+  .agency-table tr:hover td { background: #faf9f6; }
+  .issue-mini { display: flex; gap: 4px; flex-wrap: wrap; }
+  .i-chip { font-size: 10px; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+  .i-red { background: #fcebeb; color: #a32d2d; }
+  .i-amber { background: #faeeda; color: #854f0b; }
+  .rank-num { font-size: 11px; color: #b4b2a9; font-weight: 500; }
+  .blocked-bar { display: flex; align-items: center; gap: 6px; }
+  .blocked-bar-track { width: 80px; height: 6px; background: #f1efe8; border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+  .blocked-bar-fill { height: 100%; border-radius: 3px; background: #e24b4a; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Agency Breakdown</h1>
+    <p>Blocked gigs by agency and opportunity type &nbsp;·&nbsp; As at 9 June 2026</p>
+  </div>
+
+  <p class="section-title">Top 10 agencies — blocked gig count by type</p>
+  <div class="chart-card">
+    <div class="legend" id="stackLegend"></div>
+    <div style="position:relative;height:360px;">
+      <canvas id="stackedChart" role="img" aria-label="Stacked bar chart showing blocked gigs per agency broken down by opportunity type">Blocked gigs by agency and type</canvas>
+    </div>
+  </div>
+
+  <p class="section-title">Agency detail — top issues in blocked gigs</p>
+  <div class="chart-card">
+    <table class="agency-table">
+      <thead>
+        <tr>
+          <th style="width:24px;"></th>
+          <th>Agency</th>
+          <th class="r" style="padding-right:12px;">Open</th>
+          <th class="r" style="padding-right:12px;">Blocked</th>
+          <th class="r" style="padding-right:12px;">% blocked</th>
+          <th>Top issues in blocked gigs</th>
+          <th class="r">Stale</th>
+        </tr>
+      </thead>
+      <tbody id="agencyTableBody"></tbody>
+    </table>
+  </div>
+
+  <p class="section-title">Blocked gigs by opportunity type — all agencies</p>
+  <div class="two-col">
+    <div class="chart-card">
+      <h3>Count of blocked gigs per type</h3>
+      <div style="position:relative;height:250px;">
+        <canvas id="typeBlockedChart" role="img" aria-label="Blocked gigs by type bar chart">Blocked gigs by type</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>% of each type that is blocked</h3>
+      <div style="position:relative;height:250px;">
+        <canvas id="typePctChart" role="img" aria-label="Percentage blocked per type">% blocked per type</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9 June 2026
+  </div>
+</div>
+
+<script>
+const typeColors = {
+  'Secondment': '#5DCAA5', 'Job': '#85B7EB', 'No tag': '#7F77DD',
+  'Other (TBC)': '#EF9F27', 'SJR': '#AFA9EC', 'Gig': '#378ADD',
+  'agilePSD (TBC)': '#1D9E75', 'STIP': '#F09595'
+};
+
+const pivotData = {
+  'Enterprise Singapore':              {Gig:10,Job:21,'No tag':19,'Other (TBC)':5,SJR:0,STIP:0,Secondment:123,'agilePSD (TBC)':0},
+  'Ministry of Trade and Industry':    {Gig:0,Job:1,'No tag':7,'Other (TBC)':0,SJR:0,STIP:0,Secondment:34,'agilePSD (TBC)':0},
+  'Ministry of Social and Family Dev': {Gig:0,Job:0,'No tag':37,'Other (TBC)':2,SJR:0,STIP:1,Secondment:0,'agilePSD (TBC)':0},
+  '(No agency set)':                   {Gig:0,Job:13,'No tag':1,'Other (TBC)':3,SJR:5,STIP:0,Secondment:5,'agilePSD (TBC)':0},
+  'National Library Board':            {Gig:0,Job:11,'No tag':1,'Other (TBC)':7,SJR:0,STIP:1,Secondment:0,'agilePSD (TBC)':0},
+  'Ministry of Finance':               {Gig:0,Job:0,'No tag':0,'Other (TBC)':0,SJR:0,STIP:0,Secondment:17,'agilePSD (TBC)':0},
+  'Public Service Division':           {Gig:0,Job:0,'No tag':2,'Other (TBC)':0,SJR:0,STIP:0,Secondment:5,'agilePSD (TBC)':5},
+  'Ministry of Health':                {Gig:0,Job:5,'No tag':0,'Other (TBC)':0,SJR:2,STIP:0,Secondment:6,'agilePSD (TBC)':0},
+  'Workforce Singapore':               {Gig:0,Job:4,'No tag':1,'Other (TBC)':6,SJR:0,STIP:0,Secondment:2,'agilePSD (TBC)':0},
+  'Ministry of Digital Dev and Info':  {Gig:0,Job:0,'No tag':0,'Other (TBC)':13,SJR:0,STIP:0,Secondment:0,'agilePSD (TBC)':0},
+};
+
+const agencies = Object.keys(pivotData);
+const types = ['Secondment','Job','No tag','Other (TBC)','SJR','Gig','agilePSD (TBC)','STIP'];
+
+const legendEl = document.getElementById('stackLegend');
+types.forEach(t => {
+  legendEl.innerHTML += `<span><span class="legend-sq" style="background:${typeColors[t]}"></span>${t}</span>`;
+});
+
+new Chart(document.getElementById('stackedChart'), {
+  type: 'bar',
+  data: {
+    labels: agencies,
+    datasets: types.map(t => ({
+      label: t,
+      data: agencies.map(a => pivotData[a][t] || 0),
+      backgroundColor: typeColors[t],
+      borderSkipped: false,
+    }))
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#888780', maxRotation: 35 } },
+      y: { stacked: true, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+
+const tableData = [
+  {name:'Enterprise Singapore',      open:197, blocked:178, start:156, fn:27,  bu:5,  tag:19, tc:5,  stale:139},
+  {name:'Ministry of Trade & Ind.',  open:44,  blocked:42,  start:39,  fn:16,  bu:1,  tag:7,  tc:0,  stale:17},
+  {name:'MSF',                        open:43,  blocked:40,  start:0,   fn:7,   bu:0,  tag:37, tc:1,  stale:6},
+  {name:'(No agency set)',            open:27,  blocked:27,  start:11,  fn:8,   bu:4,  tag:1,  tc:0,  stale:3},
+  {name:'National Library Board',    open:23,  blocked:20,  start:11,  fn:3,   bu:2,  tag:1,  tc:1,  stale:0},
+  {name:'Ministry of Finance',       open:18,  blocked:17,  start:16,  fn:0,   bu:0,  tag:0,  tc:0,  stale:12},
+  {name:'Public Service Division',   open:36,  blocked:12,  start:2,   fn:5,   bu:0,  tag:2,  tc:0,  stale:0},
+  {name:'Ministry of Health',        open:17,  blocked:13,  start:8,   fn:2,   bu:2,  tag:0,  tc:0,  stale:4},
+  {name:'Workforce Singapore',       open:14,  blocked:13,  start:5,   fn:5,   bu:3,  tag:1,  tc:0,  stale:4},
+  {name:'MDDI',                      open:13,  blocked:13,  start:0,   fn:8,   bu:7,  tag:0,  tc:0,  stale:2},
+];
+
+const tbody = document.getElementById('agencyTableBody');
+tableData.forEach((r, i) => {
+  const pct = Math.round(r.blocked / r.open * 100);
+  const barW = Math.round(r.blocked / 178 * 100);
+  const issues = [];
+  if (r.start > 0) issues.push(`<span class="i-chip i-red">Start date: ${r.start}</span>`);
+  if (r.tag > 0) issues.push(`<span class="i-chip i-red">No type tag: ${r.tag}</span>`);
+  if (r.fn > 0) issues.push(`<span class="i-chip i-amber">Function: ${r.fn}</span>`);
+  if (r.bu > 0) issues.push(`<span class="i-chip i-amber">Business unit: ${r.bu}</span>`);
+  if (r.tc > 0) issues.push(`<span class="i-chip i-red">Time commitment: ${r.tc}</span>`);
+  tbody.innerHTML += `
+    <tr>
+      <td><span class="rank-num">${i+1}</span></td>
+      <td>${r.name}</td>
+      <td class="r" style="padding-right:12px;">${r.open}</td>
+      <td class="r" style="padding-right:12px;">
+        <div class="blocked-bar">
+          <div class="blocked-bar-track"><div class="blocked-bar-fill" style="width:${barW}%"></div></div>
+          <span>${r.blocked}</span>
+        </div>
+      </td>
+      <td class="r" style="padding-right:12px;">${pct}%</td>
+      <td><div class="issue-mini">${issues.join('')}</div></td>
+      <td class="r">${r.stale}</td>
+    </tr>`;
+});
+
+const blockedByType = {Gig:20,Job:87,'No tag':78,'Other (TBC)':35,SJR:13,STIP:5,Secondment:230,'agilePSD (TBC)':5};
+const totalByType = {Gig:36,Job:129,'No tag':78,'Other (TBC)':56,SJR:39,STIP:7,Secondment:259,'agilePSD (TBC)':29};
+const tLabels = Object.keys(blockedByType);
+
+new Chart(document.getElementById('typeBlockedChart'), {
+  type: 'bar',
+  data: {
+    labels: tLabels,
+    datasets: [{data: Object.values(blockedByType), backgroundColor: tLabels.map(t => typeColors[t]), borderRadius: 3, borderSkipped: false}]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('typePctChart'), {
+  type: 'bar',
+  data: {
+    labels: tLabels,
+    datasets: [{
+      data: tLabels.map(t => Math.round(blockedByType[t]/totalByType[t]*100)),
+      backgroundColor: tLabels.map(t => typeColors[t]),
+      borderRadius: 3, borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.parsed.x}% blocked` } }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780', callback: v => v + '%' },
+        max: 100
+      },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

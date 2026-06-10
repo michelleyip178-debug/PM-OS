@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "otep-ingestion-analysis",
+  "public": false,
+  "routes": [
+    { "src": "/", "dest": "/00_index.html" },
+    { "src": "/index", "dest": "/00_index.html" }
+  ]
+}
