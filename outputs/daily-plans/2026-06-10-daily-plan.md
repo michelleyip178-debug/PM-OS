@@ -10,18 +10,24 @@ mcps_used: [Jira (live — jira-sprint.sh)]
 
 ## TL;DR
 
-- **Meetings:** 3 today — Standup (11:00), OTEP Product × BO Senior (13:00), Dependencies Sync-Up with Core team (16:00–16:45)
-- **P0 Count:** 1 — S4 goal draft before Thu Planning (ARK email sent ✅)
-- **Key Focus:** S4 goal + story sizing. Dependencies Sync covers Imelda — go in with your four asks ready.
+- **Meetings:** 3 today — Standup (11:00) ✅, OTEP Product × BO Senior (13:00), Dependencies Sync-Up with Core team (16:00–16:45)
+- **P0 Count:** 3 — WOG AD form (today deadline), UI PRD scope (unblocks Hao Eng), S4 goal confirmed ✅
+- **Key Focus:** WOG AD form before EOD. Dependencies Sync at 16:00 — go in with Core API reviewed + four Imelda asks ready.
 
 ---
 
 ## Carry-Over from Tue 9 Jun
 
 - [x] ~~**Send ARK request email for Jobelle**~~ — ✅ sent to Adrian for approval
-- [ ] **Review monthly progress report for OTG** — ⚠️ due TODAY (Wed 10 Jun)
-- [ ] **Draft S4 goal + frame C@G stories for Thu Planning** — drafted; confirm with team at Planning tomorrow
+- [x] ~~**Draft S4 goal + frame C@G stories for Thu Planning**~~ — ✅ drafted; confirm at Planning tomorrow
 - [x] ~~**Book Imelda (CSC SSO + competency SSOT)**~~ — covered by Dependencies Sync-Up at 16:00 today ✅
+- [ ] **Review monthly progress report for OTG** — ⚠️ still due today
+
+## New from Standup (10 Jun)
+
+- [ ] **Fill WOG AD form** — Pow Hwee flagged as today deadline (open item #26)
+- [ ] **UI PRD scope** — Hao Eng holding UI work until Michelle provides PRD; define scope before S4 starts
+- [ ] **C@G description structure** — Thomas raised in standup; needs answer before Planning tomorrow (affects OTEP-87 ACs)
 
 Outcomes from Tue unknown (no calendar MCP) — check if Design Review landed S4 design priorities and if PM Weekly assigned SteerCo deliverable ownership.
 
@@ -29,9 +35,9 @@ Outcomes from Tue unknown (no calendar MCP) — check if Design Review landed S4
 
 ## Today's Three
 
-1. [ ] **Submit OTG progress report** — due today, ~15 min; clear before or after standup
-2. [ ] **OTEP Product × BO (13:00): frame S4 goal for senior audience** — goal is drafted; use this to pressure-test the framing before Planning tomorrow
-3. [ ] **Dependencies Sync (16:00): get Imelda answers on #18/#30** — four asks: integration method, schema, timeline, C@G competency mapping
+1. [ ] **Fill WOG AD form** — Pow Hwee flagged as today deadline; Fabian already provided it (open item #26)
+2. [ ] **Dependencies Sync (16:00): get Imelda answers on #18/#30** — review Core's API before 16:00; four asks ready
+3. [ ] **Define C@G description structure + UI PRD scope** — Thomas needs description structure before Planning; Hao Eng blocked on UI PRD
 
 ---
 

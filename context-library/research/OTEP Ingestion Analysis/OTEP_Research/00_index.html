@@ -100,12 +100,12 @@
   <div class="cover">
     <div class="cover-tag">OTEP · OTG Data Ingestion Analysis</div>
     <h1>We have <strong>633 open opportunities</strong><br>on OTG. Only 160 can be ingested.</h1>
-    <p class="cover-sub">This analysis covers why 473 are blocked, what it takes to fix them, and 4 decisions needed from Business Owners before the pipeline can go live.</p>
+    <p class="cover-sub">This analysis covers why 473 are blocked, what it takes to fix them, and 5 decisions identified from Business Owners — 4 still open — before the pipeline can go live.</p>
     <div class="cover-meta">
       <div class="meta-item"><strong>Analysis date</strong> 10 June 2026</div>
-      <div class="meta-item"><strong>Data source</strong> OTG gigs_v2_report (2,023 gigs)</div>
-      <div class="meta-item"><strong>Open gigs assessed</strong> 633</div>
-      <div class="meta-item"><strong>Status</strong> <span class="status-badge">4 BO decisions pending</span></div>
+      <div class="meta-item"><strong>Data source</strong> OTG gigs_v2_report (2,023 opportunities)</div>
+      <div class="meta-item"><strong>Open opportunities assessed</strong> 633</div>
+      <div class="meta-item"><strong>Status</strong> <span class="status-badge">4 BO decisions open · 1 confirmed</span></div>
     </div>
   </div>
 
@@ -113,7 +113,7 @@
   <p class="section-title">Where things stand today</p>
   <div class="impact-strip">
     <div class="impact-cell">
-      <div class="impact-label">Open gigs</div>
+      <div class="impact-label">Open opportunities</div>
       <div class="impact-value">633</div>
       <div class="impact-note">Eligible for ingestion by status</div>
     </div>
@@ -135,7 +135,7 @@
   </div>
 
   <!-- Decisions needed -->
-  <p class="section-title">4 decisions needed from Business Owners</p>
+  <p class="section-title">5 BO decisions identified — 4 open, 1 confirmed</p>
   <div class="decision-grid">
 
     <div class="d-card">
@@ -145,61 +145,57 @@
         <span class="d-status ds-open">Open</span>
       </div>
       <div class="d-body">
-        <p class="d-question">Is time commitment required for <strong>agilePSD</strong> and <strong>Other</strong> tagged gigs? These 109 gigs sit in limbo — their TC rule is unconfirmed.</p>
+        <p class="d-question">Is time commitment required for <strong>agilePSD</strong> and <strong>Other</strong> tagged opportunities? These 109 opportunities sit in limbo — their TC rule is unconfirmed.</p>
         <div class="d-options">
           <div class="d-option rec">
             <span class="opt-label opt-rec">A ★</span>
-            <span>Treat like Secondment/Job — time commitment not required. 29 agilePSD gigs unblock immediately (minus 5 with missing Function).</span>
+            <span>Treat like Secondment/Job — time commitment not required. 29 agilePSD opportunities unblock immediately (minus 5 with missing Function).</span>
           </div>
           <div class="d-option">
             <span class="opt-label opt-other">B</span>
-            <span>Require time commitment — 109 more gigs become hard-blocked and go into the remediation report.</span>
+            <span>Require time commitment — 109 more opportunities become hard-blocked and go into the remediation report.</span>
           </div>
         </div>
-        <div class="d-impact"><strong>At stake:</strong> Up to 80 additional gigs passing ingestion if Option A is chosen.</div>
+        <div class="d-impact"><strong>At stake:</strong> Up to 80 additional opportunities passing ingestion if Option A is chosen.</div>
         <a class="d-link" href="09_ingestion_rules.html" target="_blank">See rule R11 in Ingestion Rules →</a>
       </div>
     </div>
 
-    <div class="d-card">
-      <div class="d-card-head">
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
         <span class="d-num">D2</span>
-        <span class="d-title">Start date exemptions for Secondments</span>
-        <span class="d-status ds-open">Open</span>
+        <span class="d-title">Start &amp; end date exemptions for Secondments, Jobs, SJRs</span>
+        <span class="d-status" style="background:#EAF3DE;color:#3B6D11;border:1px solid #84C98A;">✓ Confirmed</span>
       </div>
       <div class="d-body">
-        <p class="d-question">Start date is the single biggest blocker: <strong>288 gigs are missing it</strong>, 200 of which are Secondments. Are standing/evergreen secondments exempt from needing a start date?</p>
+        <p class="d-question"><strong>Confirmed 10 June 2026:</strong> Start date and end date are <strong>not mandatory</strong> for Secondment, Job, and SJR types. These are standing or evergreen roles where a fixed start/end date may not apply.</p>
         <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Secondments (and permanent Jobs) are exempt — start date optional for these types. Up to 200 Secondments unblock.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Start date required for all — no exceptions. 288 gigs remain blocked until agencies fill it in.</span>
+          <div class="d-option rec" style="border-color:#84C98A;background:#f4fbf4;">
+            <span class="opt-label opt-rec">✓ Decision</span>
+            <span>Secondment, Job, and SJR are exempt from start date and end date requirements. Up to ~261 opportunities unblocked on these fields — the largest single unlock in the pipeline.</span>
           </div>
         </div>
-        <div class="d-impact"><strong>At stake:</strong> The largest single unlock. Option A could unblock ~200 Secondments alone.</div>
-        <a class="d-link" href="07_dq_by_opportunity_type.html" target="_blank">See Secondment breakdown in DQ by Type →</a>
+        <div class="d-impact"><strong>Impact:</strong> Secondment (200), Job (61) no longer blocked on start date; Secondment (38) no longer blocked on end date. Exemption applied at type level — no schema change required.</div>
+        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See updated R9 &amp; R10 in Ingestion Rules →</a>
       </div>
     </div>
 
     <div class="d-card">
       <div class="d-card-head">
         <span class="d-num">D3</span>
-        <span class="d-title">Stale gig policy</span>
+        <span class="d-title">Stale opportunity policy</span>
         <span class="d-status ds-open">Open</span>
       </div>
       <div class="d-body">
-        <p class="d-question"><strong>346 open gigs have passed their end date</strong> — 74 by more than a year. 255 of these have zero applicants. Should these appear on OTEP?</p>
+        <p class="d-question"><strong>346 open opportunities have passed their end date</strong> — 74 by more than a year. 255 of these have zero applicants. Should these appear on OTEP?</p>
         <div class="d-options">
           <div class="d-option rec">
             <span class="opt-label opt-rec">A ★</span>
-            <span>Exclude stale gigs with zero applicants (255). Live stale gigs with applicants (91) still pass — someone is interested.</span>
+            <span>Exclude stale opportunities with zero applicants (255). Live stale opportunities with applicants (91) still pass — someone is interested.</span>
           </div>
           <div class="d-option">
             <span class="opt-label opt-other">B</span>
-            <span>Exclude all stale gigs (346). Cleanest catalogue but removes some active-interest listings.</span>
+            <span>Exclude all stale opportunities (346). Cleanest catalogue but removes some active-interest listings.</span>
           </div>
           <div class="d-option">
             <span class="opt-label opt-other">C</span>
@@ -214,11 +210,11 @@
     <div class="d-card">
       <div class="d-card-head">
         <span class="d-num">D4</span>
-        <span class="d-title">Gigs with no type tag</span>
+        <span class="d-title">Opportunities with no type tag</span>
         <span class="d-status ds-open">Open</span>
       </div>
       <div class="d-body">
-        <p class="d-question"><strong>78 gigs have no [type prefix]</strong> in their name. Without a type, OTEP cannot classify or validate them. Most appear to be Jobs from MSF and Enterprise Singapore.</p>
+        <p class="d-question"><strong>78 opportunities have no [type prefix]</strong> in their name. Without a type, OTEP cannot classify or validate them. Most appear to be Jobs from MSF and Enterprise Singapore.</p>
         <div class="d-options">
           <div class="d-option rec">
             <span class="opt-label opt-rec">A ★</span>
@@ -229,8 +225,40 @@
             <span>Ingest as "Uncategorised" — visible on OTEP but not type-filtered. Risks permanent orphan listings.</span>
           </div>
         </div>
-        <div class="d-impact"><strong>At stake:</strong> Tag discipline going forward. Without enforcement, new untyped gigs will appear every ingestion run.</div>
+        <div class="d-impact"><strong>At stake:</strong> Tag discipline going forward. Without enforcement, new untyped opportunities will appear every ingestion run.</div>
         <a class="d-link" href="03_unrecognised_type_analysis.html" target="_blank">See unrecognised type deep-dive →</a>
+      </div>
+    </div>
+
+    <div class="d-card" style="grid-column: 1 / -1;">
+      <div class="d-card-head" style="background:#FEF3F2;border-bottom-color:#FCA5A5;">
+        <span class="d-num">D5</span>
+        <span class="d-title">How do Secondment, agilePSD, and Other (TBC) map to the 5 OTEP categories?</span>
+        <span class="d-status ds-open" style="background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;">⚠ Highest impact open</span>
+      </div>
+      <div class="d-body">
+        <p class="d-question">OTEP recognises <strong>5 categories only</strong>: GIG, STIP, JOB, C@G Jobs, SJR. But <strong>344 open OTG opportunities</strong> carry prefixes (Secondment, agilePSD, Other variants) that don't map to any of these categories — they are blocked at classification (R4). This is now the single largest blocker in the pipeline.</p>
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">Secondment: 259 blocked</span>
+          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">agilePSD: 29 blocked</span>
+          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">Other (TBC): 56 blocked</span>
+        </div>
+        <div class="d-options">
+          <div class="d-option rec">
+            <span class="opt-label opt-rec">A ★</span>
+            <span>Map to nearest OTEP category — e.g. Secondment→JOB, agilePSD→GIG or SJR. Confirm exact mapping, update R4 classifier, re-run pipeline. No platform schema change needed.</span>
+          </div>
+          <div class="d-option">
+            <span class="opt-label opt-other">B</span>
+            <span>Exclude Secondment, agilePSD, and Other from OTEP scope entirely. Only the 5 canonical categories are ingested. Simplest long-term, but 344 opportunities permanently out of scope.</span>
+          </div>
+          <div class="d-option">
+            <span class="opt-label opt-other">C</span>
+            <span>Create new OTEP categories for Secondment and/or agilePSD. Unlocks all 344 but requires OTEP platform schema change and re-classification logic.</span>
+          </div>
+        </div>
+        <div class="d-impact"><strong>At stake:</strong> 344 opportunities (54% of all currently blocked). This decision unblocks more opportunities than any other single action remaining. Note: JOB vs C@G Jobs split within the existing 129 "Job" opportunities also needs data verification.</div>
+        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See updated R4 classification in Ingestion Rules →</a>
       </div>
     </div>
 
@@ -239,8 +267,8 @@
   <!-- Catalogue impact scenarios -->
   <p class="section-title">What the catalogue could look like — based on BO decisions</p>
   <div class="scenario-wrap">
-    <h3>Projected gigs passing ingestion under each scenario</h3>
-    <p>Starting from 160 gigs that pass today. Each BO decision adds gigs back to the catalogue.</p>
+    <h3>Projected opportunities passing ingestion under each scenario</h3>
+    <p>Starting from 160 opportunities that pass today. Each BO decision adds opportunities back to the catalogue.</p>
     <div class="scenario-bars">
       <div class="sbar-row">
         <span class="sbar-label">Today (no changes)</span>
@@ -259,7 +287,7 @@
         <span class="sbar-note">agilePSD + Other (TBC) unlock</span>
       </div>
       <div class="sbar-row">
-        <span class="sbar-label">+ D2 recommended (start date exempt)</span>
+        <span class="sbar-label">+ D2 ✓ confirmed (start &amp; end date exempt: Secondment, Job, SJR)</span>
         <div class="sbar-track">
           <div class="sbar-fill" style="width:60%;background:#5DCAA5;">~380</div>
         </div>
@@ -280,7 +308,7 @@
           <div class="sbar-fill" style="width:100%;background:#1D9E75;">633</div>
         </div>
         <span class="sbar-count">633</span>
-        <span class="sbar-note">All open gigs ingested</span>
+        <span class="sbar-note">All open opportunities ingested</span>
       </div>
     </div>
   </div>
@@ -323,7 +351,7 @@
         <span class="file-name">Summary Dashboard</span>
         <span class="file-audience fa-all">All</span>
       </div>
-      <p class="file-desc">Overall picture — 633 open gigs, 473 blocked, 160 passing. Missing field counts, type distribution, and stale gig breakdown.</p>
+      <p class="file-desc">Overall picture — 633 open opportunities, 473 blocked, 160 passing. Missing field counts, type distribution, and stale opportunity breakdown.</p>
     </a>
 
     <a class="file-card" href="02_agency_breakdown.html" target="_blank">
@@ -332,7 +360,7 @@
         <span class="file-name">Agency Breakdown</span>
         <span class="file-audience fa-all">All</span>
       </div>
-      <p class="file-desc">Blocked gigs by agency. Enterprise Singapore accounts for 178 of 473. Per-agency issue chips and blocked-rate chart.</p>
+      <p class="file-desc">Blocked opportunities by agency. Enterprise Singapore accounts for 178 of 473. Per-agency issue chips and blocked-rate chart.</p>
     </a>
 
     <a class="file-card" href="03_unrecognised_type_analysis.html" target="_blank">
@@ -341,7 +369,7 @@
         <span class="file-name">Unrecognised Type Deep-dive</span>
         <span class="file-audience fa-pm">PM</span>
       </div>
-      <p class="file-desc">163 gigs with no recognised type tag — the 78 with no prefix, 56 Other (TBC), 29 agilePSD. Resolution scenarios per variant.</p>
+      <p class="file-desc">163 opportunities with no recognised type tag — the 78 with no prefix, 56 Other (TBC), 29 agilePSD. Resolution scenarios per variant.</p>
     </a>
 
     <a class="file-card" href="04_oqa_risks_assumptions.html" target="_blank">

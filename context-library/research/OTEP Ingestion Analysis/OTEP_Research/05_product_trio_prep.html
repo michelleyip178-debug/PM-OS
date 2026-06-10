@@ -122,7 +122,7 @@
 
   <div class="callout amber">
     <div class="callout-label">Before we start</div>
-    We've completed a full ingestion analysis. The headline: 473 of 633 open gigs (75%) will not ingest today. This isn't just a data quality problem — it surfaces three harder questions about our product, our process, and our relationship with agencies. This session is about those questions.
+    We've completed a full ingestion analysis. The headline: 473 of 633 open opportunities (75%) will not ingest today. This isn't just a data quality problem — it surfaces three harder questions about our product, our process, and our relationship with agencies. This session is about those questions.
   </div>
 
   <hr class="divider">
@@ -130,14 +130,14 @@
   <!-- Context -->
   <h2>Context — what we know</h2>
 
-  <p>The ingestion pipeline reads from the OTG source file and imports opportunities into OTEP. A gig is blocked if any of 7 required fields is missing or its type tag is unrecognised. We cannot modify the creation form at source. The remediation path today is: analysis → Excel report → distribute to agencies → agencies fix → re-ingest.</p>
+  <p>The ingestion pipeline reads from the OTG source file and imports opportunities into OTEP. A opportunity is blocked if any of 7 required fields is missing or its type tag is unrecognised. We cannot modify the creation form at source. The remediation path today is: analysis → Excel report → distribute to agencies → agencies fix → re-ingest.</p>
 
-  <p>The numbers that should concern us most aren't the 473 blocked gigs. They're:</p>
+  <p>The numbers that should concern us most aren't the 473 blocked opportunities. They're:</p>
   <ul>
-    <li><strong>160</strong> — the number of gigs that would appear on OTEP at launch. Is that enough?</li>
-    <li><strong>346</strong> — open gigs with a past end date. Ingesting these makes OTEP look abandoned.</li>
-    <li><strong>0</strong> — number of agency admins who currently know their gig was blocked.</li>
-    <li><strong>∞</strong> — how many new gigs will arrive with the same problems after launch, with no gate to stop them.</li>
+    <li><strong>160</strong> — the number of opportunities that would appear on OTEP at launch. Is that enough?</li>
+    <li><strong>346</strong> — open opportunities with a past end date. Ingesting these makes OTEP look abandoned.</li>
+    <li><strong>0</strong> — number of agency admins who currently know their opportunity was blocked.</li>
+    <li><strong>∞</strong> — how many new opportunities will arrive with the same problems after launch, with no gate to stop them.</li>
   </ul>
 
   <hr class="divider">
@@ -163,14 +163,14 @@
     <span class="principle-num">2</span>
     <div class="principle-body">
       <strong>A thin catalogue at launch is worse than a delayed launch</strong>
-      <p>160 gigs across all of government will feel empty, especially after filtering. If users search for Gig opportunities in a specific function and get 3 results, they'll conclude OTEP isn't for them. We should define a minimum viable catalogue before setting a go-live date.</p>
+      <p>160 opportunities across all of government will feel empty, especially after filtering. If users search for Gig opportunities in a specific function and get 3 results, they'll conclude OTEP isn't for them. We should define a minimum viable catalogue before setting a go-live date.</p>
     </div>
   </div>
   <div class="principle">
     <span class="principle-num">3</span>
     <div class="principle-body">
       <strong>Fix the recurring problem, not just the current instance</strong>
-      <p>Even if agencies fix all 473 gigs today, the next batch of gigs posted without a [prefix] will hit the same wall. Solutions should have a "prevention" layer, not just a "remediation" layer.</p>
+      <p>Even if agencies fix all 473 opportunities today, the next batch of opportunities posted without a [prefix] will hit the same wall. Solutions should have a "prevention" layer, not just a "remediation" layer.</p>
     </div>
   </div>
   <div class="principle">
@@ -190,21 +190,21 @@
   <!-- Problem 1 -->
   <div class="problem-block">
     <div class="problem-label">Problem area 1 of 5</div>
-    <div class="problem-title">Agencies have no feedback loop — they don't know their gigs are blocked</div>
+    <div class="problem-title">Agencies have no feedback loop — they don't know their opportunities are blocked</div>
     <span class="problem-stat">0 agencies currently notified</span>
 
     <div class="trio-grid">
       <div class="trio-card">
         <div class="trio-role role-pm">Product Manager</div>
-        <p>This is a trust problem. If an agency posts a gig, waits two weeks, and it never appears — they'll stop using OTG. We need to close the loop within hours, not weeks. Who owns communicating this? Is it the ingestion pipeline, the platform team, or OTG?</p>
+        <p>This is a trust problem. If an agency posts a opportunity, waits two weeks, and it never appears — they'll stop using OTG. We need to close the loop within hours, not weeks. Who owns communicating this? Is it the ingestion pipeline, the platform team, or OTG?</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-des">Designer</div>
-        <p>An Excel report is not a feedback loop — it's a post-mortem. The right moment to surface a problem is when the gig is created, not weeks later. Even if we can't touch the creation form, could we surface validation in a pre-submission preview or a gig management dashboard?</p>
+        <p>An Excel report is not a feedback loop — it's a post-mortem. The right moment to surface a problem is when the opportunity is created, not weeks later. Even if we can't touch the creation form, could we surface validation in a pre-submission preview or a opportunity management dashboard?</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-eng">Engineer</div>
-        <p>The ingestion pipeline already knows why each gig was blocked — we're just not doing anything with that output. We could write failures to a database and serve them via a simple API. The engineering effort to notify is lower than the effort to build the analysis we just did.</p>
+        <p>The ingestion pipeline already knows why each opportunity was blocked — we're just not doing anything with that output. We could write failures to a database and serve them via a simple API. The engineering effort to notify is lower than the effort to build the analysis we just did.</p>
       </div>
     </div>
 
@@ -219,28 +219,28 @@
       <div class="idea">
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
-          <div class="idea-title">Automated email per gig owner on ingestion failure <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">Ingestion pipeline emails GigOwner directly with the specific field(s) missing. No new UI needed. Works within existing email infrastructure. Risk: email fatigue if agencies have many blocked gigs.</div>
+          <div class="idea-title">Automated email per opportunity owner on ingestion failure <span class="effort-tag e-quick">Quick</span></div>
+          <div class="idea-note">Ingestion pipeline emails GigOwner directly with the specific field(s) missing. No new UI needed. Works within existing email infrastructure. Risk: email fatigue if agencies have many blocked opportunities.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
-          <div class="idea-title">Agency admin dashboard — "Your gigs on OTEP" <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">A read-only web view per agency showing all their gigs: which are live, which are blocked (and why), which are stale. No write access needed — just visibility. Would reduce the need for the remediation Excel entirely.</div>
+          <div class="idea-title">Agency admin dashboard — "Your opportunities on OTEP" <span class="effort-tag e-med">Medium</span></div>
+          <div class="idea-note">A read-only web view per agency showing all their opportunities: which are live, which are blocked (and why), which are stale. No write access needed — just visibility. Would reduce the need for the remediation Excel entirely.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
           <div class="idea-title">Batch remediation digest — weekly per agency <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">Instead of an ad-hoc Excel file, generate a styled HTML email digest every Monday showing each agency their current blocked gigs. Owned by the pipeline, not the platform team. Scales automatically.</div>
+          <div class="idea-note">Instead of an ad-hoc Excel file, generate a styled HTML email digest every Monday showing each agency their current blocked opportunities. Owned by the pipeline, not the platform team. Scales automatically.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-big"></div>
         <div class="idea-body">
-          <div class="idea-title">Inline validation in OTG at point of gig creation <span class="effort-tag e-big">Big bet</span></div>
+          <div class="idea-title">Inline validation in OTG at point of opportunity creation <span class="effort-tag e-big">Big bet</span></div>
           <div class="idea-note">Requires touching the source creation form — currently out of scope. Worth flagging as the right long-term fix. Would prevent the problem entirely rather than detect it post-hoc. Track as future work with OTG product owner.</div>
         </div>
       </div>
@@ -251,7 +251,7 @@
   <div class="problem-block">
     <div class="problem-label">Problem area 2 of 5</div>
     <div class="problem-title">The type classification system is too fragile to maintain</div>
-    <span class="problem-stat amber">163 gigs unclassifiable today · grows with every new tag variant</span>
+    <span class="problem-stat amber">163 opportunities unclassifiable today · grows with every new tag variant</span>
 
     <div class="trio-grid">
       <div class="trio-card">
@@ -275,7 +275,7 @@
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
           <div class="idea-title">Publish a canonical tag list and communicate it to agencies <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">A one-page reference doc: approved [prefix] tags, what type they map to, what each type means. Circulate to all agency admins. Doesn't fix existing gigs but prevents new variants from being invented.</div>
+          <div class="idea-note">A one-page reference doc: approved [prefix] tags, what type they map to, what each type means. Circulate to all agency admins. Doesn't fix existing opportunities but prevents new variants from being invented.</div>
         </div>
       </div>
       <div class="idea">
@@ -289,7 +289,7 @@
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
           <div class="idea-title">Classify unrecognised tags with a short BO review workflow <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">New unknown tags are queued for the BO to classify once. Once classified, all gigs with that tag are retroactively updated. Prevents the 109-gig TBC problem from recurring.</div>
+          <div class="idea-note">New unknown tags are queued for the BO to classify once. Once classified, all opportunities with that tag are retroactively updated. Prevents the 109-opportunity TBC problem from recurring.</div>
         </div>
       </div>
       <div class="idea">
@@ -305,13 +305,13 @@
   <!-- Problem 3 -->
   <div class="problem-block">
     <div class="problem-label">Problem area 3 of 5</div>
-    <div class="problem-title">346 stale gigs will pollute the catalogue if ingested</div>
-    <span class="problem-stat">55% of open gigs have a past end date · 255 have zero applicants</span>
+    <div class="problem-title">346 stale opportunities will pollute the catalogue if ingested</div>
+    <span class="problem-stat">55% of open opportunities have a past end date · 255 have zero applicants</span>
 
     <div class="trio-grid">
       <div class="trio-card">
         <div class="trio-role role-pm">Product Manager</div>
-        <p>Stale listings destroy applicant trust faster than an empty catalogue. One "Application closed 14 months ago" listing and the user questions everything. We need a clear policy before go-live: do we ingest stale gigs, flag them, or exclude them?</p>
+        <p>Stale listings destroy applicant trust faster than an empty catalogue. One "Application closed 14 months ago" listing and the user questions everything. We need a clear policy before go-live: do we ingest stale opportunities, flag them, or exclude them?</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-des">Designer</div>
@@ -329,29 +329,29 @@
       <div class="idea">
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
-          <div class="idea-title">Hard exclude stale gigs from ingestion (GigEnd &lt; today) <span class="effort-tag e-quick">Quick</span></div>
+          <div class="idea-title">Hard exclude stale opportunities from ingestion (GigEnd &lt; today) <span class="effort-tag e-quick">Quick</span></div>
           <div class="idea-note">Simplest pipeline rule. Pros: clean catalogue, no stale listings. Cons: excludes legitimate evergreen roles. Mitigate by adding a "Evergreen / No fixed end date" checkbox to the creation form — but that requires a form change.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
-          <div class="idea-title">Auto-exclude stale + zero-applicant gigs only <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">More permissive: only exclude gigs that are both past their end date AND have never received a single application. 255 gigs would be excluded. Gigs with at least one applicant stay in, on the assumption someone intentionally kept them open.</div>
+          <div class="idea-title">Auto-exclude stale + zero-applicant opportunities only <span class="effort-tag e-quick">Quick</span></div>
+          <div class="idea-note">More permissive: only exclude opportunities that are both past their end date AND have never received a single application. 255 opportunities would be excluded. Opportunities with at least one applicant stay in, on the assumption someone intentionally kept them open.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
           <div class="idea-title">Surface "Closing soon" / "Recently closed" state on listing card <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">Ingest stale gigs but show a visual indicator ("Applications may have closed") on the OTEP card. Lets applicants self-select. Requires a listing page UI change. Puts the decision with the applicant, not the pipeline.</div>
+          <div class="idea-note">Ingest stale opportunities but show a visual indicator ("Applications may have closed") on the OTEP card. Lets applicants self-select. Requires a listing page UI change. Puts the decision with the applicant, not the pipeline.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
-          <div class="idea-title">Automated stale gig notification to agency admin <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">30 days before expiry: "Your gig [X] closes in 30 days — extend or close it in OTG." Prevents the backlog from growing. Requires knowing who the admin is (GigOwner) and a reliable email channel.</div>
+          <div class="idea-title">Automated stale opportunity notification to agency admin <span class="effort-tag e-med">Medium</span></div>
+          <div class="idea-note">30 days before expiry: "Your opportunity [X] closes in 30 days — extend or close it in OTG." Prevents the backlog from growing. Requires knowing who the admin is (GigOwner) and a reliable email channel.</div>
         </div>
       </div>
     </div>
@@ -360,17 +360,17 @@
   <!-- Problem 4 -->
   <div class="problem-block">
     <div class="problem-label">Problem area 4 of 5</div>
-    <div class="problem-title">160 gigs may not be enough to launch with</div>
+    <div class="problem-title">160 opportunities may not be enough to launch with</div>
     <span class="problem-stat amber">No minimum viable catalogue threshold defined</span>
 
     <div class="trio-grid">
       <div class="trio-card">
         <div class="trio-role role-pm">Product Manager</div>
-        <p>We've never defined what "enough" looks like. 160 total gigs is already thin. After filtering by agency, type, or function, some views will return single digits. We need to decide: is there a minimum count before we go live, and if so, who unblocks it?</p>
+        <p>We've never defined what "enough" looks like. 160 total opportunities is already thin. After filtering by agency, type, or function, some views will return single digits. We need to decide: is there a minimum count before we go live, and if so, who unblocks it?</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-des">Designer</div>
-        <p>The problem isn't just count — it's distribution. Even 400 gigs is fine if they're spread across types and functions. But 160 gigs that are 70% Secondments from two agencies means most filter combinations return nothing. We should model what the filtered experience looks like, not just the total.</p>
+        <p>The problem isn't just count — it's distribution. Even 400 opportunities is fine if they're spread across types and functions. But 160 opportunities that are 70% Secondments from two agencies means most filter combinations return nothing. We should model what the filtered experience looks like, not just the total.</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-eng">Engineer</div>
@@ -385,21 +385,21 @@
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
           <div class="idea-title">Define minimum viable catalogue: count × distribution <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">Decision, not engineering. Propose a threshold — e.g. 300 passing gigs, at least 3 opportunity types with 20+ gigs each. Get BO and leadership sign-off before committing to a go-live date.</div>
+          <div class="idea-note">Decision, not engineering. Propose a threshold — e.g. 300 passing opportunities, at least 3 opportunity types with 20+ opportunities each. Get BO and leadership sign-off before committing to a go-live date.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
           <div class="idea-title">Target-agency remediation blitz before launch <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">Enterprise Singapore alone = 178 blocked gigs. A single focused session with their admin team unlocks 38% of all blocked content. Prioritise the top 3 agencies (EnterpriseGov, MTI, MSF) for white-glove remediation support before go-live.</div>
+          <div class="idea-note">Enterprise Singapore alone = 178 blocked opportunities. A single focused session with their admin team unlocks 38% of all blocked content. Prioritise the top 3 agencies (EnterpriseGov, MTI, MSF) for white-glove remediation support before go-live.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
           <div class="idea-title">Model catalogue distribution at each remediation milestone <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">Run a simulation: what does OTEP look like if only EnterpriseGov fixes their gigs? What if MTI also fixes? Build a heat-map of gig coverage by type × function so designers can validate the browse experience at each milestone.</div>
+          <div class="idea-note">Run a simulation: what does OTEP look like if only EnterpriseGov fixes their opportunities? What if MTI also fixes? Build a heat-map of opportunity coverage by type × function so designers can validate the browse experience at each milestone.</div>
         </div>
       </div>
     </div>
@@ -414,11 +414,11 @@
     <div class="trio-grid">
       <div class="trio-card">
         <div class="trio-role role-pm">Product Manager</div>
-        <p>We've been talking about "the ingestion" as if it happens once. But gigs are created, edited, closed, and re-opened continuously. Who runs the ingestion after launch — and how often? If an agency fixes a gig on Tuesday, when does it appear on OTEP? If the answer is "next month", we have a product gap.</p>
+        <p>We've been talking about "the ingestion" as if it happens once. But opportunities are created, edited, closed, and re-opened continuously. Who runs the ingestion after launch — and how often? If an agency fixes a opportunity on Tuesday, when does it appear on OTEP? If the answer is "next month", we have a product gap.</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-des">Designer</div>
-        <p>From an applicant's perspective: if I apply for a gig on Monday and it closes on Wednesday, am I notified? If an agency edits the role description after ingestion, does OTEP reflect it? These are continuity-of-experience questions that the current pipeline design doesn't answer.</p>
+        <p>From an applicant's perspective: if I apply for a opportunity on Monday and it closes on Wednesday, am I notified? If an agency edits the role description after ingestion, does OTEP reflect it? These are continuity-of-experience questions that the current pipeline design doesn't answer.</p>
       </div>
       <div class="trio-card">
         <div class="trio-role role-eng">Engineer</div>
@@ -433,14 +433,14 @@
         <div class="idea-dot dot-quick"></div>
         <div class="idea-body">
           <div class="idea-title">Daily scheduled full re-ingest <span class="effort-tag e-quick">Quick</span></div>
-          <div class="idea-note">Run the full pipeline every night. Gigs fixed by an agency appear on OTEP within 24 hours. Simple to operate; no need to track which gigs changed. Acceptable latency for most use cases. Start here.</div>
+          <div class="idea-note">Run the full pipeline every night. Opportunities fixed by an agency appear on OTEP within 24 hours. Simple to operate; no need to track which opportunities changed. Acceptable latency for most use cases. Start here.</div>
         </div>
       </div>
       <div class="idea">
         <div class="idea-dot dot-medium"></div>
         <div class="idea-body">
           <div class="idea-title">Delta sync on DateModified — near real-time updates <span class="effort-tag e-med">Medium</span></div>
-          <div class="idea-note">On each run, only process gigs where DateModified > last_run_timestamp. Reduces processing load. Requires DateModified to be reliably updated in OTG (verify this assumption — some edits may not touch it).</div>
+          <div class="idea-note">On each run, only process opportunities where DateModified > last_run_timestamp. Reduces processing load. Requires DateModified to be reliably updated in OTG (verify this assumption — some edits may not touch it).</div>
         </div>
       </div>
       <div class="idea">
@@ -479,13 +479,13 @@
         <td>Is time commitment required for agilePSD and Other (TBC) types?</td>
         <td><span class="owner-chip o-bo">BO</span></td>
         <td>This session</td>
-        <td>109 gigs stuck in amber; remediation report is incomplete</td>
+        <td>109 opportunities stuck in amber; remediation report is incomplete</td>
       </tr>
       <tr>
-        <td>How do we handle stale gigs? (exclude / flag / warn)</td>
+        <td>How do we handle stale opportunities? (exclude / flag / warn)</td>
         <td><span class="owner-chip o-trio">Trio</span></td>
         <td>This session</td>
-        <td>346 gigs need a disposition; pipeline cannot be finalised without this rule</td>
+        <td>346 opportunities need a disposition; pipeline cannot be finalised without this rule</td>
       </tr>
       <tr>
         <td>What is the ingestion cadence? (daily / delta / event-driven)</td>
@@ -503,7 +503,7 @@
         <td>What is the agency feedback mechanism? (email / dashboard / digest)</td>
         <td><span class="owner-chip o-trio">Trio</span></td>
         <td>Next sprint</td>
-        <td>Without this, blocked gigs will silently accumulate post-launch</td>
+        <td>Without this, blocked opportunities will silently accumulate post-launch</td>
       </tr>
       <tr>
         <td>Is there a plan to add a structured Type field in OTG? (timeline + owner)</td>
@@ -536,7 +536,7 @@
   <div class="agenda-row">
     <div class="agenda-time">0:25 – 0:40</div>
     <div class="agenda-body">
-      <strong>Stale gig policy + ingestion cadence <span class="agenda-tag at-decide">decide</span></strong>
+      <strong>Stale opportunity policy + ingestion cadence <span class="agenda-tag at-decide">decide</span></strong>
       <span>Choose a staleness rule. Choose a sync cadence. Both are needed before pipeline finalisation.</span>
     </div>
   </div>
@@ -569,7 +569,7 @@
 
   <div class="callout green">
     <div class="callout-label">What good looks like</div>
-    By end of Q3: OTEP launches with a catalogue of at least 350 passing gigs across a minimum of 4 opportunity types. Agency admins receive automated feedback within 24 hours of a gig failing ingestion. The ingestion pipeline runs daily. The tag taxonomy is owned by a named person and documented in a canonical reference. Stale gigs are automatically excluded from the catalogue. The plan to move to a structured Type field in OTG is on the roadmap.
+    By end of Q3: OTEP launches with a catalogue of at least 350 passing opportunities across a minimum of 4 opportunity types. Agency admins receive automated feedback within 24 hours of a opportunity failing ingestion. The ingestion pipeline runs daily. The tag taxonomy is owned by a named person and documented in a canonical reference. Stale opportunities are automatically excluded from the catalogue. The plan to move to a structured Type field in OTG is on the roadmap.
   </div>
 
   <div class="callout blue">
@@ -583,8 +583,8 @@
   <h2>Pre-read for attendees</h2>
   <ul>
     <li><strong>01_summary_dashboard.html</strong> — overall ingestion health; read this first</li>
-    <li><strong>02_agency_breakdown.html</strong> — blocked gigs by agency and type; useful context for the remediation blitz discussion</li>
-    <li><strong>03_unrecognised_type_analysis.html</strong> — the 163 unclassifiable gigs; context for the tag taxonomy decision</li>
+    <li><strong>02_agency_breakdown.html</strong> — blocked opportunities by agency and type; useful context for the remediation blitz discussion</li>
+    <li><strong>03_unrecognised_type_analysis.html</strong> — the 163 unclassifiable opportunities; context for the tag taxonomy decision</li>
     <li><strong>04_oqa_risks_assumptions.html</strong> — open questions, risks, and assumptions; the full decision log</li>
     <li><strong>OTEP_Remediation_Report_v2.xlsx</strong> — the per-agency remediation report; share with agency admins after the session</li>
   </ul>

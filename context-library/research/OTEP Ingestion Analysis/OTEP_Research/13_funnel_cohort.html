@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Funnel & Cohort Analysis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Insight cards */
+  .insight-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .insight-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem 1.1rem; }
+  .ic-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 4px; }
+  .ic-val { font-size: 26px; font-weight: 300; letter-spacing: -.5px; }
+  .ic-sub { font-size: 11px; color: #5f5e5a; margin-top: 2px; }
+  .ic-delta { font-size: 11px; font-weight: 500; margin-top: 4px; }
+  .ic-delta.red { color: #C0392B; }
+  .ic-delta.green { color: #1D9E75; }
+  .ic-delta.amber { color: #D4880A; }
+
+  /* Funnel */
+  .funnel-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .funnel-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; position: relative; }
+  .funnel-stage { flex-shrink: 0; width: 160px; }
+  .funnel-stage-name { font-size: 11px; font-weight: 500; color: #1a1a18; }
+  .funnel-stage-sub { font-size: 10px; color: #888780; }
+  .funnel-bar-area { flex: 1; display: flex; align-items: center; gap: 8px; }
+  .funnel-bar { height: 38px; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; transition: width .3s; }
+  .funnel-bar-label { font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; }
+  .funnel-bar-n { font-size: 11px; color: #fff; opacity: .8; margin-left: 6px; }
+  .funnel-meta { font-size: 11px; color: #5f5e5a; margin-left: 10px; white-space: nowrap; }
+  .funnel-drop { font-size: 10px; color: #C0392B; font-weight: 500; }
+  .funnel-arrow { text-align: center; font-size: 14px; color: #d3d1c7; margin: 2px 0 2px 160px; }
+
+  /* Stacked bar cohort */
+  .cohort-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .cohort-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .cohort-label { width: 110px; flex-shrink: 0; font-size: 11px; font-weight: 500; color: #1a1a18; }
+  .cohort-n { font-size: 10px; color: #888780; }
+  .cohort-bar { flex: 1; height: 22px; border-radius: 4px; overflow: hidden; display: flex; }
+  .cb-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: rgba(255,255,255,.9); overflow: hidden; }
+  .cohort-pct { font-size: 11px; font-weight: 600; min-width: 38px; text-align: right; }
+  .legend-row { display: flex; gap: 16px; margin-top: 12px; padding-top: 10px; border-top: 0.5px solid #f1efe8; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #5f5e5a; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Dropout table */
+  .dropout-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; }
+  .dropout-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .dropout-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; }
+  .dropout-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .dropout-table tr:last-child td { border-bottom: none; }
+  .loss-bar { display: inline-flex; align-items: center; gap: 6px; }
+  .loss-fill { height: 6px; border-radius: 3px; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Funnel &amp; Cohort Analysis</h1>
+    <p>Where opportunities drop out of the ingestion pipeline and which types are most affected &nbsp;·&nbsp; As at 10 June 2026 &nbsp;·&nbsp; 633 open opportunities evaluated</p>
+  </div>
+
+  <!-- Key metrics -->
+  <div class="insight-row">
+    <div class="insight-card">
+      <div class="ic-label">Overall pass rate</div>
+      <div class="ic-val">25.3%</div>
+      <div class="ic-sub">160 of 633 opportunities reach OTEP</div>
+      <div class="ic-delta red">▼ 74.7% drop out before ingestion</div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-label">Largest dropout stage</div>
+      <div class="ic-val">Phase 3</div>
+      <div class="ic-sub">Field validation drops 390 opportunities</div>
+      <div class="ic-delta red">▼ 61.6% of classified opportunities blocked</div>
+    </div>
+    <div class="insight-card">
+      <div class="ic-label">If D2 applied earlier</div>
+      <div class="ic-val">~380</div>
+      <div class="ic-sub">Projected pass count post-exemption</div>
+      <div class="ic-delta green">▲ +220 opportunities unlocked by one BO decision</div>
+    </div>
+  </div>
+
+  <!-- Funnel -->
+  <p class="section-title">Ingestion funnel — stage by stage</p>
+  <div class="funnel-wrap" id="funnelWrap"></div>
+
+  <!-- Cohort stacked bars -->
+  <p class="section-title">Pass / blocked / stale by opportunity type</p>
+  <div class="cohort-wrap" id="cohortWrap"></div>
+
+  <!-- Dropout analysis table -->
+  <p class="section-title">Stage dropout analysis</p>
+  <table class="dropout-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Rule(s)</th>
+        <th>Records in</th>
+        <th>Dropped</th>
+        <th>Drop rate</th>
+        <th>Loss bar</th>
+        <th>Root cause</th>
+      </tr>
+    </thead>
+    <tbody id="dropoutBody"></tbody>
+  </table>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; "Dropped" = hard blocked or excluded; flagged/stale counted separately &nbsp;·&nbsp; Part of OTEP_Research series (file 13 of 15)
+  </div>
+</div>
+
+<script>
+// ── Funnel data ──────────────────────────────────────────
+const stages = [
+  { name:'OTG open opportunities', sub:'Source', n:633, color:'#378ADD', drop:null,   dropLabel:'' },
+  { name:'Pre-flight',    sub:'R1–R3',  n:628, color:'#5DCAA5', drop:5,      dropLabel:'5 test entries excluded' },
+  { name:'Classification',sub:'R4–R5',  n:550, color:'#85B7EB', drop:78,     dropLabel:'78 no-tag blocked' },
+  { name:'Field validation',sub:'R6–R11',n:160,color:'#1D9E75', drop:390,    dropLabel:'390 failed field checks' },
+  { name:'OTEP (ingested)',sub:'Phase 4',n:160, color:'#1D9E75', drop:0,     dropLabel:'' },
+];
+const maxN = 633;
+const funnelWrap = document.getElementById('funnelWrap');
+stages.forEach((s, i) => {
+  const w = Math.round(s.n / maxN * 100);
+  if (i > 0 && stages[i-1].drop) {
+    funnelWrap.innerHTML += `<div class="funnel-arrow">↓ <span style="color:#C0392B;font-size:11px;font-weight:500;">−${stages[i-1].drop} (${Math.round(stages[i-1].drop/stages[i-2].n*100)}% dropout)</span> <span style="font-size:10px;color:#888780;">${stages[i-1].dropLabel}</span></div>`;
+  }
+  funnelWrap.innerHTML += `
+    <div class="funnel-row">
+      <div class="funnel-stage">
+        <div class="funnel-stage-name">${s.name}</div>
+        <div class="funnel-stage-sub">${s.sub}</div>
+      </div>
+      <div class="funnel-bar-area">
+        <div class="funnel-bar" style="width:${w}%;background:${s.color};min-width:60px;">
+          <span class="funnel-bar-label">${s.n.toLocaleString()}</span>
+          <span class="funnel-bar-n">(${w}%)</span>
+        </div>
+      </div>
+    </div>`;
+});
+
+// ── Cohort data ──────────────────────────────────────────
+const types = [
+  { name:'Secondment', n:259, pass:29,  blocked:230, stale:170, color:'#5DCAA5' },
+  { name:'Job',        n:129, pass:42,  blocked:87,  stale:100, color:'#85B7EB' },
+  { name:'No tag',     n:78,  pass:0,   blocked:78,  stale:29,  color:'#7F77DD' },
+  { name:'Other (TBC)',n:56,  pass:21,  blocked:35,  stale:22,  color:'#EF9F27' },
+  { name:'SJR',        n:39,  pass:26,  blocked:13,  stale:4,   color:'#AFA9EC' },
+  { name:'Gig',        n:36,  pass:16,  blocked:20,  stale:17,  color:'#378ADD' },
+  { name:'agilePSD',   n:29,  pass:24,  blocked:5,   stale:0,   color:'#1D9E75' },
+  { name:'STIP',       n:7,   pass:2,   blocked:5,   stale:4,   color:'#F09595' },
+];
+
+const cohortWrap = document.getElementById('cohortWrap');
+types.sort((a,b) => b.blocked/b.n - a.blocked/a.n);
+types.forEach(t => {
+  const passPct  = Math.round(t.pass/t.n*100);
+  const blockPct = Math.round(t.blocked/t.n*100);
+  const stalePct = Math.round(t.stale/t.n*100);
+  const passColor = '#1D9E75', blockColor = '#E24B4A', staleColor = '#EF9F27';
+  cohortWrap.innerHTML += `
+    <div class="cohort-row">
+      <div class="cohort-label">${t.name} <span class="cohort-n">n=${t.n}</span></div>
+      <div class="cohort-bar">
+        <div class="cb-seg" style="width:${blockPct}%;background:${blockColor};" title="Blocked: ${t.blocked}">${blockPct>8?blockPct+'%':''}</div>
+        <div class="cb-seg" style="width:${passPct}%;background:${passColor};" title="Passes: ${t.pass}">${passPct>8?passPct+'%':''}</div>
+        <div class="cb-seg" style="width:${Math.max(0,100-blockPct-passPct)}%;background:#e0dfd8;"></div>
+      </div>
+      <div class="cohort-pct" style="color:${blockPct>=70?'#C0392B':blockPct>=40?'#D4880A':'#1D9E75'}">${blockPct}% blocked</div>
+    </div>`;
+});
+cohortWrap.innerHTML += `
+  <div class="legend-row">
+    <div class="legend-item"><div class="legend-dot" style="background:#E24B4A;"></div>Blocked</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;"></div>Passes all rules</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e0dfd8;"></div>Remainder (flagged / TBC)</div>
+  </div>`;
+
+// ── Dropout table ────────────────────────────────────────
+const dropouts = [
+  { stage:'Test entry exclusion', rules:'R2', in:633, dropped:5,   cause:'GigName contains "test", "do not use", or "sandbox" pattern' },
+  { stage:'No type prefix',       rules:'R5', in:628, dropped:78,  cause:'GigName has no [Prefix] bracket — cannot classify. 100% block rate for this cohort.' },
+  { stage:'Agency missing',       rules:'R6', in:550, dropped:27,  cause:'LocationName null — no owner agency. Cannot attribute or route the opportunity.' },
+  { stage:'Business Unit missing',rules:'R7', in:550, dropped:53,  cause:'BusinessUnit null — required for OTEP org filtering. Worst in Other(TBC) type (23/56).' },
+  { stage:'Start date missing',   rules:'R9', in:550, dropped:27,  cause:'After D2 exemption (Secondment/Job/SJR). Remaining 27 are Gig/No tag/Other.' },
+  { stage:'End date missing',     rules:'R10',in:550, dropped:13,  cause:'After D2 exemption. Remaining 13 are Gig/Other(TBC) types.' },
+  { stage:'Time commitment',      rules:'R11',in:550, dropped:5,   cause:'Gig type only — 5 missing TC. agilePSD (29) pending BO ruling, not yet counted.' },
+];
+const maxDrop = Math.max(...dropouts.map(d=>d.dropped));
+const tbody = document.getElementById('dropoutBody');
+dropouts.forEach(d => {
+  const dropRate = Math.round(d.dropped/d.in*100);
+  const barW = Math.round(d.dropped/maxDrop*100);
+  const barColor = dropRate >= 10 ? '#E24B4A' : dropRate >= 3 ? '#EF9F27' : '#85B7EB';
+  tbody.innerHTML += `
+    <tr>
+      <td style="font-weight:500;">${d.stage}</td>
+      <td><span style="font-size:10px;background:#f1efe8;padding:1px 7px;border-radius:4px;color:#5f5e5a;">${d.rules}</span></td>
+      <td>${d.in}</td>
+      <td style="font-weight:600;color:#C0392B;">${d.dropped}</td>
+      <td>${dropRate}%</td>
+      <td>
+        <div class="loss-bar">
+          <div style="width:${barW}px;height:6px;border-radius:3px;background:${barColor};"></div>
+        </div>
+      </td>
+      <td style="font-size:11px;color:#5f5e5a;">${d.cause}</td>
+    </tr>`;
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Rule Violation Analysis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Outcome chips */
+  .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .chip { display: flex; align-items: center; gap: 8px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .7rem 1rem; }
+  .chip-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .chip-label { font-size: 11px; color: #5f5e5a; }
+  .chip-val { font-size: 18px; font-weight: 500; color: #1a1a18; line-height: 1; }
+
+  /* Rule cards */
+  .rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+  .rule-vcard { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem 1.1rem; }
+  .rule-vcard.tbc { border-color: #F0C27F; }
+  .rule-vcard.confirmed { border-color: #84C98A; }
+  .rv-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .rv-num { font-size: 10px; font-weight: 600; background: #f1efe8; color: #5f5e5a; padding: 2px 7px; border-radius: 4px; }
+  .rv-num.block { background: #FCEBEB; color: #A32D2D; }
+  .rv-num.tbc { background: #FAEEDA; color: #854F0B; }
+  .rv-num.ok { background: #EAF3DE; color: #3B6D11; }
+  .rv-name { font-size: 12px; font-weight: 500; flex: 1; }
+  .rv-count { font-size: 20px; font-weight: 300; letter-spacing: -.3px; margin-bottom: 2px; }
+  .rv-count.red { color: #C0392B; }
+  .rv-count.amber { color: #D4880A; }
+  .rv-count.green { color: #1D9E75; }
+  .rv-count.grey { color: #888780; }
+  .rv-sub { font-size: 11px; color: #888780; margin-bottom: 8px; }
+  .type-bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 11px; color: #5f5e5a; }
+  .tb-label { width: 90px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tb-bar { flex: 1; height: 5px; background: #f1efe8; border-radius: 3px; overflow: hidden; }
+  .tb-fill { height: 100%; border-radius: 3px; }
+  .tb-count { min-width: 24px; text-align: right; font-weight: 500; color: #1a1a18; }
+  .tb-count.zero { color: #d3d1c7; }
+  .exempt-note { font-size: 10px; color: #3B6D11; background: #EAF3DE; border-radius: 4px; padding: 3px 8px; margin-top: 6px; }
+  .tbc-note { font-size: 10px; color: #854F0B; background: #FAEEDA; border-radius: 4px; padding: 3px 8px; margin-top: 6px; }
+
+  /* Heatmap table */
+  .heat-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .heat-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .heat-table th { padding: 8px 10px; text-align: center; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: #888780; }
+  .heat-table th.left { text-align: left; }
+  .heat-table td { padding: 7px 10px; border-bottom: 0.5px solid #f1efe8; text-align: center; }
+  .heat-table tr:last-child td { border-bottom: none; }
+  .heat-table td.left { text-align: left; font-weight: 500; font-size: 11px; }
+  .hcell { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; min-width: 28px; }
+  .hc-red { background: #FCEBEB; color: #A32D2D; }
+  .hc-amber { background: #FAEEDA; color: #854F0B; }
+  .hc-green { background: #EAF3DE; color: #3B6D11; }
+  .hc-na { color: #d3d1c7; font-size: 12px; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Rule Violation Analysis</h1>
+    <p>Which rules fired, how many violations, by type &nbsp;·&nbsp; Run: 10 June 2026 &nbsp;·&nbsp; 633 open opportunities evaluated across R1–R12</p>
+  </div>
+
+  <!-- Outcome chips -->
+  <p class="section-title">Violation summary by outcome</p>
+  <div class="chip-row">
+    <div class="chip">
+      <div class="chip-dot" style="background:#E24B4A;"></div>
+      <div>
+        <div class="chip-val">473</div>
+        <div class="chip-label">Hard blocked</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="chip-dot" style="background:#EF9F27;"></div>
+      <div>
+        <div class="chip-val">173</div>
+        <div class="chip-label">TBC / pending BO ruling</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="chip-dot" style="background:#888780;"></div>
+      <div>
+        <div class="chip-val">5</div>
+        <div class="chip-label">Excluded (pre-flight)</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="chip-dot" style="background:#EF9F27;"></div>
+      <div>
+        <div class="chip-val">346</div>
+        <div class="chip-label">Flagged stale (policy TBC)</div>
+      </div>
+    </div>
+    <div class="chip">
+      <div class="chip-dot" style="background:#1D9E75;"></div>
+      <div>
+        <div class="chip-val">160</div>
+        <div class="chip-label">Passes all rules</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rule violation cards -->
+  <p class="section-title">Rule-by-rule breakdown</p>
+  <div class="rule-grid" id="ruleCards"></div>
+
+  <!-- Heatmap: rule × type -->
+  <p class="section-title">Violation heatmap — rule × opportunity type</p>
+  <table class="heat-table">
+    <thead>
+      <tr>
+        <th class="left">Rule</th>
+        <th>Gig</th>
+        <th>STIP</th>
+        <th>Secondment</th>
+        <th>Job</th>
+        <th>SJR</th>
+        <th>agilePSD</th>
+        <th>Other (TBC)</th>
+        <th>No tag</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="heatRows"></tbody>
+  </table>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Run: 10 June 2026 &nbsp;·&nbsp; A opportunity may violate multiple rules; counts reflect per-rule violations, not unique opportunities &nbsp;·&nbsp; Part of OTEP_Research series (file 11 of 12)
+  </div>
+</div>
+
+<script>
+const TYPE_COLORS = {
+  'Gig':'#378ADD','STIP':'#F09595','Secondment':'#5DCAA5','Job':'#85B7EB',
+  'SJR':'#AFA9EC','agilePSD':'#1D9E75','Other(TBC)':'#EF9F27','No tag':'#7F77DD'
+};
+const TYPES = ['Gig','STIP','Secondment','Job','SJR','agilePSD','Other(TBC)','No tag'];
+const TYPE_N = { Gig:36, STIP:7, Secondment:259, Job:129, SJR:39, agilePSD:29, 'Other(TBC)':56, 'No tag':78 };
+
+const rules = [
+  {
+    id:'R2', name:'Test / invalid entries', outcome:'exclude',
+    total: 5, sub: '5 excluded before processing',
+    byType: { Gig:0, STIP:0, Secondment:2, Job:1, SJR:0, agilePSD:0, 'Other(TBC)':1, 'No tag':1 },
+    note: null
+  },
+  {
+    id:'R3', name:'Stale (end_date in past)', outcome:'tbc',
+    total: 346, sub: '346 flagged — policy TBC, not yet hard-excluded',
+    byType: { Gig:17, STIP:4, Secondment:170, Job:100, SJR:4, agilePSD:0, 'Other(TBC)':22, 'No tag':29 },
+    note: { type:'tbc', text:'D3 open: stale policy not yet confirmed. Currently flagged only.' }
+  },
+  {
+    id:'R5', name:'No type prefix in GigName', outcome:'block',
+    total: 78, sub: '78 blocked — cannot classify without prefix',
+    byType: { Gig:0, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':0, 'No tag':78 },
+    note: { type:'tbc', text:'D4 open: no-tag handling (hard block vs. Uncategorised vs. keyword inference) not yet confirmed.' }
+  },
+  {
+    id:'R6', name:'Agency (LocationName) missing', outcome:'block',
+    total: 27, sub: '27 blocked — no owner agency on record',
+    byType: { Gig:0, STIP:0, Secondment:5, Job:13, SJR:5, agilePSD:0, 'Other(TBC)':3, 'No tag':1 },
+    note: null
+  },
+  {
+    id:'R7', name:'Business Unit missing', outcome:'block',
+    total: 53, sub: '53 blocked — required for org routing',
+    byType: { Gig:4, STIP:0, Secondment:7, Job:7, SJR:0, agilePSD:0, 'Other(TBC)':23, 'No tag':6 },
+    note: null
+  },
+  {
+    id:'R8', name:'Function missing', outcome:'tbc',
+    total: 174, sub: '174 violations — TBC whether this hard-blocks',
+    byType: { Gig:13, STIP:5, Secondment:52, Job:41, SJR:11, agilePSD:5, 'Other(TBC)':31, 'No tag':16 },
+    note: { type:'tbc', text:'D1 (partial): Function confirmed required for Gig/STIP. TBC for Secondment/Job/SJR/agilePSD/Other.' }
+  },
+  {
+    id:'R9', name:'Start date missing', outcome:'block',
+    total: 27, sub: '27 blocked — 261 exempt (Secondment/Job/SJR confirmed)',
+    byType: { Gig:4, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':6, 'No tag':17 },
+    note: { type:'exempt', text:'D2 ✓ confirmed: Secondment (200), Job (61), SJR (0) exempt — not counted in violations.' }
+  },
+  {
+    id:'R10', name:'End date missing', outcome:'block',
+    total: 13, sub: '13 blocked — 38 exempt (Secondment/Job confirmed)',
+    byType: { Gig:3, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':1, 'No tag':0 },
+    note: { type:'exempt', text:'D2 ✓ confirmed: Secondment (38), Job (9) exempt from end date — not counted in violations.' }
+  },
+  {
+    id:'R11', name:'Time commitment missing', outcome:'block',
+    total: 5, sub: '5 hard blocked (Gig); 29 TBC (agilePSD)',
+    byType: { Gig:5, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:29, 'Other(TBC)':0, 'No tag':0 },
+    note: { type:'tbc', text:'D1 open: agilePSD TC rule not yet confirmed. 29 opportunities pending.' }
+  },
+];
+
+// Render rule cards
+const container = document.getElementById('ruleCards');
+rules.forEach(r => {
+  const maxVal = Math.max(...Object.values(r.byType));
+  const totalRows = TYPES.map(t => {
+    const v = r.byType[t] || 0;
+    const w = maxVal > 0 ? Math.round(v / maxVal * 100) : 0;
+    const barColor = r.outcome === 'tbc' ? '#EF9F27' : (v > 0 ? '#E24B4A' : '#D3D1C7');
+    return `<div class="type-bar-row">
+      <span class="tb-label">${t}</span>
+      <div class="tb-bar"><div class="tb-fill" style="width:${w}%;background:${barColor};"></div></div>
+      <span class="tb-count ${v===0?'zero':''}">${v}</span>
+    </div>`;
+  }).join('');
+
+  const numClass = r.outcome === 'block' ? 'block' : r.outcome === 'tbc' ? 'tbc' : 'ok';
+  const countClass = r.outcome === 'block' ? 'red' : r.outcome === 'tbc' ? 'amber' : 'grey';
+  const cardBorder = r.outcome === 'tbc' ? ' tbc' : r.note?.type === 'exempt' ? ' confirmed' : '';
+  const noteHtml = r.note
+    ? `<div class="${r.note.type === 'exempt' ? 'exempt-note' : 'tbc-note'}">${r.note.text}</div>`
+    : '';
+
+  container.innerHTML += `
+    <div class="rule-vcard${cardBorder}">
+      <div class="rv-head">
+        <span class="rv-num ${numClass}">${r.id}</span>
+        <span class="rv-name">${r.name}</span>
+      </div>
+      <div class="rv-count ${countClass}">${r.total}</div>
+      <div class="rv-sub">${r.sub}</div>
+      ${totalRows}
+      ${noteHtml}
+    </div>`;
+});
+
+// Render heatmap
+const heatRows = document.getElementById('heatRows');
+rules.forEach(r => {
+  const cells = TYPES.map(t => {
+    const v = r.byType[t] || 0;
+    const n = TYPE_N[t];
+    const pct = Math.round(v / n * 100);
+    if (v === 0) return `<td><span class="hc-na">—</span></td>`;
+    const cls = r.outcome === 'tbc' ? 'hc-amber' : pct >= 30 ? 'hc-red' : 'hc-red';
+    return `<td><span class="hcell ${cls}">${v}</span></td>`;
+  }).join('');
+  const total = Object.values(r.byType).reduce((a,b)=>a+b,0);
+  const totalCls = r.outcome === 'tbc' ? 'hc-amber' : 'hc-red';
+  heatRows.innerHTML += `
+    <tr>
+      <td class="left"><span class="rv-num ${r.outcome==='block'?'block':r.outcome==='tbc'?'tbc':'ok'}" style="font-size:10px;">${r.id}</span> ${r.name}</td>
+      ${cells}
+      <td><span class="hcell ${totalCls}" style="font-weight:700;">${total}</span></td>
+    </tr>`;
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

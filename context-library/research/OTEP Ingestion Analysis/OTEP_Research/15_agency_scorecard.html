@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Agency Health Scorecard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1020px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Score methodology */
+  .method-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .method-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem; }
+  .mc-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 4px; }
+  .mc-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .mc-desc { font-size: 11px; color: #5f5e5a; }
+  .mc-weight { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #f1efe8; color: #5f5e5a; margin-top: 6px; }
+
+  /* Quadrant canvas */
+  .quad-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .quad-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .quad-sub { font-size: 11px; color: #888780; margin-bottom: 1rem; }
+  canvas { display: block; }
+
+  /* Scorecard table */
+  .score-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .score-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .score-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; cursor: pointer; }
+  .score-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .score-table tr:last-child td { border-bottom: none; }
+  .score-table tr:hover td { background: #fafaf7; }
+
+  /* Score bars */
+  .score-bar { display: flex; align-items: center; gap: 6px; }
+  .sb-track { width: 70px; height: 7px; background: #f1efe8; border-radius: 3px; overflow: hidden; }
+  .sb-fill { height: 100%; border-radius: 3px; }
+  .sb-num { font-size: 11px; font-weight: 600; min-width: 26px; }
+
+  /* Overall score badge */
+  .score-badge { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+  .sb-a { background: #EAF3DE; color: #3B6D11; }
+  .sb-b { background: #EAF0FD; color: #2B4EAE; }
+  .sb-c { background: #FAEEDA; color: #854F0B; }
+  .sb-d { background: #FCEBEB; color: #A32D2D; }
+
+  /* Priority action */
+  .priority-tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 4px; background: #f1efe8; color: #5f5e5a; }
+  .pt-red { background: #FCEBEB; color: #A32D2D; }
+  .pt-amber { background: #FAEEDA; color: #854F0B; }
+  .pt-green { background: #EAF3DE; color: #3B6D11; }
+
+  /* Sort controls */
+  .sort-row { display: flex; gap: 8px; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+  .sort-btn { font-size: 11px; padding: 5px 12px; border-radius: 6px; border: 0.5px solid #e0dfd8; background: #fff; color: #5f5e5a; cursor: pointer; }
+  .sort-btn.active { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+  .result-note { font-size: 11px; color: #888780; margin-left: auto; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Agency Health Scorecard</h1>
+    <p>Composite health scores across data quality, engagement, and staleness for each contributing agency &nbsp;·&nbsp; As at 10 June 2026</p>
+  </div>
+
+  <!-- Methodology -->
+  <p class="section-title">Scoring methodology</p>
+  <div class="method-row">
+    <div class="method-card">
+      <div class="mc-label">Dimension 1</div>
+      <div class="mc-name">Data Quality Score</div>
+      <div class="mc-desc">% of the agency's opportunities that pass all hard field validations. Higher = fewer missing required fields.</div>
+      <div class="mc-weight">Weight: 40%</div>
+    </div>
+    <div class="method-card">
+      <div class="mc-label">Dimension 2</div>
+      <div class="mc-name">Engagement Score</div>
+      <div class="mc-desc">Inverse of zero-applicant rate. Higher = opportunities are attracting talent. Proxy for listing quality and relevance.</div>
+      <div class="mc-weight">Weight: 35%</div>
+    </div>
+    <div class="method-card">
+      <div class="mc-label">Dimension 3</div>
+      <div class="mc-name">Freshness Score</div>
+      <div class="mc-desc">Inverse of staleness rate. Higher = fewer expired listings still marked Open in OTG.</div>
+      <div class="mc-weight">Weight: 25%</div>
+    </div>
+  </div>
+
+  <!-- Quadrant chart -->
+  <p class="section-title">Agency quadrant — data quality vs. engagement</p>
+  <div class="quad-wrap">
+    <div class="quad-title">Agency positioning: data quality score vs. engagement score</div>
+    <div class="quad-sub">Bubble size = number of opportunities. Target = top right (high quality + high engagement).</div>
+    <canvas id="quadCanvas" width="860" height="380"></canvas>
+  </div>
+
+  <!-- Scorecard table -->
+  <p class="section-title">Full agency scorecard</p>
+  <div class="sort-row">
+    <button class="sort-btn active" onclick="sortTable('composite')">Overall score</button>
+    <button class="sort-btn" onclick="sortTable('dq')">Data quality</button>
+    <button class="sort-btn" onclick="sortTable('engagement')">Engagement</button>
+    <button class="sort-btn" onclick="sortTable('freshness')">Freshness</button>
+    <button class="sort-btn" onclick="sortTable('opportunities')">Gig count</button>
+    <span class="result-note" id="sortNote">Sorted by overall health score ↓</span>
+  </div>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Agency</th>
+        <th>Gigs</th>
+        <th>Data quality</th>
+        <th>Engagement</th>
+        <th>Freshness</th>
+        <th>Overall</th>
+        <th>Grade</th>
+        <th>Priority action</th>
+      </tr>
+    </thead>
+    <tbody id="scorecardBody"></tbody>
+  </table>
+
+  <div class="footer">
+    Composite score = 0.4×DQ + 0.35×Engagement + 0.25×Freshness &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; Scores are indicative — based on field completeness, zero-applicant, and staleness proxies &nbsp;·&nbsp; Part of OTEP_Research series (file 15 of 15)
+  </div>
+</div>
+
+<script>
+const agencies = [
+  { name:'GovTech',           opportunities:40, dq:77, eng:52, fresh:70, action:'Fix Function & TC for Gig/agilePSD types', actionType:'amber' },
+  { name:'Workforce Singapore',opportunities:18,dq:83, eng:61, fresh:78, action:'Resolve TC for agilePSD', actionType:'green' },
+  { name:'SportSG',           opportunities:12, dq:75, eng:58, fresh:83, action:'Fix Function missing in SJR', actionType:'green' },
+  { name:'CSA',               opportunities:11, dq:73, eng:45, fresh:67, action:'Fix Function + Business Unit', actionType:'amber' },
+  { name:'MOE',               opportunities:24, dq:42, eng:38, fresh:42, action:'Fix Start date + Function (Secondment/Job)', actionType:'amber' },
+  { name:'MOF',               opportunities:30, dq:20, eng:23, fresh:40, action:'Fix Agency field (27 opportunities have no owner)', actionType:'red' },
+  { name:'MOM',               opportunities:35, dq:20, eng:29, fresh:46, action:'Fix Start date + Function + Agency', actionType:'red' },
+  { name:'PSD',               opportunities:28, dq:21, eng:32, fresh:64, action:'Fix Business Unit + Type prefix', actionType:'red' },
+  { name:'NEA',               opportunities:12, dq:25, eng:42, fresh:82, action:'Fix Function + Business Unit', actionType:'amber' },
+  { name:'URA',               opportunities:11, dq:27, eng:36, fresh:55, action:'Fix Start date + Business Unit', actionType:'amber' },
+  { name:'MHA',               opportunities:14, dq:29, eng:31, fresh:57, action:'Fix Function + Agency', actionType:'amber' },
+  { name:'IRAS',              opportunities:16, dq:25, eng:44, fresh:44, action:'Fix Function + Business Unit', actionType:'amber' },
+  { name:'MSD/MSF',           opportunities:48, dq:17, eng:21, fresh:69, action:'Fix Type prefix (37 no-tag opportunities)', actionType:'red' },
+  { name:'MTI',               opportunities:55, dq:24, eng:18, fresh:49, action:'Fix Agency + Function + Start date', actionType:'red' },
+  { name:'Enterprise SG',     opportunities:210,dq:15, eng:17, fresh:55, action:'Fix Type prefix + Function (scale urgency)', actionType:'red' },
+];
+
+function composite(a) {
+  return Math.round(0.4*a.dq + 0.35*a.eng + 0.25*a.fresh);
+}
+
+function grade(score) {
+  if (score >= 70) return { label:'A', cls:'sb-a' };
+  if (score >= 50) return { label:'B', cls:'sb-b' };
+  if (score >= 30) return { label:'C', cls:'sb-c' };
+  return { label:'D', cls:'sb-d' };
+}
+
+function barHtml(score) {
+  const color = score >= 70 ? '#1D9E75' : score >= 50 ? '#378ADD' : score >= 30 ? '#EF9F27' : '#E24B4A';
+  return `<div class="score-bar"><div class="sb-track"><div class="sb-fill" style="width:${score}%;background:${color};"></div></div><span class="sb-num" style="color:${color};">${score}</span></div>`;
+}
+
+let sortKey = 'composite';
+function sortTable(key) {
+  sortKey = key;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const labels = { composite:'overall health score', dq:'data quality', engagement:'engagement', freshness:'freshness', opportunities:'opportunity count' };
+  document.getElementById('sortNote').textContent = `Sorted by ${labels[key]} ↓`;
+  renderTable();
+}
+
+function renderTable() {
+  const data = [...agencies].sort((a, b) => {
+    if (sortKey === 'composite') return composite(b) - composite(a);
+    if (sortKey === 'opportunities') return b.opportunities - a.opportunities;
+    return b[sortKey === 'dq' ? 'dq' : sortKey === 'engagement' ? 'eng' : 'fresh'] -
+           a[sortKey === 'dq' ? 'dq' : sortKey === 'engagement' ? 'eng' : 'fresh'];
+  });
+  const tbody = document.getElementById('scorecardBody');
+  tbody.innerHTML = '';
+  data.forEach((a, i) => {
+    const score = composite(a);
+    const g = grade(score);
+    const ptClass = { red:'pt-red', amber:'pt-amber', green:'pt-green' }[a.actionType];
+    tbody.innerHTML += `
+      <tr>
+        <td style="color:#888780;font-size:11px;">${i+1}</td>
+        <td style="font-weight:500;">${a.name}</td>
+        <td style="color:#5f5e5a;">${a.opportunities}</td>
+        <td>${barHtml(a.dq)}</td>
+        <td>${barHtml(a.eng)}</td>
+        <td>${barHtml(a.fresh)}</td>
+        <td><span style="font-weight:600;font-size:14px;">${score}</span><span style="font-size:10px;color:#888780;">/100</span></td>
+        <td><span class="score-badge ${g.cls}">${g.label}</span></td>
+        <td><span class="priority-tag ${ptClass}">${a.action}</span></td>
+      </tr>`;
+  });
+}
+renderTable();
+
+// ── Quadrant chart ───────────────────────────────────────
+const canvas = document.getElementById('quadCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const PAD = { l:60, r:30, t:20, b:50 };
+const plotW = W - PAD.l - PAD.r, plotH = H - PAD.t - PAD.b;
+
+// Grid + quadrant shading
+ctx.fillStyle = 'rgba(226,75,74,0.05)';
+ctx.fillRect(PAD.l, PAD.t, plotW/2, plotH/2); // low quality, high engagement (top-left)
+ctx.fillStyle = 'rgba(29,158,117,0.05)';
+ctx.fillRect(PAD.l+plotW/2, PAD.t+plotH/2, plotW/2, plotH/2); // high quality, low engagement? no...
+
+// Actually: x=dq, y=engagement. Target = high right, high top
+ctx.fillStyle = 'rgba(226,75,74,0.05)';
+ctx.fillRect(PAD.l, PAD.t+plotH/2, plotW/2, plotH/2); // low DQ, low engagement
+ctx.fillStyle = 'rgba(29,158,117,0.05)';
+ctx.fillRect(PAD.l+plotW/2, PAD.t, plotW/2, plotH/2); // high DQ, high engagement
+
+ctx.strokeStyle = '#e0dfd8'; ctx.lineWidth = 1;
+for (let i=1; i<10; i++) {
+  ctx.beginPath(); ctx.moveTo(PAD.l+i/10*plotW, PAD.t); ctx.lineTo(PAD.l+i/10*plotW, PAD.t+plotH); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t+i/10*plotH); ctx.lineTo(PAD.l+plotW, PAD.t+i/10*plotH); ctx.stroke();
+}
+
+// Midlines
+ctx.strokeStyle = '#d3d1c7'; ctx.lineWidth = 1.5; ctx.setLineDash([4,4]);
+ctx.beginPath(); ctx.moveTo(PAD.l+plotW/2, PAD.t); ctx.lineTo(PAD.l+plotW/2, PAD.t+plotH); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t+plotH/2); ctx.lineTo(PAD.l+plotW, PAD.t+plotH/2); ctx.stroke();
+ctx.setLineDash([]);
+
+// Axes
+ctx.strokeStyle = '#b4b2a9'; ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t); ctx.lineTo(PAD.l, PAD.t+plotH); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t+plotH); ctx.lineTo(PAD.l+plotW, PAD.t+plotH); ctx.stroke();
+
+// Labels
+ctx.fillStyle = '#888780'; ctx.font = '11px -apple-system, sans-serif'; ctx.textAlign = 'center';
+ctx.fillText('Data quality score →', PAD.l+plotW/2, H-8);
+ctx.save(); ctx.translate(14, PAD.t+plotH/2); ctx.rotate(-Math.PI/2);
+ctx.fillText('Engagement score →', 0, 0); ctx.restore();
+
+// Ticks
+for (let i=0; i<=10; i+=2) {
+  ctx.fillStyle = '#b4b2a9'; ctx.font = '10px -apple-system, sans-serif';
+  ctx.textAlign = 'center'; ctx.fillText(i*10, PAD.l+i/10*plotW, PAD.t+plotH+14);
+  ctx.textAlign = 'right'; ctx.fillText(i*10, PAD.l-6, PAD.t+(1-i/10)*plotH+4);
+}
+
+// Quadrant labels
+ctx.fillStyle = '#E24B4A'; ctx.font = 'bold 10px -apple-system, sans-serif';
+ctx.textAlign = 'left'; ctx.fillText('Critical — fix data first', PAD.l+4, PAD.t+plotH*0.5+16);
+ctx.fillStyle = '#1D9E75';
+ctx.fillText('Target zone', PAD.l+plotW/2+4, PAD.t+16);
+ctx.fillStyle = '#D4880A';
+ctx.textAlign = 'right'; ctx.fillText('Good data, low demand', PAD.l+plotW-4, PAD.t+16);
+
+const agencyColors = [
+  '#1D9E75','#378ADD','#5DCAA5','#85B7EB','#F09595','#EF9F27',
+  '#7F77DD','#AFA9EC','#E24B4A','#B0CAE8','#84C98A','#5C9EE8',
+  '#A78BFA','#F59E0B','#6B7280'
+];
+
+agencies.forEach((a, i) => {
+  const x = PAD.l + (a.dq/100)*plotW;
+  const y = PAD.t + (1 - a.eng/100)*plotH;
+  const r = Math.max(7, Math.sqrt(a.opportunities)*1.5);
+  const col = agencyColors[i % agencyColors.length];
+
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2);
+  ctx.fillStyle = col+'cc';
+  ctx.fill();
+  ctx.strokeStyle = col;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = '10px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  // Avoid label overlap with axis
+  const labelY = y - r - 4 < PAD.t + 10 ? y + r + 12 : y - r - 4;
+  ctx.fillText(a.name, x, labelY);
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

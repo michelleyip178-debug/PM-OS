@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Engagement Analysis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Alert callout */
+  .alert { background: #fff8ed; border: 0.5px solid #F0C27F; border-left: 3px solid #EF9F27; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .alert h3 { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: #7A4510; }
+  .alert p { font-size: 12px; color: #5f5e5a; }
+
+  /* Stat row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0dfd8; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .stat-cell { background: #fff; padding: .9rem 1rem; }
+  .stat-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 3px; }
+  .stat-value { font-size: 24px; font-weight: 300; letter-spacing: -.5px; }
+  .stat-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+
+  /* Dual bar chart */
+  .chart-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+  .chart-title { font-size: 13px; font-weight: 500; margin-bottom: 1rem; }
+  .dbar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .dbar-label { width: 100px; flex-shrink: 0; font-size: 11px; color: #5f5e5a; font-weight: 500; }
+  .dbar-tracks { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .dbar-track { display: flex; align-items: center; gap: 6px; }
+  .dbar { height: 10px; border-radius: 3px; }
+  .dbar-pct { font-size: 10px; color: #888780; min-width: 30px; }
+  .dbar-legend { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 0.5px solid #f1efe8; }
+  .dl-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #5f5e5a; }
+  .dl-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  /* Scatter plot */
+  .scatter-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+  .scatter-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .scatter-sub { font-size: 11px; color: #888780; margin-bottom: 1rem; }
+  canvas { display: block; }
+
+  /* Dead catalogue */
+  .dead-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+  .dead-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem 1.1rem; }
+  .dead-card.warn { border-color: #F0C27F; background: #fffdf8; }
+  .dc-head { font-size: 12px; font-weight: 500; margin-bottom: 6px; }
+  .dc-stat { font-size: 22px; font-weight: 300; letter-spacing: -.3px; margin-bottom: 2px; }
+  .dc-note { font-size: 11px; color: #5f5e5a; }
+
+  /* Insight table */
+  .ins-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .ins-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .ins-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; }
+  .ins-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .ins-table tr:last-child td { border-bottom: none; }
+  .sev { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
+  .sev-high { background: #FCEBEB; color: #A32D2D; }
+  .sev-med { background: #FAEEDA; color: #854F0B; }
+  .sev-low { background: #EAF3DE; color: #3B6D11; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Engagement Analysis</h1>
+    <p>Zero-applicant rates, staleness, and the catalogue quality problem beyond data completeness &nbsp;·&nbsp; As at 10 June 2026</p>
+  </div>
+
+  <div class="alert">
+    <h3>The hidden problem: fixing data quality may not fix the catalogue</h3>
+    <p>Even among the 160 opportunities that currently pass all validation rules, <strong>76% have zero applicants</strong> and <strong>37% are stale</strong>. Data completeness is a necessary but not sufficient condition for a healthy OTEP catalogue. Engagement is a separate failure mode.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-label">Zero-applicant rate (all open)</div>
+      <div class="stat-value" style="color:#C0392B;">84%</div>
+      <div class="stat-sub">534 of 633 opportunities have 0 applicants</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Zero-applicant (passing opportunities)</div>
+      <div class="stat-value" style="color:#D4880A;">76%</div>
+      <div class="stat-sub">122 of 160 ingested opportunities have 0 applicants</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Stale rate (all open)</div>
+      <div class="stat-value" style="color:#C0392B;">55%</div>
+      <div class="stat-sub">346 of 633 opportunities past their end date</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">"Dead" opportunities (stale + zero ap)</div>
+      <div class="stat-value" style="color:#C0392B;">312</div>
+      <div class="stat-sub">Both stale and zero applicants</div>
+    </div>
+  </div>
+
+  <!-- Dual bar: zero-ap + stale by type -->
+  <p class="section-title">Zero-applicant &amp; staleness rate by opportunity type</p>
+  <div class="chart-card">
+    <div class="chart-title">% of opportunities with zero applicants vs. % stale — by type</div>
+    <div id="dualBars"></div>
+    <div class="dbar-legend">
+      <div class="dl-item"><div class="dl-dot" style="background:#7F77DD;"></div>Zero applicants %</div>
+      <div class="dl-item"><div class="dl-dot" style="background:#EF9F27;"></div>Stale %</div>
+    </div>
+  </div>
+
+  <!-- Scatter: block rate vs zero-ap rate -->
+  <p class="section-title">Scatter — block rate vs. zero-applicant rate by type</p>
+  <div class="scatter-wrap">
+    <div class="scatter-title">Does fixing data quality actually help engagement?</div>
+    <div class="scatter-sub">Each bubble = one opportunity type. Size = number of opportunities. High right = high block AND high zero-applicant — broken in both dimensions.</div>
+    <canvas id="scatterCanvas" width="860" height="340"></canvas>
+  </div>
+
+  <!-- Dead catalogue breakdown -->
+  <p class="section-title">The "dead catalogue" problem</p>
+  <div class="dead-grid">
+    <div class="dead-card warn">
+      <div class="dc-head">Stale + zero applicants (all open opportunities)</div>
+      <div class="dc-stat" style="color:#C0392B;">312</div>
+      <div class="dc-note">Opportunities that are past their end date AND have attracted no applicants. Ingesting these adds noise, not value. 49% of all open opportunities fall here.</div>
+    </div>
+    <div class="dead-card warn">
+      <div class="dc-head">Passing opportunities with zero applicants</div>
+      <div class="dc-stat" style="color:#D4880A;">122</div>
+      <div class="dc-note">Of the 160 opportunities that reach OTEP, 122 have 0 applicants. These pass the pipeline but fail at engagement. Data quality alone didn't fix the problem.</div>
+    </div>
+    <div class="dead-card">
+      <div class="dc-head">Stale opportunities that still pass validation</div>
+      <div class="dc-stat" style="color:#D4880A;">59</div>
+      <div class="dc-note">59 passing opportunities have an end_date in the past. Without a staleness policy (D3 pending), these enter OTEP and show expired opportunities to users.</div>
+    </div>
+    <div class="dead-card">
+      <div class="dc-head">SJR — engagement paradox</div>
+      <div class="dc-stat" style="color:#D4880A;">95%</div>
+      <div class="dc-note">SJR is the cleanest recognised type (only 33% blocked) yet has a 95% zero-applicant rate. Fixing data quality here won't move the needle on engagement.</div>
+    </div>
+  </div>
+
+  <!-- Analyst insight table -->
+  <p class="section-title">Analyst findings — what the data is actually saying</p>
+  <table class="ins-table">
+    <thead>
+      <tr><th>Finding</th><th>Severity</th><th>Evidence</th><th>Implication</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:500;">Zero-applicant problem is structural, not a data quality issue</td>
+        <td><span class="sev sev-high">High</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">84% zero-ap across all opportunities; 76% among passing opportunities</td>
+        <td style="font-size:11px;color:#5f5e5a;">OTEP needs demand-side analysis (discoverability, targeting) not just supply-side (data completeness)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">Secondment type is structurally different — needs a separate catalogue logic</td>
+        <td><span class="sev sev-high">High</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">259 opportunities, 88% blocked, 170 stale, 182 zero-ap. Evergreen by nature.</td>
+        <td style="font-size:11px;color:#5f5e5a;">Secondments may need a "standing roles" section in OTEP rather than standard opportunity listings with dates</td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">Stale policy (D3) is blocking a key quality signal</td>
+        <td><span class="sev sev-high">High</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">346 stale opportunities; 59 stale opportunities currently passing and entering OTEP</td>
+        <td style="font-size:11px;color:#5f5e5a;">Without D3 resolution, OTEP will fill with expired listings. This is a user-experience risk, not just a data risk.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">agilePSD is the highest-quality type but has zero traction</td>
+        <td><span class="sev sev-med">Medium</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">29 opportunities, 0 stale, all dates present, 0% zero-ap only if TC TBC resolves</td>
+        <td style="font-size:11px;color:#5f5e5a;">Resolve TC ruling for agilePSD first — quickest win for a clean cohort entering OTEP</td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">Function field is the biggest single-field unblock available</td>
+        <td><span class="sev sev-med">Medium</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">174 opportunities missing Function — largest field gap after type prefix</td>
+        <td style="font-size:11px;color:#5f5e5a;">A targeted agency outreach campaign on Function alone could unlock ~100 additional opportunities</td>
+      </tr>
+      <tr>
+        <td style="font-weight:500;">No tag opportunities are a data governance gap, not a pipeline gap</td>
+        <td><span class="sev sev-low">Lower</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">78 no-tag opportunities; other fields relatively healthy (1 missing agency, 6 missing BU)</td>
+        <td style="font-size:11px;color:#5f5e5a;">The fix is upstream governance (agencies must add prefix) not pipeline logic. Worth targeting with an agency comms push.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; "Zero applicants" = GigApplicants = 0 &nbsp;·&nbsp; "Stale" = GigEnd &lt; 2026-06-10 while Status = Open &nbsp;·&nbsp; Part of OTEP_Research series (file 14 of 15)
+  </div>
+</div>
+
+<script>
+// ── Dual bar chart ────────────────────────────────────────
+const types = [
+  { name:'agilePSD',    n:29,  zeroAp:29, stale:0   },
+  { name:'SJR',         n:39,  zeroAp:37, stale:4   },
+  { name:'No tag',      n:78,  zeroAp:42, stale:29  },
+  { name:'Job',         n:129, zeroAp:84, stale:100 },
+  { name:'STIP',        n:7,   zeroAp:5,  stale:4   },
+  { name:'Other (TBC)', n:56,  zeroAp:40, stale:22  },
+  { name:'Gig',         n:36,  zeroAp:28, stale:17  },
+  { name:'Secondment',  n:259, zeroAp:182,stale:170 },
+];
+types.sort((a,b) => (b.zeroAp/b.n) - (a.zeroAp/a.n));
+
+const dualWrap = document.getElementById('dualBars');
+types.forEach(t => {
+  const zPct = Math.round(t.zeroAp/t.n*100);
+  const sPct = Math.round(t.stale/t.n*100);
+  dualWrap.innerHTML += `
+    <div class="dbar-row">
+      <div class="dbar-label">${t.name} <span style="font-size:9px;color:#b4b2a9;">n=${t.n}</span></div>
+      <div class="dbar-tracks">
+        <div class="dbar-track">
+          <div class="dbar" style="width:${zPct*4}px;background:#7F77DD;max-width:360px;"></div>
+          <span class="dbar-pct">${zPct}% zero-ap</span>
+        </div>
+        <div class="dbar-track">
+          <div class="dbar" style="width:${sPct*4}px;background:#EF9F27;max-width:360px;"></div>
+          <span class="dbar-pct">${sPct}% stale</span>
+        </div>
+      </div>
+    </div>`;
+});
+
+// ── Scatter plot ─────────────────────────────────────────
+const scatter = [
+  { name:'Secondment', n:259, blockPct:89, zapPct:70, color:'#5DCAA5' },
+  { name:'Job',        n:129, blockPct:67, zapPct:65, color:'#85B7EB' },
+  { name:'No tag',     n:78,  blockPct:100,zapPct:54, color:'#7F77DD' },
+  { name:'Other(TBC)', n:56,  blockPct:63, zapPct:71, color:'#EF9F27' },
+  { name:'Gig',        n:36,  blockPct:56, zapPct:78, color:'#378ADD' },
+  { name:'SJR',        n:39,  blockPct:33, zapPct:95, color:'#AFA9EC' },
+  { name:'agilePSD',   n:29,  blockPct:17, zapPct:100,color:'#1D9E75' },
+  { name:'STIP',       n:7,   blockPct:71, zapPct:71, color:'#F09595' },
+];
+
+const canvas = document.getElementById('scatterCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const PAD = { l:60, r:30, t:20, b:50 };
+const plotW = W - PAD.l - PAD.r, plotH = H - PAD.t - PAD.b;
+
+// Grid
+ctx.strokeStyle = '#f1efe8'; ctx.lineWidth = 1;
+for (let i=0; i<=10; i++) {
+  const x = PAD.l + i/10*plotW;
+  const y = PAD.t + i/10*plotH;
+  ctx.beginPath(); ctx.moveTo(x, PAD.t); ctx.lineTo(x, PAD.t+plotH); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(PAD.l+plotW, y); ctx.stroke();
+}
+
+// Axes
+ctx.strokeStyle = '#d3d1c7'; ctx.lineWidth = 1.5;
+ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t); ctx.lineTo(PAD.l, PAD.t+plotH); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(PAD.l, PAD.t+plotH); ctx.lineTo(PAD.l+plotW, PAD.t+plotH); ctx.stroke();
+
+// Axis labels
+ctx.fillStyle = '#888780'; ctx.font = '11px -apple-system, sans-serif'; ctx.textAlign = 'center';
+ctx.fillText('Block rate →', PAD.l + plotW/2, H - 8);
+ctx.save(); ctx.translate(14, PAD.t + plotH/2); ctx.rotate(-Math.PI/2);
+ctx.fillText('Zero-applicant rate →', 0, 0); ctx.restore();
+
+// Tick labels
+for (let i=0; i<=10; i+=2) {
+  ctx.fillStyle = '#b4b2a9'; ctx.font = '10px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(i*10+'%', PAD.l + i/10*plotW, PAD.t+plotH+14);
+  ctx.textAlign = 'right';
+  ctx.fillText(i*10+'%', PAD.l-6, PAD.t + (1-i/10)*plotH + 4);
+}
+
+// Quadrant shading
+ctx.fillStyle = 'rgba(226,75,74,0.04)';
+ctx.fillRect(PAD.l + plotW*0.5, PAD.t, plotW*0.5, plotH*0.5);
+ctx.fillStyle = 'rgba(29,158,117,0.04)';
+ctx.fillRect(PAD.l, PAD.t + plotH*0.5, plotW*0.5, plotH*0.5);
+
+// Quadrant labels
+ctx.fillStyle = '#E24B4A'; ctx.font = '10px -apple-system, sans-serif'; ctx.textAlign = 'left';
+ctx.fillText('Broken both ways', PAD.l + plotW*0.51 + 4, PAD.t + 16);
+ctx.fillStyle = '#1D9E75'; ctx.textAlign = 'left';
+ctx.fillText('Low block, low zero-ap', PAD.l + 4, PAD.t + plotH*0.5 + 30);
+
+// Bubbles
+scatter.forEach(d => {
+  const x = PAD.l + (d.blockPct/100)*plotW;
+  const y = PAD.t + (1 - d.zapPct/100)*plotH;
+  const r = Math.max(8, Math.sqrt(d.n)*1.8);
+
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2);
+  ctx.fillStyle = d.color + 'cc';
+  ctx.fill();
+  ctx.strokeStyle = d.color;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = `bold 11px -apple-system, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText(d.name, x, y - r - 4);
+  ctx.font = '10px -apple-system, sans-serif';
+  ctx.fillStyle = '#888780';
+  ctx.fillText('n='+d.n, x, y - r - 16);
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

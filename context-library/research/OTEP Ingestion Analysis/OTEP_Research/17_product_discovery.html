@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — OTG Ingestion Product Discovery</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #faf9f6; color: #1a1a18; font-size: 14px; line-height: 1.75; }
+  .page { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  /* Doc header */
+  .doc-meta { display: flex; gap: 20px; margin-bottom: .6rem; flex-wrap: wrap; }
+  .doc-meta span { font-size: 12px; color: #888780; }
+  .doc-meta strong { color: #5f5e5a; font-weight: 500; }
+  h1 { font-size: 24px; font-weight: 500; margin-bottom: .4rem; line-height: 1.3; }
+  .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 2rem; line-height: 1.6; }
+
+  .divider { border: none; border-top: 1px solid #e0dfd8; margin: 2.5rem 0; }
+  h2 { font-size: 17px; font-weight: 500; margin: 2rem 0 .5rem; }
+  h3 { font-size: 14px; font-weight: 500; margin: 1.4rem 0 .35rem; color: #2c2c2a; }
+  p { font-size: 13px; color: #2c2c2a; margin-bottom: .75rem; }
+  ul { margin: .5rem 0 .75rem 1.2rem; }
+  ul li { font-size: 13px; color: #2c2c2a; margin-bottom: .35rem; }
+
+  /* Callout */
+  .callout { border-left: 3px solid; padding: .85rem 1.1rem; margin: 1.25rem 0; border-radius: 0 8px 8px 0; font-size: 13px; }
+  .callout.blue { border-color: #85B7EB; background: #f0f7fd; color: #0c447c; }
+  .callout.amber { border-color: #EF9F27; background: #fdf6ec; color: #633806; }
+  .callout.red { border-color: #e24b4a; background: #fef5f5; color: #791f1f; }
+  .callout.green { border-color: #5DCAA5; background: #f0faf6; color: #085041; }
+  .callout-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; opacity: .7; }
+
+  /* Stat pills */
+  .stat-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 1rem 0; }
+  .stat { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .75rem 1.1rem; min-width: 140px; }
+  .stat .num { font-size: 28px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
+  .stat .lbl { font-size: 12px; color: #5f5e5a; }
+  .stat.red .num { color: #a32d2d; }
+  .stat.amber .num { color: #854f0b; }
+  .stat.green .num { color: #3b6d11; }
+
+  /* TL;DR card */
+  .tldr-card { background: #1a1a18; color: #fff; border-radius: 12px; padding: 1.5rem 1.75rem; margin: 1.5rem 0 2rem; }
+  .tldr-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: #888780; margin-bottom: .75rem; }
+  .tldr-card p { color: #d4d3ce; font-size: 13px; margin-bottom: .6rem; }
+  .tldr-card p:last-child { margin-bottom: 0; }
+  .tldr-card strong { color: #fff; }
+
+  /* Action items */
+  .action-list { margin: .75rem 0; list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 10px; padding: .55rem 0; border-bottom: 0.5px solid #f1efe8; align-items: flex-start; font-size: 13px; color: #2c2c2a; }
+  .action-list li:last-child { border-bottom: none; }
+  .action-badge { flex-shrink: 0; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+  .badge-today { background: #fef5f5; color: #a32d2d; border: 1px solid #f5c6c6; }
+  .badge-week { background: #fdf6ec; color: #854f0b; border: 1px solid #f0c27f; }
+  .badge-after { background: #f1efe8; color: #5f5e5a; border: 1px solid #d3d1c7; }
+
+  /* Scenario bar */
+  .scenario-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; }
+  .scenario-label { width: 240px; color: #5f5e5a; flex-shrink: 0; }
+  .scenario-bar-wrap { flex: 1; height: 10px; background: #f1efe8; border-radius: 5px; overflow: hidden; }
+  .scenario-bar-fill { height: 100%; border-radius: 5px; }
+  .scenario-count { width: 55px; text-align: right; font-weight: 500; color: #1a1a18; }
+
+  /* Decision cards */
+  .decision-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 12px; padding: 1.5rem; margin: 1.25rem 0; }
+  .decision-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; }
+  .decision-num { width: 28px; height: 28px; border-radius: 50%; background: #1a1a18; color: #fff; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .decision-title { font-size: 15px; font-weight: 500; line-height: 1.4; }
+  .decision-stakes { font-size: 12px; color: #a32d2d; margin-top: 3px; }
+  .options-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1rem 0 .5rem; }
+  .option { display: flex; gap: 10px; padding: .6rem 0; border-bottom: 0.5px solid #f1efe8; align-items: flex-start; }
+  .option:last-child { border-bottom: none; }
+  .opt-letter { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #d3d1c7; font-size: 11px; font-weight: 500; color: #5f5e5a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .opt-letter.rec { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+  .opt-body { flex: 1; }
+  .opt-title { font-size: 13px; font-weight: 500; color: #1a1a18; }
+  .opt-note { font-size: 12px; color: #5f5e5a; margin-top: 2px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: .75rem 0 1rem; }
+  th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #888780; padding: .5rem .75rem; border-bottom: 1px solid #e0dfd8; background: #faf9f6; }
+  td { padding: .5rem .75rem; border-bottom: 0.5px solid #f1efe8; color: #2c2c2a; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .tag-red { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 20px; background: #fcebeb; color: #a32d2d; }
+  .tag-amber { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 20px; background: #faeeda; color: #854f0b; }
+  .tag-green { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 20px; background: #eaf3de; color: #3b6d11; }
+  .tag-gray { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 20px; background: #f1efe8; color: #5f5e5a; }
+
+  .section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-meta">
+    <span><strong>Date</strong> 10 June 2026</span>
+    <span><strong>Owner</strong> Michelle Yip</span>
+    <span><strong>Status</strong> Draft</span>
+  </div>
+  <h1>OTG Ingestion — Product Discovery</h1>
+  <p class="subtitle">What we know, what's unresolved, and what needs to happen before Sprint 5.</p>
+
+  <!-- TL;DR -->
+  <div class="tldr-card">
+    <div class="tldr-label">TL;DR</div>
+    <p>The pipeline works. The data doesn't. 75% of OTG's 633 open gigs will hard-skip on first run, leaving CareerCompass launching with <strong>~160 opportunities</strong>. Secondment searches will return almost nothing — 89% of secondments are blocked.</p>
+    <p>The fix isn't engineering. It's two PM decisions with Pow Hwee (are start date and function required fields?) that unlock ~300 more gigs without any agency lifting a finger. After that, one remediation session with Enterprise Singapore unlocks another 178.</p>
+  </div>
+
+  <p class="section-label">Three things to act on now</p>
+  <ul class="action-list">
+    <li>
+      <span class="action-badge badge-today">Today</span>
+      <span>Confirm start date + function scope with Pow Hwee. Update OTEP-192 ACs immediately after.</span>
+    </li>
+    <li>
+      <span class="action-badge badge-week">This week</span>
+      <span>BO meeting (Jacky / Xian Zhang) to confirm minimum viable catalogue threshold and stale gig policy.</span>
+    </li>
+    <li>
+      <span class="action-badge badge-after">After OTEP-192</span>
+      <span>Send per-agency skip reports. Start with Enterprise Singapore — they're 38% of all blocked gigs.</span>
+    </li>
+  </ul>
+
+  <hr class="divider">
+
+  <!-- Problem statement -->
+  <h2>1. The Problem</h2>
+  <p>CareerCompass promises officers a single place to discover all development opportunities. The OTG ingestion pipeline is what makes that real for 160,000 officers on the platform today.</p>
+  <p>The current state: the pipeline exists, but 75% of OTG's open gigs won't pass it. Officers searching for secondments will see almost nothing. Some filter views will return single digits. This isn't a technical failure — the pipeline is doing exactly what we designed it to do. The problem is that the rules were set before we ran against real data.</p>
+
+  <div class="callout red">
+    <div class="callout-label">Risk</div>
+    Officers try CareerCompass once, find it sparse compared to what they know is in OTG, and stop returning. Early word-of-mouth kills adoption before the platform has a chance to build traction.
+  </div>
+
+  <!-- Headline numbers -->
+  <hr class="divider">
+  <h2>2. The Data Reality</h2>
+  <p>Source: OTG Oppr.xlsx, 633 open gigs as at 9 June 2026.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="num">633</div>
+      <div class="lbl">Open gigs in OTG source</div>
+    </div>
+    <div class="stat green">
+      <div class="num">160</div>
+      <div class="lbl">Passing — ready to ingest (25%)</div>
+    </div>
+    <div class="stat red">
+      <div class="num">473</div>
+      <div class="lbl">Blocked — will hard-skip (75%)</div>
+    </div>
+    <div class="stat amber">
+      <div class="num">346</div>
+      <div class="lbl">Open gigs past closing date</div>
+    </div>
+  </div>
+
+  <h3>What's blocking the 473</h3>
+  <table>
+    <thead>
+      <tr><th>Field missing</th><th>Gigs affected</th><th>Currently required?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Start date (GigStart)</td><td><strong>288</strong></td><td><span class="tag-amber">TBD — highest leverage</span></td></tr>
+      <tr><td>Function</td><td>174</td><td><span class="tag-amber">TBD — mostly Secondments</span></td></tr>
+      <tr><td>Type tag (missing / unrecognised)</td><td>163</td><td><span class="tag-red">Yes — hard skip</span></td></tr>
+      <tr><td>Business unit</td><td>47</td><td><span class="tag-amber">TBD</span></td></tr>
+      <tr><td>End date</td><td>51</td><td><span class="tag-gray">Partial — nil is valid</span></td></tr>
+      <tr><td>Agency (unresolvable)</td><td>27</td><td><span class="tag-red">Yes — hard skip</span></td></tr>
+      <tr><td>Time commitment</td><td>5</td><td><span class="tag-amber">TBD</span></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#888780;">Many gigs fail on more than one field — counts above overlap. Net blocked: 473.</p>
+
+  <h3>Blocked by type</h3>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Open gigs</th><th>Blocked</th><th>% blocked</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Secondment</td><td>259</td><td>230</td><td><span class="tag-red">89%</span></td></tr>
+      <tr><td>Job</td><td>129</td><td>87</td><td><span class="tag-amber">67%</span></td></tr>
+      <tr><td>No tag (unclassifiable)</td><td>78</td><td>78</td><td><span class="tag-red">100% — permanent until fixed at source</span></td></tr>
+      <tr><td>Gig</td><td>36</td><td>20</td><td><span class="tag-amber">56%</span></td></tr>
+      <tr><td>STIP</td><td>7</td><td>5</td><td><span class="tag-amber">71%</span></td></tr>
+      <tr><td>agilePSD</td><td>29</td><td>5</td><td><span class="tag-green">17% — low-hanging fruit</span></td></tr>
+      <tr><td>SJR</td><td>39</td><td>13</td><td><span class="tag-gray">Excluded by design</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Catalogue scenarios at launch</h3>
+  <div style="margin: 1rem 0;">
+    <div class="scenario-row">
+      <div class="scenario-label">Current rules, no changes</div>
+      <div class="scenario-bar-wrap"><div class="scenario-bar-fill" style="width:27%;background:#a32d2d;"></div></div>
+      <div class="scenario-count">~160</div>
+    </div>
+    <div class="scenario-row">
+      <div class="scenario-label">Start date + function optional</div>
+      <div class="scenario-bar-wrap"><div class="scenario-bar-fill" style="width:62%;background:#EF9F27;"></div></div>
+      <div class="scenario-count">~375</div>
+    </div>
+    <div class="scenario-row">
+      <div class="scenario-label">Above + ESG remediates</div>
+      <div class="scenario-bar-wrap"><div class="scenario-bar-fill" style="width:83%;background:#5DCAA5;"></div></div>
+      <div class="scenario-count">~500+</div>
+    </div>
+    <div class="scenario-row">
+      <div class="scenario-label">All rules relaxed (not recommended)</div>
+      <div class="scenario-bar-wrap"><div class="scenario-bar-fill" style="width:100%;background:#d3d1c7;"></div></div>
+      <div class="scenario-count">~600</div>
+    </div>
+  </div>
+  <p>The 350–400 range is achievable through field scope decisions alone — before any agency does anything.</p>
+
+  <hr class="divider">
+
+  <!-- Open decisions -->
+  <h2>3. Open Decisions</h2>
+  <p>These are unresolved. Each one directly affects catalogue size or story ACs. They need owners and deadlines.</p>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">A</div>
+      <div>
+        <div class="decision-title">Is start date (GigStart) required or optional?</div>
+        <div class="decision-stakes">Affects 288 gigs — the single biggest lever</div>
+      </div>
+    </div>
+    <p>Secondments are standing roles. A start date may genuinely not exist for them. Gigs and STIPs are time-bound — the date is material to the officer's decision.</p>
+    <div class="options-label">Options</div>
+    <div class="option">
+      <div class="opt-letter">A</div>
+      <div class="opt-body">
+        <div class="opt-title">Required for all types</div>
+        <div class="opt-note">288 gigs hard-skip. Blanket rule hits standing roles unfairly.</div>
+      </div>
+    </div>
+    <div class="option">
+      <div class="opt-letter rec">B</div>
+      <div class="opt-body">
+        <div class="opt-title">Optional for Secondments + Jobs only (recommended)</div>
+        <div class="opt-note">Most of 288 pass. Matches role semantics — standing roles don't have a fixed start.</div>
+      </div>
+    </div>
+    <div class="option">
+      <div class="opt-letter">C</div>
+      <div class="opt-body">
+        <div class="opt-title">Remove as required field entirely</div>
+        <div class="opt-note">Maximum unlock, but reduces listing quality for time-bound roles.</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 ACs finalised</p>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">B</div>
+      <div>
+        <div class="decision-title">Is function required or display-only?</div>
+        <div class="decision-stakes">Affects 174 gigs, heavily overlapping with Secondments</div>
+      </div>
+    </div>
+    <p>Function drives the filter on OTEP-86. If required, 174 gigs hard-skip but filter accuracy is preserved. If optional, those gigs appear in unfiltered browsing but not in function-filtered views.</p>
+    <div class="options-label">Options</div>
+    <div class="option">
+      <div class="opt-letter">A</div>
+      <div class="opt-body">
+        <div class="opt-title">Required for all types</div>
+        <div class="opt-note">174 gigs hard-skip. Filter is accurate but smaller.</div>
+      </div>
+    </div>
+    <div class="option">
+      <div class="opt-letter rec">B</div>
+      <div class="opt-body">
+        <div class="opt-title">Optional / display-only (recommended)</div>
+        <div class="opt-note">174 gigs pass. A gig without a function is still a valid opportunity — it just won't appear in function-filtered views.</div>
+      </div>
+    </div>
+    <div class="callout amber" style="margin-top:.75rem;">
+      <div class="callout-label">Design note for Amber</div>
+      If function is optional, the listing card needs a graceful null state. Empty function-filter results need a design too.
+    </div>
+    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 ACs finalised</p>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">C</div>
+      <div>
+        <div class="decision-title">Are competencies + time commitment required or optional?</div>
+        <div class="decision-stakes">Affects OTEP-87 detail page design and Léo's transform logic</div>
+      </div>
+    </div>
+    <p>If required: every ingested record has competency data — Amber designs for a populated section. If optional: records can be null — Amber designs both states (populated and empty). Open item #41: Pow Hwee to schedule meeting with core team.</p>
+    <p style="font-size:12px;color:#888780;">Owner: Pow Hwee (to schedule) + Michelle &nbsp;·&nbsp; Needed by: before S4/S5 OTEP-87 grooming</p>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">D</div>
+      <div>
+        <div class="decision-title">Stale gig policy — pipeline exclusion or rely on lifecycle rule?</div>
+        <div class="decision-stakes">Affects 346 open gigs past their closing date</div>
+      </div>
+    </div>
+    <p>The existing lifecycle rule (<code style="font-size:11px;background:#f1efe8;padding:1px 5px;border-radius:3px;">closing_date &gt; today OR closing_date IS NULL</code>) already hides stale gigs from officers. This is a DB hygiene question, not an officer experience question.</p>
+    <div class="options-label">Options</div>
+    <div class="option">
+      <div class="opt-letter rec">A</div>
+      <div class="opt-body">
+        <div class="opt-title">Rely on lifecycle rule for MVP (recommended)</div>
+        <div class="opt-note">Stale gigs ingest, sit in DB, never visible to officers. Already works correctly.</div>
+      </div>
+    </div>
+    <div class="option">
+      <div class="opt-letter">B</div>
+      <div class="opt-body">
+        <div class="opt-title">Pipeline exclusion (stale + zero applicants)</div>
+        <div class="opt-note">255 fewer DB records. Cleaner audit trail. Add in S5/6 review.</div>
+      </div>
+    </div>
+    <div class="callout blue" style="margin-top:.75rem;">
+      <div class="callout-label">Also needed</div>
+      Hardcode exclusion of 3 test entries (GigIDs 13733, 14807, 14813) from ingestion. Michelle to add to OTEP-192 ACs.
+    </div>
+    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 closes</p>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">E</div>
+      <div>
+        <div class="decision-title">Programme-type TC exemption (agilePSD, KidSTART, etc.)</div>
+        <div class="decision-stakes">Affects ~109 gigs in edge-case programme categories</div>
+      </div>
+    </div>
+    <p>agilePSD (29 gigs, all from PSD) is the cleanest case — fully dated, zero stale. Are programme types exempt from the time commitment requirement like Jobs and Secondments, or must they have TC like Gigs?</p>
+    <p style="font-size:12px;color:#888780;">Owner: Michelle → BOs (Jacky / Xian Zhang) &nbsp;·&nbsp; Needed by: before go-live date is set</p>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-header">
+      <div class="decision-num">F</div>
+      <div>
+        <div class="decision-title">What is the minimum viable catalogue threshold for launch?</div>
+        <div class="decision-stakes">No floor set = no go-live date can be confirmed</div>
+      </div>
+    </div>
+    <p>Recommended: 350+ ingested gigs with at least 3 opportunity types with 20+ each. Below 300 is thin — some filter views will return single digits.</p>
+    <p style="font-size:12px;color:#888780;">Owner: Michelle → BOs &nbsp;·&nbsp; Needed by: before S5 planning</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- What's confirmed -->
+  <h2>4. What's Already Confirmed</h2>
+  <p>These 10 decisions are settled. Don't re-open them.</p>
+  <table>
+    <thead>
+      <tr><th>Decision</th><th>Detail</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ingestion method</td><td>Excel file import (not API)</td><td>2026-05-14</td></tr>
+      <tr><td>Sync cadence</td><td>One-time port only — no ongoing automated sync</td><td>2026-05-29</td></tr>
+      <tr><td>SJRs excluded</td><td>No apply flow, no card, no ingestion</td><td>2026-05-21</td></tr>
+      <tr><td>Hard-skip rule</td><td>Any missing mapped field = entire row skipped</td><td>2026-06-08</td></tr>
+      <tr><td>Unrecognised type prefixes</td><td>Hard-skip pending DevOps/DT fix at source</td><td>2026-06-04</td></tr>
+      <tr><td>formsg_url required</td><td>No apply URL = no point ingesting</td><td>2026-06-08</td></tr>
+      <tr><td>Nil closing date</td><td>"00/01/1900" = evergreen = valid, maps to nil</td><td>2026-05-29</td></tr>
+      <tr><td>Opportunity lifecycle</td><td>closing_date > today OR nil. Date-driven, not manual.</td><td>2026-05-13</td></tr>
+      <tr><td>OTEP-130 removed from S4</td><td>FormSG webhook moved to backlog — R1 concern</td><td>2026-06-10</td></tr>
+      <tr><td>Ingestion rules revisit</td><td>Structured review of skip rules in S5/6</td><td>2026-06-10</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- Remediation plan -->
+  <h2>5. Agency Remediation Plan</h2>
+  <p>The 163 unclassifiable gigs (no type tag, unrecognised prefix) are permanently blocked until agencies fix the data at source. Agencies need to know what to fix and by when.</p>
+
+  <h3>Top agencies to target first</h3>
+  <table>
+    <thead>
+      <tr><th>Agency</th><th>Blocked gigs</th><th>% of all blocked</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Enterprise Singapore</strong></td><td>178</td><td><span class="tag-red">38%</span></td></tr>
+      <tr><td>MTI</td><td>42</td><td>9%</td></tr>
+      <tr><td>MSF</td><td>40</td><td>8%</td></tr>
+      <tr><td>NLB</td><td>20</td><td>4%</td></tr>
+      <tr><td>MDDI</td><td>17</td><td>4%</td></tr>
+      <tr><td>EDB</td><td>18</td><td>4%</td></tr>
+      <tr><td>NCSS</td><td>18</td><td>4%</td></tr>
+      <tr><td>WSG</td><td>16</td><td>3%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout green">
+    <div class="callout-label">Playbook</div>
+    Generate per-agency skip report from the ingestion log. Send to agency HR contacts. Give agencies 2 weeks to correct flagged records. Run a second ingestion after. One session with Enterprise Singapore unlocks more than a third of all blocked content.
+  </div>
+
+  <h3>Operational questions still open</h3>
+  <table>
+    <thead>
+      <tr><th>Question</th><th>Owner</th><th>Urgency</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Who publishes and maintains the canonical type tag list?</td><td>OTG Ops / Michelle</td><td><span class="tag-amber">Before agency outreach</span></td></tr>
+      <tr><td>Who is the remediation contact at each agency?</td><td>Rama / PSD Ops</td><td><span class="tag-amber">Before remediation window opens</span></td></tr>
+      <tr><td>Can OTG enforce a type label at the point of posting?</td><td>DevOps/DT</td><td><span class="tag-gray">S5/6 — prevents recurrence</span></td></tr>
+      <tr><td>7 gigs with no named owner in OTG — how to handle?</td><td>Rama</td><td><span class="tag-gray">Before remediation</span></td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- Open items -->
+  <h2>6. Open Items Summary</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Item</th><th>Owner</th><th>By when</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>A</td><td>Start date required or optional (per-type rule?)</td><td>Pow Hwee + Michelle</td><td><span class="tag-red">Today</span></td></tr>
+      <tr><td>B</td><td>Function required or optional?</td><td>Pow Hwee + Michelle</td><td><span class="tag-red">Today</span></td></tr>
+      <tr><td>C</td><td>Competencies + time commitment required or optional?</td><td>Pow Hwee to schedule</td><td><span class="tag-amber">Before OTEP-87 grooming</span></td></tr>
+      <tr><td>D</td><td>Stale gig policy — pipeline or lifecycle rule?</td><td>Pow Hwee + Michelle</td><td><span class="tag-amber">Before OTEP-192 closes</span></td></tr>
+      <tr><td>E</td><td>Programme-type TC exemption (agilePSD etc.)?</td><td>Michelle → BOs</td><td><span class="tag-amber">Before go-live set</span></td></tr>
+      <tr><td>F</td><td>Minimum viable catalogue threshold</td><td>Michelle → BOs</td><td><span class="tag-amber">Before S5 planning</span></td></tr>
+      <tr><td>G</td><td>Admin list for upload UI (OTEP-397)</td><td>Michelle</td><td><span class="tag-amber">Before OTEP-397 closes</span></td></tr>
+      <tr><td>H</td><td>OTEP-358 (nil-date spike) into S4 planning brief</td><td>Michelle</td><td><span class="tag-red">Thu</span></td></tr>
+      <tr><td>I</td><td>CFT sequence diagram (OTEP-391)</td><td>Hao Eng / Pow Hwee</td><td><span class="tag-red">This week</span></td></tr>
+      <tr><td>J</td><td>OTEP-348 sequencing — S3 or S4?</td><td>Pow Hwee</td><td><span class="tag-red">Squad Sync</span></td></tr>
+      <tr><td>K</td><td>WOG AD form — Michelle to fill in</td><td>Michelle</td><td><span class="tag-red">ASAP</span></td></tr>
+      <tr><td>L</td><td>Canonical type tag list — who owns it?</td><td>Michelle / OTG Ops</td><td><span class="tag-amber">Before agency outreach</span></td></tr>
+      <tr><td>M</td><td>Per-agency skip report distributed to top 3 agencies</td><td>Michelle + Rama</td><td><span class="tag-gray">After OTEP-192 closes</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>OTG Ingestion Product Discovery &nbsp;·&nbsp; 10 June 2026 &nbsp;·&nbsp; Source: decisions-log.md, open-items.md, trio analysis 2026-06-09, OTG Oppr.xlsx</p>
+  </div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Data Source Reconciliation</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1020px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Alert banner */
+  .alert-banner { background: #FEF3F2; border: 1px solid #FCA5A5; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start; }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text { font-size: 12px; color: #7F1D1D; line-height: 1.6; }
+  .alert-text strong { font-weight: 600; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0dfd8; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .stat-cell { background: #fff; padding: .9rem 1rem; }
+  .stat-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 3px; }
+  .stat-value { font-size: 24px; font-weight: 300; letter-spacing: -.5px; }
+  .stat-note { font-size: 11px; color: #5f5e5a; margin-top: 2px; }
+
+  /* Architecture diagram */
+  .arch-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .arch-flow { display: flex; align-items: stretch; gap: 0; }
+  .arch-box { flex: 1; border: 1.5px solid #e0dfd8; border-radius: 8px; padding: 1rem; position: relative; }
+  .arch-box.wd { border-color: #85B7EB; background: #f0f7ff; }
+  .arch-box.otg { border-color: #EF9F27; background: #fffbf3; }
+  .arch-box.otep { border-color: #1D9E75; background: #f2fbf7; }
+  .arch-box-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+  .arch-box.wd .arch-box-label { color: #185fa5; }
+  .arch-box.otg .arch-box-label { color: #854F0B; }
+  .arch-box.otep .arch-box-label { color: #1D6B4F; }
+  .arch-box-name { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  .arch-box-items { font-size: 11px; color: #5f5e5a; line-height: 1.7; }
+  .arch-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 10px; font-size: 18px; color: #b4b2a9; flex-shrink: 0; gap: 4px; }
+  .arch-arrow-label { font-size: 9px; color: #b4b2a9; text-align: center; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+  .arch-arrow-warn { font-size: 9px; color: #D4880A; font-weight: 600; text-align: center; }
+  .arch-note { font-size: 11px; color: #5f5e5a; margin-top: 10px; padding-top: 10px; border-top: 0.5px solid #f1efe8; }
+
+  /* Gap highlight boxes */
+  .gap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .gap-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 8px; padding: .9rem 1rem; }
+  .gap-card.critical { border-color: #FCA5A5; background: #FEF9F9; }
+  .gap-card.warn { border-color: #F0C27F; background: #FFFBF3; }
+  .gap-card.info { border-color: #85B7EB; background: #F0F7FF; }
+  .gap-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+  .gap-card.critical .gap-label { color: #991B1B; }
+  .gap-card.warn .gap-label { color: #854F0B; }
+  .gap-card.info .gap-label { color: #185fa5; }
+  .gap-val { font-size: 26px; font-weight: 300; letter-spacing: -.5px; margin-bottom: 3px; }
+  .gap-desc { font-size: 11px; color: #5f5e5a; line-height: 1.5; }
+
+  /* Field mapping table */
+  .field-table { width: 100%; border-collapse: collapse; font-size: 11px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .field-table thead tr { background: #f8f7f3; }
+  .field-table th { padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #888780; border-bottom: 1px solid #e0dfd8; white-space: nowrap; }
+  .field-table td { padding: 7px 10px; border-bottom: 0.5px solid #f1efe8; vertical-align: top; }
+  .field-table tr:last-child td { border-bottom: none; }
+  .field-table tr:hover td { background: #fafaf8; }
+  .field-name { font-weight: 500; color: #1a1a18; white-space: nowrap; }
+  .field-present { color: #1D9E75; font-weight: 500; }
+  .field-partial { color: #D4880A; font-weight: 500; }
+  .field-absent { color: #b4b2a9; font-style: italic; }
+  .field-issue { color: #C0392B; font-weight: 500; }
+  .pill { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 10px; display: inline-block; white-space: nowrap; }
+  .pill-match { background: #EAF3DE; color: #3B6D11; }
+  .pill-gap { background: #FEE2E2; color: #991B1B; }
+  .pill-enrich { background: #e6f1fb; color: #185fa5; }
+  .pill-conflict { background: #FAEEDA; color: #854F0B; }
+  .pill-wd { background: #f0f7ff; color: #185fa5; }
+  .pill-otg { background: #fffbf3; color: #854F0B; }
+
+  /* Canonical schema */
+  .schema-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .schema-group { margin-bottom: 1.25rem; }
+  .schema-group-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #888780; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 0.5px solid #f1efe8; }
+  .schema-fields { display: flex; flex-wrap: wrap; gap: 6px; }
+  .schema-field { font-size: 11px; padding: 4px 9px; border-radius: 5px; border: 0.5px solid #e0dfd8; background: #f8f7f3; font-family: 'SF Mono', 'Fira Code', monospace; color: #1a1a18; display: flex; align-items: center; gap: 5px; }
+  .sf-src { font-size: 9px; padding: 1px 5px; border-radius: 3px; font-family: inherit; font-weight: 600; }
+  .sf-both { background: #EAF3DE; color: #3B6D11; }
+  .sf-wd { background: #e6f1fb; color: #185fa5; }
+  .sf-otg { background: #fffbf3; color: #854F0B; }
+  .sf-new { background: #f1efe8; color: #888780; }
+
+  /* Recommendation cards */
+  .rec-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+  .rec-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 8px; padding: .85rem 1rem; display: flex; gap: 12px; }
+  .rec-num { font-size: 11px; font-weight: 600; color: #fff; background: #1a1a18; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .rec-body { flex: 1; }
+  .rec-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+  .rec-detail { font-size: 11px; color: #5f5e5a; line-height: 1.5; }
+  .rec-impact { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; margin-top: 5px; }
+  .ri-high { background: #FEE2E2; color: #991B1B; }
+  .ri-med { background: #FAEEDA; color: #854F0B; }
+  .ri-low { background: #EAF3DE; color: #3B6D11; }
+
+  /* Stip visibility bar */
+  .vis-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .vis-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .vis-label { font-size: 11px; font-weight: 500; min-width: 140px; flex-shrink: 0; }
+  .vis-track { flex: 1; height: 26px; background: #f1efe8; border-radius: 5px; overflow: hidden; display: flex; position: relative; }
+  .vis-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.9); }
+  .vis-total { font-size: 11px; font-weight: 500; min-width: 60px; text-align: right; color: #1a1a18; }
+  .vis-note { font-size: 10px; color: #888780; min-width: 120px; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP — Data Source Reconciliation</h1>
+    <p>Two sources feed GIG and STIP opportunities into OTG — WD STIP GIG Masterlist and officer self-posting. This page maps the schema differences, quantifies the gaps, and proposes a single canonical ingestion format. &nbsp;·&nbsp; As at 10 June 2026</p>
+  </div>
+
+  <div class="alert-banner">
+    <div class="alert-icon">⚠</div>
+    <div class="alert-text">
+      <strong>Critical finding: most STIPs are invisible to OTEP.</strong> WD manages 45 STIP opportunities in 2026. Only 7 appear in OTG GIGS_V2_REPORT — the source OTEP ingests from. 38 STIPs are being run entirely outside OTG (via WD + FormSG), meaning OTEP is currently missing the majority of the STIP catalogue. The same pattern affects GIG, where ~7 WD-managed GIGs are confirmed on OTG against 28 active in WD.
+    </div>
+  </div>
+
+  <!-- Headline numbers -->
+  <p class="section-title">Headline numbers</p>
+  <div class="stat-strip">
+    <div class="stat-cell">
+      <div class="stat-label">WD STIP active</div>
+      <div class="stat-value" style="color:#185fa5;">24</div>
+      <div class="stat-note">In Progress or Pending in WD</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">STIP visible on OTG</div>
+      <div class="stat-value" style="color:#E24B4A;">7</div>
+      <div class="stat-note">In OTG GIGS_V2_REPORT</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">GIG active in WD</div>
+      <div class="stat-value" style="color:#185fa5;">28</div>
+      <div class="stat-note">In Progress or Pending in WD</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Active WD opps on OTG</div>
+      <div class="stat-value" style="color:#E24B4A;">7</div>
+      <div class="stat-note">Confirmed Posted across GIG+STIP</div>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <p class="section-title">Data flow architecture</p>
+  <div class="arch-wrap">
+    <div class="arch-flow">
+
+      <div class="arch-box wd">
+        <div class="arch-box-label">Source 1 — WD</div>
+        <div class="arch-box-name">STIP GIG Masterlist</div>
+        <div class="arch-box-items">
+          78 records (2026 cohort)<br>
+          45 STIP · 32 GIG · 1 error<br>
+          13 sheets by Job Family<br>
+          (SS, SD, PE, ICT-SS, P&amp;P…)<br><br>
+          <strong>Managed by:</strong> WD team<br>
+          <strong>Updated:</strong> Continuously<br>
+          <strong>Application channel:</strong> FormSG<br>
+          (separate from OTG)
+        </div>
+      </div>
+
+      <div class="arch-arrow">
+        ↓<br>→
+        <div class="arch-arrow-label">Manual<br>entry</div>
+        <div class="arch-arrow-warn">⚠ Lossy</div>
+      </div>
+
+      <div class="arch-box otg">
+        <div class="arch-box-label">Platform — OTG</div>
+        <div class="arch-box-name">OTG GIGS_V2_REPORT</div>
+        <div class="arch-box-items">
+          633 open opportunities<br>
+          36 GIG · 7 STIP · 259 Secondment<br>
+          129 Job · 39 SJR + others<br><br>
+          <strong>Source mix:</strong><br>
+          — WD-posted (minority of GIG/STIP)<br>
+          — Self-posted by agencies<br>
+          — Other types (Job, SJR etc.)
+        </div>
+      </div>
+
+      <div class="arch-arrow">
+        →
+        <div class="arch-arrow-label">Pipeline<br>R1–R12</div>
+      </div>
+
+      <div class="arch-box otep">
+        <div class="arch-box-label">Target — OTEP</div>
+        <div class="arch-box-name">OTEP Platform</div>
+        <div class="arch-box-items">
+          160 currently passing<br>
+          GIG · STIP · JOB · SJR · C@G Jobs<br><br>
+          <strong>Ingests:</strong> OTG only<br>
+          <strong>Missing:</strong> All WD-managed opps<br>
+          not posted to OTG<br><br>
+          WD's richer fields (Target<br>
+          Audience, POC, Competencies)<br>
+          not available in OTG form
+        </div>
+      </div>
+
+    </div>
+    <div class="arch-note">
+      <strong>Additionally:</strong> WD uses FormSG as the application channel for WD-managed opportunities. Officers who find an opportunity on OTG may be redirected to a FormSG link (embedded in the Description field). This creates a split application journey — OTG for discovery, FormSG for applying. OTEP should account for whether it links to the OTG application flow or the FormSG link.
+    </div>
+  </div>
+
+  <!-- Visibility gap -->
+  <p class="section-title">Source visibility gap — WD vs OTG</p>
+  <div class="vis-wrap">
+    <p style="font-size:12px;color:#5f5e5a;margin-bottom:1rem;">Of WD-managed opportunities (active), how many are actually visible in OTG? Non-visible = OTEP cannot see them at all.</p>
+    <div class="vis-row">
+      <span class="vis-label">STIP (WD active: 24)</span>
+      <div class="vis-track">
+        <div class="vis-seg" style="width:8%;background:#1D9E75;" title="Posted on OTG: 2">~2</div>
+        <div class="vis-seg" style="width:92%;background:#E24B4A;" title="Not on OTG">~22 not on OTG</div>
+      </div>
+      <span class="vis-total">~92%</span>
+      <span class="vis-note">invisible to OTEP</span>
+    </div>
+    <div class="vis-row">
+      <span class="vis-label">GIG (WD active: 28)</span>
+      <div class="vis-track">
+        <div class="vis-seg" style="width:18%;background:#1D9E75;" title="Posted on OTG: 5">5</div>
+        <div class="vis-seg" style="width:82%;background:#E24B4A;" title="Not on OTG">23 not on OTG</div>
+      </div>
+      <span class="vis-total">82%</span>
+      <span class="vis-note">invisible to OTEP</span>
+    </div>
+    <div class="vis-row">
+      <span class="vis-label">OTG self-posted GIG</span>
+      <div class="vis-track">
+        <div class="vis-seg" style="width:100%;background:#85B7EB;" title="All visible">~29 self-posted</div>
+      </div>
+      <span class="vis-total">100%</span>
+      <span class="vis-note">visible (self-posted)</span>
+    </div>
+    <div style="font-size:11px;color:#888780;margin-top:8px;padding-top:8px;border-top:0.5px solid #f1efe8;">
+      GIG in OTG (36) = ~7 WD-posted + ~29 agency self-posted. STIP in OTG (7) = small subset of WD's 45. Source attribution is inferred — OTG doesn't record which records originated from WD.
+    </div>
+  </div>
+
+  <!-- Gap cards -->
+  <p class="section-title">Key schema and data gaps</p>
+  <div class="gap-grid">
+    <div class="gap-card critical">
+      <div class="gap-label">Application vs Program dates</div>
+      <div class="gap-val" style="color:#991B1B;">2 pairs</div>
+      <div class="gap-desc">WD maintains separate <em>Application</em> start/end and <em>Program</em> start/end. OTG likely stores only one date pair. Median gap: 28 days between app close and program start. OTEP needs to confirm which OTG date field maps to which WD date.</div>
+    </div>
+    <div class="gap-card critical">
+      <div class="gap-label">WD-only structured fields</div>
+      <div class="gap-val" style="color:#991B1B;">5 fields</div>
+      <div class="gap-desc">Target Audience (97%), Competencies (92%), Pre-requisites (94%), Agency POC (99%), Vacancies (92%) — all well-filled in WD, all missing as dedicated fields in OTG. In OTG, this content is embedded in the Description blob.</div>
+    </div>
+    <div class="gap-card warn">
+      <div class="gap-label">Job Family classification</div>
+      <div class="gap-val" style="color:#854F0B;">13 families</div>
+      <div class="gap-desc">WD organises opportunities by Job Family (SS, SD, ICT-SS, PE, P&amp;P, PC, FP, HR, OD…). OTG has no equivalent — it uses the [Type] prefix only. OTEP currently has no job family dimension for filtering or matching.</div>
+    </div>
+    <div class="gap-card warn">
+      <div class="gap-label">Time commitment format</div>
+      <div class="gap-val" style="color:#854F0B;">Free text</div>
+      <div class="gap-desc">Both WD (83% filled) and OTG store time commitment as unstructured free text. Examples: "29 Jan 2026, 9am to 12pm", "1-1.5 days/week", "6 months". A structured field (hours/week or days/week) would be needed for reliable filtering in OTEP.</div>
+    </div>
+    <div class="gap-card warn">
+      <div class="gap-label">Vacancies vs sign-ups gap</div>
+      <div class="gap-val" style="color:#854F0B;">Demand data</div>
+      <div class="gap-desc">WD tracks Vacancies (92%), Sign ups (49%), Actual Matches (32%). OTG GIGS_V2_REPORT has applicant counts. These are the same concept from different angles — but the two sources aren't linked, making demand-supply analysis difficult.</div>
+    </div>
+    <div class="gap-card info">
+      <div class="gap-label">WD type error</div>
+      <div class="gap-val" style="color:#185fa5;">1 record</div>
+      <div class="gap-desc">One WD record has Type="NLB" instead of "GIG" (NLB GIG, PE job family). Data entry error in the masterlist. If WD is used as a direct source, type validation would be needed upstream of OTEP ingestion.</div>
+    </div>
+  </div>
+
+  <!-- Field mapping table -->
+  <p class="section-title">Field mapping: WD Masterlist → OTG GIGS_V2_REPORT → OTEP canonical</p>
+  <table class="field-table">
+    <thead>
+      <tr>
+        <th>OTEP Canonical field</th>
+        <th>WD Masterlist</th>
+        <th>OTG GIGS_V2_REPORT</th>
+        <th>Coverage in WD</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="field-name">source</td>
+        <td class="field-present">Derived (WD)</td>
+        <td class="field-present">Derived (OTG)</td>
+        <td>—</td>
+        <td><span class="pill pill-new">New field</span></td>
+        <td>Flag whether record originates from WD or self-posted on OTG</td>
+      </tr>
+      <tr>
+        <td class="field-name">opportunity_type</td>
+        <td class="field-present">Type (col 4)</td>
+        <td class="field-present">[Prefix] in GigName</td>
+        <td>100%</td>
+        <td><span class="pill pill-conflict">Conflict</span></td>
+        <td>WD value is "GIG"/"STIP" plain text; OTG derives type from prefix bracket. 1 WD error (Type="NLB").</td>
+      </tr>
+      <tr>
+        <td class="field-name">job_family</td>
+        <td class="field-present">Job Family (col 2)</td>
+        <td class="field-absent">Not present</td>
+        <td>100%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>13 families: SS, SD, ICT-SS, PE, P&amp;P, PC, FP, HR, OD, OTHERS, SMART REG, STE, PENFACI</td>
+      </tr>
+      <tr>
+        <td class="field-name">agency</td>
+        <td class="field-present">Agency (col 3)</td>
+        <td class="field-present">LocationName</td>
+        <td>100%</td>
+        <td><span class="pill pill-match">Match</span></td>
+        <td>Direct 1:1 mapping. Both use agency abbreviation.</td>
+      </tr>
+      <tr>
+        <td class="field-name">title</td>
+        <td class="field-present">Project Title (col 5)</td>
+        <td class="field-present">GigName (minus prefix)</td>
+        <td>97%</td>
+        <td><span class="pill pill-conflict">Conflict</span></td>
+        <td>OTG GigName includes [Type] prefix; WD Project Title is clean. Requires prefix stripping from OTG.</td>
+      </tr>
+      <tr>
+        <td class="field-name">description</td>
+        <td class="field-present">Description (col 6)</td>
+        <td class="field-present">Description</td>
+        <td>~95%</td>
+        <td><span class="pill pill-conflict">Conflict</span></td>
+        <td>OTG Description is a blob containing title, audience, competencies, POC. WD Description is clean body text only. Manual entry likely combines everything into OTG Description.</td>
+      </tr>
+      <tr>
+        <td class="field-name">time_commitment_raw</td>
+        <td class="field-present">Time Commitment (col 7)</td>
+        <td class="field-present">TimeCommitment</td>
+        <td>83%</td>
+        <td><span class="pill pill-conflict">Conflict</span></td>
+        <td>Free text in both. WD: "1-1.5 days/week", "9am–5pm". Not structured enough for reliable OTEP filtering. Needs parsing or a structured field.</td>
+      </tr>
+      <tr>
+        <td class="field-name">target_audience</td>
+        <td class="field-present">Target Audience (col 8)</td>
+        <td class="field-absent">Embedded in Description</td>
+        <td>97%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>WD has this as a dedicated structured field. OTG loses the structure on manual entry. High value for OTEP matching.</td>
+      </tr>
+      <tr>
+        <td class="field-name">competencies</td>
+        <td class="field-present">Core / Functional Competencies (col 9)</td>
+        <td class="field-absent">Embedded in Description</td>
+        <td>92%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>Well-structured in WD (PL levels noted). Lost in OTG manual entry.</td>
+      </tr>
+      <tr>
+        <td class="field-name">prerequisites</td>
+        <td class="field-present">Pre-requisite (col 10)</td>
+        <td class="field-absent">Embedded in Description</td>
+        <td>94%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>Structured field in WD. Lost in OTG.</td>
+      </tr>
+      <tr>
+        <td class="field-name">agency_poc</td>
+        <td class="field-present">Agency POC (col 11)</td>
+        <td class="field-absent">Embedded in Description</td>
+        <td>99%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>Name + email, nearly always present in WD. Not surfaced as a field in OTG. Useful for remediation routing.</td>
+      </tr>
+      <tr>
+        <td class="field-name">wd_status</td>
+        <td class="field-present">Status (col 12)</td>
+        <td class="field-absent">Not present</td>
+        <td>100%</td>
+        <td><span class="pill pill-gap">WD only</span></td>
+        <td>Pending / In Progress / Ended / Cancelled. Different vocabulary from OTG status.</td>
+      </tr>
+      <tr>
+        <td class="field-name">app_start_date</td>
+        <td class="field-present">Application Start Date (col 13)</td>
+        <td class="field-partial">Unclear — merged?</td>
+        <td>91%</td>
+        <td><span class="pill pill-conflict">Needs confirmation</span></td>
+        <td>WD distinguishes application window from program dates. OTG may store only one date pair. Confirm which OTG StartDate maps to.</td>
+      </tr>
+      <tr>
+        <td class="field-name">app_end_date</td>
+        <td class="field-present">Application End Date (col 14)</td>
+        <td class="field-partial">Unclear — merged?</td>
+        <td>92%</td>
+        <td><span class="pill pill-conflict">Needs confirmation</span></td>
+        <td>Median 28-day gap between app_end and program_start. OTG EndDate may map to either.</td>
+      </tr>
+      <tr>
+        <td class="field-name">program_start_date</td>
+        <td class="field-present">Program Start Date (col 15)</td>
+        <td class="field-present">StartDate (likely)</td>
+        <td>99%</td>
+        <td><span class="pill pill-match">Likely match</span></td>
+        <td>OTG StartDate most likely maps to Program Start Date (the actual opportunity start). 99% filled in WD — this is the field R9 should validate against.</td>
+      </tr>
+      <tr>
+        <td class="field-name">program_end_date</td>
+        <td class="field-present">Program End Date (col 16)</td>
+        <td class="field-present">EndDate (likely)</td>
+        <td>97%</td>
+        <td><span class="pill pill-match">Likely match</span></td>
+        <td>OTG EndDate most likely maps to Program End Date. 97% filled in WD.</td>
+      </tr>
+      <tr>
+        <td class="field-name">vacancies</td>
+        <td class="field-present">Vacancies (col 17)</td>
+        <td class="field-absent">Not tracked separately?</td>
+        <td>92%</td>
+        <td><span class="pill pill-gap">Gap in OTG</span></td>
+        <td>WD tracks intended vacancies. OTG tracks applicants (sign-ups) but may not have a vacancies field.</td>
+      </tr>
+      <tr>
+        <td class="field-name">sign_ups</td>
+        <td class="field-present">Sign ups (col 18)</td>
+        <td class="field-present">ApplicantCount</td>
+        <td>49%</td>
+        <td><span class="pill pill-conflict">Diverge</span></td>
+        <td>WD tracks FormSG sign-ups; OTG tracks OTG applicants. For WD-managed opps using FormSG, OTG applicant count will be 0 or low — the real interest is in FormSG.</td>
+      </tr>
+      <tr>
+        <td class="field-name">actual_matches</td>
+        <td class="field-present">Actual Matches (col 19)</td>
+        <td class="field-absent">Not present</td>
+        <td>32%</td>
+        <td><span class="pill pill-gap">WD only</span></td>
+        <td>The outcome metric — how many officers were actually placed. No equivalent in OTG. Critical for measuring programme success.</td>
+      </tr>
+      <tr>
+        <td class="field-name">formsg_link</td>
+        <td class="field-present">FormSG Link (col 22)</td>
+        <td class="field-partial">Regex from Description</td>
+        <td>71%</td>
+        <td><span class="pill pill-enrich">Enrich OTG</span></td>
+        <td>WD has it as a clean dedicated column (GIG: 91%, STIP: 56%). OTG extracts via regex from Description — lossy. WD is the more reliable source for this field.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Canonical schema -->
+  <p class="section-title">Proposed canonical OTEP ingestion schema</p>
+  <div class="schema-wrap">
+    <p style="font-size:12px;color:#5f5e5a;margin-bottom:1.25rem;">A single standardised record that either source can populate. Fields tagged by authoritative source. WD-native fields should be populated directly from the Masterlist; OTG-native fields from GIGS_V2_REPORT. Where both have the field, WD is preferred for GIG/STIP.</p>
+
+    <div class="schema-group">
+      <div class="schema-group-title">Identity &amp; classification</div>
+      <div class="schema-fields">
+        <div class="schema-field">source <span class="sf-src sf-new">DERIVED</span></div>
+        <div class="schema-field">opportunity_id <span class="sf-src sf-new">DERIVED</span></div>
+        <div class="schema-field">opportunity_type <span class="sf-src sf-both">BOTH</span></div>
+        <div class="schema-field">job_family <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">agency <span class="sf-src sf-both">BOTH</span></div>
+      </div>
+    </div>
+
+    <div class="schema-group">
+      <div class="schema-group-title">Core content</div>
+      <div class="schema-fields">
+        <div class="schema-field">title <span class="sf-src sf-both">BOTH</span></div>
+        <div class="schema-field">description <span class="sf-src sf-both">BOTH</span></div>
+        <div class="schema-field">time_commitment_raw <span class="sf-src sf-both">BOTH</span></div>
+        <div class="schema-field">time_commitment_days_per_week <span class="sf-src sf-new">PARSED</span></div>
+        <div class="schema-field">target_audience <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">competencies <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">prerequisites <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">agency_poc_name <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">agency_poc_email <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">formsg_link <span class="sf-src sf-wd">WD preferred</span></div>
+      </div>
+    </div>
+
+    <div class="schema-group">
+      <div class="schema-group-title">Dates (4 fields — not 2)</div>
+      <div class="schema-fields">
+        <div class="schema-field">app_start_date <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">app_end_date <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">program_start_date <span class="sf-src sf-both">BOTH</span></div>
+        <div class="schema-field">program_end_date <span class="sf-src sf-both">BOTH</span></div>
+      </div>
+    </div>
+
+    <div class="schema-group">
+      <div class="schema-group-title">Supply &amp; demand</div>
+      <div class="schema-fields">
+        <div class="schema-field">vacancies <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">formsg_signups <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">otg_applicants <span class="sf-src sf-otg">OTG</span></div>
+        <div class="schema-field">actual_matches <span class="sf-src sf-wd">WD</span></div>
+      </div>
+    </div>
+
+    <div class="schema-group">
+      <div class="schema-group-title">Status &amp; tracking</div>
+      <div class="schema-fields">
+        <div class="schema-field">wd_status <span class="sf-src sf-wd">WD</span></div>
+        <div class="schema-field">otg_status <span class="sf-src sf-otg">OTG</span></div>
+        <div class="schema-field">otep_outcome <span class="sf-src sf-new">DERIVED</span></div>
+        <div class="schema-field">ingestion_run_id <span class="sf-src sf-new">DERIVED</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:.75rem;font-size:11px;color:#888780;">
+      <span class="sf-src sf-both" style="font-family:inherit;padding:2px 7px;">BOTH</span> = present in both sources, use WD for GIG/STIP &nbsp;·&nbsp;
+      <span class="sf-src sf-wd" style="font-family:inherit;padding:2px 7px;">WD</span> = WD Masterlist only &nbsp;·&nbsp;
+      <span class="sf-src sf-otg" style="font-family:inherit;padding:2px 7px;">OTG</span> = OTG GIGS_V2_REPORT only &nbsp;·&nbsp;
+      <span class="sf-src sf-new" style="font-family:inherit;padding:2px 7px;">DERIVED</span> = computed during ingestion
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <p class="section-title">Reconciliation recommendations</p>
+  <div class="rec-list">
+
+    <div class="rec-card">
+      <div class="rec-num">1</div>
+      <div class="rec-body">
+        <div class="rec-title">Add WD Masterlist as a direct ingestion source for GIG and STIP</div>
+        <div class="rec-detail">Rather than relying on manual WD→OTG entry, OTEP should ingest GIG and STIP directly from the WD Masterlist. This unlocks all WD-managed opportunities (78 records, 53 active) regardless of whether they've been posted to OTG. OTG self-posted GIGs/STIPs would continue to be ingested from GIGS_V2_REPORT. De-duplication logic needed for records that appear in both sources.</div>
+        <span class="rec-impact ri-high">Highest impact — unblocks ~46 invisible opportunities</span>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">2</div>
+      <div class="rec-body">
+        <div class="rec-title">Confirm OTG date field mapping: Program dates or Application dates?</div>
+        <div class="rec-detail">OTG has one StartDate and one EndDate field. WD has four (Application Start/End + Program Start/End). The R9 "start date missing" validation is firing against OTG's StartDate — but it's unclear whether this maps to Application Start or Program Start. Since Program Start is 99% filled in WD and Application Start is 91%, confirming this mapping could change the DQ picture for GIG and STIP significantly. Recommendation: treat OTG StartDate = Program Start Date.</div>
+        <span class="rec-impact ri-high">Directly affects R9/R10 validation logic</span>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">3</div>
+      <div class="rec-body">
+        <div class="rec-title">Standardise the upload template for OTG self-posted GIGs and STIPs</div>
+        <div class="rec-detail">Officers self-posting on OTG currently enter into a free-form creation form. The WD Masterlist's structure (Job Family, Target Audience, Competencies, Prerequisites, POC) should be the standard for all GIG and STIP postings. A shared upload template — matching the canonical schema — would ensure self-posted records are as structured as WD-managed ones. Note: OTEP cannot modify the OTG creation form (existing constraint), but a pre-upload template is feasible.</div>
+        <span class="rec-impact ri-med">Medium impact — improves data quality for ~29 self-posted GIGs</span>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">4</div>
+      <div class="rec-body">
+        <div class="rec-title">Clarify the application journey: OTG apply vs FormSG</div>
+        <div class="rec-detail">WD-managed STIPs and GIGs use FormSG as the application channel. OTG serves as a discovery layer only — the "Apply" action redirects to FormSG. This means OTG applicant counts will be near-zero for WD-managed opportunities (confirmed in our engagement analysis: 84% zero-applicant rate). OTEP should use FormSG sign-up counts (from WD) rather than OTG applicant counts as the demand signal for these types.</div>
+        <span class="rec-impact ri-med">Fixes misleading zero-applicant metric for WD-managed opps</span>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">5</div>
+      <div class="rec-body">
+        <div class="rec-title">Fix the WD type error (NLB record) and add upstream validation</div>
+        <div class="rec-detail">One WD record has Type="NLB" instead of "GIG" — a data entry error. If WD becomes a direct ingestion source, type validation must be applied upstream. Add a WD pre-ingestion check: Type must be one of GIG, STIP. Any other value routes to a WD data quality report (analogous to the OTG remediation report).</div>
+        <span class="rec-impact ri-low">Low impact now — critical once WD is a direct source</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Source: WD STIP GIG Masterlist 2026 (78 records, 13 job-family sheets) + OTG GIGS_V2_REPORT (633 open opportunities) &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; Part of OTEP_Research series (file 16 of 16)
+  </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

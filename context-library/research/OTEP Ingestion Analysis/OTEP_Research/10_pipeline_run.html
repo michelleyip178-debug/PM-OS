@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Pipeline Run Report</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: #e0dfd8; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .stat-cell { background: #fff; padding: .9rem 1rem; }
+  .stat-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 3px; }
+  .stat-value { font-size: 24px; font-weight: 300; letter-spacing: -.5px; }
+  .stat-value.red { color: #C0392B; }
+  .stat-value.green { color: #1D9E75; }
+  .stat-value.amber { color: #D4880A; }
+  .stat-value.grey { color: #888780; }
+  .stat-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+
+  /* Run history table */
+  .run-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .run-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .run-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; }
+  .run-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; color: #1a1a18; }
+  .run-table tr:last-child td { border-bottom: none; }
+  .run-table tr.current-run td { background: #f8fbff; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .badge-success { background: #EAF3DE; color: #3B6D11; }
+  .badge-warn { background: #FAEEDA; color: #854F0B; }
+  .badge-running { background: #EAF0FD; color: #2B4EAE; }
+
+  /* Stage pipeline */
+  .stage-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .stage-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1rem; }
+  .stage-num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #888780; margin-bottom: 4px; }
+  .stage-name { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: #1a1a18; }
+  .stage-in { font-size: 11px; color: #888780; margin-bottom: 2px; }
+  .stage-in strong { color: #1a1a18; font-weight: 600; }
+  .stage-out { font-size: 11px; color: #888780; }
+  .stage-out strong { font-weight: 600; }
+  .stage-out.out-red strong { color: #C0392B; }
+  .stage-out.out-amber strong { color: #D4880A; }
+  .stage-out.out-green strong { color: #1D9E75; }
+  .stage-arrow { display: flex; align-items: center; justify-content: flex-end; margin-top: 10px; font-size: 10px; color: #b4b2a9; }
+
+  /* Log terminal */
+  .log-box { background: #18181a; border-radius: 10px; padding: 1.25rem 1.5rem; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 11.5px; line-height: 1.9; color: #9191a0; overflow-x: auto; margin-bottom: 1.5rem; }
+  .log-ts { color: #4a4a55; margin-right: 6px; }
+  .log-info { color: #5C9EE8; }
+  .log-ok { color: #4CAF82; }
+  .log-warn { color: #E89A3C; }
+  .log-err { color: #E24B4A; }
+  .log-dim { color: #4a4a55; }
+  .log-white { color: #e8e8ef; }
+
+  /* Field gap summary */
+  .gap-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .gap-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .gap-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; }
+  .gap-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .gap-table tr:last-child td { border-bottom: none; }
+  .bar-wrap { width: 100%; height: 6px; background: #f1efe8; border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .rule-tag { font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 4px; background: #f1efe8; color: #5f5e5a; }
+  .impact-hard { color: #C0392B; font-weight: 600; }
+  .impact-tbc { color: #D4880A; font-weight: 600; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Pipeline Run Report</h1>
+    <p>Run ID: <code>otep-ingest-20260610-0800</code> &nbsp;·&nbsp; Triggered: scheduled &nbsp;·&nbsp; Source: OTG Oppr.xlsx (gigs_v2_report) &nbsp;·&nbsp; Duration: 4.2s</p>
+  </div>
+
+  <!-- Stat strip -->
+  <div class="stat-strip">
+    <div class="stat-cell">
+      <div class="stat-label">Records in</div>
+      <div class="stat-value">633</div>
+      <div class="stat-sub">Open opportunities from OTG</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Excluded</div>
+      <div class="stat-value grey">5</div>
+      <div class="stat-sub">Test / invalid entries</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Blocked</div>
+      <div class="stat-value red">473</div>
+      <div class="stat-sub">Failed field validation</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Flagged</div>
+      <div class="stat-value amber">346</div>
+      <div class="stat-sub">Stale (TBC policy)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Ingested</div>
+      <div class="stat-value green">160</div>
+      <div class="stat-sub">Written to OTEP</div>
+    </div>
+  </div>
+
+  <!-- Stage flow -->
+  <p class="section-title">Processing stages</p>
+  <div class="stage-flow">
+    <div class="stage-card">
+      <div class="stage-num">Phase 1</div>
+      <div class="stage-name">Pre-flight</div>
+      <div class="stage-in">Records in: <strong>633</strong></div>
+      <div class="stage-out">Test entries excluded: <span class="out-red" style="color:#888780;"><strong>5</strong></span></div>
+      <div class="stage-out">Stale flagged: <span style="color:#D4880A;"><strong>346</strong></span></div>
+      <div class="stage-out out-green">Forwarded: <strong>628</strong></div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-num">Phase 2</div>
+      <div class="stage-name">Classification</div>
+      <div class="stage-in">Records in: <strong>628</strong></div>
+      <div class="stage-out">Types recognised: <span style="color:#1D9E75;"><strong>550</strong></span></div>
+      <div class="stage-out">No tag (blocked): <span style="color:#C0392B;"><strong>78</strong></span></div>
+      <div class="stage-out">TBC types: <span style="color:#D4880A;"><strong>56</strong></span></div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-num">Phase 3</div>
+      <div class="stage-name">Field Validation</div>
+      <div class="stage-in">Records in: <strong>550</strong></div>
+      <div class="stage-out out-red">Hard blocked: <strong>395</strong></div>
+      <div class="stage-out">TBC pending: <span style="color:#D4880A;"><strong>173</strong></span></div>
+      <div class="stage-out out-green">Passes all: <strong>160</strong></div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-num">Phase 4</div>
+      <div class="stage-name">Extraction</div>
+      <div class="stage-in">Records processed: <strong>160</strong></div>
+      <div class="stage-out out-green">FormSG URL found: <strong>94</strong></div>
+      <div class="stage-out">No FormSG URL: <span style="color:#888780;"><strong>66</strong></span></div>
+      <div class="stage-out out-green">Written to OTEP: <strong>160</strong></div>
+    </div>
+  </div>
+
+  <!-- Run log -->
+  <p class="section-title">Run log</p>
+  <div class="log-box">
+    <div><span class="log-ts">08:00:01.042</span><span class="log-info">[INFO]</span>  <span class="log-white">otep-ingest started</span> <span class="log-dim">run_id=otep-ingest-20260610-0800 source=gigs_v2_report</span></div>
+    <div><span class="log-ts">08:00:01.103</span><span class="log-info">[INFO]</span>  <span class="log-white">Loaded 633 rows</span> <span class="log-dim">cols=22 sheet=gigs_v2_report</span></div>
+    <div><span class="log-ts">08:00:01.109</span><span class="log-info">[INFO]</span>  Phase 1 — Pre-flight checks</div>
+    <div><span class="log-ts">08:00:01.115</span><span class="log-ok">  [R1]</span>  Status filter applied <span class="log-dim">→ 633 open, 0 filtered (pre-filtered by export)</span></div>
+    <div><span class="log-ts">08:00:01.121</span><span class="log-warn">  [R2]</span>  Test entries detected <span class="log-dim">→ 5 excluded</span> <span class="log-err">["[TEST] ESTL Gig", "test entry", "DO NOT USE", "test_placeholder", "sandbox_gig"]</span></div>
+    <div><span class="log-ts">08:00:01.128</span><span class="log-warn">  [R3]</span>  Stale detection: end_date &lt; 2026-06-10 while Status=Open <span class="log-dim">→ 346 flagged (TBC policy, not excluded)</span></div>
+    <div><span class="log-ts">08:00:01.131</span><span class="log-info">[INFO]</span>  Phase 1 complete <span class="log-dim">628 forwarded to classification</span></div>
+    <div>&nbsp;</div>
+    <div><span class="log-ts">08:00:01.134</span><span class="log-info">[INFO]</span>  Phase 2 — Type classification</div>
+    <div><span class="log-ts">08:00:01.149</span><span class="log-ok">  [R4]</span>  Prefix regex matched <span class="log-dim">pattern=\[([A-Za-z ]+)\] → 550 classified</span></div>
+    <div><span class="log-ts">08:00:01.152</span><span class="log-dim">         Gig=36  STIP=7  Secondment=259  Job=129  SJR=39  agilePSD=29  Other(TBC)=51</span></div>
+    <div><span class="log-ts">08:00:01.156</span><span class="log-err">  [R5]</span>  No-tag opportunities <span class="log-dim">→ 78 blocked (no type prefix found in GigName)</span></div>
+    <div><span class="log-ts">08:00:01.159</span><span class="log-warn">        </span>  Other(TBC) types: 18 distinct unrecognised prefixes <span class="log-dim">→ treated as TBC pending BO ruling</span></div>
+    <div><span class="log-ts">08:00:01.162</span><span class="log-info">[INFO]</span>  Phase 2 complete <span class="log-dim">550 forwarded to field validation</span></div>
+    <div>&nbsp;</div>
+    <div><span class="log-ts">08:00:01.164</span><span class="log-info">[INFO]</span>  Phase 3 — Field validation</div>
+    <div><span class="log-ts">08:00:01.171</span><span class="log-err">  [R6]</span>  Agency (LocationName) missing <span class="log-dim">→ 27 blocked</span></div>
+    <div><span class="log-ts">08:00:01.178</span><span class="log-err">  [R7]</span>  BusinessUnit missing <span class="log-dim">→ 53 blocked</span></div>
+    <div><span class="log-ts">08:00:01.183</span><span class="log-warn">  [R8]</span>  Function missing <span class="log-dim">→ 174 flagged as TBC (BO ruling pending)</span></div>
+    <div><span class="log-ts">08:00:01.190</span><span class="log-err">  [R9]</span>  Start date missing <span class="log-dim">→ 27 blocked (261 exempt: Secondment/Job/SJR)</span></div>
+    <div><span class="log-ts">08:00:01.197</span><span class="log-err">  [R10]</span> End date missing <span class="log-dim">→ 13 blocked (38 exempt: Secondment/Job)</span></div>
+    <div><span class="log-ts">08:00:01.203</span><span class="log-err">  [R11]</span> TimeCommitment missing (Gig/STIP) <span class="log-dim">→ 5 blocked; 29 TBC (agilePSD pending)</span></div>
+    <div><span class="log-ts">08:00:01.209</span><span class="log-info">[INFO]</span>  Phase 3 complete <span class="log-dim">160 pass all validations</span></div>
+    <div>&nbsp;</div>
+    <div><span class="log-ts">08:00:01.211</span><span class="log-info">[INFO]</span>  Phase 4 — Field extraction</div>
+    <div><span class="log-ts">08:00:01.228</span><span class="log-ok">  [R12]</span> FormSG URL extraction <span class="log-dim">pattern=https://form\.gov\.sg/[a-zA-Z0-9]+</span></div>
+    <div><span class="log-ts">08:00:01.231</span><span class="log-dim">         found=94  not_found=66  (non-blocking — all 160 forwarded)</span></div>
+    <div>&nbsp;</div>
+    <div><span class="log-ts">08:00:01.233</span><span class="log-info">[INFO]</span>  Writing to OTEP target</div>
+    <div><span class="log-ts">08:00:05.189</span><span class="log-ok">[OK]  </span>  <span class="log-white">160 records upserted to OTEP</span> <span class="log-dim">duration=3.956s</span></div>
+    <div><span class="log-ts">08:00:05.195</span><span class="log-warn">[WARN]</span>  <span class="log-white">Remediation report generated</span> <span class="log-dim">→ 473 blocked opportunities written to remediation_20260610.xlsx</span></div>
+    <div><span class="log-ts">08:00:05.201</span><span class="log-ok">[OK]  </span>  <span class="log-white">Run complete</span> <span class="log-dim">total=4.159s exit=0</span></div>
+  </div>
+
+  <!-- Field gap summary -->
+  <p class="section-title">Validation results — field gap counts</p>
+  <table class="gap-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Rule</th>
+        <th>Missing count</th>
+        <th style="width:200px;">% of 633 opportunities</th>
+        <th>Outcome</th>
+        <th>Exempt types</th>
+      </tr>
+    </thead>
+    <tbody id="gapRows"></tbody>
+  </table>
+
+  <!-- Run history -->
+  <p class="section-title">Run history (last 5)</p>
+  <table class="run-table">
+    <thead>
+      <tr>
+        <th>Run ID</th>
+        <th>Triggered</th>
+        <th>Source rows</th>
+        <th>Ingested</th>
+        <th>Blocked</th>
+        <th>Duration</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="current-run">
+        <td><code>otep-ingest-20260610-0800</code></td>
+        <td>10 Jun 08:00 · scheduled</td>
+        <td>633</td>
+        <td style="color:#1D9E75;font-weight:600;">160</td>
+        <td style="color:#C0392B;">473</td>
+        <td>4.2s</td>
+        <td><span class="badge badge-success">✓ Complete</span></td>
+      </tr>
+      <tr>
+        <td><code>otep-ingest-20260609-0800</code></td>
+        <td>9 Jun 08:00 · scheduled</td>
+        <td>631</td>
+        <td style="color:#1D9E75;font-weight:600;">158</td>
+        <td style="color:#C0392B;">473</td>
+        <td>4.0s</td>
+        <td><span class="badge badge-success">✓ Complete</span></td>
+      </tr>
+      <tr>
+        <td><code>otep-ingest-20260608-0800</code></td>
+        <td>8 Jun 08:00 · scheduled</td>
+        <td>629</td>
+        <td style="color:#1D9E75;font-weight:600;">155</td>
+        <td style="color:#C0392B;">474</td>
+        <td>3.9s</td>
+        <td><span class="badge badge-success">✓ Complete</span></td>
+      </tr>
+      <tr>
+        <td><code>otep-ingest-20260607-0800</code></td>
+        <td>7 Jun 08:00 · scheduled</td>
+        <td>630</td>
+        <td style="color:#1D9E75;font-weight:600;">152</td>
+        <td style="color:#C0392B;">478</td>
+        <td>4.1s</td>
+        <td><span class="badge badge-success">✓ Complete</span></td>
+      </tr>
+      <tr>
+        <td><code>otep-ingest-20260606-0800</code></td>
+        <td>6 Jun 08:00 · scheduled</td>
+        <td>628</td>
+        <td style="color:#1D9E75;font-weight:600;">149</td>
+        <td style="color:#C0392B;">479</td>
+        <td>5.7s</td>
+        <td><span class="badge badge-warn">⚠ Slow</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Run: 10 June 2026 08:00 SGT &nbsp;·&nbsp; Schedule: daily 08:00 &nbsp;·&nbsp; Part of OTEP_Research series (file 10 of 12)
+  </div>
+</div>
+
+<script>
+const gaps = [
+  { field: 'Type prefix',    rule: 'R5',  count: 78,  outcome: 'blocked', exempt: '—' },
+  { field: 'Function',       rule: 'R8',  count: 174, outcome: 'tbc',     exempt: 'None (TBC for all)' },
+  { field: 'Start date',     rule: 'R9',  count: 288, outcome: 'blocked', exempt: 'Secondment, Job, SJR → 261 exempt; 27 still blocked' },
+  { field: 'Business Unit',  rule: 'R7',  count: 53,  outcome: 'blocked', exempt: '—' },
+  { field: 'End date',       rule: 'R10', count: 51,  outcome: 'blocked', exempt: 'Secondment, Job, SJR → 47 exempt; 4 still blocked' },
+  { field: 'Agency',         rule: 'R6',  count: 27,  outcome: 'blocked', exempt: '—' },
+  { field: 'Time commitment',rule: 'R11', count: 5,   outcome: 'blocked', exempt: 'Secondment, Job, SJR exempt; agilePSD TBC (29 opportunities)' },
+];
+
+const tbody = document.getElementById('gapRows');
+const total = 633;
+gaps.forEach(g => {
+  const pct = Math.round(g.count / total * 100);
+  const barColor = g.outcome === 'tbc' ? '#EF9F27' : '#E24B4A';
+  const outcomeHtml = g.outcome === 'tbc'
+    ? '<span class="impact-tbc">TBC</span>'
+    : '<span class="impact-hard">BLOCKED</span>';
+  tbody.innerHTML += `
+    <tr>
+      <td style="font-weight:500;">${g.field}</td>
+      <td><span class="rule-tag">${g.rule}</span></td>
+      <td style="font-weight:600;">${g.count}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+          <span style="font-size:11px;color:#5f5e5a;min-width:28px;">${pct}%</span>
+        </div>
+      </td>
+      <td>${outcomeHtml}</td>
+      <td style="font-size:11px;color:#5f5e5a;">${g.exempt}</td>
+    </tr>`;
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -48,7 +48,7 @@
 
   <div class="header">
     <h1>OTEP Ingestion — Summary Dashboard</h1>
-    <p>Analysis of OTG opportunity data &nbsp;·&nbsp; 633 open gigs &nbsp;·&nbsp; As at 9 June 2026</p>
+    <p>Analysis of OTG opportunity data &nbsp;·&nbsp; 633 open opportunities &nbsp;·&nbsp; As at 9 June 2026</p>
   </div>
 
   <p class="section-title">Ingestion health</p>
@@ -66,12 +66,12 @@
     <div class="metric danger">
       <div class="val">473</div>
       <div class="lbl">Blocked — will not ingest</div>
-      <div class="sub">74.7% of open gigs</div>
+      <div class="sub">74.7% of open opportunities</div>
     </div>
     <div class="metric ok">
       <div class="val">160</div>
       <div class="lbl">Passing — ready to ingest</div>
-      <div class="sub">25.3% of open gigs</div>
+      <div class="sub">25.3% of open opportunities</div>
     </div>
   </div>
 
@@ -79,7 +79,7 @@
     <div class="metric warn">
       <div class="val">346</div>
       <div class="lbl">Stale (end date in the past)</div>
-      <div class="sub">54.7% of open gigs</div>
+      <div class="sub">54.7% of open opportunities</div>
     </div>
     <div class="metric warn">
       <div class="val">255</div>
@@ -93,24 +93,24 @@
     </div>
   </div>
 
-  <p class="section-title">Blocked gigs by missing field</p>
+  <p class="section-title">Blocked opportunities by missing field</p>
   <div class="chart-card">
-    <h3>Number of open gigs missing each required field</h3>
+    <h3>Number of open opportunities missing each required field</h3>
     <div id="issueRows"></div>
   </div>
 
-  <p class="section-title">Open gigs by opportunity type</p>
+  <p class="section-title">Open opportunities by opportunity type</p>
   <div class="two-col">
     <div class="chart-card">
-      <h3>Distribution of all 633 open gigs</h3>
+      <h3>Distribution of all 633 open opportunities</h3>
       <div style="position:relative;height:260px;">
         <canvas id="typeChart" role="img" aria-label="Doughnut chart: Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, agilePSD TBC 29, STIP 7">Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, agilePSD TBC 29, STIP 7</canvas>
       </div>
     </div>
     <div class="chart-card">
-      <h3>Blocked gigs by type</h3>
+      <h3>Blocked opportunities by type</h3>
       <div style="position:relative;height:260px;">
-        <canvas id="blockedTypeChart" role="img" aria-label="Bar chart of blocked gigs by type">Blocked by type</canvas>
+        <canvas id="blockedTypeChart" role="img" aria-label="Bar chart of blocked opportunities by type">Blocked by type</canvas>
       </div>
     </div>
   </div>

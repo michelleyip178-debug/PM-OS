@@ -53,11 +53,11 @@
   <div class="insight-grid">
     <div class="callout">
       <h3>Secondment is the dominant problem</h3>
-      <p>259 gigs, 88% blocked. Start date is missing on 200 of them — nearly the entire type. Also the most stale (170). One field decision by BO unlocks a large portion of the catalogue.</p>
+      <p>259 opportunities, 88% blocked. Start date is missing on 200 of them — nearly the entire type. Also the most stale (170). One field decision by BO unlocks a large portion of the catalogue.</p>
     </div>
     <div class="callout">
       <h3>SJR is the cleanest recognised type</h3>
-      <p>33% blocked, all dates fully populated. Only Function (11) and Agency (5) cause issues. Once fixed, SJR gigs almost entirely clear.</p>
+      <p>33% blocked, all dates fully populated. Only Function (11) and Agency (5) cause issues. Once fixed, SJR opportunities almost entirely clear.</p>
     </div>
     <div class="callout">
       <h3>agilePSD is healthy but frozen</h3>
@@ -103,7 +103,7 @@ const types = [
       { name: 'TC',            count: 0,   tbc: false, na: true },
     ],
     stale: 100, zero_ap: 84,
-    note: 'TC not required. Start date and Function both major gaps. 13 gigs have no agency set — no owner to contact for remediation.'
+    note: 'TC not required. Start date and Function both major gaps. 13 opportunities have no agency set — no owner to contact for remediation.'
   },
   {
     name: 'No tag', color: '#7F77DD', n: 78, blocked: 78,
@@ -116,7 +116,7 @@ const types = [
       { name: 'End date',      count: 0,   tbc: false },
     ],
     stale: 29, zero_ap: 42,
-    note: '100% blocked — every gig is missing the type prefix. Other fields are relatively healthy. MSF (37) and Enterprise Singapore (19) account for 69%.'
+    note: '100% blocked — every opportunity is missing the type prefix. Other fields are relatively healthy. MSF (37) and Enterprise Singapore (19) account for 69%.'
   },
   {
     name: 'Other (TBC)', color: '#EF9F27', n: 56, blocked: 35,
@@ -129,7 +129,7 @@ const types = [
       { name: 'End date',      count: 1,   tbc: false },
     ],
     stale: 22, zero_ap: 40,
-    note: '18 distinct unrecognised tag variants. Function and Business Unit are the dominant gaps. 16 gigs have TC flagged as TBC pending BO ruling.'
+    note: '18 distinct unrecognised tag variants. Function and Business Unit are the dominant gaps. 16 opportunities have TC flagged as TBC pending BO ruling.'
   },
   {
     name: 'Gig', color: '#378ADD', n: 36, blocked: 20,
@@ -168,7 +168,7 @@ const types = [
       { name: 'Agency',        count: 0,   tbc: false },
     ],
     stale: 0, zero_ap: 29,
-    note: 'Healthiest type overall. All dates, BU, agency present. Only 5 blocked (missing Function). 29 gigs await TC ruling — if exempt, 24 immediately clear. Zero stale.'
+    note: 'Healthiest type overall. All dates, BU, agency present. Only 5 blocked (missing Function). 29 opportunities await TC ruling — if exempt, 24 immediately clear. Zero stale.'
   },
   {
     name: 'STIP', color: '#F09595', n: 7, blocked: 5,
@@ -181,7 +181,7 @@ const types = [
       { name: 'TC',            count: 0,   tbc: false },
     ],
     stale: 4, zero_ap: 5,
-    note: 'Smallest type (7 gigs). Function is the only blocker. All 5 blocked gigs just need Function filled in — a quick fix.'
+    note: 'Smallest type (7 opportunities). Function is the only blocker. All 5 blocked opportunities just need Function filled in — a quick fix.'
   },
 ];
 
@@ -223,7 +223,7 @@ types.forEach(t => {
       <div class="block-bar-wrap">
         <div class="block-bar-fill" style="width:${pct}%;background:${barColor};"></div>
       </div>
-      <div class="field-label">Missing fields (out of ${t.n} gigs)</div>
+      <div class="field-label">Missing fields (out of ${t.n} opportunities)</div>
       ${fieldRows}
       <div class="stale-row">
         <span><strong style="color:${staleColor};">${t.stale}</strong> stale (${stalePct}%)</span>

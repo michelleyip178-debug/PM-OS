@@ -125,7 +125,7 @@
       <h4>2 · Pre-flight exclusions</h4>
       <ul>
         <li>Remove test entries</li>
-        <li>Stale gig policy (TBC)</li>
+        <li>Stale opportunity policy (TBC)</li>
         <li>No-owner records flagged</li>
       </ul>
     </div>
@@ -207,7 +207,7 @@
         <td class="col-type">String</td>
         <td class="col-transform">Trim whitespace</td>
         <td><span class="tag tag-req">Required</span></td>
-        <td class="col-notes">Maps to owning agency. 5–27 gigs per type have blank/NULL agency — no owner to contact for remediation.</td>
+        <td class="col-notes">Maps to owning agency. 5–27 opportunities per type have blank/NULL agency — no owner to contact for remediation.</td>
       </tr>
       <tr>
         <td class="col-target">business_unit</td>
@@ -225,7 +225,7 @@
         <td class="col-type">String</td>
         <td class="col-transform">Trim whitespace</td>
         <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">174 gigs missing across all types. BO to confirm if truly required for all — short-term gigs may not map neatly to a function.</td>
+        <td class="col-notes">174 opportunities missing across all types. BO to confirm if truly required for all — short-term opportunities may not map neatly to a function.</td>
       </tr>
       <tr>
         <td class="col-target">start_date</td>
@@ -234,7 +234,7 @@
         <td class="col-type">DateTime → Date</td>
         <td class="col-transform">Parse date, strip time component</td>
         <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">288 gigs missing — the single biggest blocker. Secondment alone: 200 missing. BO to rule if evergreen/standing opportunities can be exempt.</td>
+        <td class="col-notes">288 opportunities missing — the single biggest blocker. Secondment alone: 200 missing. BO to rule if evergreen/standing opportunities can be exempt.</td>
       </tr>
       <tr>
         <td class="col-target">end_date</td>
@@ -243,7 +243,7 @@
         <td class="col-type">DateTime → Date</td>
         <td class="col-transform">Parse date, strip time component</td>
         <td><span class="tag tag-req">Required</span></td>
-        <td class="col-notes">Used for staleness check (end_date &lt; today = stale). 50 gigs missing across all types. Also drives stale exclusion logic.</td>
+        <td class="col-notes">Used for staleness check (end_date &lt; today = stale). 50 opportunities missing across all types. Also drives stale exclusion logic.</td>
       </tr>
       <tr>
         <td class="col-target">time_commitment</td>
@@ -252,7 +252,7 @@
         <td class="col-type">String</td>
         <td class="col-transform">Trim whitespace</td>
         <td><span class="tag tag-cond">Conditional</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">Required for Gig and STIP only (confirmed). Not required for Secondment, Job, SJR. TBC for agilePSD and Other — affects 109 gigs.</td>
+        <td class="col-notes">Required for Gig and STIP only (confirmed). Not required for Secondment, Job, SJR. TBC for agilePSD and Other — affects 109 opportunities.</td>
       </tr>
       <tr>
         <td class="col-target">applicant_count</td>
@@ -270,7 +270,7 @@
         <td class="col-type">String</td>
         <td class="col-transform">Filter: only pass "Open"</td>
         <td><span class="tag tag-excl">Exclusion gate</span></td>
-        <td class="col-notes">Pre-flight filter — non-Open gigs never reach validation. Not stored in OTEP target (implicit from being in catalogue).</td>
+        <td class="col-notes">Pre-flight filter — non-Open opportunities never reach validation. Not stored in OTEP target (implicit from being in catalogue).</td>
       </tr>
       <tr>
         <td class="col-target">formsg_url</td>
@@ -350,9 +350,9 @@
           <td class="field-name">start_date</td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-pend">PEND</span></td>
-          <td><span class="cell-pend">PEND</span></td>
-          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
@@ -361,9 +361,9 @@
           <td class="field-name">end_date</td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
@@ -411,8 +411,8 @@
     <div class="rule-item">
       <span class="rule-step">3</span>
       <div class="rule-body">
-        <strong>Stale gig check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
-        <div class="rule-note"><code>end_date &lt; today</code> and <code>Status = Open</code>. 346 gigs currently affected. BO options: (A) skip all stale, (B) skip if stale AND zero applicants (255 gigs), (C) ingest with a "closing soon" flag, (D) ingest as-is.</div>
+        <strong>Stale opportunity check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
+        <div class="rule-note"><code>end_date &lt; today</code> and <code>Status = Open</code>. 346 opportunities currently affected. BO options: (A) skip all stale, (B) skip if stale AND zero applicants (255 opportunities), (C) ingest with a "closing soon" flag, (D) ingest as-is.</div>
       </div>
       <span class="rule-badge rb-tbc">TBC</span>
     </div>
@@ -420,7 +420,7 @@
       <span class="rule-step">4</span>
       <div class="rule-body">
         <strong>No-type-tag check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
-        <div class="rule-note">GigName does not start with <code>[</code> — no prefix present. 78 gigs. BO options: (A) hard block and route to report, (B) ingest as "Uncategorised" type, (C) attempt fuzzy matching on GigName keywords.</div>
+        <div class="rule-note">GigName does not start with <code>[</code> — no prefix present. 78 opportunities. BO options: (A) hard block and route to report, (B) ingest as "Uncategorised" type, (C) attempt fuzzy matching on GigName keywords.</div>
       </div>
       <span class="rule-badge rb-tbc">TBC</span>
     </div>
@@ -428,7 +428,7 @@
       <span class="rule-step">5</span>
       <div class="rule-body">
         <strong>No-owner flag</strong>
-        <div class="rule-note">Agency is blank or owned by <code>otg@psd.gov.sg</code> shared inbox (7 gigs). These proceed through validation but are flagged in the remediation report as uncontactable — no one to fix them.</div>
+        <div class="rule-note">Agency is blank or owned by <code>otg@psd.gov.sg</code> shared inbox (7 opportunities). These proceed through validation but are flagged in the remediation report as uncontactable — no one to fix them.</div>
       </div>
       <span class="rule-badge rb-flag">Flag</span>
     </div>
@@ -443,7 +443,7 @@
         <th>Regex match on [prefix]</th>
         <th>Example tags observed</th>
         <th>TC required?</th>
-        <th>n (open gigs)</th>
+        <th>n (open opportunities)</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -520,28 +520,28 @@
   <div class="decision-grid">
     <div class="decision-card">
       <h3><span class="d-num">D1</span> TC rule for agilePSD &amp; Other (TBC)</h3>
-      <p>Is time commitment required for uncertain-type gigs? Affects 109 gigs.</p>
+      <p>Is time commitment required for uncertain-type opportunities? Affects 109 opportunities.</p>
       <div class="schema-impact">
-        <strong>Schema impact:</strong> If yes — 109 more gigs become hard-blocked. If no — TC validation rule is marked N/A for these types. The matrix cell changes from TBC → REQ or —.
+        <strong>Schema impact:</strong> If yes — 109 more opportunities become hard-blocked. If no — TC validation rule is marked N/A for these types. The matrix cell changes from TBC → REQ or —.
       </div>
     </div>
     <div class="decision-card">
       <h3><span class="d-num">D2</span> Start date exemptions</h3>
       <p>Are evergreen/standing opportunities (e.g. Secondments, permanent roles) exempt from requiring a start date?</p>
       <div class="schema-impact">
-        <strong>Schema impact:</strong> If Secondments exempt — 200 gigs unblock immediately. The PEND cell for Secondment in the matrix changes to —. Would require a new <code>is_evergreen</code> flag or type-level override in the schema.
+        <strong>Schema impact:</strong> If Secondments exempt — 200 opportunities unblock immediately. The PEND cell for Secondment in the matrix changes to —. Would require a new <code>is_evergreen</code> flag or type-level override in the schema.
       </div>
     </div>
     <div class="decision-card">
-      <h3><span class="d-num">D3</span> Stale gig handling</h3>
-      <p>Should Open gigs with end_date in the past be ingested, skipped, or flagged?</p>
+      <h3><span class="d-num">D3</span> Stale opportunity handling</h3>
+      <p>Should Open opportunities with end_date in the past be ingested, skipped, or flagged?</p>
       <div class="schema-impact">
-        <strong>Schema impact:</strong> Affects exclusion rule #3. If skipped — ingestion shrinks by up to 346 gigs. If flagged with status — OTEP schema needs an <code>is_stale</code> or <code>listing_status</code> field. If ingested as-is — no schema change needed.
+        <strong>Schema impact:</strong> Affects exclusion rule #3. If skipped — ingestion shrinks by up to 346 opportunities. If flagged with status — OTEP schema needs an <code>is_stale</code> or <code>listing_status</code> field. If ingested as-is — no schema change needed.
       </div>
     </div>
     <div class="decision-card">
-      <h3><span class="d-num">D4</span> No-tag gig handling</h3>
-      <p>Hard block, ingest as "Uncategorised", or attempt fuzzy type inference for 78 untagged gigs?</p>
+      <h3><span class="d-num">D4</span> No-tag opportunity handling</h3>
+      <p>Hard block, ingest as "Uncategorised", or attempt fuzzy type inference for 78 untagged opportunities?</p>
       <div class="schema-impact">
         <strong>Schema impact:</strong> If Uncategorised allowed — OTEP type enum must include an "Uncategorised" value. If fuzzy inference — classification logic gains a fallback branch (keyword matching on GigName body). If hard block — no schema change.
       </div>
