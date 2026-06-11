@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Ringfencing Analysis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Alert */
+  .alert { background: #FAEEDA; border: 1px solid #F0C27F; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem; display: flex; gap: 10px; }
+  .alert-icon { font-size: 16px; flex-shrink: 0; }
+  .alert-text { font-size: 12px; color: #5C3B0E; line-height: 1.6; }
+  .alert-text strong { font-weight: 600; }
+
+  /* Stat strip */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; border: 0.5px solid #e0dfd8; }
+  .stat-cell { background: #fff; padding: .9rem 1rem; }
+  .stat-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 3px; }
+  .stat-value { font-size: 24px; font-weight: 300; letter-spacing: -.5px; }
+  .stat-note { font-size: 11px; color: #5f5e5a; margin-top: 2px; }
+
+  /* Split layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+
+  /* Chart cards */
+  .card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.1rem 1.25rem; }
+  .card h3 { font-size: 12px; font-weight: 500; margin-bottom: .85rem; }
+  .card-note { font-size: 10px; color: #888780; margin-top: 8px; }
+
+  /* Bar rows */
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .bar-label { font-size: 11px; color: #1a1a18; min-width: 170px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; height: 18px; background: #f1efe8; border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 6px; font-size: 9px; font-weight: 700; color: rgba(255,255,255,.9); }
+  .bar-count { font-size: 11px; font-weight: 500; min-width: 32px; text-align: right; color: #1a1a18; }
+
+  /* Type ringfence rates */
+  .type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .type-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 8px; padding: .85rem 1rem; text-align: center; }
+  .type-name { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin-bottom: 6px; }
+  .type-ring-pct { font-size: 28px; font-weight: 300; letter-spacing: -.5px; margin-bottom: 4px; }
+  .type-ring-sub { font-size: 10px; color: #5f5e5a; }
+  .type-ring-bar { height: 5px; border-radius: 3px; margin: 6px 0 4px; }
+
+  /* OTEP implication box */
+  .implication-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .impl-head { background: #f8f7f3; padding: .75rem 1.1rem; border-bottom: 0.5px solid #e0dfd8; font-size: 12px; font-weight: 500; }
+  .impl-row { display: flex; gap: 0; border-bottom: 0.5px solid #f1efe8; }
+  .impl-row:last-child { border-bottom: none; }
+  .impl-scenario { flex: 0 0 200px; padding: .7rem 1rem; font-size: 11px; font-weight: 500; border-right: 0.5px solid #f1efe8; background: #fafaf8; display: flex; align-items: center; }
+  .impl-detail { flex: 1; padding: .7rem 1rem; font-size: 11px; color: #5f5e5a; }
+  .impl-impact { flex: 0 0 110px; padding: .7rem 1rem; font-size: 11px; text-align: right; display: flex; align-items: center; justify-content: flex-end; }
+  .tag { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 10px; display: inline-block; }
+  .tag-red { background: #FEE2E2; color: #991B1B; }
+  .tag-amber { background: #FAEEDA; color: #854F0B; }
+  .tag-green { background: #EAF3DE; color: #3B6D11; }
+  .tag-blue { background: #e6f1fb; color: #185fa5; }
+
+  /* D6 decision card */
+  .d-card { background: #fff; border: 1px solid #F0C27F; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .d-card-head { background: #FAEEDA; padding: .85rem 1rem; border-bottom: 0.5px solid #F0C27F; display: flex; align-items: center; gap: 8px; }
+  .d-num { font-size: 10px; font-weight: 600; background: #F0C27F; color: #5C3B0E; border-radius: 20px; padding: 2px 9px; }
+  .d-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .d-status { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 500; background: #FAEEDA; color: #854F0B; border: 1px solid #F0C27F; }
+  .d-body { padding: .9rem 1rem; }
+  .d-question { font-size: 12px; color: #5f5e5a; margin-bottom: 10px; line-height: 1.5; }
+  .d-options { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+  .d-option { font-size: 11px; padding: 6px 9px; border-radius: 6px; border: 0.5px solid #e0dfd8; color: #5f5e5a; display: flex; gap: 6px; }
+  .d-option.rec { border-color: #1D9E75; background: #f2fbf7; color: #1a1a18; }
+  .opt-label { font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .opt-rec { color: #1D9E75; }
+  .opt-other { color: #b4b2a9; }
+  .d-impact { font-size: 11px; padding: 6px 9px; background: #f8f7f3; border-radius: 6px; color: #5f5e5a; border-left: 2px solid #e0dfd8; }
+
+  /* ESG callout */
+  .esg-box { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; }
+  .esg-box h3 { font-size: 12px; font-weight: 500; margin-bottom: .75rem; }
+  .esg-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
+  .esg-stat { text-align: center; padding: 1rem; background: #f8f7f3; border-radius: 8px; }
+  .esg-val { font-size: 36px; font-weight: 300; letter-spacing: -1px; color: #E24B4A; }
+  .esg-label { font-size: 11px; color: #5f5e5a; margin-top: 3px; }
+  .esg-sub { font-size: 10px; color: #888780; margin-top: 2px; }
+
+  /* Stacked split bar */
+  .split-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .split-bar-label { font-size: 11px; min-width: 110px; flex-shrink: 0; }
+  .split-bar-track { flex: 1; height: 20px; border-radius: 3px; overflow: hidden; display: flex; }
+  .split-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: rgba(255,255,255,.9); }
+  .split-total { font-size: 10px; color: #888780; min-width: 36px; text-align: right; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP — Audience Ringfencing Analysis</h1>
+    <p>OTG allows opportunity owners to restrict visibility by agency (Location), Business Unit, or Function. This analysis quantifies how prevalent ringfencing is and what it means for OTEP ingestion. &nbsp;·&nbsp; Source: RAW_GIG_AUDIENCE_FILTERS Report &nbsp;·&nbsp; 2,187 records, 669 currently open</p>
+  </div>
+
+  <div class="alert">
+    <div class="alert-icon">⚠</div>
+    <div class="alert-text">
+      <strong>38% of open opportunities are ringfenced — OTEP cannot ingest these as public listings.</strong> 253 of 669 currently open opportunities are restricted to officers from specific agencies. If OTEP ingests them without enforcing the filter, ineligible officers see listings they cannot apply to. A new BO decision (D6) is needed: exclude, enforce, or flag ringfenced opportunities.
+    </div>
+  </div>
+
+  <!-- Headline metrics -->
+  <p class="section-title">Headline metrics — APPLICATIONS_OPEN only</p>
+  <div class="stat-strip">
+    <div class="stat-cell">
+      <div class="stat-label">Open opportunities</div>
+      <div class="stat-value">669</div>
+      <div class="stat-note">APPLICATIONS_OPEN status</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Ringfenced</div>
+      <div class="stat-value" style="color:#E24B4A;">253</div>
+      <div class="stat-note">38% — have audience filter</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Open to all WOG</div>
+      <div class="stat-value" style="color:#1D9E75;">416</div>
+      <div class="stat-note">62% — no filter applied</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Single-agency ringfence</div>
+      <div class="stat-value" style="color:#E24B4A;">242</div>
+      <div class="stat-note">96% of ringfenced are 1 agency only</div>
+    </div>
+  </div>
+
+  <!-- Filter mechanism + ESG -->
+  <div class="two-col">
+    <div class="card">
+      <h3>How ringfencing is applied (open opps)</h3>
+      <div class="bar-row">
+        <span class="bar-label">Location (agency-based)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:97%;background:#E24B4A;">279</div></div>
+        <span class="bar-count">279</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">BU + Function</span>
+        <div class="bar-track"><div class="bar-fill" style="width:4%;background:#EF9F27;min-width:28px;">12</div></div>
+        <span class="bar-count">12</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">BU + Function + Location</span>
+        <div class="bar-track"><div class="bar-fill" style="width:0.5%;background:#85B7EB;min-width:20px;">1</div></div>
+        <span class="bar-count">1</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">EXCLUDE (blocklist)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:0.5%;background:#888780;min-width:20px;">1</div></div>
+        <span class="bar-count">1</span>
+      </div>
+      <p class="card-note">97% of ringfencing is by agency (Location filter). BU/Function ringfencing is rare — 13 records, typically internal HR moves (OD, HR functions). One EXCLUDE record: MDDI Family Opportunity, which lists ~100 agencies to block (effectively MDDI-only).</p>
+    </div>
+
+    <div class="card">
+      <h3>Top agencies using ringfencing (open opps, as target)</h3>
+      <div class="bar-row">
+        <span class="bar-label" title="Enterprise Singapore">Enterprise Singapore</span>
+        <div class="bar-track"><div class="bar-fill" style="width:68%;background:#E24B4A;">172</div></div>
+        <span class="bar-count">172</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">People's Association</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%;background:#EF9F27;">20</div></div>
+        <span class="bar-count">20</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">National Library Board</span>
+        <div class="bar-track"><div class="bar-fill" style="width:7%;background:#EF9F27;">18</div></div>
+        <span class="bar-count">18</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Workforce Singapore</span>
+        <div class="bar-track"><div class="bar-fill" style="width:7%;background:#85B7EB;">17</div></div>
+        <span class="bar-count">17</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">MDDI</span>
+        <div class="bar-track"><div class="bar-fill" style="width:5%;background:#85B7EB;">12</div></div>
+        <span class="bar-count">12</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">EDB</span>
+        <div class="bar-track"><div class="bar-fill" style="width:2%;background:#d3d1c7;min-width:16px;">5</div></div>
+        <span class="bar-count">5</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Others (MTI, MOF, MAS…)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:3%;background:#d3d1c7;min-width:16px;">9</div></div>
+        <span class="bar-count">9</span>
+      </div>
+      <p class="card-note">Enterprise Singapore accounts for 68% of all agency-based ringfencing. ESG appears to use OTG as an internal HR mobility platform — most ESG postings are visible only to ESG officers.</p>
+    </div>
+  </div>
+
+  <!-- ESG deep dive -->
+  <p class="section-title">Enterprise Singapore — ringfencing deep dive</p>
+  <div class="esg-box">
+    <h3>Enterprise Singapore accounts for 68% of all ringfenced open opportunities</h3>
+    <div class="esg-inner">
+      <div>
+        <div class="esg-stat">
+          <div class="esg-val">169</div>
+          <div class="esg-label">ESG-only ringfenced opportunities</div>
+          <div class="esg-sub">of 253 total ringfenced (67%)</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:#5f5e5a;margin-bottom:10px;">Breakdown of ESG-only ringfenced opportunities by type:</p>
+        <div class="split-bar-row">
+          <span class="split-bar-label">Secondment</span>
+          <div class="split-bar-track">
+            <div class="split-seg" style="width:75%;background:#E24B4A;">127</div>
+            <div class="split-seg" style="width:25%;background:#f1efe8;"></div>
+          </div>
+          <span class="split-total">127</span>
+        </div>
+        <div class="split-bar-row">
+          <span class="split-bar-label">Job / Internal Move</span>
+          <div class="split-bar-track">
+            <div class="split-seg" style="width:13%;background:#EF9F27;">22</div>
+            <div class="split-seg" style="width:87%;background:#f1efe8;"></div>
+          </div>
+          <span class="split-total">22</span>
+        </div>
+        <div class="split-bar-row">
+          <span class="split-bar-label">GIG</span>
+          <div class="split-bar-track">
+            <div class="split-seg" style="width:5%;background:#378ADD;min-width:22px;">9</div>
+            <div class="split-seg" style="width:95%;background:#f1efe8;"></div>
+          </div>
+          <span class="split-total">9</span>
+        </div>
+        <div class="split-bar-row">
+          <span class="split-bar-label">No tag / Other</span>
+          <div class="split-bar-track">
+            <div class="split-seg" style="width:7%;background:#d3d1c7;min-width:22px;">11</div>
+            <div class="split-seg" style="width:93%;background:#f1efe8;"></div>
+          </div>
+          <span class="split-total">11</span>
+        </div>
+        <p style="font-size:11px;color:#5f5e5a;margin-top:10px;">ESG's 127 ringfenced Secondments represent <strong>49% of all Secondment opportunities</strong> in OTG. These are internal ESG HR movements, not WOG-open roles. If OTEP ingests Secondment without enforcing ringfencing, non-ESG officers see 127 opportunities they cannot apply to.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Type-level ringfence rates -->
+  <p class="section-title">Ringfence rate by OTEP opportunity type</p>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-name">GIG</div>
+      <div class="type-ring-pct" style="color:#EF9F27;">24%</div>
+      <div class="type-ring-bar" style="background:linear-gradient(to right,#EF9F27 24%,#f1efe8 24%);"></div>
+      <div class="type-ring-sub">9 of 38 ringfenced</div>
+      <div style="font-size:10px;color:#888780;margin-top:4px;">All 9 are ESG-only GIGs</div>
+    </div>
+    <div class="type-card">
+      <div class="type-name">STIP</div>
+      <div class="type-ring-pct" style="color:#1D9E75;">11%</div>
+      <div class="type-ring-bar" style="background:linear-gradient(to right,#1D9E75 11%,#f1efe8 11%);"></div>
+      <div class="type-ring-sub">1 of 9 ringfenced</div>
+      <div style="font-size:10px;color:#888780;margin-top:4px;">Low impact</div>
+    </div>
+    <div class="type-card">
+      <div class="type-name">JOB</div>
+      <div class="type-ring-pct" style="color:#E24B4A;">35%</div>
+      <div class="type-ring-bar" style="background:linear-gradient(to right,#E24B4A 35%,#f1efe8 35%);"></div>
+      <div class="type-ring-sub">36 of 102 ringfenced</div>
+      <div style="font-size:10px;color:#888780;margin-top:4px;">IJPs, PASTAP, Internal Rotations</div>
+    </div>
+    <div class="type-card">
+      <div class="type-name">SJR</div>
+      <div class="type-ring-pct" style="color:#1D9E75;">0%</div>
+      <div class="type-ring-bar" style="background:linear-gradient(to right,#1D9E75 0%,#f1efe8 0%);"></div>
+      <div class="type-ring-sub">0 of 57 ringfenced</div>
+      <div style="font-size:10px;color:#888780;margin-top:4px;">Fully WOG-open — no ringfencing</div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #e0dfd8;border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.5rem;font-size:11px;color:#5f5e5a;line-height:1.7;">
+    <strong style="color:#1a1a18;">Secondment (unrecognised by OTEP):</strong> The most ringfenced type overall — 132 of 259 OTG Secondments have audience filters (51%). ESG accounts for 127 of these. This matters because BO is being asked to decide how Secondment maps to OTEP categories (D5). If Secondment is eventually ingested, its ringfencing rate must be handled.
+  </div>
+
+  <!-- OTEP implications -->
+  <p class="section-title">What this means for OTEP ingestion</p>
+  <div class="implication-wrap">
+    <div class="impl-head">Three options for handling ringfenced opportunities — each requires a BO decision</div>
+    <div class="impl-row">
+      <div class="impl-scenario">A — Exclude ringfenced opps</div>
+      <div class="impl-detail">Do not ingest any opportunity with an audience filter. OTEP only serves fully WOG-open opportunities. Simple to implement — add R13: "Has Audience Filter = Yes → BLOCKED." 253 currently open opportunities would be excluded, leaving 416 open to ingest.</div>
+      <div class="impl-impact"><span class="tag tag-amber">Loses 38%</span></div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-scenario">B — Enforce ringfence in OTEP</div>
+      <div class="impl-detail">Ingest all opportunities but apply the Location/BU/Function filter when displaying to officers. Each officer's agency is matched against the filter — they only see opportunities they're eligible for. Requires OTEP to know each officer's agency at display time. Most complete solution but highest engineering effort.</div>
+      <div class="impl-impact"><span class="tag tag-blue">Best UX</span></div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-scenario">C — Flag but ingest</div>
+      <div class="impl-detail">Ingest all opportunities with a "Restricted" badge visible to all officers. Officers from non-eligible agencies can see but cannot apply. Reduces confusion vs Option A but may generate frustration. FormSG link may serve as a soft gate anyway (FormSG can enforce agency eligibility separately).</div>
+      <div class="impl-impact"><span class="tag tag-amber">Partial UX</span></div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-scenario">D — Ingest; ESG carve-out</div>
+      <div class="impl-detail">Exclude ESG-ringfenced opportunities only (169 records = 67% of all ringfenced) and ingest the rest. ESG is using OTG as a pure internal HR platform — these are not intended to be WOG discovery opportunities. All other ringfenced agencies (PA, NLB, WSG: 84 records) get Option B or C treatment.</div>
+      <div class="impl-impact"><span class="tag tag-green">Pragmatic</span></div>
+    </div>
+  </div>
+
+  <!-- New rule -->
+  <div style="background:#fff;border:0.5px solid #e0dfd8;border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+    <div style="font-size:12px;font-weight:500;margin-bottom:.5rem;">Proposed new ingestion rule — R13: Audience Filter Check</div>
+    <div style="font-size:11px;color:#5f5e5a;line-height:1.6;">
+      <strong>Trigger:</strong> Has Audience Filter = Yes<br>
+      <strong>Action (pending D6):</strong> Route to one of the four options above.<br>
+      <strong>Rule type:</strong> Classification / eligibility — runs after R4 (type classification)<br>
+      <strong>Data needed:</strong> GIGS_V2_REPORT currently does not include audience filter fields. The RAW_GIG_AUDIENCE_FILTERS report must be joined to GIGS_V2_REPORT on Gig ID before this rule can fire.<br>
+      <strong>Affected opportunities:</strong> 253 open · 38% of pipeline intake
+    </div>
+  </div>
+
+  <!-- D6 decision card -->
+  <p class="section-title">New BO decision required</p>
+  <div class="d-card">
+    <div class="d-card-head">
+      <span class="d-num">D6</span>
+      <span class="d-title">How should OTEP handle ringfenced (audience-filtered) opportunities?</span>
+      <span class="d-status">Open</span>
+    </div>
+    <div class="d-body">
+      <p class="d-question"><strong>38% of open opportunities (253 of 669)</strong> are restricted to officers from specific agencies. OTEP must decide whether to exclude them, enforce the filter, or flag them. Enterprise Singapore alone accounts for 169 ringfenced opportunities — most are internal ESG HR movements (Secondments, IJPs) not intended for WOG-wide discovery. How OTEP handles this determines whether an ESG officer sees a different catalogue than an MOH officer.</p>
+      <div class="d-options">
+        <div class="d-option rec">
+          <span class="opt-label opt-rec">A ★</span>
+          <span>Ingest all; enforce ringfence by matching officer's agency to Location filter at display time. Best user experience — each officer sees only what they're eligible for. Requires officer agency data to be available in OTEP session context. SJR is fully safe (0% ringfenced); start there, add enforcement for other types progressively.</span>
+        </div>
+        <div class="d-option">
+          <span class="opt-label opt-other">B</span>
+          <span>Exclude ESG-ringfenced opportunities (169 records) as they represent internal HR movements not intended for WOG discovery. Ingest the remaining 84 ringfenced opportunities with a "Restricted" flag. Pragmatic and low-engineering, but ESG staff lose OTEP visibility of their internal opportunities.</span>
+        </div>
+        <div class="d-option">
+          <span class="opt-label opt-other">C</span>
+          <span>Exclude all ringfenced opportunities (253). Simplest implementation — add R13 to pipeline. OTEP serves only the 416 fully WOG-open opportunities. Catalogue shrinks by 38% but all listings are universally accessible.</span>
+        </div>
+      </div>
+      <div class="d-impact"><strong>At stake:</strong> Up to 253 opportunities (38% of open catalogue) + OTEP's ability to serve personalised opportunity feeds per officer. Also affects D5 (Secondment mapping) — 51% of Secondments are ringfenced, so resolving D6 is a prerequisite to fully resolving D5.</div>
+    </div>
+  </div>
+
+  <!-- Additional findings -->
+  <p class="section-title">Additional findings</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem;">
+
+    <div class="card">
+      <h3>Secondment ringfencing (unrecognised type)</h3>
+      <div class="bar-row">
+        <span class="bar-label">Ringfenced (ESG mainly)</span>
+        <div class="bar-track"><div class="bar-fill" style="width:51%;background:#E24B4A;">132</div></div>
+        <span class="bar-count">132</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Open to all WOG</span>
+        <div class="bar-track"><div class="bar-fill" style="width:49%;background:#1D9E75;">127</div></div>
+        <span class="bar-count">127</span>
+      </div>
+      <p class="card-note">259 total Secondment in OTG. 51% ringfenced. If D5 resolves Secondment→JOB mapping, D6 must be resolved first for the 132 ringfenced ones. Only 127 are safe to ingest as WOG-open.</p>
+    </div>
+
+    <div class="card">
+      <h3>Custom agency type prefixes (ringfenced)</h3>
+      <div class="bar-row">
+        <span class="bar-label">[MDDI Internal Opportunity]</span>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#85B7EB;">12</div></div>
+        <span class="bar-count">12</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">[NLB Project Marketplace]</span>
+        <div class="bar-track"><div class="bar-fill" style="width:67%;background:#85B7EB;">8</div></div>
+        <span class="bar-count">8</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">[MDDI Family Opportunity]</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%;background:#d3d1c7;min-width:16px;">1</div></div>
+        <span class="bar-count">1</span>
+      </div>
+      <p class="card-note">Agencies have invented custom type prefixes for their own internal platforms. These are not OTEP categories and would be blocked at R4. They're also all ringfenced — doubly excluded. Supports D5 recommendation to enforce strict prefix validation.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Source: RAW_GIG_AUDIENCE_FILTERS Report (2,187 records) · Analysis: 10 June 2026 · Ringfencing = Has Audience Filter = Yes · "Open" = APPLICATIONS_OPEN status only · Part of OTEP_Research series (file 17 of 17)
+  </div>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

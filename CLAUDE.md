@@ -39,6 +39,7 @@ The PM has organized their knowledge into this workspace. Always reference:
 - `context-library/metrics/` for analytics reports, A/B test results, dashboards
 - `context-library/meetings/` for all meeting notes, syncs, retros
 - `context-library/example-prds/` for reference examples when drafting documents
+- `context-library/prompt-library/aakash-prompt-library.md` - 82 structured PM prompts by Aakash Gupta, organized by category (Discovery, Strategy, PM Artifacts, Analytics, Operations, AI Features, Productivity, GTM, Career). Reference when the task calls for a structured prompt not covered by an existing skill — especially for GTM copy and career tasks (see `/gtm-copy` and `/career-tools` skills).
 - `templates/` for empty templates only (not filled-out work)
 
 **External Workspace (linked, read-only reference):**

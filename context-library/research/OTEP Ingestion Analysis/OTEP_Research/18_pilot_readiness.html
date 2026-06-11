@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP — Pilot Agency Readiness</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1020px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
+
+  /* Status legend */
+  .legend { display: flex; gap: 16px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5f5e5a; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Summary matrix */
+  .matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+
+  /* Agency card */
+  .agency-card { background: #fff; border: 1.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; }
+  .agency-card.ready    { border-color: #84C98A; }
+  .agency-card.action   { border-color: #F0C27F; }
+  .agency-card.blocked  { border-color: #FCA5A5; }
+
+  .ac-head { padding: .85rem 1rem; display: flex; align-items: center; gap: 10px; border-bottom: 0.5px solid #f1efe8; }
+  .ac-head.ready   { background: #EAF3DE; }
+  .ac-head.action  { background: #FAEEDA; }
+  .ac-head.blocked { background: #FEF3F2; }
+
+  .ac-code { font-size: 16px; font-weight: 600; letter-spacing: -.3px; }
+  .ac-name { font-size: 10px; color: #5f5e5a; flex: 1; line-height: 1.3; }
+  .ac-status { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+  .st-ready   { background: #EAF3DE; color: #3B6D11; border: 1px solid #84C98A; }
+  .st-action  { background: #FAEEDA; color: #854F0B; border: 1px solid #F0C27F; }
+  .st-blocked { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
+
+  .ac-body { padding: .85rem 1rem; }
+  .ac-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; font-size: 11px; }
+  .ac-row-label { color: #888780; font-weight: 500; min-width: 90px; flex-shrink: 0; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+  .ac-row-val { color: #1a1a18; flex: 1; }
+
+  /* Catalogue comparison mini-bar */
+  .cat-bars { margin: 6px 0 8px; }
+  .cat-bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .cat-bar-label { font-size: 9px; color: #888780; min-width: 42px; }
+  .cat-bar-track { flex: 1; height: 12px; background: #f1efe8; border-radius: 2px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 2px; }
+  .cat-bar-val { font-size: 10px; font-weight: 600; min-width: 30px; text-align: right; color: #1a1a18; }
+
+  /* Blockers */
+  .blocker-list { margin-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+  .blocker { font-size: 10px; padding: 3px 7px; border-radius: 4px; display: flex; gap: 5px; align-items: flex-start; }
+  .blocker.crit { background: #FEE2E2; color: #7F1D1D; }
+  .blocker.warn { background: #FAEEDA; color: #5C3B0E; }
+  .blocker.info { background: #EAF3DE; color: #1D4D0E; }
+  .blocker.note { background: #f1efe8; color: #5f5e5a; }
+  .blocker-icon { flex-shrink: 0; font-weight: 700; }
+
+  /* Actions needed */
+  .actions { margin-top: 8px; padding-top: 8px; border-top: 0.5px solid #f1efe8; }
+  .actions-title { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 4px; }
+  .action-item { font-size: 10px; color: #5f5e5a; padding: 2px 0; display: flex; gap: 5px; }
+  .action-item::before { content: "→"; color: #b4b2a9; flex-shrink: 0; }
+
+  /* Sequencing */
+  .seq-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .seq-wrap h3 { font-size: 12px; font-weight: 500; margin-bottom: 1rem; }
+  .seq-track { display: flex; align-items: stretch; gap: 0; position: relative; }
+  .seq-phase { flex: 1; padding: .75rem; border: 1px solid #e0dfd8; border-right: none; position: relative; }
+  .seq-phase:first-child { border-radius: 8px 0 0 8px; }
+  .seq-phase:last-child { border-right: 1px solid #e0dfd8; border-radius: 0 8px 8px 0; }
+  .seq-phase.ph1 { background: #EAF3DE; border-color: #84C98A; }
+  .seq-phase.ph2 { background: #FAEEDA; border-color: #F0C27F; }
+  .seq-phase.ph3 { background: #FEF3F2; border-color: #FCA5A5; }
+  .seq-phase-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+  .ph1 .seq-phase-label { color: #3B6D11; }
+  .ph2 .seq-phase-label { color: #854F0B; }
+  .ph3 .seq-phase-label { color: #991B1B; }
+  .seq-agencies { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+  .seq-ag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .ph1 .seq-ag { background: #fff; color: #3B6D11; border: 1.5px solid #84C98A; }
+  .ph2 .seq-ag { background: #fff; color: #854F0B; border: 1.5px solid #F0C27F; }
+  .ph3 .seq-ag { background: #fff; color: #991B1B; border: 1.5px solid #FCA5A5; }
+  .seq-condition { font-size: 10px; color: #5f5e5a; line-height: 1.5; }
+
+  /* Pre-pilot checklist */
+  .checklist-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .cl-head { background: #f8f7f3; padding: .65rem 1rem; border-bottom: 0.5px solid #e0dfd8; display: grid; grid-template-columns: 2fr repeat(6, 1fr); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #888780; gap: 4px; align-items: center; }
+  .cl-row { padding: .55rem 1rem; border-bottom: 0.5px solid #f1efe8; display: grid; grid-template-columns: 2fr repeat(6, 1fr); gap: 4px; align-items: center; font-size: 11px; }
+  .cl-row:last-child { border-bottom: none; }
+  .cl-row:hover { background: #fafaf8; }
+  .cl-action { color: #1a1a18; }
+  .cl-cell { text-align: center; font-size: 13px; }
+
+  /* Catalogue delta table */
+  .delta-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .delta-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .delta-table thead tr { background: #f8f7f3; border-bottom: 1px solid #e0dfd8; }
+  .delta-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #888780; }
+  .delta-table td { padding: 8px 12px; border-bottom: 0.5px solid #f1efe8; }
+  .delta-table tr:last-child td { border-bottom: none; }
+  .delta-table tr:hover td { background: #fafaf8; }
+
+  .tag { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; display: inline-block; }
+  .tag-r { background: #EAF3DE; color: #3B6D11; }
+  .tag-a { background: #FAEEDA; color: #854F0B; }
+  .tag-b { background: #FEE2E2; color: #991B1B; }
+
+  .delta-neg { color: #C0392B; font-weight: 600; }
+  .delta-neu { color: #888780; }
+  .delta-pos { color: #1D9E75; font-weight: 600; }
+
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP — Pilot Agency Readiness</h1>
+    <p>Readiness assessment for the 6 pilot agencies: ESG, CAAS, MCCY, MDDI, PSD, URA. Covers ringfencing impact, catalogue gaps, open blockers, and recommended sequencing. &nbsp;·&nbsp; As at 10 June 2026</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;"></div>Ready — no blockers, proceed to pilot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EF9F27;"></div>Needs action — solvable before pilot with specific steps</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E24B4A;"></div>Blocked — pending BO decision (D6) before piloting</div>
+  </div>
+
+  <!-- Agency cards -->
+  <p class="section-title">Per-agency readiness</p>
+  <div class="matrix">
+
+    <!-- CAAS -->
+    <div class="agency-card ready">
+      <div class="ac-head ready">
+        <div>
+          <div class="ac-code">CAAS</div>
+          <div class="ac-name">Civil Aviation Authority<br>of Singapore</div>
+        </div>
+        <span class="ac-status st-ready">✓ Ready</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">None — 0 opps ringfenced</span></div>
+        <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">1 STIP record (ended 2026)</span></div>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTG today</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#85B7EB;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTEP (any D6)</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#1D9E75;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+        </div>
+        <div class="blocker-list">
+          <div class="blocker info">No catalogue drop under any D6 option</div>
+        </div>
+        <div class="actions">
+          <div class="actions-title">Actions before pilot</div>
+          <div class="action-item">No agency-specific actions needed — proceed when pipeline is ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- URA -->
+    <div class="agency-card ready">
+      <div class="ac-head ready">
+        <div>
+          <div class="ac-code">URA</div>
+          <div class="ac-name">Urban Redevelopment<br>Authority</div>
+        </div>
+        <span class="ac-status st-ready">✓ Ready</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">None — 0 opps ringfenced</span></div>
+        <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">0 WD Masterlist records</span></div>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTG today</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#85B7EB;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTEP (any D6)</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#1D9E75;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+        </div>
+        <div class="blocker-list">
+          <div class="blocker info">No catalogue drop under any D6 option</div>
+        </div>
+        <div class="actions">
+          <div class="actions-title">Actions before pilot</div>
+          <div class="action-item">No agency-specific actions needed — proceed when pipeline is ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MCCY -->
+    <div class="agency-card ready">
+      <div class="ac-head ready">
+        <div>
+          <div class="ac-code">MCCY</div>
+          <div class="ac-name">Ministry of Culture,<br>Community and Youth</div>
+        </div>
+        <span class="ac-status st-ready">✓ Ready</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">Negligible — 1 opp visible to them</span></div>
+        <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">4 records (3 GIG, 1 STIP) — all active</span></div>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTG today</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#85B7EB;"></div></div>
+            <span class="cat-bar-val">417</span>
+          </div>
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTEP (opt C)</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#1D9E75;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+        </div>
+        <div class="blocker-list">
+          <div class="blocker info">Catalogue drop of 1 opp — imperceptible</div>
+          <div class="blocker note">4 active WD opps (GIG/STIP) may not be visible on OTG — confirm posting status</div>
+        </div>
+        <div class="actions">
+          <div class="actions-title">Actions before pilot</div>
+          <div class="action-item">Verify MCCY's 4 WD Masterlist GIGs/STIPs are posted on OTG so they appear in OTEP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PSD -->
+    <div class="agency-card ready">
+      <div class="ac-head ready">
+        <div>
+          <div class="ac-code">PSD</div>
+          <div class="ac-name">Public Service<br>Division</div>
+        </div>
+        <span class="ac-status st-ready">✓ Ready</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">2 opps (both test entries)</span></div>
+        <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">4 records (3 STIP, 1 GIG) — 1 active</span></div>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTG today</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#85B7EB;"></div></div>
+            <span class="cat-bar-val">418</span>
+          </div>
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTEP (opt C)</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#1D9E75;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+        </div>
+        <div class="blocker-list">
+          <div class="blocker info">Catalogue drop of 2 opps (test entries) — imperceptible</div>
+          <div class="blocker note">PSD coordinates WOG STIPs via WD Masterlist — most routed through FormSG, not OTG</div>
+        </div>
+        <div class="actions">
+          <div class="actions-title">Actions before pilot</div>
+          <div class="action-item">Confirm PSD's role as STIP coordinator is understood — STIP discovery via OTEP may need a separate communication</div>
+          <div class="action-item">Remove 2 test entries still showing as open on OTG (1 [Test], 1 PSD-ringfenced STIP)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MDDI -->
+    <div class="agency-card action">
+      <div class="ac-head action">
+        <div>
+          <div class="ac-code">MDDI</div>
+          <div class="ac-name">Ministry of Digital Dev.<br>and Information</div>
+        </div>
+        <span class="ac-status st-action">⚠ Needs action</span>
+      </div>
+      <div class="ac-body">
+        <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">12 MDDI-internal + 1 EXCLUDE opp</span></div>
+        <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">0 WD Masterlist records</span></div>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTG today</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:73%;background:#85B7EB;"></div></div>
+            <span class="cat-bar-val">429</span>
+          </div>
+          <div class="cat-bar-row">
+            <span class="cat-bar-label">OTEP (any D6)</span>
+            <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#EF9F27;"></div></div>
+            <span class="cat-bar-val">416</span>
+          </div>
+        </div>
+        <div class="blocker-list">
+          <div class="blocker warn"><span class="blocker-icon">⚠</span>12 [MDDI Internal Opportunity] opps blocked at R4 — custom prefix, not an OTEP type. Invisible in OTEP regardless of D6.</div>
+          <div class="blocker warn"><span class="blocker-icon">⚠</span>[MDDI Family Opportunity] uses EXCLUDE filter + custom prefix — doubly blocked.</div>
+          <div class="blocker note"><span class="blocker-icon">→</span>MDDI officers will notice 13 opportunities on OTG that don't appear in OTEP — likely to raise as a bug.</div>
+        </div>
+        <div class="actions">
+          <div class="actions-title">Actions before pilot</div>
+          <div class="action-item">Brief MDDI: [MDDI Internal Opportunity] won't appear in OTEP — not an ingested type</div>
+          <div class="action-item">Give MDDI two options: (A) reclassify those roles with a recognised prefix (e.g. [Job]), or (B) accept they are OTG-only and won't be on OTEP</div>
+          <div class="action-item">If Option A chosen: MDDI to update 12 GigNames before pilot launch; rerun pipeline to confirm they pass R4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESG -->
+    <div class="agency-card blocked" style="grid-column: 1 / -1;">
+      <div class="ac-head blocked">
+        <div>
+          <div class="ac-code">ESG</div>
+          <div class="ac-name">Enterprise Singapore — D6 must be resolved before piloting</div>
+        </div>
+        <span class="ac-status st-blocked">🚨 Blocked</span>
+      </div>
+      <div class="ac-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+
+          <div>
+            <div class="ac-row"><span class="ac-row-label">Ringfencing</span><span class="ac-row-val">169 opps ringfenced exclusively to ESG</span></div>
+            <div class="ac-row"><span class="ac-row-label">WD presence</span><span class="ac-row-val">0 WD Masterlist records — fully self-posting</span></div>
+            <div class="ac-row"><span class="ac-row-label">OTG use pattern</span><span class="ac-row-val">Internal HR mobility platform (not WOG discovery)</span></div>
+          </div>
+
+          <div>
+            <div class="cat-bars" style="margin-top:0;">
+              <div style="font-size:10px;font-weight:500;margin-bottom:5px;color:#1a1a18;">ESG officer catalogue</div>
+              <div class="cat-bar-row">
+                <span class="cat-bar-label">OTG today</span>
+                <div class="cat-bar-track"><div class="cat-bar-fill" style="width:100%;background:#85B7EB;"></div></div>
+                <span class="cat-bar-val">587</span>
+              </div>
+              <div class="cat-bar-row">
+                <span class="cat-bar-label">OTEP opt A</span>
+                <div class="cat-bar-track"><div class="cat-bar-fill" style="width:100%;background:#1D9E75;"></div></div>
+                <span class="cat-bar-val">585</span>
+              </div>
+              <div class="cat-bar-row">
+                <span class="cat-bar-label">OTEP opt B</span>
+                <div class="cat-bar-track"><div class="cat-bar-fill" style="width:100%;background:#EF9F27;"></div></div>
+                <span class="cat-bar-val">585</span>
+              </div>
+              <div class="cat-bar-row">
+                <span class="cat-bar-label">OTEP opt C</span>
+                <div class="cat-bar-track"><div class="cat-bar-fill" style="width:71%;background:#E24B4A;"></div></div>
+                <span class="cat-bar-val" style="color:#C0392B;">416</span>
+              </div>
+            </div>
+            <div style="font-size:10px;color:#991B1B;font-weight:500;margin-top:4px;">Option C: 171 opportunities disappear (−29%)</div>
+          </div>
+
+          <div>
+            <div class="blocker-list" style="margin-top:0;">
+              <div class="blocker crit"><span class="blocker-icon">🚨</span>127 Secondments + 20 Internal Rotations = ESG's primary use case. Not WOG-open. Require ringfence enforcement to remain visible.</div>
+              <div class="blocker crit"><span class="blocker-icon">🚨</span>8 ringfenced GIGs (OTEP type) blocked unless D6 is enforced. ESG's GIG contribution to OTEP is near-zero without enforcement.</div>
+              <div class="blocker warn"><span class="blocker-icon">⚠</span>ESG has 0 WD Masterlist opps — no alternative data path. Their entire OTG presence is self-posted and ringfenced.</div>
+              <div class="blocker warn"><span class="blocker-icon">⚠</span>ESG officers expect to see their internal catalogue. Without D6 resolved, pilot will generate immediate dissatisfaction.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <div class="actions-title">Actions required before ESG pilot</div>
+          <div class="action-item">Resolve D6 — confirm how OTEP handles ringfenced opportunities (enforce, exclude, or flag)</div>
+          <div class="action-item">Align with ESG on OTEP's scope: is it for WOG discovery only, or also internal ESG mobility? If internal, enforce ringfence (Option A)</div>
+          <div class="action-item">If D6 → Option A: confirm OTEP session context will include officer's agency for filter matching</div>
+          <div class="action-item">If D6 → Option C (exclude): set expectation with ESG that 169 opps won't appear — consider a separate internal mobility surface for ESG</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Catalogue delta table -->
+  <p class="section-title">Catalogue impact summary — what each agency's officers see</p>
+  <div class="delta-wrap">
+    <table class="delta-table">
+      <thead>
+        <tr>
+          <th>Agency</th>
+          <th>OTG today</th>
+          <th>OTEP Option A<br><span style="font-weight:400;font-size:9px;">Enforce ringfence</span></th>
+          <th>OTEP Option C<br><span style="font-weight:400;font-size:9px;">Exclude all ringfenced</span></th>
+          <th>Delta (A vs OTG)</th>
+          <th>Delta (C vs OTG)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;">ESG</td>
+          <td>587</td>
+          <td>585</td>
+          <td>416</td>
+          <td class="delta-neg">−2</td>
+          <td class="delta-neg">−171 (−29%)</td>
+          <td><span class="tag tag-b">Blocked</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">MDDI</td>
+          <td>429</td>
+          <td>428</td>
+          <td>416</td>
+          <td class="delta-neg">−1</td>
+          <td class="delta-neg">−13 (−3%)</td>
+          <td><span class="tag tag-a">Needs action</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">PSD</td>
+          <td>418</td>
+          <td>418</td>
+          <td>416</td>
+          <td class="delta-neu">0</td>
+          <td class="delta-neg">−2</td>
+          <td><span class="tag tag-r">Ready</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">MCCY</td>
+          <td>417</td>
+          <td>417</td>
+          <td>416</td>
+          <td class="delta-neu">0</td>
+          <td class="delta-neg">−1</td>
+          <td><span class="tag tag-r">Ready</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">CAAS</td>
+          <td>416</td>
+          <td>416</td>
+          <td>416</td>
+          <td class="delta-neu">0</td>
+          <td class="delta-neu">0</td>
+          <td><span class="tag tag-r">Ready</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">URA</td>
+          <td>416</td>
+          <td>416</td>
+          <td>416</td>
+          <td class="delta-neu">0</td>
+          <td class="delta-neu">0</td>
+          <td><span class="tag tag-r">Ready</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sequencing -->
+  <p class="section-title">Recommended pilot sequencing</p>
+  <div class="seq-wrap">
+    <h3>Stagger rollout — don't wait for ESG and MDDI to block the clean agencies</h3>
+    <div class="seq-track">
+      <div class="seq-phase ph1">
+        <div class="seq-phase-label">Phase 1 — Launch now</div>
+        <div class="seq-agencies">
+          <span class="seq-ag">CAAS</span>
+          <span class="seq-ag">URA</span>
+          <span class="seq-ag">MCCY</span>
+          <span class="seq-ag">PSD</span>
+        </div>
+        <div class="seq-condition">No blockers. Clean ingestion. Catalogue same as OTG. Use this phase to validate the pipeline end-to-end and surface any infra issues before the complex agencies join.</div>
+      </div>
+      <div class="seq-phase ph2">
+        <div class="seq-phase-label">Phase 2 — After MDDI prefix fix</div>
+        <div class="seq-agencies">
+          <span class="seq-ag">MDDI</span>
+        </div>
+        <div class="seq-condition">MDDI reclassifies [MDDI Internal Opportunity] roles to a recognised type OR accepts they won't appear. Brief MDDI, get confirmation, rerun pipeline. Est. 1–2 weeks.</div>
+      </div>
+      <div class="seq-phase ph3">
+        <div class="seq-phase-label">Phase 3 — After D6 resolved</div>
+        <div class="seq-agencies">
+          <span class="seq-ag">ESG</span>
+        </div>
+        <div class="seq-condition">D6 decision confirmed, ringfence enforcement implemented (or ESG explicitly scoped out of internal mobility view). ESG aligned on catalogue expectations. Timeline depends on D6 resolution.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-pilot checklist -->
+  <p class="section-title">Pre-pilot checklist — by agency</p>
+  <div class="checklist-wrap">
+    <div class="cl-head">
+      <div>Action</div>
+      <div>ESG</div><div>CAAS</div><div>MCCY</div><div>MDDI</div><div>PSD</div><div>URA</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Resolve D6 (ringfencing policy)</div>
+      <div class="cl-cell">🚨</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Align agency on OTEP scope vs OTG</div>
+      <div class="cl-cell">🚨</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div><div class="cl-cell">⚠</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Reclassify custom type prefix to OTEP type</div>
+      <div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">⚠</div><div class="cl-cell">—</div><div class="cl-cell">—</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Set catalogue expectation (drop vs OTG)</div>
+      <div class="cl-cell">🚨</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div><div class="cl-cell">⚠</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Verify WD Masterlist opps posted to OTG</div>
+      <div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">⚠</div><div class="cl-cell">—</div><div class="cl-cell">⚠</div><div class="cl-cell">—</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Remove test entries from OTG</div>
+      <div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">—</div><div class="cl-cell">⚠</div><div class="cl-cell">—</div>
+    </div>
+    <div class="cl-row">
+      <div class="cl-action">Confirm pipeline passes ≥1 opp for agency</div>
+      <div class="cl-cell">⚠</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div><div class="cl-cell">⚠</div><div class="cl-cell">✓</div><div class="cl-cell">✓</div>
+    </div>
+    <div class="cl-row" style="background:#f8f7f3;font-size:10px;color:#888780;">
+      <div>Legend: ✓ done / no action needed &nbsp;·&nbsp; ⚠ action required &nbsp;·&nbsp; 🚨 blocked / critical &nbsp;·&nbsp; — not applicable</div>
+      <div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: RAW_GIG_AUDIENCE_FILTERS Report + WD STIP GIG Masterlist 2026 + OTG GIGS_V2_REPORT analysis &nbsp;·&nbsp; As at 10 June 2026 &nbsp;·&nbsp; Part of OTEP_Research series (file 18 of 18) &nbsp;·&nbsp; Catalogue figures reflect APPLICATIONS_OPEN status; validation-passing count (160) is a subset
+  </div>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

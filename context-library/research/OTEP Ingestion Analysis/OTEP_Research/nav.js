@@ -129,10 +129,8 @@
       label: 'Overview',
       color: '#888780',
       pages: [
-        { file: '00_index.html',             label: 'Home',              dot: '#1a1a18' },
-        { file: '01_summary_dashboard.html', label: 'Summary',           dot: '#378ADD' },
-        { file: '17_product_discovery.html', label: 'Product Discovery', dot: '#7F77DD' },
-        { file: '05_product_trio_prep.html', label: 'Trio Prep',         dot: '#AFA9EC' },
+        { file: '00_index.html',             label: 'Home',            dot: '#1a1a18' },
+        { file: '01_summary_dashboard.html', label: 'Summary',         dot: '#378ADD' },
       ]
     },
     {
@@ -150,14 +148,21 @@
       label: 'Analysis',
       color: '#2B4EAE',
       pages: [
-        { file: '02_agency_breakdown.html',           label: 'By Agency',       dot: '#5DCAA5' },
-        { file: '03_unrecognised_type_analysis.html', label: 'Unrecognised Types', dot: '#E24B4A' },
-        { file: '04_oqa_risks_assumptions.html',      label: 'Risks & OQAs',    dot: '#EF9F27' },
-        { file: '07_dq_by_opportunity_type.html',     label: 'By Type',         dot: '#7F77DD' },
-        { file: '13_funnel_cohort.html',              label: 'Funnel',          dot: '#378ADD' },
-        { file: '14_engagement_insights.html',        label: 'Engagement',      dot: '#AFA9EC' },
-        { file: '15_agency_scorecard.html',           label: 'Scorecard',       dot: '#1D9E75' },
-        { file: '16_data_source_reconciliation.html', label: 'Data Sources',    dot: '#E24B4A' },
+        { file: '02_agency_breakdown.html',          label: 'By Agency',    dot: '#5DCAA5' },
+        { file: '07_dq_by_opportunity_type.html',    label: 'By Type',      dot: '#7F77DD' },
+        { file: '13_funnel_cohort.html',             label: 'Funnel',       dot: '#378ADD' },
+        { file: '14_engagement_insights.html',       label: 'Engagement',   dot: '#AFA9EC' },
+        { file: '15_agency_scorecard.html',          label: 'Scorecard',    dot: '#1D9E75' },
+        { file: '16_data_source_reconciliation.html', label: 'Data Sources', dot: '#E24B4A' },
+        { file: '17_ringfencing_analysis.html',        label: 'Ringfencing',  dot: '#EF9F27' },
+      ]
+    },
+    {
+      id: 'pilot',
+      label: 'Pilot',
+      color: '#1D9E75',
+      pages: [
+        { file: '18_pilot_readiness.html', label: 'Pilot Readiness', dot: '#1D9E75' },
       ]
     },
     {
@@ -228,7 +233,7 @@
     '</div>' +
     '<div class="otep-sb-nav">' + groupsHtml + '</div>' +
     '<div class="otep-sb-footer">' +
-      '<div class="otep-sb-badge">Sprint 4</div>' +
+      '<div class="otep-sb-badge">5 decisions open</div>' +
     '</div>';
 
   document.body.insertBefore(sbEl, document.body.firstChild);

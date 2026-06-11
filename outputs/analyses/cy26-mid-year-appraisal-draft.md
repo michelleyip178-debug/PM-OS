@@ -1,8 +1,12 @@
 # CY26 Mid-Year Appraisal Draft
 **Name:** Michelle Yip
+
 **Assessment period:** January–June 2026
+
 **Level:** Generic, Level 2
+
 **Role:** PM Apprentice, OTEP Pathfinder (GovTech)
+
 **Joined OTEP:** 1 April 2026
 
 ---
@@ -92,6 +96,21 @@
 
   *[Tracker ref: Roadmapping — 2026-05-26]*
 
+- **Turned a raw data quality problem into a PM-owned launch decision with a clear remediation plan.**
+  - When the OTG ingestion pipeline ran against live data, only 160 of 633 open gigs (25%) were passing — leaving CareerCompass potentially launching with a thin catalogue.
+  - Rather than treating this as an engineering problem, reframed it as three sequential PM decisions: field scope rules (which fields are truly required vs optional), a BO-aligned catalogue floor (the go-live gate), and an agency remediation plan to unlock post-launch growth.
+  - Produced a structured discovery brief quantifying catalogue scenarios (160 → 350–500+), identifying that two field scope decisions alone could lift the catalogue to 350–400 without any agency action, and mapping a per-agency remediation sequence prioritising Enterprise Singapore (178 blocked gigs, 38% of all blocked content).
+  - Directly surfaced open decision items A–F to the right owners with explicit deadlines, preventing ingestion from becoming an unresolved blocker at Sprint 5 planning.
+
+  *[June 2026 — 2026-06-10-otg-ingestion-product-discovery.md]*
+
+- **Led Sprint 4 planning with a locked goal and a cleared board — after completing six pre-planning actions in a compressed 1h45 window.**
+  - On the day of Sprint 4 planning (11 Jun), created two new Jira tickets (keyword search, sort by date), fixed OTEP-87 AC conflicts flagged by the tech lead twice, pulled OTEP-281 into the sprint board, and confirmed the OTEP-192 / Core architecture risk with Pow Hwee — all before the 14:00 ceremony.
+  - Sprint 4 goal agreed: "Deliver a complete, usable listing experience — officers can search, filter, and sort opportunities, understand what each type means, and trust that the data they're seeing is current and accurate."
+  - The board was clean going into planning; the session could focus on capacity and sequencing rather than hygiene.
+
+  *[June 2026 — Sprint 4 Planning, 2026-06-11]*
+
 ---
 
 ## Behavioural Dimension 3: Culture & Organisational Influence
@@ -101,7 +120,11 @@
   - Acted as the main gatekeeper for vendor ticket management, coordinating directly with the CEG/Fuel50 support team to clarify requirements, manage bug fixes, and keep backlog grooming on track.
   - Kept the Workforce Development team, ITC, and external vendors aligned so that policy, SLA, and technical integration issues were escalated to the right person rather than landing as surprises or getting stuck.
 
-- **[AI-powered PM knowledge sharing — to be filled by Michelle.]** Describe what you shared, with whom, and the outcome. Lead with the impact on peers or the team. The guidelines flag this as your strongest piece of evidence for this dimension — add the specifics here.
+- **Uplifted AI capability across the PM community through a cross-agency sharing session, achieving concrete downstream adoption.**
+  - Selected to speak at the PMP Learn-Create-Share Friday (8 May 2026, hybrid, MBC Level 10), representing the Product Management practice to a cross-agency audience. Shared a practical, working AI stack for PM work — AI-powered ideation with Claude, rapid prototyping in Figma, and knowledge management in Notion.
+  - 4.25/5 satisfaction; 100% would recommend; 75% reported greater clarity on AI, up from a baseline where most attendees were only doing ad-hoc prompts and two weren't using AI at all.
+  - Drove real behavior change: attendees committed to setting up Claude Code, building their own synthesis assistants, and automating user story generation. At least one attendee built and shared a synthesis assistant across their own team — multiplying impact beyond the room.
+  - Set a reference point for the practice on what practical AI-enabled PM work looks like, ahead of the curve relative to peers.
 
 - **Built a structured PM operating system that reduced information burden on the team and modelled PM discipline.**
   - Designed a working environment with context files, sprint planning prep templates, meeting notes workflows, and daily planning habits that gave engineers and the tech lead shared context without needing to chase Michelle.
@@ -127,6 +150,11 @@
   - Flagged four open dependency questions between the Pathfinder squad and Core squad (Imelda's team) — CSC SSO document ownership, competency data delivery format, schema, timeline — to Jace before they surfaced as surprises in Sprint 4.
   - At Sprint Planning, raised the POCDEX scope risk from the concurrent job family model discussion, giving the team the option to commit provisionally rather than blindly.
   - Both actions kept cross-squad dependencies visible without requiring the manager to track them.
+
+- **Structured a smooth knowledge transfer to an incoming team member, protecting programme continuity.**
+  - Designed a 4-week, 12-session handover plan for Jobelle (joining 3 Jun), sequencing onboarding by complexity rather than recency — POCDEX and OTG ops context first, OTEP delivery second — so she could build a working mental model before taking on live tasks.
+  - Proactively secured an ARK request through Adrian before the deadline to formalise the handover scope.
+  - Ran Session 1 on 8 Jun; ensured all reference materials were accessible before the session so Jobelle had context without needing to chase anyone.
 
 ---
 
@@ -161,12 +189,14 @@
 ## Before Submitting
 
 1. [x] Jan–Mar + Apr–Jun content merged into single Jan–Jun section per dimension ✅
-2. [ ] Add AI-powered PM knowledge sharing bullet (Culture & Org Influence)
+2. [x] AI-powered PM knowledge sharing bullet added (Culture & Org Influence) ✅
 3. [x] OTG BAU responsibilities added ✅
-4. [ ] Add PostHog event taxonomy if completed in June
-5. [ ] Consider adding 3 tracker entries marked ⚠️ above if word count allows
-6. [ ] Stress-test through AppraisAI (aibots.gov.sg/chats/govtech-appraisal-bot)
-7. [ ] Confirm every bullet leads with Outcome, not Activity
+4. [x] June evidence added: OTG ingestion discovery, Sprint 4 planning, Jobelle handover ✅
+5. [ ] Add PostHog event taxonomy if completed before 24 Jul deadline
+6. [ ] Consider adding 3 tracker entries marked ⚠️ above if word count allows
+7. [ ] Stress-test through AppraisAI (aibots.gov.sg/chats/govtech-appraisal-bot)
+8. [ ] Confirm every bullet leads with Outcome, not Activity
+9. [ ] Submit by 24 July — managers need time; aim for mid-July
 
 ---
 
