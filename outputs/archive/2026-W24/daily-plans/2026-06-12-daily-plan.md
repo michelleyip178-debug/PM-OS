@@ -1,0 +1,118 @@
+---
+date: 2026-06-12
+day: Friday
+week: 2026-W24
+sprint: Sprint 3, Day 9 (FINAL DAY) — S3 ends today; S4 starts Mon 15 Jun
+mcps_used: [Jira (live — jira-sprint.sh + jira-sync.py), Google Calendar (live — direct API, re-authed 12 Jun)]
+---
+
+# Daily Plan — Friday, 12 June 2026
+
+## TL;DR
+
+- **Status:** Mid-day refresh — 9am OTG + standup done, both processed. Afternoon = close S3.
+- **Remaining today:** 1 meeting (15:00 Finalisation) + 2 P0s — sprint summary to Confluence, S4 board reconciled before Mon.
+- **Key Focus:** Land Sprint 3 cleanly. Goal is close (apply + filters in QA) — frame carry-in honestly at 15:00, de-risk S4's Monday start.
+
+---
+
+## Carry-Over (live)
+
+- [ ] **Reconcile S4 board to plan** — spine (319/86/87/88/89/192) not pulled forward yet; OTEP-71 verify.
+- [ ] **Call OTEP-127 + OTEP-130 in-or-out** — on S4 board, un-contracted. Flag or pull before Mon.
+- [ ] **Draft UI PRD scope for Hao Eng** — blocked on UI work (OTEP-438) until this lands.
+- [ ] **OTG Confluence write-up** — ingestion data quality + unrecognised types / PSFG analysis. One doc, two audiences (squad + BO). *New from this morning — gates agency outreach.*
+- [ ] **Review monthly OTG progress report** — overdue from Wed 10 Jun.
+- ~~Fix OTEP-87 AC conflict~~ — resolved: AC updates landed 06-10/06-11 (FormSG-vs-C@G no longer open). Remaining 87 work is dependency hygiene, not ACs.
+
+---
+
+## Today's Three
+
+1. [ ] **Sprint summary to Confluence** — due today; closes the sprint cleanly. Draft before 15:00 so Finalisation confirms rather than scrambles.
+2. [ ] **Reconcile S4 board before Mon** — pull the spine (319/86/87/88/89/192), call OTEP-127/130 in-or-out. Un-reconciled board = Monday planning chaos.
+3. [ ] **Frame S3 carry-in honestly at Finalisation (15:00)** — apply (319), filters (86), deep-link (89) all in QA; name what lands vs carries with live Jira numbers.
+
+*Why these three: final day. Closing S3 and de-risking S4's Monday start are the only things that can't slip.*
+
+---
+
+## Schedule & Meeting Prep
+
+| Time | Meeting | Prep | Context |
+|------|---------|------|---------|
+| ~~09:00~~ | ~~OTG Opportunities~~ | ✅ Done | [Notes captured](../meeting-notes/2026-06-12-otg-opportunities-careercompass-ingestion.md) — 5-cat model (pending Xian Zhang), open-only ingestion, data-quality risk. |
+| ~~11:00~~ | ~~Standup~~ | ✅ Done | [Notes captured](../meeting-notes/2026-06-12-daily-standup.md) — PSFG out of MVP, upload base-scope only, Keycloak blocker, filter spike proceeds. |
+| **15:00–16:00** | **Sprint 3 Ends — Finalisation** | ⚠️ Bring numbers | Close-out, not a full demo/retro. Walk in with carry-in list + sprint summary draft. Frame OTEP-319/86/89 (QA) honestly. |
+
+*Calendar pulled live via Google Calendar API (re-authed this morning).*
+
+---
+
+## Finalisation Lens (15:00)
+
+- **Sprint goal status** — apply (319), filters (86), deep-link (89) all reached QA. Goal is *near-met pending QA clearance*, not done. Frame it that way: what verifies by EOD lands, the rest is named carry-in.
+- **QA tail (9 items)** — 85/86/89/128/192/268/305/317/319 all in QA. This is the carry-in narrative — which clear today vs roll to S4. You own this framing.
+- **Keycloak blocker (from standup)** — Pow Hwee has no resolution date. It gates integration testing for the QA items above. Get a target date before you log off.
+
+---
+
+## Heads Up
+
+⚠️ **S4 starts Monday with an un-reconciled board** — spine (319/86/87/88/89/192) not pulled forward; OTEP-127/130 still un-contracted. Half a day today protects Monday.
+
+⚠️ **New scope landed this morning, capacity is shrinking** — PSFG + upload feature both grew in standup as a team member is leaving. PSFG effort assessment (Leo) + upload ownership (Rama/Imelda) need to land before S4 commits, or you groom against undefined scope.
+
+⚠️ **Keycloak is the live integration blocker** — no resolution date. Gates integration testing for the QA tail. Pull a date from Pow Hwee.
+
+⚠️ **"Monday retro" ambiguity** — standup floated a sync/retro Monday, but S4 *starts* Monday and close-out is today's 15:00. Confirm it's not a double-booking.
+
+⚠️ **Sprint summary to Confluence due today** — timebox right after Finalisation while it's fresh.
+
+⚠️ **OTG monthly progress report overdue** (since Wed) — ship today or defer with a date.
+
+⚠️ **POCDEX CP item #2 due tomorrow (Sat 13 Jun)** — confirm with Pow Hwee before you log off (open item #31).
+
+---
+
+## Growth Nudge
+
+The Retro is your moment to convert "we scoped the sprint goal too wide" into a roadmapping habit — bring the carry-in data, not blame. Owning that framing is outcomes thinking made visible to the team.
+
+<details><summary>Appendix</summary>
+
+### Sprint 3 Live State (jira-sprint.sh, 12 Jun mid-day — 46 issues)
+
+| Status | Count | Key items |
+|--------|-------|-----------|
+| Done | 23 | incl. OTEP-88 (C@G listing), OTEP-391 (virus scan spike), OTEP-303 (POCDEX field check), OTEP-332 (ref data repo), OTEP-380/381 (filtering params) |
+| In QA | 9 | OTEP-85 (cards), OTEP-86 (filters), OTEP-89 (C@G deep-link), OTEP-128 (detail), OTEP-192 (ingestion), OTEP-268 (empty/error), OTEP-305 (login/logout), OTEP-317 (clear filters), OTEP-319 (apply redirect) |
+| In Progress | 10 | OTEP-324 (token rotation, Thomas), OTEP-349/351 (spikes, Pow Hwee/Léo), OTEP-350 (WOG AD, Fabian), OTEP-352 (POCDEX, Hao), OTEP-361 (ADR forum), OTEP-438 (admin placeholder, Hao), OTEP-276 (design system spike), OTEP-322 (Playwright E2E), OTEP-363 (closed-opp UI) |
+| Backlog | 4 | OTEP-129 (open/closed pre-apply), OTEP-289 (filter-by-function spike), OTEP-348 (OTG scheduler), OTEP-358 (nil-date spike, Michelle) |
+
+**Movement since this morning:** OTEP-89 (C@G deep-link) In Progress → QA, OTEP-391 → Done. QA tail now 9. Sprint goal is near-met pending QA clearance — apply (319) + filters (86) + deep-link (89) all in QA, none blocked in Backlog.
+
+### Sprint 4 Goal (agreed 2026-06-11)
+
+"Deliver a complete, usable opportunity listing experience — officers can search, filter, and sort opportunities, understand what each type means, and trust the data they're seeing is current and accurate."
+
+### Pre-Monday S4 Checklist
+
+- [ ] Fix OTEP-87 ACs (binary competency + cascading filter order: Job family → function → agency)
+- [ ] Call OTEP-127 / OTEP-130 in-or-out
+- [ ] Pull spine into S4 board (319/86/87/88/89/192) + verify OTEP-71
+- [ ] Confirm OTEP-405 (keyword search) / OTEP-406 (sort) created from yesterday's crunch
+- [ ] UI PRD scope for Hao Eng (unblocks OTEP-438)
+
+### Prep Deadlines (sprint calendar)
+
+| Item | Due |
+|------|-----|
+| Demo script ready | EOD Thu 11 Jun (verify done) |
+| Sprint summary to Confluence | **Fri 12 Jun (today)** |
+
+### BAU Pointer
+
+See `00-hub/tasks-active.md` (Up Next) for P1s this week: UI PRD for Hao Eng, WOG AD response to Adrian (#26), CSC SSO + Imelda syncs (#18/#30).
+
+</details>

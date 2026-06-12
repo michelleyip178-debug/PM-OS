@@ -16,6 +16,15 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 | # | Decision | Date | Area | Status |
 |---|----------|------|------|--------|
+| D-026 | OTG ingestion rules v3: StartDate optional for Jobs, Function optional, TC for Gig/STIP only | 2026-06-12 | Data / Ingestion | ✅ Final — see [otg-ingestion-decision-log.md](../context-library/decisions/otg-ingestion-decision-log.md) |
+| D-025 | 5-category model: STIPs · Gigs · Jobs · SJR · PSFG | 2026-06-12 | Data / Ingestion | 🟡 Pending Xian Zhang validation |
+| D-024 | "Jobs" consolidates Secondments + Internal Jobs; Secondment is a mechanism not a category | 2026-06-12 | Data / Ingestion | 🟡 Pending Xian Zhang validation |
+| D-023 | MVP ring-fencing = agency-level only; R1+ adds job-family and officer-level | 2026-06-12 | Ring-fencing | ✅ Final |
+| D-022 | C@G source-of-truth dedup rule (where job exists in both OTG and C@G) | 2026-06-12 | Data / Ingestion | 🔴 Open — ESG HR confirmation needed |
+| D-021 | PSFG is its own category | 2026-06-12 | Data / Ingestion | 🟡 Pending Xian Zhang validation |
+| D-020 | Ingestion rules revisit: current rules are working rules for S4; structured review in S5/S6 | 2026-06-10 | Data / Ingestion | ✅ Final |
+| D-019 | Pilot agency scope for OTG bulk import: 6 MVP agencies only (PSD, ESG, MDDI, URA, MCCY, CAAS) | 2026-06-02 | Data / Ingestion | ✅ Final |
+| D-018 | SJR excluded from MVP listing and ingestion | 2026-05-21 | Data / Ingestion | ✅ Final |
 | D-017 | Demo format: squad-by-squad for working sessions (Jace); consolidated cross-squad narrative for Mark + GK | 2026-05-29 | Process | ✅ Final |
 | D-016 | OTG competency porting: initial one-time port only; no ongoing sync — pilot agencies driven to Compass | 2026-05-29 | Data / Ingestion | ✅ Final |
 | D-015 | OTG disappearing opportunities → auto-deactivate (soft delete) | 2026-05-28 | Data / Ingestion | ✅ Final |
@@ -43,7 +52,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-017 — Demo format: squad-by-squad for working sessions; consolidated for Mark + GK
 
 **Date:** 2026-05-29
+
 **Area:** Process / Stakeholder management
+
 **Status:** ✅ Final
 
 **Decision:** Regular sprint demos run squad-by-squad — each squad presents their own work. Working-level attendees (Jace) should expect "working sessions" covering the previous sprint only. For Mark and GK sessions, the two squads consolidate into a single coherent narrative to present as one team.
@@ -57,7 +68,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-016 — OTG competency porting: initial one-time port only; no ongoing sync
 
 **Date:** 2026-05-29
+
 **Area:** Data / Ingestion
+
 **Status:** ✅ Final
 
 **Decision:** Core team will do an initial one-time port of officer competencies from OTG into Compass. There is no ongoing automated sync after the initial import. Pilot agencies will instead be driven to adopt and use Compass directly going forward.
@@ -73,7 +86,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-015 — OTG disappearing opportunities → auto-deactivate (soft delete)
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning Prep / Sprint Planning
+
 **Area:** Data / Ingestion
 
 **Decision:** When an opportunity disappears from the OTG Excel file, OTEP automatically soft-deletes (deactivates) it rather than hard-deleting or keeping it visible.
@@ -89,7 +104,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-014 — Failure alerting for ingestion job → deferred to post-MVP
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning Prep
+
 **Area:** Data / Ingestion
 
 **Decision:** Automated failure alerting for the OTG ingestion job is out of Sprint 3 and MVP scope.
@@ -105,7 +122,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-013 — Design lock deadline: Wednesday 3 June
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** Process
 
 **Decision:** Amber must finalise and sign off Figma for all competency management flows by end of day Wednesday 3 June. Engineers must not start UI work until design is locked.
@@ -123,7 +142,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-012 — Demo sequence: internal validation first, then stakeholders
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** Stakeholder management
 
 **Decision:** Michelle validates the demo internally with the team first, then shares with Jacky and Mark.
@@ -139,7 +160,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-011 — AI feedback loop deferred to a later sprint
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** AI track
 
 **Decision:** The AI feedback loop feature is out of Sprint 3. Victor focuses on environment setup and evaluation layer only.
@@ -155,7 +178,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-010 — OTG competency migration: file ingestion, not live API
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** Data / Ingestion
 
 **Decision:** OTG officer competency data comes via bulk Excel file import, not a live API. One-time import into a temp DB table; on first login, the officer's competencies are pulled using their user ID.
@@ -171,6 +196,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 **Open:** OTG sync cadence after initial import still unresolved (w/c 2 Jun deadline). Also unresolved: how do officers who joined after the initial bulk import get their data?
 
 **Owner:** Fanxu
+
 **Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
 
 ---
@@ -178,7 +204,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-009 — Role competencies are hide-only; additional competencies are fully editable
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** Competency UX
 
 **Decision:**
@@ -197,7 +225,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-008 — Competency API split from profile API
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** API design
 
 **Decision:** Competency management runs on a standalone API, separate from the profile API.
@@ -212,6 +242,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 - Max 20 results returned (frontend handles display for now; backend pagination deferred to Sprint 4)
 
 **Owner:** Kingsley
+
 **Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
 
 ---
@@ -219,7 +250,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-007 — "Competency" terminology everywhere — not "skills"
 
 **Date:** 2026-05-28
+
 **Meeting:** Sprint 3 Planning
+
 **Area:** Terminology
 
 **Decision:** All UI copy, API field names, and internal references use "competency," not "skills."
@@ -235,7 +268,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-006 — PostHog selected for OTEP analytics and OKR monitoring
 
 **Date:** 2026-05-26
+
 **Meeting:** OTEP Squad Sync
+
 **Area:** Tooling
 
 **Decision:** PostHog is the analytics tool for OTEP. Tooling evaluation was completed by Rama before this decision.
@@ -251,7 +286,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-005 — FormSG pre-fill removed from MVP; native application form targeted for R1
 
 **Date:** 2026-05-26 (confirmed in Squad Sync; technical rationale surfaced 2026-05-25 adhoc with Pow Hwee)
+
 **Meeting:** OTEP Squad Sync + Adhoc with Pow Hwee
+
 **Area:** FormSG / Scope
 
 **Decision:** FormSG pre-fill via URL params is out of MVP. OTEP-130 retains basic FormSG redirect and webhook only. A native in-OTEP application form is the R1 target (Seamless Application PRD).
@@ -272,7 +309,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-004 — CSC SSO feasibility confirmed; OTEP builds own SSO, DLE integrates with it
 
 **Date:** 2026-05-25
+
 **Meeting:** Email confirmation from Sy En (CSC IT) + Adhoc with Pow Hwee
+
 **Area:** WOG Auth / SSO
 
 **Decision:** CSC (DLE) supports WOG AD / Azure AD SSO via OIDC and SAML. Seamless deep-link experience (no re-login) is technically possible. Architecture: OTEP builds its own SSO layer; DLE integrates with it.
@@ -292,7 +331,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-003 — POCDEX API not a critical blocker — scheduling and requirements clarity needed first
 
 **Date:** 2026-05-25
+
 **Meeting:** Adhoc with Pow Hwee
+
 **Area:** POCDEX
 
 **Decision:** POCDEX API is not a technical blocker for current sprint work. The real dependency is requirements clarity — specifically the outcome of the WD×DO job family model discussion (29 May).
@@ -308,7 +349,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-002 — No OTG redirects in MVP; officers must not have to re-authenticate
 
 **Date:** 2026-05-25
+
 **Meeting:** BO Strategic Review
+
 **Area:** Scope / UX
 
 **Decision:** Any flow that requires an officer to leave OTEP and re-authenticate in OTG is out of MVP scope. This is a hard UX constraint, not a preference.
@@ -326,7 +369,9 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ### D-001 — MVP feature filter: every feature must ladder to North Star or OKRs
 
 **Date:** 2026-05-25
+
 **Meeting:** BO Strategic Review
+
 **Area:** Strategy
 
 **Decision:** Every feature included in MVP must be justifiable against the North Star (50% of officers complete a development action by Dec '28) or OTEP OKRs. Features that can't demonstrate contribution to competency development, career progression, or meaningful user outcomes are challenged or deprioritised.

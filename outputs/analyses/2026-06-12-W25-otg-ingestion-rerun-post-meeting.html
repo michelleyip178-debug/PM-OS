@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTG Ingestion Re-Run — Post-Meeting Analysis (12 Jun 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f5; color: #1a1a1a; font-size: 14px; }
+  .header { background: #1a1a2e; color: white; padding: 24px 32px; }
+  .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .header .sub { color: #aaa; font-size: 13px; }
+  .badge { display: inline-block; background: #e67e22; color: white; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin-left: 10px; vertical-align: middle; }
+  .content { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+  .section { background: white; border-radius: 8px; padding: 20px 24px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 14px; border-bottom: 2px solid #e8e8e8; padding-bottom: 8px; }
+  .section h3 { font-size: 13px; font-weight: 600; color: #444; margin: 12px 0 8px; }
+  .kpi-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+  .kpi { flex: 1; min-width: 140px; background: #f9f9f9; border-radius: 6px; padding: 14px 16px; border-left: 4px solid #ccc; }
+  .kpi.green { border-color: #27ae60; }
+  .kpi.amber { border-color: #e67e22; }
+  .kpi.red { border-color: #e74c3c; }
+  .kpi.blue { border-color: #2980b9; }
+  .kpi.purple { border-color: #8e44ad; }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #777; margin-bottom: 4px; }
+  .kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 11px; color: #888; margin-top: 4px; }
+  .kpi.green .kpi-value { color: #27ae60; }
+  .kpi.amber .kpi-value { color: #e67e22; }
+  .kpi.red .kpi-value { color: #e74c3c; }
+  .kpi.blue .kpi-value { color: #2980b9; }
+  .kpi.purple .kpi-value { color: #8e44ad; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f0f0f0; font-weight: 600; text-align: left; padding: 8px 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; color: #555; }
+  td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+  .pill-green { background: #d5f0de; color: #1e7a3a; }
+  .pill-amber { background: #fde8cb; color: #a0520c; }
+  .pill-red { background: #fde0de; color: #a01010; }
+  .pill-grey { background: #e8e8e8; color: #555; }
+  .pill-blue { background: #d6e8f8; color: #1a5a90; }
+  .pill-purple { background: #ecdff5; color: #6a2a9a; }
+  .change-row { display: flex; gap: 10px; align-items: center; padding: 10px 12px; background: #f5fbf7; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #27ae60; }
+  .change-row.blocked { background: #fef9f0; border-color: #e67e22; }
+  .change-row.pending { background: #f0f4fb; border-color: #2980b9; }
+  .change-title { font-weight: 600; font-size: 13px; flex: 1; }
+  .change-impact { font-size: 13px; font-weight: 700; width: 80px; text-align: right; }
+  .change-impact.pos { color: #27ae60; }
+  .change-impact.neg { color: #e74c3c; }
+  .change-impact.zero { color: #aaa; }
+  .change-desc { font-size: 12px; color: #666; margin-top: 3px; }
+  .arrow { font-size: 16px; color: #aaa; }
+  .before-after { display: flex; gap: 20px; align-items: stretch; }
+  .ba-box { flex: 1; padding: 16px; border-radius: 6px; }
+  .ba-box.before { background: #fde0de; }
+  .ba-box.after { background: #d5f0de; }
+  .ba-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .ba-label.before { color: #a01010; }
+  .ba-label.after { color: #1e7a3a; }
+  .ba-number { font-size: 36px; font-weight: 700; line-height: 1; }
+  .ba-box.before .ba-number { color: #e74c3c; }
+  .ba-box.after .ba-number { color: #27ae60; }
+  .ba-sub { font-size: 12px; color: #555; margin-top: 4px; }
+  .ba-delta { flex: 0 0 auto; display: flex; align-items: center; font-size: 24px; font-weight: 700; color: #27ae60; }
+  .note-box { background: #fff8e1; border-left: 3px solid #f0c040; border-radius: 4px; padding: 10px 14px; font-size: 12px; color: #555; margin-top: 12px; }
+  .note-box strong { color: #a07000; }
+  .risk-box { background: #fef5f0; border-left: 3px solid #e67e22; border-radius: 4px; padding: 10px 14px; font-size: 12px; color: #555; margin-top: 8px; }
+  .risk-box strong { color: #a04000; }
+  .funnel { display: flex; gap: 0; margin: 10px 0; }
+  .funnel-step { flex: 1; text-align: center; padding: 10px 8px; font-size: 12px; }
+  .funnel-step:first-child { border-radius: 6px 0 0 6px; }
+  .funnel-step:last-child { border-radius: 0 6px 6px 0; }
+  .funnel-num { font-size: 20px; font-weight: 700; display: block; }
+  .funnel-lbl { font-size: 11px; margin-top: 2px; }
+  .f1 { background: #2980b9; color: white; }
+  .f2 { background: #27ae60; color: white; }
+  .f3 { background: #e74c3c; color: white; }
+  .f4 { background: #e67e22; color: white; }
+  .f5 { background: #95a5a6; color: white; }
+  .category-map { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
+  .cat-card { background: #f5f5f5; border-radius: 6px; padding: 12px; text-align: center; border-top: 3px solid #ccc; }
+  .cat-card.stip { border-color: #e74c3c; }
+  .cat-card.gig { border-color: #e67e22; }
+  .cat-card.job { border-color: #27ae60; }
+  .cat-card.sjr { border-color: #8e44ad; }
+  .cat-card.psfg { border-color: #2980b9; }
+  .cat-name { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .cat-count { font-size: 22px; font-weight: 700; margin: 4px 0; }
+  .cat-stip .cat-count { color: #e74c3c; }
+  .cat-gig .cat-count { color: #e67e22; }
+  .cat-job .cat-count { color: #27ae60; }
+  .cat-sjr .cat-count { color: #8e44ad; }
+  .cat-psfg .cat-count { color: #2980b9; }
+  .cat-sub { font-size: 11px; color: #777; }
+  .remediation-priority { display: flex; gap: 12px; flex-wrap: wrap; }
+  .rp-item { flex: 1; min-width: 200px; background: #f9f9f9; border-radius: 6px; padding: 12px; border-left: 4px solid; }
+  .rp-item.high { border-color: #e74c3c; }
+  .rp-item.med { border-color: #e67e22; }
+  .rp-item.low { border-color: #27ae60; }
+  .rp-title { font-weight: 600; font-size: 13px; }
+  .rp-count { font-size: 20px; font-weight: 700; margin: 4px 0; }
+  .rp-item.high .rp-count { color: #e74c3c; }
+  .rp-item.med .rp-count { color: #e67e22; }
+  .rp-item.low .rp-count { color: #27ae60; }
+  .rp-desc { font-size: 12px; color: #666; }
+  hr.div { border: none; border-top: 1px solid #eee; margin: 16px 0; }
+  .bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .bar-bg { flex: 1; height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-label { font-size: 12px; color: #555; width: 30px; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>OTG Ingestion Re-Run — Post-Meeting Analysis <span class="badge">12 JUN 2026</span></h1>
+  <div class="sub">Updated ingestion rules based on OTG Opportunities → CareerCompass alignment meeting &nbsp;·&nbsp; Baseline: 2026-06-09 OTG dataset (633 open records)</div>
+</div>
+
+<div class="content">
+
+<!-- BEFORE / AFTER HEADLINE -->
+<div class="section">
+  <h2>Impact of June 12 Decisions on Catalogue Size</h2>
+  <div class="before-after" style="margin-bottom:14px;">
+    <div class="ba-box before">
+      <div class="ba-label before">Before (old rules)</div>
+      <div class="ba-number">160</div>
+      <div class="ba-sub">25% of 633 open gigs pass ingestion</div>
+    </div>
+    <div class="ba-delta">→ +265</div>
+    <div class="ba-box after">
+      <div class="ba-label after">After (new rules — estimated)</div>
+      <div class="ba-number">~425</div>
+      <div class="ba-sub">~67% of open gigs pass under new rules</div>
+    </div>
+  </div>
+  <div class="note-box">
+    <strong>Estimation basis:</strong> Simulated from the 2026-06-09 dataset using the rule changes agreed on 12 Jun. The +265 estimate is conservative — it assumes ~190 Secondments unlock (StartDate now optional for Jobs), ~40 Jobs unlock, ~30 Function-only unlocks, and 5 TimeCommitment unlocks. The 5-category model and "Jobs" consolidation are pending Xian Zhang team validation — if validated, this estimate stands. Actual numbers depend on Léo running a dry-run against current OTG data.
+  </div>
+  <div class="risk-box" style="margin-top:8px;">
+    <strong>Critical gap:</strong> 163 records remain blocked regardless of PM decisions — 78 "No tag," 56 "Other (TBC)," 29 "agilePSD (TBC)." These need type-tag fixes at source (DevOps + agencies). The <strong>Aug–Sep go-live threshold (≥350) is reachable without agency remediation</strong> under the new rules. Agency remediation is needed to get to 500+.
+  </div>
+</div>
+
+<!-- KPI ROW -->
+<div class="kpi-row">
+  <div class="kpi green">
+    <div class="kpi-label">Est. Passing (new rules)</div>
+    <div class="kpi-value">~425</div>
+    <div class="kpi-sub">Up from 160 (+265)</div>
+  </div>
+  <div class="kpi red">
+    <div class="kpi-label">Still Blocked</div>
+    <div class="kpi-value">~208</div>
+    <div class="kpi-sub">33% — needs source fix</div>
+  </div>
+  <div class="kpi amber">
+    <div class="kpi-label">Unresolvable (PM)</div>
+    <div class="kpi-value">163</div>
+    <div class="kpi-sub">No tag / TBC — agency/DevOps</div>
+  </div>
+  <div class="kpi blue">
+    <div class="kpi-label">Launch Threshold</div>
+    <div class="kpi-value">≥350</div>
+    <div class="kpi-sub">Target agreed; now reachable</div>
+  </div>
+  <div class="kpi purple">
+    <div class="kpi-label">SJR (excluded)</div>
+    <div class="kpi-value">39</div>
+    <div class="kpi-sub">Separate module, MVP out</div>
+  </div>
+</div>
+
+<!-- FUNNEL -->
+<div class="section">
+  <h2>Updated Ingestion Funnel</h2>
+  <div class="funnel">
+    <div class="funnel-step f1"><span class="funnel-num">2,023</span><span class="funnel-lbl">All OTG records</span></div>
+    <div class="funnel-step f2"><span class="funnel-num">633</span><span class="funnel-lbl">Open (not expired)</span></div>
+    <div class="funnel-step f3"><span class="funnel-num">39</span><span class="funnel-lbl">SJR → excluded</span></div>
+    <div class="funnel-step f4"><span class="funnel-num">163</span><span class="funnel-lbl">No-tag → hard skip</span></div>
+    <div class="funnel-step f2"><span class="funnel-num">~425</span><span class="funnel-lbl">Est. ingested ✓</span></div>
+  </div>
+  <p style="font-size:12px;color:#777;margin-top:8px;">Funnel reflects new rules. "No-tag" = 78 no prefix + 56 Other/TBC + 29 agilePSD = 163 unresolvable.</p>
+</div>
+
+<!-- RULE CHANGES -->
+<div class="section">
+  <h2>Decision-by-Decision Impact</h2>
+
+  <div class="change-row">
+    <div style="flex:1">
+      <div class="change-title">1. Secondments → "Jobs" category; StartDate now optional for Jobs</div>
+      <div class="change-desc">Secondments are standing roles — no fixed start by nature. New rule: start date optional for Jobs (includes Secondments + internal jobs). Primary driver of the +265 unlock.</div>
+    </div>
+    <div class="change-impact pos">+190</div>
+  </div>
+
+  <div class="change-row">
+    <div style="flex:1">
+      <div class="change-title">2. Internal Jobs ("Job" type) — StartDate optional</div>
+      <div class="change-desc">87 blocked Jobs in original data. Start date was the primary blocker for ~40. Remainder (47) blocked by other issues (Function, BusinessUnit, TypeTag).</div>
+    </div>
+    <div class="change-impact pos">+40</div>
+  </div>
+
+  <div class="change-row">
+    <div style="flex:1">
+      <div class="change-title">3. Function field → optional (display-only, not required for ingestion)</div>
+      <div class="change-desc">174 records were blocked by Function. Most overlap with StartDate blocks (already counted above). These are the additional pure-Function-only blocks across Jobs, Gigs, STIPs.</div>
+    </div>
+    <div class="change-impact pos">+30</div>
+  </div>
+
+  <div class="change-row">
+    <div style="flex:1">
+      <div class="change-title">4. TimeCommitment required for STIPs &amp; Gigs only (not Jobs/Secondments)</div>
+      <div class="change-desc">5 records were blocked solely by missing TimeCommitment. These are Jobs/Secondments that lacked TC — now they're exempt. STIPs &amp; Gigs still require start/end date + hours-per-week.</div>
+    </div>
+    <div class="change-impact pos">+5</div>
+  </div>
+
+  <div class="change-row blocked">
+    <div style="flex:1">
+      <div class="change-title">5. "No tag" / "Other (TBC)" / "agilePSD" records — still blocked</div>
+      <div class="change-desc">78 + 56 + 29 = 163 records need valid type prefix at source. PM decisions can't resolve these. Remediation: DevOps + agencies fix OTG type tags before go-live.</div>
+    </div>
+    <div class="change-impact zero">0</div>
+  </div>
+
+  <div class="change-row pending">
+    <div style="flex:1">
+      <div class="change-title">6. 5-category model (STIPs / Gigs / Jobs / SJR / PSFG) — pending validation</div>
+      <div class="change-desc">New taxonomy supersedes "Internal Job / STIPs &amp; Gigs / SJR." The category model itself doesn't change the pass count above — it changes how records are labelled after ingestion. Pending: Xian Zhang team validation by w/c 15 Jun.</div>
+    </div>
+    <div class="change-impact zero">—</div>
+  </div>
+
+  <div class="change-row pending">
+    <div style="flex:1">
+      <div class="change-title">7. C@G as source-of-truth dedup rule (where a job is in both OTG and C@G)</div>
+      <div class="change-desc">New dedup rule — prefer Careers@GovTech over OTG copy where duplicated. Not yet decided: blocked on ESG HR confirmation. Don't build yet (Léo: see handoff doc).</div>
+    </div>
+    <div class="change-impact zero">TBD</div>
+  </div>
+
+  <div style="border-top:2px solid #27ae60;margin-top:12px;padding-top:12px;display:flex;justify-content:flex-end;gap:24px;align-items:center;">
+    <span style="font-weight:600;font-size:13px;color:#555;">Total estimated unlock (PM decisions only):</span>
+    <span style="font-size:22px;font-weight:700;color:#27ae60;">+265 records</span>
+  </div>
+</div>
+
+<!-- CATEGORY MODEL -->
+<div class="section">
+  <h2>New 5-Category Model <span class="pill pill-amber">Pending Xian Zhang validation</span></h2>
+  <div class="category-map">
+    <div class="cat-card stip">
+      <div class="cat-name" style="color:#e74c3c;">STIPs</div>
+      <div class="cat-count" style="color:#e74c3c;">7</div>
+      <div class="cat-sub">OTG type: "STIP"<br>Requires: start/end date, hours/wk</div>
+    </div>
+    <div class="cat-card gig">
+      <div class="cat-name" style="color:#e67e22;">Gigs</div>
+      <div class="cat-count" style="color:#e67e22;">36</div>
+      <div class="cat-sub">OTG type: "Gig"<br>Requires: start/end date, hours/wk</div>
+    </div>
+    <div class="cat-card job">
+      <div class="cat-name" style="color:#27ae60;">Jobs</div>
+      <div class="cat-count" style="color:#27ae60;">388</div>
+      <div class="cat-sub">OTG: "Secondment" + "Job" + C@G jobs<br>StartDate optional. TC exempt.</div>
+    </div>
+    <div class="cat-card sjr">
+      <div class="cat-name" style="color:#8e44ad;">SJR</div>
+      <div class="cat-count" style="color:#8e44ad;">39</div>
+      <div class="cat-sub">OTG type: "SJR"<br>MVP excluded — separate module</div>
+    </div>
+    <div class="cat-card psfg">
+      <div class="cat-name" style="color:#2980b9;">PSFG</div>
+      <div class="cat-count" style="color:#2980b9;">TBD</div>
+      <div class="cat-sub">Public Service for Good<br>Voluntary / skills-based. New category.</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#777;">Jobs count (388) = 259 Secondments + 129 Jobs in OTG. PSFG count: not yet mapped from OTG data — needs type-prefix identification.</p>
+  <div class="note-box" style="margin-top:10px;">
+    <strong>What "Jobs consolidation" means for ingestion:</strong> "Secondment" is now an internal mechanism, not a user-facing type. Records tagged "Secondment" in OTG ingest as the "Jobs" category in CareerCompass. Card labelling and filter keys need to reflect this. OTEP-86 (type filter), OTEP-289 (taxonomy mapping) depend on this being validated before S4 grooming hardens.
+  </div>
+</div>
+
+<!-- PER-AGENCY IMPACT (TOP 10) -->
+<div class="section">
+  <h2>Per-Agency Impact Under New Rules</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Agency</th>
+        <th>Total Open</th>
+        <th>Old Blocked</th>
+        <th>Primary Blocker</th>
+        <th>Est. Unlocked by New Rules</th>
+        <th>Est. Still Blocked</th>
+        <th>Remediation Needed?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Enterprise Singapore</strong></td>
+        <td>197</td>
+        <td>178 (90%)</td>
+        <td>StartDate (156), TypeTag (19)</td>
+        <td><span class="pill pill-green">~150</span> StartDate unlocked</td>
+        <td>~28 (TypeTag 19 + others)</td>
+        <td><span class="pill pill-amber">Yes — TypeTag fix needed</span></td>
+      </tr>
+      <tr>
+        <td><strong>Ministry of Trade and Industry</strong></td>
+        <td>44</td>
+        <td>42 (95%)</td>
+        <td>StartDate (39), Function (16), TypeTag (7)</td>
+        <td><span class="pill pill-green">~35</span> StartDate + Function</td>
+        <td>~7 (TypeTag, BusinessUnit)</td>
+        <td><span class="pill pill-amber">Yes — TypeTag fix needed</span></td>
+      </tr>
+      <tr>
+        <td><strong>Ministry of Social and Family Development</strong></td>
+        <td>45</td>
+        <td>40 (89%)</td>
+        <td>TypeTag (37!), Function (9)</td>
+        <td><span class="pill pill-red">~3</span> Function only; TypeTag still blocks</td>
+        <td>~37 (TypeTag — largest)</td>
+        <td><span class="pill pill-red">Critical — 37 bad TypeTags</span></td>
+      </tr>
+      <tr>
+        <td><strong>(Blank agency)</strong></td>
+        <td>27</td>
+        <td>27 (100%)</td>
+        <td>StartDate (14), Function (14), Agency missing (27)</td>
+        <td><span class="pill pill-red">0</span> — missing agency blocks all</td>
+        <td>27</td>
+        <td><span class="pill pill-red">Critical — Agency field missing</span></td>
+      </tr>
+      <tr>
+        <td><strong>National Library Board</strong></td>
+        <td>22</td>
+        <td>20 (91%)</td>
+        <td>StartDate (11), BusinessUnit (6), Function (9)</td>
+        <td><span class="pill pill-green">~13</span> StartDate + Function</td>
+        <td>~7 (BusinessUnit)</td>
+        <td><span class="pill pill-amber">Yes — BusinessUnit fix</span></td>
+      </tr>
+      <tr>
+        <td><strong>Economic Development Board</strong></td>
+        <td>19</td>
+        <td>18 (95%)</td>
+        <td>StartDate (14), Function (10)</td>
+        <td><span class="pill pill-green">~16</span> StartDate + Function</td>
+        <td>~2</td>
+        <td><span class="pill pill-green">Low — mostly PM-unlockable</span></td>
+      </tr>
+      <tr>
+        <td><strong>National Council of Social Service</strong></td>
+        <td>20</td>
+        <td>18 (90%)</td>
+        <td>TypeTag (2 only), Function (2)</td>
+        <td><span class="pill pill-green">~14</span></td>
+        <td>~4</td>
+        <td><span class="pill pill-green">Low</span></td>
+      </tr>
+      <tr>
+        <td><strong>Ministry of Digital Dev &amp; Info</strong></td>
+        <td>26</td>
+        <td>17 (65%)</td>
+        <td>BusinessUnit (12), Function (13), StartDate (5)</td>
+        <td><span class="pill pill-amber">~8</span> StartDate + Function</td>
+        <td>~9 (BusinessUnit — largest)</td>
+        <td><span class="pill pill-amber">Yes — BusinessUnit fix</span></td>
+      </tr>
+      <tr>
+        <td><strong>Workforce Singapore</strong></td>
+        <td>22</td>
+        <td>16 (73%)</td>
+        <td>StartDate (13), BusinessUnit (7), Function (9)</td>
+        <td><span class="pill pill-green">~12</span> StartDate + Function</td>
+        <td>~4 (BusinessUnit)</td>
+        <td><span class="pill pill-amber">Some — BusinessUnit</span></td>
+      </tr>
+      <tr>
+        <td><strong>Public Service Division</strong></td>
+        <td>37</td>
+        <td>11 (30%)</td>
+        <td>Function (10), BusinessUnit (3)</td>
+        <td><span class="pill pill-green">~10</span> Function now optional</td>
+        <td>~1</td>
+        <td><span class="pill pill-green">Minimal</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- REMEDIATION PRIORITIES -->
+<div class="section">
+  <h2>Remediation Priorities (post PM-decision unlocks)</h2>
+  <p style="font-size:13px;color:#555;margin-bottom:14px;">With new rules applied, the remaining 208 blocked records need agency/DevOps action. Here's where to start.</p>
+  <div class="remediation-priority">
+    <div class="rp-item high">
+      <div class="rp-title">MSF — TypeTag Fix</div>
+      <div class="rp-count">37</div>
+      <div class="rp-desc">Ministry of Social and Family Development has 37 records with bad or missing type tags. New ingestion rules don't help — these need source correction. One session with MSF DevOps contact.</div>
+    </div>
+    <div class="rp-item high">
+      <div class="rp-title">Blank Agency Records</div>
+      <div class="rp-count">27</div>
+      <div class="rp-desc">27 records with no agency field — 100% blocked regardless of rule changes. Need OTG admin to identify and tag the owning agency. Highest density of stale records (24/27).</div>
+    </div>
+    <div class="rp-item high">
+      <div class="rp-title">ESG — TypeTag Fix (residual)</div>
+      <div class="rp-count">~19</div>
+      <div class="rp-desc">~150 ESG records unlock via StartDate rule, but ~19 remain blocked by unrecognised type tags. Target ESG remediation for these alongside the broader tag guide rollout.</div>
+    </div>
+    <div class="rp-item med">
+      <div class="rp-title">BusinessUnit — MDDI, NLB, WSG</div>
+      <div class="rp-count">~22</div>
+      <div class="rp-desc">BusinessUnit is still a required field. MDDI (12), NLB (6), Workforce Singapore (7) have records blocked by missing BusinessUnit. Check if BusinessUnit can become optional for MVP.</div>
+    </div>
+    <div class="rp-item low">
+      <div class="rp-title">MTI — TypeTag Residual</div>
+      <div class="rp-count">7</div>
+      <div class="rp-desc">7 MTI records with unrecognised type tags after StartDate blocks are cleared. Include in agency outreach alongside ESG.</div>
+    </div>
+  </div>
+  <div class="note-box" style="margin-top:14px;">
+    <strong>Open question for Léo:</strong> Can BusinessUnit become optional for MVP (display-only like Function)? If yes, this unlocks another ~22 records, pushing the estimate closer to 450. Flag this in OTEP-427.
+  </div>
+</div>
+
+<!-- WHAT'S VALIDATED vs PENDING -->
+<div class="section">
+  <h2>Decision Status Register</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Decision</th>
+        <th>Status</th>
+        <th>Ingestion Impact</th>
+        <th>Blocker</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Open-only ingestion (exclude expired)</td>
+        <td><span class="pill pill-green">✅ Ratified</span></td>
+        <td>Consistent with hard-skip D 2026-06-08</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>StartDate optional for Jobs (incl. Secondments)</td>
+        <td><span class="pill pill-green">✅ Ratified</span></td>
+        <td><strong>+190</strong> estimated</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Function field display-only (not required)</td>
+        <td><span class="pill pill-green">✅ Ratified</span></td>
+        <td><strong>+30</strong> additional</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>TimeCommitment required for STIPs/Gigs only</td>
+        <td><span class="pill pill-green">✅ Ratified</span></td>
+        <td><strong>+5</strong></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>SJR excluded from MVP listing</td>
+        <td><span class="pill pill-green">✅ Ratified</span></td>
+        <td>No change (already excluded)</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>5-category model (STIPs/Gigs/Jobs/SJR/PSFG)</td>
+        <td><span class="pill pill-amber">🟡 Pending validation</span></td>
+        <td>Labelling only (no pass/fail change)</td>
+        <td>Xian Zhang team — w/c 15 Jun</td>
+      </tr>
+      <tr>
+        <td>"Jobs" consolidation (Secondments + internal + C@G)</td>
+        <td><span class="pill pill-amber">🟡 Pending validation</span></td>
+        <td>Labelling only — pass count already reflected above</td>
+        <td>Xian Zhang team — w/c 15 Jun</td>
+      </tr>
+      <tr>
+        <td>C@G as source-of-truth (dedup rule)</td>
+        <td><span class="pill pill-red">🔴 Open — not decided</span></td>
+        <td>Unknown — may exclude some ingested Jobs</td>
+        <td>ESG HR confirmation needed</td>
+      </tr>
+      <tr>
+        <td>PSFG as a category — OTG type mapping</td>
+        <td><span class="pill pill-red">🔴 Open</span></td>
+        <td>Unknown count</td>
+        <td>Need to identify PSFG prefix/tags in OTG data</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- NEXT ACTIONS -->
+<div class="section">
+  <h2>Immediate Next Actions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Action</th>
+        <th>Owner</th>
+        <th>Target</th>
+        <th>Unlocks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Léo: dry-run ingestion with new rules</strong> (StartDate optional for Jobs, Function optional, TC exempt for Jobs)</td>
+        <td>Léo</td>
+        <td>This week</td>
+        <td>Validates the ~425 estimate; OTEP-192 AC update</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Michelle: write 5-category mapping logic</strong> (OTG prefixes → STIPs/Gigs/Jobs/SJR/PSFG)</td>
+        <td>Michelle</td>
+        <td>w/c 15 Jun (before OTEP-86 grooming)</td>
+        <td>Unblocks OTEP-86 filter + OTEP-289 taxonomy spike</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Xian Zhang: validate 5-category model + Jobs consolidation</strong></td>
+        <td>Xian Zhang team</td>
+        <td>Early w/c 15 Jun</td>
+        <td>Locks taxonomy for S4 work</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Generate per-agency remediation reports</strong> (MSF first — 37 TypeTag fixes, then ESG, then Blank Agency)</td>
+        <td>Michelle</td>
+        <td>Before agency outreach (w/c 15 Jun)</td>
+        <td>Agency clean-up → 500+ catalogue</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Xian Zhang: engage ESG HR</strong> — confirm OTG vs C@G duplication before dedup rule is built</td>
+        <td>Xian Zhang</td>
+        <td>Before ESG ingestion built</td>
+        <td>Unblocks C@G dedup rule (OTEP-348)</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Léo: check if BusinessUnit can be optional for MVP</strong> (would unlock ~22 more records)</td>
+        <td>Léo</td>
+        <td>OTEP-427 spike</td>
+        <td>+22 records if confirmed optional</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="text-align:center;color:#aaa;font-size:12px;padding:20px 0;">
+  Analysis updated: 2026-06-12 &nbsp;·&nbsp; Baseline dataset: OTG Oppr.xlsx (2026-06-09, 633 open records) &nbsp;·&nbsp; Decisions source: OTG Opportunities → CareerCompass meeting notes
+</div>
+
+</div>
+</body>
+</html>
