@@ -99,14 +99,14 @@
       <div class="chip-dot" style="background:#EF9F27;"></div>
       <div>
         <div class="chip-val">346</div>
-        <div class="chip-label">Flagged stale (policy TBC)</div>
+        <div class="chip-label">Stale — I-004 lifecycle rule handles</div>
       </div>
     </div>
     <div class="chip">
       <div class="chip-dot" style="background:#1D9E75;"></div>
       <div>
-        <div class="chip-val">160</div>
-        <div class="chip-label">Passes all rules</div>
+        <div class="chip-val">415</div>
+        <div class="chip-label">Passes all rules (v3 — was 160)</div>
       </div>
     </div>
   </div>
@@ -136,7 +136,7 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Run: 10 June 2026 &nbsp;·&nbsp; A opportunity may violate multiple rules; counts reflect per-rule violations, not unique opportunities &nbsp;·&nbsp; Part of OTEP_Research series (file 11 of 12)
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Run: 10 June 2026 &nbsp;·&nbsp; Updated 15 June 2026 — v3 rules: R8 Function now optional (I-014), R11 PSFG exempt (I-013) · 415 now pass (was 160)
   </div>
 </div>
 
@@ -159,13 +159,13 @@ const rules = [
     id:'R3', name:'Stale (end_date in past)', outcome:'tbc',
     total: 346, sub: '346 flagged — policy TBC, not yet hard-excluded',
     byType: { Gig:17, STIP:4, Secondment:170, Job:100, SJR:4, agilePSD:0, 'Other(TBC)':22, 'No tag':29 },
-    note: { type:'tbc', text:'D3 open: stale policy not yet confirmed. Currently flagged only.' }
+    note: { type:'exempt', text:'I-004 confirmed (12 Jun): stale gigs ingest into DB but are hidden by lifecycle rule (closing_date > today OR NULL). No pipeline exclusion for MVP.' }
   },
   {
     id:'R5', name:'No type prefix in GigName', outcome:'block',
     total: 78, sub: '78 blocked — cannot classify without prefix',
     byType: { Gig:0, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':0, 'No tag':78 },
-    note: { type:'tbc', text:'D4 open: no-tag handling (hard block vs. Uncategorised vs. keyword inference) not yet confirmed.' }
+    note: { type:'tbc', text:'No-tag = hard block. 78 permanently blocked until agencies fix the prefix at source. MSF (37) and Enterprise Singapore (19) account for 69%.' }
   },
   {
     id:'R6', name:'Agency (LocationName) missing', outcome:'block',
@@ -181,9 +181,9 @@ const rules = [
   },
   {
     id:'R8', name:'Function missing', outcome:'tbc',
-    total: 174, sub: '174 violations — TBC whether this hard-blocks',
+    total: 174, sub: '174 affected — I-014 confirmed optional for all types (not a blocker)',
     byType: { Gig:13, STIP:5, Secondment:52, Job:41, SJR:11, agilePSD:5, 'Other(TBC)':31, 'No tag':16 },
-    note: { type:'tbc', text:'D1 (partial): Function confirmed required for Gig/STIP. TBC for Secondment/Job/SJR/agilePSD/Other.' }
+    note: { type:'exempt', text:'I-014 confirmed (12 Jun): Function is optional/display-only for all types. These 174 are no longer blocked — they just won\'t appear in function-filtered views.' }
   },
   {
     id:'R9', name:'Start date missing', outcome:'block',
@@ -199,9 +199,9 @@ const rules = [
   },
   {
     id:'R11', name:'Time commitment missing', outcome:'block',
-    total: 5, sub: '5 hard blocked (Gig); 29 TBC (agilePSD)',
-    byType: { Gig:5, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:29, 'Other(TBC)':0, 'No tag':0 },
-    note: { type:'tbc', text:'D1 open: agilePSD TC rule not yet confirmed. 29 opportunities pending.' }
+    total: 5, sub: '5 hard blocked (Gig/STIP); PSFG confirmed exempt (I-013)',
+    byType: { Gig:5, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':0, 'No tag':0 },
+    note: { type:'exempt', text:'I-013 confirmed (12 Jun): TC required for Gig/STIP only. PSFG (formerly agilePSD) is exempt — 29 agilePSD gigs unblocked. Only 5 Gig gigs remain hard-blocked.' }
   },
 ];
 

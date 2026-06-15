@@ -98,14 +98,14 @@
 
   <div class="header">
     <h1>OTEP — Ingestion Schema</h1>
-    <p>Field mapping, validation rules, exclusion logic, and pending decisions &nbsp;·&nbsp; OTG → OTEP ingestion contract &nbsp;·&nbsp; Draft as at 10 June 2026</p>
+    <p>Field mapping, validation rules, exclusion logic, and pending decisions &nbsp;·&nbsp; OTG → OTEP ingestion contract &nbsp;·&nbsp; Updated 15 June 2026 (v3 rules — I-013/I-014/I-015 confirmed)</p>
   </div>
 
   <div class="chips">
     <div class="chip"><strong>11</strong> source fields mapped</div>
     <div class="chip"><strong>7</strong> required fields in ingestion</div>
     <div class="chip"><strong>5</strong> exclusion checks before validation</div>
-    <div class="chip"><strong>4</strong> BO decisions affect schema</div>
+    <div class="chip"><strong style="color:#0f6e56;">0</strong> items pending — I-017 &amp; I-018 confirmed 15 Jun</div>
     <div class="chip"><strong>1</strong> derived field (opportunity type)</div>
   </div>
 
@@ -224,8 +224,8 @@
         <td class="col-type">[7]</td>
         <td class="col-type">String</td>
         <td class="col-transform">Trim whitespace</td>
-        <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">174 opportunities missing across all types. BO to confirm if truly required for all — short-term opportunities may not map neatly to a function.</td>
+        <td><span class="tag tag-meta">Optional — I-014</span></td>
+        <td class="col-notes">I-014 confirmed 12 Jun: Function is display-only for all types — not a validation blocker. 174 gigs that were blocked on Function are now unlocked. Gigs without Function won't appear in function-filtered views.</td>
       </tr>
       <tr>
         <td class="col-target">start_date</td>
@@ -233,8 +233,8 @@
         <td class="col-type">[12]</td>
         <td class="col-type">DateTime → Date</td>
         <td class="col-transform">Parse date, strip time component</td>
-        <td><span class="tag tag-req">Required</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">288 opportunities missing — the single biggest blocker. Secondment alone: 200 missing. BO to rule if evergreen/standing opportunities can be exempt.</td>
+        <td><span class="tag tag-cond">Conditional — I-015</span></td>
+        <td class="col-notes">I-015 confirmed 12 Jun: optional for Job and Secondment; required for Gig, STIP, and PSFG. Unlocked ~261 opportunities (200 Secondments + 61 Jobs). 27 Gig/STIP/PSFG/No-tag still blocked on start date.</td>
       </tr>
       <tr>
         <td class="col-target">end_date</td>
@@ -251,8 +251,8 @@
         <td class="col-type">[11]</td>
         <td class="col-type">String</td>
         <td class="col-transform">Trim whitespace</td>
-        <td><span class="tag tag-cond">Conditional</span> <span class="tag tag-tbc">BO decision</span></td>
-        <td class="col-notes">Required for Gig and STIP only (confirmed). Not required for Secondment, Job, SJR. TBC for agilePSD and Other — affects 109 opportunities.</td>
+        <td><span class="tag tag-cond">Conditional — I-013</span></td>
+        <td class="col-notes">I-013 confirmed 12 Jun: required for Gig and STIP only. Not required for Secondment, Job, SJR, or PSFG (formerly agilePSD). All TC uncertainty resolved. 5 Gig/STIP still blocked — agencies must supply TC data.</td>
       </tr>
       <tr>
         <td class="col-target">applicant_count</td>
@@ -336,15 +336,15 @@
           <td><span class="cell-req">REQ</span></td>
         </tr>
         <tr>
-          <td class="field-name">function</td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
-          <td><span class="cell-req">REQ</span></td>
+          <td class="field-name">function <span style="font-size:9px;color:#3b6d11;">(I-014 optional)</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
         </tr>
         <tr>
           <td class="field-name">start_date</td>
@@ -369,14 +369,14 @@
           <td><span class="cell-req">REQ</span></td>
         </tr>
         <tr>
-          <td class="field-name">time_commitment</td>
+          <td class="field-name">time_commitment <span style="font-size:9px;color:#3b6d11;">(I-013)</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-req">REQ</span></td>
           <td><span class="cell-na">—</span></td>
           <td><span class="cell-na">—</span></td>
           <td><span class="cell-na">—</span></td>
-          <td><span class="cell-tbc">TBC</span></td>
-          <td><span class="cell-tbc">TBC</span></td>
+          <td><span class="cell-na">—</span></td>
+          <td><span class="cell-na">—</span></td>
           <td><span class="cell-na">—</span></td>
         </tr>
       </tbody>
@@ -489,12 +489,12 @@
         <td><span class="tag tag-meta">Confirmed</span></td>
       </tr>
       <tr>
-        <td class="col-target">agilePSD</td>
+        <td class="col-target">PSFG</td>
         <td class="col-source">^agilepsd</td>
         <td class="col-notes">[agilePSD]</td>
-        <td><span class="tag tag-tbc">TBC</span></td>
+        <td><span class="tag tag-excl">No — I-013</span></td>
         <td class="col-type">29</td>
-        <td><span class="tag tag-cond">TC rule pending BO</span></td>
+        <td><span class="tag tag-meta">Confirmed — TC exempt</span></td>
       </tr>
       <tr>
         <td class="col-target">Other</td>
@@ -516,34 +516,34 @@
   </table>
 
   <!-- BO decisions affecting schema -->
-  <p class="section-title">BO decisions that gate this schema</p>
+  <p class="section-title">Schema decisions — confirmed and pending</p>
   <div class="decision-grid">
-    <div class="decision-card">
-      <h3><span class="d-num">D1</span> TC rule for agilePSD &amp; Other (TBC)</h3>
-      <p>Is time commitment required for uncertain-type opportunities? Affects 109 opportunities.</p>
-      <div class="schema-impact">
-        <strong>Schema impact:</strong> If yes — 109 more opportunities become hard-blocked. If no — TC validation rule is marked N/A for these types. The matrix cell changes from TBC → REQ or —.
+    <div class="decision-card" style="border-color:#84C98A;background:#f0faf6;">
+      <h3><span class="d-num" style="background:#eaf3de;color:#3b6d11;">I-013</span> TC rule — Gig/STIP only <span style="font-size:10px;color:#3b6d11;">&#10003; Confirmed 12 Jun</span></h3>
+      <p>TC required for Gig and STIP. Not required for Secondment, Job, SJR, or PSFG (formerly agilePSD).</p>
+      <div class="schema-impact" style="border-color:#5DCAA5;">
+        <strong>Schema impact:</strong> Matrix updated — TC row shows — for agilePSD/Other. All TBC cells resolved.
       </div>
     </div>
-    <div class="decision-card">
-      <h3><span class="d-num">D2</span> Start date exemptions</h3>
-      <p>Are evergreen/standing opportunities (e.g. Secondments, permanent roles) exempt from requiring a start date?</p>
-      <div class="schema-impact">
-        <strong>Schema impact:</strong> If Secondments exempt — 200 opportunities unblock immediately. The PEND cell for Secondment in the matrix changes to —. Would require a new <code>is_evergreen</code> flag or type-level override in the schema.
+    <div class="decision-card" style="border-color:#84C98A;background:#f0faf6;">
+      <h3><span class="d-num" style="background:#eaf3de;color:#3b6d11;">I-014</span> Function — optional all types <span style="font-size:10px;color:#3b6d11;">&#10003; Confirmed 12 Jun</span></h3>
+      <p>Function is display-only — not a validation blocker for any type. 174 gigs unblocked.</p>
+      <div class="schema-impact" style="border-color:#5DCAA5;">
+        <strong>Schema impact:</strong> Function row in matrix changed from REQ → — for all types.
       </div>
     </div>
-    <div class="decision-card">
-      <h3><span class="d-num">D3</span> Stale opportunity handling</h3>
-      <p>Should Open opportunities with end_date in the past be ingested, skipped, or flagged?</p>
-      <div class="schema-impact">
-        <strong>Schema impact:</strong> Affects exclusion rule #3. If skipped — ingestion shrinks by up to 346 opportunities. If flagged with status — OTEP schema needs an <code>is_stale</code> or <code>listing_status</code> field. If ingested as-is — no schema change needed.
+    <div class="decision-card" style="border-color:#84C98A;background:#f0faf6;">
+      <h3><span class="d-num" style="background:#eaf3de;color:#3b6d11;">I-015</span> Start/End date — optional for Job/Secondment <span style="font-size:10px;color:#3b6d11;">&#10003; Confirmed 12 Jun</span></h3>
+      <p>StartDate and EndDate optional for Job and Secondment. Required for Gig, STIP, PSFG.</p>
+      <div class="schema-impact" style="border-color:#5DCAA5;">
+        <strong>Schema impact:</strong> start_date and end_date rows show — for Secondment and Job. ~261 gigs unblocked.
       </div>
     </div>
-    <div class="decision-card">
-      <h3><span class="d-num">D4</span> No-tag opportunity handling</h3>
-      <p>Hard block, ingest as "Uncategorised", or attempt fuzzy type inference for 78 untagged opportunities?</p>
+    <div class="decision-card" style="border-color:#F0C27F;background:#fdf6ec;">
+      <h3><span class="d-num" style="background:#d4edda;color:#155724;">I-017</span> Secondment → JOB category in CC <span style="font-size:10px;color:#155724;">Confirmed 15 Jun 2026</span></h3>
+      <p>Proposed: Secondments display under "Jobs" in CareerCompass. Ingestion unaffected — this is a CC display decision.</p>
       <div class="schema-impact">
-        <strong>Schema impact:</strong> If Uncategorised allowed — OTEP type enum must include an "Uncategorised" value. If fuzzy inference — classification logic gains a fallback branch (keyword matching on GigName body). If hard block — no schema change.
+        <strong>Schema impact:</strong> No ingestion schema change. Affects CC display logic and OTEP-86 filter behaviour.
       </div>
     </div>
   </div>
@@ -594,7 +594,7 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9–10 June 2026 &nbsp;·&nbsp; Schema status: DRAFT — pending 4 BO decisions &nbsp;·&nbsp; Part of OTEP_Research series (file 08 of 08)
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9–10 June 2026 &nbsp;·&nbsp; Updated 15 June 2026 — v3 rules confirmed (I-013/I-014/I-015/I-017/I-018) · all decisions ratified
   </div>
 </div>
 <script src="nav.js"></script>

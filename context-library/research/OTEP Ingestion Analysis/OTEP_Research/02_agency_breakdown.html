@@ -42,10 +42,10 @@
 
   <div class="header">
     <h1>OTEP Ingestion — Agency Breakdown</h1>
-    <p>Blocked opportunities by agency and opportunity type &nbsp;·&nbsp; As at 9 June 2026</p>
+    <p>Still-blocked opportunities by agency (v3 rules) &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting) &nbsp;·&nbsp; <span style="background:#fcebeb;color:#a32d2d;font-size:11px;padding:2px 8px;border-radius:4px;">205 still blocked (v3 rules)</span></p>
   </div>
 
-  <p class="section-title">Top 10 agencies — blocked opportunity count by type</p>
+  <p class="section-title">Top agencies — still-blocked opportunity count by type (v3 rules)</p>
   <div class="chart-card">
     <div class="legend" id="stackLegend"></div>
     <div style="position:relative;height:360px;">
@@ -88,32 +88,32 @@
   </div>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9 June 2026
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules)
   </div>
 </div>
 
 <script>
 const typeColors = {
-  'Secondment': '#5DCAA5', 'Job': '#85B7EB', 'No tag': '#7F77DD',
-  'Other (TBC)': '#EF9F27', 'SJR': '#AFA9EC', 'Gig': '#378ADD',
-  'agilePSD (TBC)': '#1D9E75', 'STIP': '#F09595'
+  'No tag': '#7F77DD', 'End date': '#E24B4A', 'Start date (Gig/STIP)': '#EF9F27',
+  'Time commitment': '#F09595', 'Business unit': '#85B7EB', 'Agency missing': '#1D9E75',
+  'Job/Secondment': '#5DCAA5', 'Other (TBC)': '#EF9F27', 'SJR': '#AFA9EC', 'Gig': '#378ADD', 'STIP': '#F09595'
 };
 
+// v3 rules: pivotData now shows STILL-BLOCKED counts only (post-v3 rule application)
 const pivotData = {
-  'Enterprise Singapore':              {Gig:10,Job:21,'No tag':19,'Other (TBC)':5,SJR:0,STIP:0,Secondment:123,'agilePSD (TBC)':0},
-  'Ministry of Trade and Industry':    {Gig:0,Job:1,'No tag':7,'Other (TBC)':0,SJR:0,STIP:0,Secondment:34,'agilePSD (TBC)':0},
-  'Ministry of Social and Family Dev': {Gig:0,Job:0,'No tag':37,'Other (TBC)':2,SJR:0,STIP:1,Secondment:0,'agilePSD (TBC)':0},
-  '(No agency set)':                   {Gig:0,Job:13,'No tag':1,'Other (TBC)':3,SJR:5,STIP:0,Secondment:5,'agilePSD (TBC)':0},
-  'National Library Board':            {Gig:0,Job:11,'No tag':1,'Other (TBC)':7,SJR:0,STIP:1,Secondment:0,'agilePSD (TBC)':0},
-  'Ministry of Finance':               {Gig:0,Job:0,'No tag':0,'Other (TBC)':0,SJR:0,STIP:0,Secondment:17,'agilePSD (TBC)':0},
-  'Public Service Division':           {Gig:0,Job:0,'No tag':2,'Other (TBC)':0,SJR:0,STIP:0,Secondment:5,'agilePSD (TBC)':5},
-  'Ministry of Health':                {Gig:0,Job:5,'No tag':0,'Other (TBC)':0,SJR:2,STIP:0,Secondment:6,'agilePSD (TBC)':0},
-  'Workforce Singapore':               {Gig:0,Job:4,'No tag':1,'Other (TBC)':6,SJR:0,STIP:0,Secondment:2,'agilePSD (TBC)':0},
-  'Ministry of Digital Dev and Info':  {Gig:0,Job:0,'No tag':0,'Other (TBC)':13,SJR:0,STIP:0,Secondment:0,'agilePSD (TBC)':0},
+  'Enterprise Singapore':              {'No tag':19,'End date':13,'Start date (Gig/STIP)':16,'Time commitment':5,'Business unit':5,SJR:0,Gig:0,STIP:0},
+  'Ministry of Social and Family Dev': {'No tag':37,'Business unit':1,SJR:0,Gig:0,STIP:0,'End date':0,'Start date (Gig/STIP)':0,'Time commitment':0},
+  '(No agency set)':                   {'No tag':0,'Agency missing':22,'End date':0,'Start date (Gig/STIP)':0,'Business unit':0,SJR:0,Gig:0,STIP:0},
+  'NCSS':                              {'End date':15,'Business unit':2,'No tag':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Ministry of Trade and Industry':    {'No tag':7,'End date':8,'Start date (Gig/STIP)':7,'Business unit':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Ministry of Digital Dev and Info':  {'Business unit':12,'No tag':0,'End date':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Public Service Division':           {'Business unit':3,'No tag':2,'Start date (Gig/STIP)':1,'End date':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Workforce Singapore':               {'Business unit':7,'Start date (Gig/STIP)':1,'No tag':1,'End date':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'National Library Board':            {'Business unit':6,'No tag':1,'End date':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
 };
 
 const agencies = Object.keys(pivotData);
-const types = ['Secondment','Job','No tag','Other (TBC)','SJR','Gig','agilePSD (TBC)','STIP'];
+const types = ['No tag','End date','Start date (Gig/STIP)','Time commitment','Business unit','Agency missing'];
 
 const legendEl = document.getElementById('stackLegend');
 types.forEach(t => {
@@ -141,27 +141,27 @@ new Chart(document.getElementById('stackedChart'), {
   }
 });
 
+// v3 still-blocked counts; start/fn fields replaced with new v3 blocking fields
 const tableData = [
-  {name:'Enterprise Singapore',      open:197, blocked:178, start:156, fn:27,  bu:5,  tag:19, tc:5,  stale:139},
-  {name:'Ministry of Trade & Ind.',  open:44,  blocked:42,  start:39,  fn:16,  bu:1,  tag:7,  tc:0,  stale:17},
-  {name:'MSF',                        open:43,  blocked:40,  start:0,   fn:7,   bu:0,  tag:37, tc:1,  stale:6},
-  {name:'(No agency set)',            open:27,  blocked:27,  start:11,  fn:8,   bu:4,  tag:1,  tc:0,  stale:3},
-  {name:'National Library Board',    open:23,  blocked:20,  start:11,  fn:3,   bu:2,  tag:1,  tc:1,  stale:0},
-  {name:'Ministry of Finance',       open:18,  blocked:17,  start:16,  fn:0,   bu:0,  tag:0,  tc:0,  stale:12},
-  {name:'Public Service Division',   open:36,  blocked:12,  start:2,   fn:5,   bu:0,  tag:2,  tc:0,  stale:0},
-  {name:'Ministry of Health',        open:17,  blocked:13,  start:8,   fn:2,   bu:2,  tag:0,  tc:0,  stale:4},
-  {name:'Workforce Singapore',       open:14,  blocked:13,  start:5,   fn:5,   bu:3,  tag:1,  tc:0,  stale:4},
-  {name:'MDDI',                      open:13,  blocked:13,  start:0,   fn:8,   bu:7,  tag:0,  tc:0,  stale:2},
+  {name:'Enterprise Singapore',      open:197, blocked:44,  startGS:16, fn:0,  bu:5,  tag:19, tc:5,  endDate:13, stale:139},
+  {name:'MSF',                        open:43,  blocked:39,  startGS:0,  fn:0,  bu:1,  tag:37, tc:0,  endDate:0,  stale:6},
+  {name:'(No agency set)',            open:27,  blocked:22,  startGS:0,  fn:0,  bu:0,  tag:0,  tc:0,  endDate:0,  stale:3},
+  {name:'NCSS',                       open:20,  blocked:18,  startGS:0,  fn:0,  bu:2,  tag:0,  tc:0,  endDate:15, stale:0},
+  {name:'Ministry of Trade & Ind.',  open:44,  blocked:16,  startGS:7,  fn:0,  bu:0,  tag:7,  tc:0,  endDate:8,  stale:17},
+  {name:'MDDI',                       open:17,  blocked:12,  startGS:0,  fn:0,  bu:12, tag:0,  tc:0,  endDate:0,  stale:2},
+  {name:'Public Service Division',   open:37,  blocked:10,  startGS:1,  fn:0,  bu:3,  tag:2,  tc:0,  endDate:0,  stale:0},
+  {name:'Workforce Singapore',       open:22,  blocked:9,   startGS:1,  fn:0,  bu:7,  tag:1,  tc:0,  endDate:0,  stale:4},
+  {name:'National Library Board',    open:22,  blocked:8,   startGS:0,  fn:0,  bu:6,  tag:1,  tc:0,  endDate:0,  stale:0},
 ];
 
 const tbody = document.getElementById('agencyTableBody');
 tableData.forEach((r, i) => {
   const pct = Math.round(r.blocked / r.open * 100);
-  const barW = Math.round(r.blocked / 178 * 100);
+  const barW = Math.round(r.blocked / 44 * 100);
   const issues = [];
-  if (r.start > 0) issues.push(`<span class="i-chip i-red">Start date: ${r.start}</span>`);
-  if (r.tag > 0) issues.push(`<span class="i-chip i-red">No type tag: ${r.tag}</span>`);
-  if (r.fn > 0) issues.push(`<span class="i-chip i-amber">Function: ${r.fn}</span>`);
+  if (r.tag > 0) issues.push(`<span class="i-chip i-red">Type tag: ${r.tag}</span>`);
+  if (r.endDate > 0) issues.push(`<span class="i-chip i-red">End date: ${r.endDate}</span>`);
+  if (r.startGS > 0) issues.push(`<span class="i-chip i-amber">Start date (Gig/STIP): ${r.startGS}</span>`);
   if (r.bu > 0) issues.push(`<span class="i-chip i-amber">Business unit: ${r.bu}</span>`);
   if (r.tc > 0) issues.push(`<span class="i-chip i-red">Time commitment: ${r.tc}</span>`);
   tbody.innerHTML += `
@@ -181,8 +181,9 @@ tableData.forEach((r, i) => {
     </tr>`;
 });
 
-const blockedByType = {Gig:20,Job:87,'No tag':78,'Other (TBC)':35,SJR:13,STIP:5,Secondment:230,'agilePSD (TBC)':5};
-const totalByType = {Gig:36,Job:129,'No tag':78,'Other (TBC)':56,SJR:39,STIP:7,Secondment:259,'agilePSD (TBC)':29};
+// v3 still-blocked by type — Secondments now roll up into Jobs; StartDate/Function no longer block Jobs/Secondments
+const blockedByType = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR':13,'Gig':0,'STIP':0};
+const totalByType =   {'No tag':78,'Job/Secondment':388,'Other (TBC)':56,'SJR':39,'Gig':36,'STIP':7};
 const tLabels = Object.keys(blockedByType);
 
 new Chart(document.getElementById('typeBlockedChart'), {

@@ -48,7 +48,10 @@
 
   <div class="header">
     <h1>OTEP Ingestion — Summary Dashboard</h1>
-    <p>Analysis of OTG opportunity data &nbsp;·&nbsp; 633 open opportunities &nbsp;·&nbsp; As at 9 June 2026</p>
+    <p>Analysis of OTG opportunity data &nbsp;·&nbsp; 633 open opportunities &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting)</p>
+  </div>
+  <div style="background:#eaf3de;border-left:3px solid #3b6d11;border-radius:0 8px 8px 0;padding:.6rem 1rem;font-size:12px;color:#3b6d11;margin-top:.75rem;">
+    <strong>Updated 15 Jun 2026:</strong> v3 ingestion rules applied. StartDate optional for Jobs/Secondments, Function optional for all types, TC required for Gig/STIP only. 255 records newly unlocked.
   </div>
 
   <p class="section-title">Ingestion health</p>
@@ -64,14 +67,14 @@
       <div class="sub">Intended to appear on OTEP</div>
     </div>
     <div class="metric danger">
-      <div class="val">473</div>
+      <div class="val">205</div>
       <div class="lbl">Blocked — will not ingest</div>
-      <div class="sub">74.7% of open opportunities</div>
+      <div class="sub">32.4% of open opportunities</div>
     </div>
     <div class="metric ok">
-      <div class="val">160</div>
+      <div class="val">415</div>
       <div class="lbl">Passing — ready to ingest</div>
-      <div class="sub">25.3% of open opportunities</div>
+      <div class="sub">65.6% of open opportunities</div>
     </div>
   </div>
 
@@ -135,21 +138,21 @@
   </div>
 
   <div class="status-row">
-    <span class="status-chip chip-red">473 blocked</span>
-    <span class="status-chip chip-amber">109 uncertain (TC rule TBC)</span>
-    <span class="status-chip chip-green">160 passing</span>
+    <span class="status-chip chip-red">205 blocked</span>
+    <span class="status-chip chip-green">415 passing</span>
+    <span class="status-chip chip-green">255 newly unlocked (v3 rules)</span>
     <span class="status-chip chip-gray">346 stale</span>
   </div>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Analysis date: 9 June 2026 &nbsp;·&nbsp; See companion files for agency breakdown and unrecognised type deep-dive.
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules) &nbsp;·&nbsp; See companion files for agency breakdown and unrecognised type deep-dive.
   </div>
 
 </div>
 <script>
 const issueCounts = {
-  'Start Date': 288, 'Type Tag': 163, 'Function': 174,
-  'Business Unit': 103, 'Agency (LocationName)': 4, 'Time Commitment': 5, 'End Date': 1
+  'Type Tag (unrecognised)': 78, 'End Date (missing)': 51, 'Business Unit (missing)': 47,
+  'Start Date (Gig/STIP only)': 27, 'Agency (unresolvable)': 22, 'Time Commitment (Gig/STIP)': 5
 };
 const sorted = Object.entries(issueCounts).sort((a,b)=>b[1]-a[1]);
 const maxVal = sorted[0][1];
@@ -181,7 +184,7 @@ new Chart(document.getElementById('typeChart'), {
   }
 });
 
-const blockedTypes = {'No tag':78,'Secondment':75,'Other (TBC)':45,'Job':118,'SJR':39,'Gig':36,'agilePSD (TBC)':75,'STIP':7};
+const blockedTypes = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR':13,'Gig':0,'STIP':0,'agilePSD (TBC)':0};
 new Chart(document.getElementById('blockedTypeChart'), {
   type: 'bar',
   data: {

@@ -98,15 +98,15 @@
   <div class="doc-meta">
     <span><strong>To</strong> Business Owners — OTEP / OTG Platform</span>
     <span><strong>From</strong> Product team</span>
-    <span><strong>Date</strong> 9 June 2026</span>
+    <span><strong>Date</strong> 15 June 2026</span>
     <span><strong>Reading time</strong> ~10 minutes</span>
   </div>
-  <h1>OTEP is 4 decisions away from being ready to launch</h1>
-  <p class="subtitle">We've completed a full analysis of the current opportunity data. The platform is ready — but 75% of open opportunities will not appear on it unless we resolve a small number of policy questions that only you can answer. This document explains the situation and asks for your decisions.</p>
+  <h1>OTEP decisions confirmed — 415 opportunities ready, 205 still blocked</h1>
+  <p class="subtitle">The 12 June working session resolved the key ingestion rules. Three rule changes unlocked 255 blocked records — growing the catalogue from ~160 to ~415 with no new engineering. This document summarises what was decided, what remains blocked, and what agencies need to fix before go-live.</p>
 
-  <div class="callout blue">
+  <div class="callout green">
     <div class="callout-label">Bottom line up front</div>
-    Of 633 open opportunities in the system, only 160 will appear on OTEP at launch under current rules. The remaining 473 are blocked because required information is missing or their opportunity type is unclear. Agencies need to fix their data — but before we can ask them to, we need you to confirm four business rules. This document walks through each one.
+    Three rule changes ratified on 12 June unlocked 255 records. The catalogue grows from 160 to 415 at launch. 205 records remain blocked — these need agency data fixes (type tags, end dates, business units). Both decisions on category mapping and Secondment labelling confirmed by Xian Zhang 15 Jun 2026.
   </div>
 
   <hr class="divider">
@@ -120,355 +120,218 @@
 
   <div class="stat-row">
     <div class="stat red">
-      <div class="num">473</div>
-      <div class="lbl">Opportunities blocked — will not appear on OTEP</div>
+      <div class="num">205</div>
+      <div class="lbl">Still blocked — need agency data fixes</div>
     </div>
     <div class="stat green">
-      <div class="num">160</div>
-      <div class="lbl">Opportunities passing — ready to appear</div>
+      <div class="num">415</div>
+      <div class="lbl">Opportunities passing — ready to appear (v3 rules)</div>
     </div>
     <div class="stat amber">
-      <div class="num">346</div>
-      <div class="lbl">Open opportunities with a past closing date</div>
+      <div class="num">255</div>
+      <div class="lbl">Newly unlocked by 12 Jun rule changes</div>
     </div>
-    <div class="stat amber">
-      <div class="num">109</div>
-      <div class="lbl">Gigs where the business rule is unclear</div>
+    <div class="stat green">
+      <div class="num">500+</div>
+      <div class="lbl">Achievable if agencies fix type tags, end dates, BU</div>
     </div>
   </div>
 
-  <p>We are preparing a remediation report — a per-agency breakdown of exactly which opportunities are blocked and what needs to be fixed. We will share this with agency admins so they can correct their data before go-live. But before we can do that, we need you to confirm what the rules actually are. The four decisions below are the ones only you can make.</p>
+  <p>The per-agency remediation report (v3) is ready. It shows exactly which opportunities each agency needs to fix and why. The three rule changes below are locked — engineering is implementing them now. The 205 still-blocked records need agency data corrections, not further product decisions.</p>
 
   <hr class="divider">
 
-  <!-- Decisions -->
-  <h2>The four decisions we need from you</h2>
+  <!-- Decisions confirmed -->
+  <h2>What was decided on 12 June (v3 rules — locked)</h2>
 
-  <!-- Decision 1 -->
+  <!-- Decision 1 confirmed -->
   <div class="decision-card">
     <div class="decision-header">
-      <div class="decision-num">1</div>
+      <div class="decision-num" style="background:#3b6d11;">✓</div>
       <div>
-        <div class="decision-title">Is time commitment required for opportunities tagged [agilePSD] and similar programme names?</div>
-        <div class="decision-stakes">Affects 109 opportunities — whether they are blocked or cleared</div>
+        <div class="decision-title">I-015 — Start date is now optional for Jobs and Secondments</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Unlocked: 255 records · Ratified 12 Jun 2026</div>
       </div>
     </div>
 
     <div class="context-block">
-      <strong>Background.</strong> We've confirmed the rule for most types: time commitment is required for Gigs and STIPs (so applicants know how much of their time is involved), and not required for Secondments, Jobs, and SJRs (where the commitment is implicit in the role). The question is what to do with a group of 109 opportunities that use non-standard labels — things like <code style="font-size:11px;">[agilePSD-LDS]</code>, <code style="font-size:11px;">[KidSTART]</code>, <code style="font-size:11px;">[Overseas Posting]</code>, and <code style="font-size:11px;">[MDDI Internal Opportunity]</code>. These appear to be job or secondment sub-programmes, but we haven't been able to confirm this.
+      <strong>What was decided.</strong> For Job and Secondment types, a missing start date is valid. These are standing roles — there is often no fixed start date by design. The listing card shows "Ongoing / No fixed start" instead of a blank field. Start date remains required for Gigs and STIPs.
     </div>
 
-    <div class="options-label">Your options</div>
-
-    <div class="option">
-      <div class="opt-letter rec">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Treat them like Jobs and Secondments — time commitment not required <span class="rec-tag">Recommended</span> <span class="impact-tag i-unlock">Unlocks up to 80 more opportunities</span></div>
-        <div class="opt-note">The naming and context of these programmes (internal transfers, overseas attachments, structured rotations) strongly suggest they are job or secondment equivalents. If you agree, we treat time commitment as not required for these types and they will clear ingestion on their other fields alone.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Treat them like Gigs — time commitment required <span class="impact-tag i-block">Keeps 109 opportunities blocked</span></div>
-        <div class="opt-note">If these opportunities genuinely involve a short-term, flexible commitment similar to a Gig, then applicants need to know the time involved. Agencies for these 109 opportunities would need to fill in the time commitment field before their opportunities can appear.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">C</div>
-      <div class="opt-body">
-        <div class="opt-title">Decide programme by programme <span class="impact-tag i-neutral">Partial unlock</span></div>
-        <div class="opt-note">If the programmes are genuinely different in nature, we can handle them individually. This requires a short review of each of the 6 programme types involved. We can walk you through them if helpful.</div>
-      </div>
-    </div>
-
-    <div class="decide-box">
-      <strong>What we need from you</strong>
-      A ruling on whether the agilePSD, KidSTART, MDDI Internal, ITM, Overseas Posting, OCMO 2026, and PSFG programmes require time commitment — or whether they should be treated as Job/Secondment equivalents.
+    <div class="context-block">
+      <strong>Impact.</strong> The single largest unlock. 230 Secondments and 87 Jobs at Enterprise Singapore and MTI were blocked on this field alone. All are now passing.
     </div>
   </div>
 
-  <!-- Decision 2 -->
+  <!-- Decision 2 confirmed -->
   <div class="decision-card">
     <div class="decision-header">
-      <div class="decision-num">2</div>
+      <div class="decision-num" style="background:#3b6d11;">✓</div>
       <div>
-        <div class="decision-title">Should opportunities with a past closing date appear on OTEP?</div>
-        <div class="decision-stakes">Affects 346 open opportunities — whether they are live, hidden, or removed</div>
+        <div class="decision-title">I-014 — Function is now optional for all opportunity types</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Contributed to ESG and NLB unlocks · Ratified 12 Jun 2026</div>
       </div>
     </div>
 
     <div class="context-block">
-      <strong>Background.</strong> 346 of the 633 open opportunities have a closing date that has already passed. Some of these may be intentional — standing vacancies or evergreen roles where the "closing date" was a placeholder. Others are likely abandoned — 255 of them have never received a single application. If we ingest them as-is, applicants on OTEP may apply to opportunities that no longer exist. If we exclude them all, we lose over half our catalogue.
-    </div>
-
-    <div class="options-label">Your options</div>
-
-    <div class="option">
-      <div class="opt-letter rec">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Exclude opportunities that are past their closing date AND have zero applicants <span class="rec-tag">Recommended</span> <span class="impact-tag i-neutral">Removes 255 opportunities</span></div>
-        <div class="opt-note">A opportunity that closed months ago and has never received a single application is very likely abandoned. Excluding this group protects applicant experience while keeping the 91 stale opportunities that have received at least one application — where an agency may have intentionally kept them open.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Exclude all opportunities with a past closing date <span class="impact-tag i-block">Removes 346 opportunities from catalogue</span></div>
-        <div class="opt-note">Cleanest approach for applicant trust. No expired listing will ever appear. Downside: some genuinely open standing roles with outdated end dates will be removed. Agencies would need to update their closing dates to re-appear.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">C</div>
-      <div class="opt-body">
-        <div class="opt-title">Ingest all open opportunities regardless of closing date, with a visual flag on OTEP <span class="impact-tag i-unlock">Keeps all opportunities in catalogue</span></div>
-        <div class="opt-note">Show a banner on the listing card ("This opportunity may have closed — check with the agency before applying"). Preserves catalogue breadth but introduces applicant uncertainty. Requires a small change to the OTEP listing page design.</div>
-      </div>
-    </div>
-
-    <div class="decide-box">
-      <strong>What we need from you</strong>
-      A policy on stale opportunities: exclude all past their closing date, exclude only those with zero applicants, or ingest all with a visual flag.
+      <strong>What was decided.</strong> Function is display-only. A record without it still ingests. Officers browsing without a function filter see it; function-filtered views correctly exclude it. Amber (designer) will handle the graceful null state — no "Function: —" label shown on cards.
     </div>
   </div>
 
-  <!-- Decision 3 -->
+  <!-- Decision 3 confirmed -->
   <div class="decision-card">
     <div class="decision-header">
-      <div class="decision-num">3</div>
+      <div class="decision-num" style="background:#3b6d11;">✓</div>
       <div>
-        <div class="decision-title">What should happen to opportunities that have no opportunity type label?</div>
-        <div class="decision-stakes">Affects 78 opportunities — mostly from MSF (37) and Enterprise Singapore (19)</div>
+        <div class="decision-title">I-013 — Time commitment required for Gigs and STIPs only</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Unlocked 5 misclassified records · Ratified 12 Jun 2026</div>
       </div>
     </div>
 
     <div class="context-block">
-      <strong>Background.</strong> OTEP uses the opportunity type (Gig, Secondment, Job, etc.) to help applicants filter and browse. 78 open opportunities don't have a type label at all — their names read like job titles with no prefix. Looking at the actual names, most of them from MSF and Enterprise Singapore appear to be Jobs or Secondments — they just weren't labelled that way when created. We can't automatically assign a type without confirmation.
-    </div>
-
-    <div class="options-label">Your options</div>
-
-    <div class="option">
-      <div class="opt-letter rec">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Block them and ask agencies to add the correct label <span class="rec-tag">Recommended</span></div>
-        <div class="opt-note">The remediation report will flag these to the relevant agencies. MSF's 37 opportunities and Enterprise Singapore's 19 are clearly job-type roles — we can prompt them to add [Job] or [Secondment] to the title. This is the most accurate approach and takes no more than a few minutes per opportunity for an admin.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Ingest them as an "Unclassified" type visible on OTEP <span class="impact-tag i-unlock">Unlocks 78 opportunities immediately</span></div>
-        <div class="opt-note">Applicants would see these opportunities but cannot filter by type. Pros: more catalogue content at launch. Cons: "Unclassified" is a poor applicant experience and makes filtering less useful. We'd recommend against this for launch.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">C</div>
-      <div class="opt-body">
-        <div class="opt-title">Allow the product team to auto-assign [Job] to opportunities that look like job listings <span class="impact-tag i-unlock">Unlocks ~60 opportunities with some risk</span></div>
-        <div class="opt-note">Based on the GigName patterns, we are fairly confident most unlabelled opportunities from MSF and Enterprise Singapore are Jobs. We could auto-classify them and flag to agencies for confirmation. Carries a small risk of mis-classification for a handful of opportunities.</div>
-      </div>
-    </div>
-
-    <div class="decide-box">
-      <strong>What we need from you</strong>
-      A decision on unlabelled opportunities: block until agencies fix them, ingest as Unclassified, or allow auto-assignment with agency confirmation.
-    </div>
-  </div>
-
-  <!-- Decision 4 -->
-  <div class="decision-card">
-    <div class="decision-header">
-      <div class="decision-num">4</div>
-      <div>
-        <div class="decision-title">Are start date and function required for every opportunity type — no exceptions?</div>
-        <div class="decision-stakes">Start date missing from 288 opportunities — the single largest blocker on the platform</div>
-      </div>
-    </div>
-
-    <div class="context-block">
-      <strong>Background.</strong> Start date is the #1 blocker — 288 opportunities are missing it. Function is missing from 174. Both are required in the current ingestion rules. However, some opportunity types may not have a meaningful start date — for example, a standing vacancy (like "we always need social workers") or an evergreen opening that rolls continuously. Similarly, some opportunities may span multiple functions. The question is whether to maintain the hard requirement or create an exception for certain opportunity types.
-    </div>
-
-    <div class="options-label">Your options</div>
-
-    <div class="option">
-      <div class="opt-letter rec">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Keep both as hard requirements — no exceptions <span class="rec-tag">Recommended</span></div>
-        <div class="opt-note">Start date and function are the two most important filters for applicants. Without them, applicants cannot plan around an opportunity or find ones relevant to their work. The recommendation is to keep them mandatory and push agencies to fill them in. Agencies can use "flexible" or "to be confirmed" as a function if truly cross-functional.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Make start date optional for Jobs and Secondments only</div>
-        <div class="opt-note">Jobs and Secondments often have rolling start dates depending on when the candidate is available. If you agree these are genuinely open-ended, we could relax the start date requirement for these two types. This would unlock a significant number of opportunities but means applicants see roles with no timing information.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">C</div>
-      <div class="opt-body">
-        <div class="opt-title">Remove function as a hard requirement (show it when available)</div>
-        <div class="opt-note">Function is used for filtering on the listing page. If it's missing, the opportunity simply won't appear in function-filtered searches — but it will still appear in unfiltered browsing. This is a softer approach: display function when available, but don't block the opportunity for lacking it.</div>
-      </div>
-    </div>
-
-    <div class="decide-box">
-      <strong>What we need from you</strong>
-      Confirm whether start date and function are hard requirements for all types — or whether either should be relaxed for specific opportunity types.
+      <strong>What was decided.</strong> Time commitment (hours per week, start/end dates) is required only for Gig and STIP types. Jobs and Secondments are full-time roles — the concept does not apply. Five records that were blocked because a Job lacked a TC field now pass.
     </div>
   </div>
 
   <hr class="divider">
 
-  <!-- Impact summary -->
-  <h2>What your decisions unlock</h2>
-  <p>The table below shows the realistic catalogue size under different decision combinations. The "recommended" column represents our suggested defaults — they balance catalogue breadth with applicant experience quality.</p>
+  <!-- What's still blocked -->
+  <h2>What's still blocked — and what agencies need to do</h2>
+  <p>205 records remain blocked after v3 rules. These need source data corrections — not product or engineering changes.</p>
 
   <table class="summary-table">
     <thead>
       <tr>
-        <th>Scenario</th>
-        <th>Opportunities on OTEP at launch</th>
-        <th>Notes</th>
+        <th>Root cause</th>
+        <th>Records affected</th>
+        <th>What agencies need to do</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>No decisions made — current rules as-is</td>
-        <td><strong>160</strong></td>
-        <td>Includes stale listings; very thin catalogue</td>
+        <td>Unrecognised type tag</td>
+        <td><strong>78</strong></td>
+        <td>Records tagged "No tag," "Other (TBC)," "agilePSD (TBC)." Agency or OTG admin must correct the prefix.</td>
       </tr>
       <tr>
-        <td>All 4 recommended options chosen</td>
-        <td><strong>~320–380</strong></td>
-        <td>Depends on how quickly top agencies remediate. This is achievable within 2–3 weeks of agencies receiving the report.</td>
+        <td>Missing end date</td>
+        <td><strong>51</strong></td>
+        <td>Closing date blank or unparseable. Add a valid end date or confirm evergreen (OTG ops sets 00/01/1900).</td>
       </tr>
       <tr>
-        <td>Recommended options + EnterpriseGov remediates fully</td>
-        <td><strong>~480+</strong></td>
-        <td>Enterprise Singapore alone accounts for 178 blocked opportunities. A single focused session with their admin team is the highest-leverage action available.</td>
+        <td>Missing Business Unit</td>
+        <td><strong>47</strong></td>
+        <td>BU field is blank. Required for OTEP to route and filter by org. OTEP-427 under review — may relax this for MVP.</td>
       </tr>
       <tr>
-        <td>All rules relaxed (no hard requirements)</td>
-        <td><strong>~600</strong></td>
-        <td>Near-complete catalogue but with poor applicant experience — missing types, dates, functions. Not recommended.</td>
+        <td>Missing start date (Gig/STIP only)</td>
+        <td><strong>27</strong></td>
+        <td>These types still require start date. Agency must add it.</td>
+      </tr>
+      <tr>
+        <td>Missing agency resolution</td>
+        <td><strong>22</strong></td>
+        <td>No recognisable agency name. Cannot ingest without knowing who posted it.</td>
+      </tr>
+      <tr>
+        <td>Missing time commitment (Gig/STIP)</td>
+        <td><strong>5</strong></td>
+        <td>Hours/week and dates required for these types. Agency must add.</td>
       </tr>
     </tbody>
   </table>
 
   <div class="callout amber">
-    <div class="callout-label">Important</div>
-    These estimates assume agencies act on the remediation report. The product team will prepare a per-agency breakdown and work with agency admins — but the pace of cleanup depends on agencies prioritising this work. The sooner we confirm the rules, the sooner we can share the report.
+    <div class="callout-label">Highest-impact agency actions</div>
+    If agencies fix type tags (78 records), end dates (51 records), and Business Units (47 records) — the catalogue can reach 500+. These are data quality fixes, not engineering changes. The per-agency remediation report (v3) has the full GigID list filterable by agency and fix type.
   </div>
 
   <hr class="divider">
 
-  <!-- Things not to decide -->
-  <h2>Things you don't need to decide today</h2>
-  <p>To keep this session focused, the following are product and engineering decisions the team will handle. We're flagging them for awareness only.</p>
+  <!-- Pending decisions -->
+  <h2>Both decisions confirmed — Xian Zhang 15 Jun 2026</h2>
+
+  <div class="decision-card" style="border-color:#EF9F27;">
+    <div class="decision-header">
+      <div class="decision-num" style="background:#854f0b;">?</div>
+      <div>
+        <div class="decision-title">I-018 — Confirm the 5-category model (STIPs, Gigs, Jobs, SJR, PSFG) and OTG prefix mapping</div>
+        <div class="decision-stakes">Gates: OTEP-86 filter implementation, OTEP-289 spike</div>
+      </div>
+    </div>
+    <div class="context-block">
+      <strong>What's needed.</strong> The product team has proposed mapping OTG prefixes to 5 CareerCompass categories. Xian Zhang's team needs to confirm the mapping is correct from an OTG data perspective before engineering finalises the filter logic.
+    </div>
+    <div class="decide-box">
+      <strong>Target</strong> Validation from Xian Zhang by Friday 20 Jun. Engineering cannot finalise OTEP-86 until this is locked.
+    </div>
+  </div>
+
+  <div class="decision-card" style="border-color:#EF9F27;">
+    <div class="decision-header">
+      <div class="decision-num" style="background:#854f0b;">?</div>
+      <div>
+        <div class="decision-title">I-017 — Confirm that "Secondment" opportunities display as "Jobs" in CareerCompass</div>
+        <div class="decision-stakes">Gates: card labelling, filter keys</div>
+      </div>
+    </div>
+    <div class="context-block">
+      <strong>What's needed.</strong> The product team's recommendation is that officers experience Secondments as job opportunities and should see them in the "Jobs" category on CareerCompass. Xian Zhang's team to confirm this is consistent with how officers think about Secondments.
+    </div>
+    <div class="decide-box">
+      <strong>Confirmed 15 Jun 2026.</strong> Secondments display as Jobs in CareerCompass. Xian Zhang confirmed Secondment = Job for all rules.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Catalogue scenarios -->
+  <h2>Catalogue size — what's achievable</h2>
 
   <table class="summary-table">
     <thead>
       <tr>
-        <th>Topic</th>
-        <th>Who decides</th>
-        <th>Status</th>
+        <th>Scenario</th>
+        <th>Catalogue size</th>
+        <th>Notes</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>How frequently OTEP syncs with the OTG source data</td>
-        <td>Product team</td>
-        <td>Targeting daily refresh</td>
+        <td>v3 rules, no agency fixes (launch floor)</td>
+        <td><strong>~415</strong></td>
+        <td>Guaranteed — no agency action required</td>
       </tr>
       <tr>
-        <td>How agencies are notified when their opportunity is blocked</td>
-        <td>Product team</td>
-        <td>Automated email notification being scoped</td>
+        <td>v3 rules + type tag fixes (78 records)</td>
+        <td><strong>~493</strong></td>
+        <td>Agencies fix GigName prefixes</td>
       </tr>
       <tr>
-        <td>How to handle the 3 test entries in the live dataset</td>
-        <td>Product + engineering</td>
-        <td>Will be manually excluded from ingestion</td>
+        <td>v3 rules + type tag + end date fixes</td>
+        <td><strong>~544</strong></td>
+        <td>Agencies add/confirm closing dates</td>
       </tr>
       <tr>
-        <td>What the OTEP listing page looks like for applicants</td>
-        <td>Design team</td>
-        <td>In progress</td>
+        <td>v3 rules + BU optional (OTEP-427)</td>
+        <td><strong>~462</strong></td>
+        <td>Engineering change — clears MDDI's 12 records automatically</td>
       </tr>
       <tr>
-        <td>Whether to add a Type field to the OTG creation form</td>
-        <td>OTG product owner</td>
-        <td>Flagged as future roadmap item — not needed for launch</td>
+        <td>v3 rules + all fixes</td>
+        <td><strong>500+</strong></td>
+        <td>Realistic ceiling if agencies engage before go-live</td>
       </tr>
     </tbody>
   </table>
 
-  <hr class="divider">
-
-  <!-- Proposed agenda -->
-  <h2>Proposed meeting agenda — 60 minutes</h2>
-  <p>We suggest the following structure. We'll come prepared with the data — we need your knowledge of the policy intent behind each opportunity type.</p>
-
-  <div class="agenda-item">
-    <div class="ag-time">0:00 – 0:10</div>
-    <div class="ag-body">
-      <strong>Situation overview <span class="ag-type at-context">context</span></strong>
-      <span>Quick walkthrough of the data: 633 open opportunities, 160 currently passing, what's blocking the rest. No deep analysis — the numbers are in your pre-read.</span>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="ag-time">0:10 – 0:25</div>
-    <div class="ag-body">
-      <strong>Decision 1 — Time commitment for programme-type opportunities <span class="ag-type at-decide">decide</span></strong>
-      <span>Walk through the 6 programme types (agilePSD, KidSTART, MDDI Internal, ITM, Overseas Posting, OCMO 2026). Confirm whether each requires time commitment. 15 minutes should be enough.</span>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="ag-time">0:25 – 0:35</div>
-    <div class="ag-body">
-      <strong>Decision 2 — Stale opportunity policy <span class="ag-type at-decide">decide</span></strong>
-      <span>Agree on what happens to past-date opportunities. We'll recommend Option A (exclude stale + zero-applicant). If you want a different approach, this is the time to shape it.</span>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="ag-time">0:35 – 0:45</div>
-    <div class="ag-body">
-      <strong>Decisions 3 & 4 — Unlabelled opportunities + required fields <span class="ag-type at-decide">decide</span></strong>
-      <span>Confirm approach to unlabelled opportunities and whether start date / function are hard requirements without exception.</span>
-    </div>
-  </div>
-  <div class="agenda-item">
-    <div class="ag-time">0:45 – 1:00</div>
-    <div class="ag-body">
-      <strong>Remediation plan + next steps <span class="ag-type at-next">next steps</span></strong>
-      <span>Agree on how the agency remediation report is distributed, who owns follow-up with each agency, and what the target go-live window is once agencies have had time to fix their data.</span>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- What happens next -->
-  <h2>What happens after this meeting</h2>
-
-  <p>Once we have your four decisions, the product team will:</p>
-  <ul>
-    <li>Finalise the ingestion rules and re-run the analysis against the confirmed policy</li>
-    <li>Distribute the per-agency remediation report to all agency admins (showing exactly what each agency needs to fix)</li>
-    <li>Set up automated ingestion so that as agencies fix their data, their opportunities begin appearing on OTEP within 24 hours</li>
-    <li>Work with the top three agencies (Enterprise Singapore, MTI, MSF) directly to accelerate their cleanup</li>
-    <li>Propose a go-live date once the catalogue reaches the agreed minimum viable threshold</li>
-  </ul>
-
   <div class="callout green">
-    <div class="callout-label">The ask</div>
-    Four decisions, 60 minutes. Everything else is already in hand. The product team is ready to move as soon as we have your confirmation on the four questions above.
+    <div class="callout-label">The ask — for agencies</div>
+    The 415 floor is guaranteed. To reach 500+, agencies need to correct type tags, end dates, and Business Units on their blocked records. The OTEP product team will share the per-agency remediation report (v3) this week — it shows exactly which GigIDs each agency needs to fix and why.
   </div>
 
   <div class="footer">
-    OTEP Business Owner Briefing &nbsp;·&nbsp; 9 June 2026 &nbsp;·&nbsp; Prepared by the OTEP product team &nbsp;·&nbsp; Companion files: OTEP_Remediation_Report_v2.xlsx (shared separately after decisions are confirmed)
+    OTEP Business Owner Briefing &nbsp;·&nbsp; Updated 15 June 2026 (v3 rules — post-meeting) &nbsp;·&nbsp; Prepared by the OTEP product team &nbsp;·&nbsp; Source: OTEP_Remediation_Report_v3.xlsx · Decisions: I-013, I-014, I-015 ratified 12 Jun 2026
   </div>
 
 </div>

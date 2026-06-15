@@ -77,7 +77,7 @@
 
   <div class="header">
     <h1>OTEP Ingestion — Agency Remediation Queue</h1>
-    <p>Blocked opportunities by agency — fields to fix before ingestion can proceed &nbsp;·&nbsp; Generated: 10 June 2026 &nbsp;·&nbsp; Share with agency admins for remediation</p>
+    <p>Still-blocked opportunities by agency — fields to fix before ingestion can proceed &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules) &nbsp;·&nbsp; Share with agency admins for remediation</p>
   </div>
 
   <!-- Summary strip -->
@@ -88,11 +88,11 @@
     </div>
     <div class="sum-cell">
       <div class="sum-label">Total blocked opportunities</div>
-      <div class="sum-value" style="color:#C0392B;">473</div>
+      <div class="sum-value" style="color:#C0392B;">205</div>
     </div>
     <div class="sum-cell">
       <div class="sum-label">Top blocker (field)</div>
-      <div class="sum-value" style="font-size:16px;padding-top:4px;">Function</div>
+      <div class="sum-value" style="font-size:16px;padding-top:4px;">Type Tag</div>
     </div>
     <div class="sum-cell">
       <div class="sum-label">Top blocker (agency)</div>
@@ -101,7 +101,7 @@
   </div>
 
   <div class="note-box">
-    <strong>For agency admins:</strong> Each row shows your blocked opportunities and which fields need to be filled in OTG before they can appear in OTEP. Fields marked <span class="field-tag ft-tbc">TBC</span> are pending a policy ruling — no action needed yet. Fields marked <span class="field-tag ft-block">BLOCKED</span> are hard requirements — please update these in OTG.
+    <strong>For agency admins:</strong> Each row shows your blocked opportunities and which fields need to be filled in OTG before they can appear in OTEP. Fields marked <span class="field-tag ft-tbc">TBC</span> are pending a policy ruling — no action needed yet. Fields marked <span class="field-tag ft-block">BLOCKED</span> are hard requirements — please update these in OTG. <strong>v3 rules (15 Jun):</strong> StartDate and Function are no longer blocking fields for Jobs/Secondments. Remaining blocks are TypeTag, EndDate, BusinessUnit, StartDate (Gig/STIP only), and missing Agency.
   </div>
 
   <!-- Filters -->
@@ -142,116 +142,104 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Generated: 10 June 2026 &nbsp;·&nbsp; Remediation report for agency admins &nbsp;·&nbsp; Part of OTEP_Research series (file 12 of 12)
+    Source: OTG Oppr.xlsx — OTEP_Remediation_Report_v3.xlsx &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules) &nbsp;·&nbsp; Remediation report for agency admins &nbsp;·&nbsp; Part of OTEP_Research series (file 12 of 12)
   </div>
 </div>
 
 <script>
+// v3 rules applied — blocked counts are STILL-BLOCKED after rule changes (15 Jun 2026)
+// StartDate and Function are no longer blocking for Jobs/Secondments
 const agencies = [
   {
     name: 'Enterprise Singapore',
-    types: ['Secondment','Job','No tag'],
-    blocked: 178, stale: 95, total: 210,
-    fields: [{f:'Function',t:'block'},{f:'Start date',t:'block'},{f:'Business Unit',t:'tbc'},{f:'Type prefix',t:'block'}],
-    breakdown: { Secondment:89, Job:52, 'No tag':37 }
-  },
-  {
-    name: 'Ministry of Trade and Industry',
-    types: ['Secondment','Job','SJR'],
-    blocked: 42, stale: 28, total: 55,
-    fields: [{f:'Function',t:'block'},{f:'Agency',t:'block'},{f:'Start date',t:'block'}],
-    breakdown: { Secondment:22, Job:14, SJR:6 }
+    types: ['Job','No tag','Gig/STIP'],
+    blocked: 44, stale: 95, total: 210,
+    fields: [{f:'Type Tag',t:'block'},{f:'End date',t:'block'},{f:'Start date (Gig/STIP)',t:'block'},{f:'Time commitment',t:'block'},{f:'Business Unit',t:'tbc'}],
+    breakdown: { 'TypeTag':19, 'EndDate':13, 'StartDate(Gig/STIP)':16, 'TC':5, 'BU':5 }
   },
   {
     name: 'Ministry of Social and Family Development',
-    types: ['No tag','Secondment'],
-    blocked: 40, stale: 15, total: 48,
-    fields: [{f:'Type prefix',t:'block'},{f:'Function',t:'block'},{f:'Business Unit',t:'block'}],
-    breakdown: { 'No tag':25, Secondment:15 }
+    types: ['No tag','Job'],
+    blocked: 39, stale: 15, total: 48,
+    fields: [{f:'Type Tag',t:'block'},{f:'Business Unit',t:'block'}],
+    breakdown: { 'TypeTag':37, 'BU':1 }
   },
   {
-    name: 'GovTech',
-    types: ['Gig','agilePSD','Job'],
-    blocked: 31, stale: 12, total: 40,
-    fields: [{f:'Function',t:'block'},{f:'Time commitment',t:'block'},{f:'Business Unit',t:'tbc'}],
-    breakdown: { agilePSD:16, Gig:9, Job:6 }
+    name: '(No agency set)',
+    types: ['Job','SJR'],
+    blocked: 22, stale: 3, total: 27,
+    fields: [{f:'Agency (missing)',t:'block'}],
+    breakdown: { 'Agency missing':22 }
   },
   {
-    name: 'Ministry of Manpower',
-    types: ['Secondment','Job','Other (TBC)'],
-    blocked: 28, stale: 19, total: 35,
-    fields: [{f:'Start date',t:'block'},{f:'Function',t:'block'},{f:'Agency',t:'block'}],
-    breakdown: { Secondment:14, Job:9, 'Other (TBC)':5 }
+    name: 'National Council of Social Service',
+    types: ['Job'],
+    blocked: 18, stale: 0, total: 20,
+    fields: [{f:'End date',t:'block'},{f:'Business Unit',t:'tbc'}],
+    breakdown: { 'EndDate':15, 'BU':2 }
   },
   {
-    name: 'Ministry of Finance',
-    types: ['Secondment','SJR'],
-    blocked: 24, stale: 18, total: 30,
-    fields: [{f:'Function',t:'block'},{f:'Agency',t:'block'}],
-    breakdown: { Secondment:18, SJR:6 }
+    name: 'Ministry of Trade and Industry',
+    types: ['Job','No tag','Gig/STIP'],
+    blocked: 16, stale: 17, total: 44,
+    fields: [{f:'Type Tag',t:'block'},{f:'End date',t:'block'},{f:'Start date (Gig/STIP)',t:'block'}],
+    breakdown: { 'TypeTag':7, 'EndDate':8, 'StartDate(Gig/STIP)':7 }
+  },
+  {
+    name: 'Ministry of Digital Development and Information',
+    types: ['Job'],
+    blocked: 12, stale: 2, total: 17,
+    fields: [{f:'Business Unit',t:'block'}],
+    breakdown: { 'BU':12 }
   },
   {
     name: 'Public Service Division',
-    types: ['Job','Other (TBC)','No tag'],
-    blocked: 22, stale: 10, total: 28,
-    fields: [{f:'Business Unit',t:'block'},{f:'Type prefix',t:'block'},{f:'Function',t:'tbc'}],
-    breakdown: { Job:10, 'Other (TBC)':7, 'No tag':5 }
+    types: ['Job','No tag','Gig/STIP'],
+    blocked: 10, stale: 0, total: 37,
+    fields: [{f:'Business Unit',t:'block'},{f:'Type Tag',t:'block'},{f:'Start date (Gig/STIP)',t:'block'}],
+    breakdown: { 'BU':3, 'TypeTag':2, 'StartDate(Gig/STIP)':1 }
+  },
+  {
+    name: 'Workforce Singapore',
+    types: ['Job','No tag','Gig/STIP'],
+    blocked: 9, stale: 4, total: 22,
+    fields: [{f:'Business Unit',t:'block'},{f:'Start date (Gig/STIP)',t:'block'},{f:'Type Tag',t:'block'}],
+    breakdown: { 'BU':7, 'StartDate(Gig/STIP)':1, 'TypeTag':1 }
+  },
+  {
+    name: 'National Library Board',
+    types: ['Job'],
+    blocked: 8, stale: 0, total: 22,
+    fields: [{f:'Business Unit',t:'block'},{f:'Type Tag',t:'tbc'}],
+    breakdown: { 'BU':6, 'TypeTag':1 }
   },
   {
     name: 'Ministry of Education',
-    types: ['Secondment','Job'],
-    blocked: 19, stale: 14, total: 24,
-    fields: [{f:'Start date',t:'block'},{f:'Function',t:'block'}],
-    breakdown: { Secondment:12, Job:7 }
+    types: ['Job'],
+    blocked: 1, stale: 14, total: 24,
+    fields: [{f:'Type Tag',t:'tbc'}],
+    breakdown: { 'TypeTag':1 }
   },
   {
-    name: 'Health Promotion Board',
-    types: ['Gig','STIP'],
-    blocked: 16, stale: 8, total: 20,
-    fields: [{f:'Function',t:'block'},{f:'Time commitment',t:'block'},{f:'End date',t:'block'}],
-    breakdown: { Gig:10, STIP:6 }
+    name: 'Singapore Police Force',
+    types: ['Job'],
+    blocked: 2, stale: 0, total: 7,
+    fields: [{f:'Type Tag',t:'tbc'}],
+    breakdown: { 'TypeTag':2 }
   },
   {
-    name: 'Ministry of Health',
-    types: ['Job','SJR','No tag'],
-    blocked: 15, stale: 7, total: 20,
-    fields: [{f:'Type prefix',t:'block'},{f:'Agency',t:'block'},{f:'Function',t:'tbc'}],
-    breakdown: { Job:7, SJR:5, 'No tag':3 }
+    name: 'Economic Development Board',
+    types: ['Job'],
+    blocked: 2, stale: 0, total: 18,
+    fields: [{f:'Type Tag',t:'tbc'}],
+    breakdown: { 'TypeTag':2 }
   },
   {
-    name: 'Inland Revenue Authority of Singapore',
-    types: ['Secondment','SJR'],
-    blocked: 12, stale: 9, total: 16,
-    fields: [{f:'Function',t:'block'},{f:'Business Unit',t:'block'}],
-    breakdown: { Secondment:8, SJR:4 }
-  },
-  {
-    name: 'Ministry of Home Affairs',
-    types: ['Job','Secondment'],
-    blocked: 10, stale: 6, total: 14,
-    fields: [{f:'Function',t:'block'},{f:'Agency',t:'block'}],
-    breakdown: { Job:6, Secondment:4 }
-  },
-  {
-    name: 'National Environment Agency',
-    types: ['Gig','Other (TBC)'],
-    blocked: 9, stale: 4, total: 12,
-    fields: [{f:'Function',t:'block'},{f:'Business Unit',t:'tbc'}],
-    breakdown: { Gig:5, 'Other (TBC)':4 }
-  },
-  {
-    name: 'Urban Redevelopment Authority',
-    types: ['Secondment','Job'],
-    blocked: 8, stale: 5, total: 11,
-    fields: [{f:'Start date',t:'block'},{f:'Business Unit',t:'block'}],
-    breakdown: { Secondment:5, Job:3 }
-  },
-  {
-    name: 'Other agencies (18)',
-    types: ['Various'],
-    blocked: 19, stale: 96, total: 120,
-    fields: [{f:'Function',t:'block'},{f:'Type prefix',t:'block'},{f:'Business Unit',t:'tbc'}],
-    breakdown: { Secondment:8, Job:6, 'No tag':5 }
+    name: "People's Association",
+    types: ['Job'],
+    blocked: 1, stale: 0, total: 11,
+    fields: [{f:'Type Tag',t:'tbc'}],
+    breakdown: { 'TypeTag':1 }
   },
 ];
 

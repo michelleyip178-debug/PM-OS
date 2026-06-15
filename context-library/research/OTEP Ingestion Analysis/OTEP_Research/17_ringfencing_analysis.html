@@ -103,13 +103,13 @@
 
   <div class="header">
     <h1>OTEP — Audience Ringfencing Analysis</h1>
-    <p>OTG allows opportunity owners to restrict visibility by agency (Location), Business Unit, or Function. This analysis quantifies how prevalent ringfencing is and what it means for OTEP ingestion. &nbsp;·&nbsp; Source: RAW_GIG_AUDIENCE_FILTERS Report &nbsp;·&nbsp; 2,187 records, 669 currently open</p>
+    <p>OTG allows opportunity owners to restrict visibility by agency (Location), Business Unit, or Function. This analysis quantifies how prevalent ringfencing is and what it means for OTEP ingestion. &nbsp;·&nbsp; Source: RAW_GIG_AUDIENCE_FILTERS Report &nbsp;·&nbsp; 2,187 records, 669 currently open &nbsp;·&nbsp; Updated 15 June 2026 (I-012 ratified)</p>
   </div>
 
-  <div class="alert">
-    <div class="alert-icon">⚠</div>
-    <div class="alert-text">
-      <strong>38% of open opportunities are ringfenced — OTEP cannot ingest these as public listings.</strong> 253 of 669 currently open opportunities are restricted to officers from specific agencies. If OTEP ingests them without enforcing the filter, ineligible officers see listings they cannot apply to. A new BO decision (D6) is needed: exclude, enforce, or flag ringfenced opportunities.
+  <div class="alert" style="background:#EAF3DE;border-color:#5DCAA5;">
+    <div class="alert-icon">✓</div>
+    <div class="alert-text" style="color:#085041;">
+      <strong>I-012 ratified — MVP ringfencing is agency-level only.</strong> OTEP MVP will enforce agency-level (Location) ringfencing only. BU and Function ringfencing (13 records) is deferred to post-MVP. This means OTEP reads the officer's agency at login and filters the catalogue accordingly — officers only see opportunities they are eligible for.
     </div>
   </div>
 
@@ -290,7 +290,7 @@
     </div>
   </div>
   <div style="background:#fff;border:0.5px solid #e0dfd8;border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.5rem;font-size:11px;color:#5f5e5a;line-height:1.7;">
-    <strong style="color:#1a1a18;">Secondment (unrecognised by OTEP):</strong> The most ringfenced type overall — 132 of 259 OTG Secondments have audience filters (51%). ESG accounts for 127 of these. This matters because BO is being asked to decide how Secondment maps to OTEP categories (D5). If Secondment is eventually ingested, its ringfencing rate must be handled.
+    <strong style="color:#1a1a18;">Secondment mapping (I-017 — confirmed 15 Jun 2026):</strong> The most ringfenced type overall — 132 of 259 OTG Secondments have audience filters (51%). ESG accounts for 127 of these. Secondments are confirmed as JOB category in CareerCompass (I-017, confirmed Xian Zhang 15 Jun). Secondments are ingested as Jobs with agency-level ringfencing enforced at display time (I-012 ratified).
   </div>
 
   <!-- OTEP implications -->
@@ -331,31 +331,27 @@
     </div>
   </div>
 
-  <!-- D6 decision card -->
-  <p class="section-title">New BO decision required</p>
-  <div class="d-card">
-    <div class="d-card-head">
-      <span class="d-num">D6</span>
-      <span class="d-title">How should OTEP handle ringfenced (audience-filtered) opportunities?</span>
-      <span class="d-status">Open</span>
+  <!-- D6 decision card — confirmed -->
+  <p class="section-title">Ringfencing decision — confirmed (I-012)</p>
+  <div class="d-card" style="border-color:#5DCAA5;">
+    <div class="d-card-head" style="background:#f0faf6;border-color:#5DCAA5;">
+      <span class="d-num" style="background:#5DCAA5;color:#085041;">I-012</span>
+      <span class="d-title">MVP ringfencing = agency-level only (Location filter)</span>
+      <span class="d-status" style="background:#EAF3DE;color:#3b6d11;border-color:#5DCAA5;">Ratified 12 Jun 2026</span>
     </div>
     <div class="d-body">
-      <p class="d-question"><strong>38% of open opportunities (253 of 669)</strong> are restricted to officers from specific agencies. OTEP must decide whether to exclude them, enforce the filter, or flag them. Enterprise Singapore alone accounts for 169 ringfenced opportunities — most are internal ESG HR movements (Secondments, IJPs) not intended for WOG-wide discovery. How OTEP handles this determines whether an ESG officer sees a different catalogue than an MOH officer.</p>
+      <p class="d-question"><strong>What was decided:</strong> OTEP MVP enforces agency-level (Location) ringfencing only. The ingestion pipeline reads the opportunity's audience filter and stores the eligible agency list. At display time, OTEP matches the logged-in officer's agency against the filter — officers see only opportunities they are eligible for. BU and Function ringfencing (13 records total) is deferred to post-MVP.</p>
       <div class="d-options">
         <div class="d-option rec">
-          <span class="opt-label opt-rec">A ★</span>
-          <span>Ingest all; enforce ringfence by matching officer's agency to Location filter at display time. Best user experience — each officer sees only what they're eligible for. Requires officer agency data to be available in OTEP session context. SJR is fully safe (0% ringfenced); start there, add enforcement for other types progressively.</span>
+          <span class="opt-label opt-rec">✓</span>
+          <span><strong>Confirmed approach:</strong> Ingest all opportunities (including ringfenced). Enforce agency-level Location filter at display time. Each officer sees only what they're eligible for. Requires officer agency to be available in OTEP session context (WOG AD / Keycloak). SJR is safe at MVP (0% ringfenced and excluded from MVP scope).</span>
         </div>
         <div class="d-option">
-          <span class="opt-label opt-other">B</span>
-          <span>Exclude ESG-ringfenced opportunities (169 records) as they represent internal HR movements not intended for WOG discovery. Ingest the remaining 84 ringfenced opportunities with a "Restricted" flag. Pragmatic and low-engineering, but ESG staff lose OTEP visibility of their internal opportunities.</span>
-        </div>
-        <div class="d-option">
-          <span class="opt-label opt-other">C</span>
-          <span>Exclude all ringfenced opportunities (253). Simplest implementation — add R13 to pipeline. OTEP serves only the 416 fully WOG-open opportunities. Catalogue shrinks by 38% but all listings are universally accessible.</span>
+          <span class="opt-label opt-other">Deferred</span>
+          <span>BU + Function ringfencing (13 records) — post-MVP. These are rare (HR/OD internal moves) and low-volume. Will be addressed in a follow-on sprint once agency-level enforcement is stable.</span>
         </div>
       </div>
-      <div class="d-impact"><strong>At stake:</strong> Up to 253 opportunities (38% of open catalogue) + OTEP's ability to serve personalised opportunity feeds per officer. Also affects D5 (Secondment mapping) — 51% of Secondments are ringfenced, so resolving D6 is a prerequisite to fully resolving D5.</div>
+      <div class="d-impact"><strong>Implementation dependency:</strong> Officer agency must be readable from the session context (WOG AD or Keycloak token). OTEP-305 (Login/Logout) and Keycloak integration are the engineering prerequisite. QA carry-in OTEP-305 is Keycloak-blocked as of 15 Jun — no target date from Pow Hwee yet.</div>
     </div>
   </div>
 
@@ -375,7 +371,7 @@
         <div class="bar-track"><div class="bar-fill" style="width:49%;background:#1D9E75;">127</div></div>
         <span class="bar-count">127</span>
       </div>
-      <p class="card-note">259 total Secondment in OTG. 51% ringfenced. If D5 resolves Secondment→JOB mapping, D6 must be resolved first for the 132 ringfenced ones. Only 127 are safe to ingest as WOG-open.</p>
+      <p class="card-note">259 total Secondment in OTG. 51% ringfenced. I-017 confirmed by Xian Zhang 15 Jun — Secondment → JOB category in CareerCompass. I-012 confirmed — agency-level ringfencing enforced at display time. 132 ringfenced Secondments visible to ESG officers only. 127 WOG-open Secondments ready to ingest.</p>
     </div>
 
     <div class="card">
@@ -401,7 +397,7 @@
   </div>
 
   <div class="footer">
-    Source: RAW_GIG_AUDIENCE_FILTERS Report (2,187 records) · Analysis: 10 June 2026 · Ringfencing = Has Audience Filter = Yes · "Open" = APPLICATIONS_OPEN status only · Part of OTEP_Research series (file 17 of 17)
+    Source: RAW_GIG_AUDIENCE_FILTERS Report (2,187 records) · Analysis: 10 June 2026 · Updated: 15 June 2026 (I-012 ratified) · Ringfencing = Has Audience Filter = Yes · "Open" = APPLICATIONS_OPEN status only · Part of OTEP_Research series (file 17) · I-017 confirmed Xian Zhang 15 Jun 2026
   </div>
 </div>
 <script src="nav.js"></script>

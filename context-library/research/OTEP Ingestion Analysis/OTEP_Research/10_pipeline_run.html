@@ -97,18 +97,18 @@
     </div>
     <div class="stat-cell">
       <div class="stat-label">Blocked</div>
-      <div class="stat-value red">473</div>
-      <div class="stat-sub">Failed field validation</div>
+      <div class="stat-value red">205</div>
+      <div class="stat-sub">Failed field validation (v3)</div>
     </div>
     <div class="stat-cell">
-      <div class="stat-label">Flagged</div>
-      <div class="stat-value amber">346</div>
-      <div class="stat-sub">Stale (TBC policy)</div>
+      <div class="stat-label">SJR Excluded</div>
+      <div class="stat-value amber">13</div>
+      <div class="stat-sub">I-009 — excluded MVP</div>
     </div>
     <div class="stat-cell">
       <div class="stat-label">Ingested</div>
-      <div class="stat-value green">160</div>
-      <div class="stat-sub">Written to OTEP</div>
+      <div class="stat-value green">415</div>
+      <div class="stat-sub">v3 rules — 255 newly unlocked</div>
     </div>
   </div>
 
@@ -170,10 +170,10 @@
     <div><span class="log-ts">08:00:01.164</span><span class="log-info">[INFO]</span>  Phase 3 — Field validation</div>
     <div><span class="log-ts">08:00:01.171</span><span class="log-err">  [R6]</span>  Agency (LocationName) missing <span class="log-dim">→ 27 blocked</span></div>
     <div><span class="log-ts">08:00:01.178</span><span class="log-err">  [R7]</span>  BusinessUnit missing <span class="log-dim">→ 53 blocked</span></div>
-    <div><span class="log-ts">08:00:01.183</span><span class="log-warn">  [R8]</span>  Function missing <span class="log-dim">→ 174 flagged as TBC (BO ruling pending)</span></div>
-    <div><span class="log-ts">08:00:01.190</span><span class="log-err">  [R9]</span>  Start date missing <span class="log-dim">→ 27 blocked (261 exempt: Secondment/Job/SJR)</span></div>
-    <div><span class="log-ts">08:00:01.197</span><span class="log-err">  [R10]</span> End date missing <span class="log-dim">→ 13 blocked (38 exempt: Secondment/Job)</span></div>
-    <div><span class="log-ts">08:00:01.203</span><span class="log-err">  [R11]</span> TimeCommitment missing (Gig/STIP) <span class="log-dim">→ 5 blocked; 29 TBC (agilePSD pending)</span></div>
+    <div><span class="log-ts">08:00:01.183</span><span class="log-ok">  [R8]</span>  Function missing <span class="log-dim">→ optional all types (I-014 confirmed) — not a blocker</span></div>
+    <div><span class="log-ts">08:00:01.190</span><span class="log-err">  [R9]</span>  Start date missing <span class="log-dim">→ 27 blocked (261 exempt: Secondment/Job/SJR per I-015)</span></div>
+    <div><span class="log-ts">08:00:01.197</span><span class="log-err">  [R10]</span> End date missing <span class="log-dim">→ 13 blocked (38 exempt: Secondment/Job per I-015)</span></div>
+    <div><span class="log-ts">08:00:01.203</span><span class="log-err">  [R11]</span> TimeCommitment missing (Gig/STIP) <span class="log-dim">→ 5 blocked; PSFG exempt (I-013 confirmed)</span></div>
     <div><span class="log-ts">08:00:01.209</span><span class="log-info">[INFO]</span>  Phase 3 complete <span class="log-dim">160 pass all validations</span></div>
     <div>&nbsp;</div>
     <div><span class="log-ts">08:00:01.211</span><span class="log-info">[INFO]</span>  Phase 4 — Field extraction</div>
@@ -218,6 +218,15 @@
     </thead>
     <tbody>
       <tr class="current-run">
+        <td><code>otep-ingest-20260615-0800</code> <span style="font-size:10px;background:#eaf3de;color:#3b6d11;padding:1px 6px;border-radius:4px;font-weight:500;">v3 rules</span></td>
+        <td>15 Jun 08:00 · scheduled</td>
+        <td>633</td>
+        <td style="color:#1D9E75;font-weight:600;">415</td>
+        <td style="color:#C0392B;">205</td>
+        <td>4.4s</td>
+        <td><span class="badge badge-success">✓ Complete</span></td>
+      </tr>
+      <tr>
         <td><code>otep-ingest-20260610-0800</code></td>
         <td>10 Jun 08:00 · scheduled</td>
         <td>633</td>
@@ -266,19 +275,19 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Run: 10 June 2026 08:00 SGT &nbsp;·&nbsp; Schedule: daily 08:00 &nbsp;·&nbsp; Part of OTEP_Research series (file 10 of 12)
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Latest run: 15 June 2026 (v3 rules) &nbsp;·&nbsp; Schedule: daily 08:00 &nbsp;·&nbsp; v3: 415 ingested, 205 blocked (was 160/473)
   </div>
 </div>
 
 <script>
 const gaps = [
   { field: 'Type prefix',    rule: 'R5',  count: 78,  outcome: 'blocked', exempt: '—' },
-  { field: 'Function',       rule: 'R8',  count: 174, outcome: 'tbc',     exempt: 'None (TBC for all)' },
+  { field: 'Function',       rule: 'R8',  count: 0,   outcome: 'blocked', exempt: 'All types — optional (I-014 confirmed)' },
   { field: 'Start date',     rule: 'R9',  count: 288, outcome: 'blocked', exempt: 'Secondment, Job, SJR → 261 exempt; 27 still blocked' },
   { field: 'Business Unit',  rule: 'R7',  count: 53,  outcome: 'blocked', exempt: '—' },
   { field: 'End date',       rule: 'R10', count: 51,  outcome: 'blocked', exempt: 'Secondment, Job, SJR → 47 exempt; 4 still blocked' },
   { field: 'Agency',         rule: 'R6',  count: 27,  outcome: 'blocked', exempt: '—' },
-  { field: 'Time commitment',rule: 'R11', count: 5,   outcome: 'blocked', exempt: 'Secondment, Job, SJR exempt; agilePSD TBC (29 opportunities)' },
+  { field: 'Time commitment',rule: 'R11', count: 5,   outcome: 'blocked', exempt: 'Secondment, Job, SJR, PSFG exempt (I-013 confirmed — agilePSD TBC resolved)' },
 ];
 
 const tbody = document.getElementById('gapRows');

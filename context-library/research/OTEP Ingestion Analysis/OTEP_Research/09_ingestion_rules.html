@@ -99,7 +99,7 @@
 
   <div class="header">
     <h1>OTEP — Ingestion Business Rules</h1>
-    <p>What passes, what fails, what gets flagged — and why &nbsp;·&nbsp; For BO / PM sign-off &nbsp;·&nbsp; Draft as at 10 June 2026</p>
+    <p>What passes, what fails, what gets flagged — and why &nbsp;·&nbsp; v3 rules — ratified 12 Jun 2026 &nbsp;·&nbsp; Updated 15 June 2026</p>
   </div>
 
   <div class="chips">
@@ -107,7 +107,7 @@
     <div class="chip"><strong>5</strong> pre-flight checks (applied in order)</div>
     <div class="chip"><strong>7</strong> field validation rules</div>
     <div class="chip"><strong>1</strong> extraction rule (non-blocking)</div>
-    <div class="chip"><strong>4</strong> rules pending BO decision to finalise</div>
+    <div class="chip"><strong style="color:#0f6e56;">0</strong> rules pending — I-017 &amp; I-018 confirmed 15 Jun</div>
   </div>
 
   <!-- Outcome legend -->
@@ -183,27 +183,17 @@
       </div>
     </div>
 
-    <div class="rule-card" style="border-color:#B0CAE8;">
-      <div class="rule-card-header" style="background:#f8fbff;">
+    <div class="rule-card">
+      <div class="rule-card-header">
         <span class="rule-number">R3</span>
-        <span class="rule-name">Stale opportunity handling</span>
-        <span class="outcome-pill op-tbc">BO decision needed</span>
+        <span class="rule-name">Lifecycle — visible if closing_date &gt; today OR closing_date IS NULL</span>
+        <span class="outcome-pill op-pass">Confirmed — I-004</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">A opportunity is <strong>stale</strong> when its <strong>end_date has passed</strong> but its Status is still Open. Currently <strong>346 opportunities</strong> are stale; 255 of those have zero applicants; 74 expired over a year ago.</div>
+        <div class="rule-condition">An opportunity is ingested if its <strong>closing_date is in the future</strong> or <strong>is null</strong> (evergreen). Past-date opportunities are excluded. The nil sentinel <code>00/01/1900</code> is treated as null (evergreen). Confirmed (I-004). For Job, Secondment, and SJR types where end_date is not required (R10), the staleness check is skipped entirely — these remain visible until the agency manually closes them.</div>
         <div class="rule-grid">
-          <div class="rule-box rb-why"><strong>BO must choose one of:</strong>
-            <br>A. Exclude all stale opportunities (safest for applicant trust)
-            <br>B. Exclude stale + zero-applicant opportunities only (255 excluded)
-            <br>C. Ingest stale opportunities with a "closing soon" indicator
-            <br>D. Ingest all as-is (no stale logic)
-          </div>
-          <div class="rule-box rb-data"><strong>Impact of each option</strong>
-            <br>A → 346 fewer opportunities in OTEP at launch
-            <br>B → 255 fewer opportunities; 91 stale-but-active remain
-            <br>C → requires new field in OTEP schema
-            <br>D → applicants may apply to expired roles
-          </div>
+          <div class="rule-box rb-data"><strong>Current impact</strong>Past-date records with zero applicants are excluded at this step. 51 records still blocked on missing end date — these are Gig/STIP types where end date remains required.</div>
+          <div class="rule-box rb-exc"><strong>Evergreen handling</strong>Agencies can set closing_date to 00/01/1900 to mark a standing role as evergreen. OTG ops can update this on behalf of agencies where needed.</div>
         </div>
       </div>
     </div>
@@ -246,54 +236,48 @@
             </tr>
             <tr>
               <td class="td-field">JOB</td>
-              <td>[Job], [IJP], [Internal Job Posting], [PASTAP], [Internal Rotation]</td>
+              <td>[Job], [IJP], [Internal Job Posting], [PASTAP], [Internal Rotation], [Secondment] <span class="pill p-pass" style="font-size:9px;">I-017 confirmed</span></td>
               <td><span class="pill p-pass">Not required</span></td>
-              <td style="color:#D4880A;">TBC — split from 129*</td>
+              <td>129 + 259 Secondments (I-017 confirmed 15 Jun — Secondment = Job)</td>
             </tr>
             <tr>
-              <td class="td-field">C@G Jobs</td>
-              <td>[Careers@Gov], [C@G] (confirm exact OTG prefix)</td>
+              <td class="td-field">PSFG</td>
+              <td>[PSFG] (confirm exact OTG prefix — I-018 pending)</td>
               <td><span class="pill p-pass">Not required</span></td>
-              <td style="color:#D4880A;">TBC — split from 129*</td>
+              <td style="color:#D4880A;">TBC — pending I-018 mapping validation</td>
             </tr>
             <tr>
               <td class="td-field">SJR</td>
               <td>[SJR], [Sjr]</td>
               <td><span class="pill p-pass">Not required</span></td>
-              <td>39</td>
+              <td>39 (excluded from MVP ingestion — I-009)</td>
             </tr>
           </tbody>
         </table>
-        <div style="font-size:11px;color:#888780;margin-bottom:10px;">* JOB and C@G Jobs are currently merged in our analysis as "Job (129)". Exact split requires re-running classification against confirmed OTG prefix for C@G Jobs.</div>
+        <div style="font-size:11px;color:#155724;margin-bottom:10px;">I-017 (Secondment → JOB) and I-018 (5-category model) confirmed by Xian Zhang 15 Jun 2026. Engineering can finalise OTEP-86 filter logic.</div>
         <div style="background:#FCEBEB;border-radius:6px;padding:8px 10px;font-size:11px;color:#A32D2D;">
-          <strong>Blocked at classification (pending D5 — mapping decision):</strong>
+          <strong>Still blocked at classification (data quality — not rule decisions):</strong>
           <table style="margin-top:6px;margin-bottom:0;border:none;background:transparent;">
-            <thead><tr><th style="background:transparent;padding:4px 8px;color:#A32D2D;">OTG prefix type</th><th style="background:transparent;padding:4px 8px;color:#A32D2D;">Open opps</th><th style="background:transparent;padding:4px 8px;color:#A32D2D;">Status</th></tr></thead>
+            <thead><tr><th style="background:transparent;padding:4px 8px;color:#A32D2D;">OTG prefix type</th><th style="background:transparent;padding:4px 8px;color:#A32D2D;">Still blocked</th><th style="background:transparent;padding:4px 8px;color:#A32D2D;">Fix needed</th></tr></thead>
             <tbody>
-              <tr><td style="padding:4px 8px;border-color:#f5c6c6;font-weight:500;">[Secondment]</td><td style="padding:4px 8px;border-color:#f5c6c6;">259</td><td style="padding:4px 8px;border-color:#f5c6c6;">No matching OTEP category — blocked until D5 resolved</td></tr>
-              <tr><td style="padding:4px 8px;border-color:#f5c6c6;font-weight:500;">[agilePSD]</td><td style="padding:4px 8px;border-color:#f5c6c6;">29</td><td style="padding:4px 8px;border-color:#f5c6c6;">No matching OTEP category — blocked until D5 resolved</td></tr>
-              <tr><td style="padding:4px 8px;border-color:#f5c6c6;font-weight:500;">Other (TBC variants)</td><td style="padding:4px 8px;border-color:#f5c6c6;">56</td><td style="padding:4px 8px;border-color:#f5c6c6;">Unrecognised prefixes — blocked until D5 resolved</td></tr>
+              <tr><td style="padding:4px 8px;border-color:#f5c6c6;font-weight:500;">No tag / unrecognised</td><td style="padding:4px 8px;border-color:#f5c6c6;">78</td><td style="padding:4px 8px;border-color:#f5c6c6;">Agency must correct the GigName prefix — product team cannot guess</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <div class="rule-card" style="border-color:#B0CAE8;">
-      <div class="rule-card-header" style="background:#f8fbff;">
+    <div class="rule-card">
+      <div class="rule-card-header">
         <span class="rule-number">R5</span>
-        <span class="rule-name">Opportunities with no type prefix — handling TBC</span>
-        <span class="outcome-pill op-tbc">BO decision needed</span>
+        <span class="rule-name">Opportunities with no recognised type prefix — hard blocked</span>
+        <span class="outcome-pill op-block">Blocked</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">If GigName does not start with a <strong>[prefix]</strong>, the opportunity cannot be typed. Currently <strong>78 opportunities</strong> have no prefix — mostly from MSF (37) and Enterprise Singapore (19). Based on naming patterns, most are likely Jobs or Secondments.</div>
+        <div class="rule-condition">If GigName does not start with a recognised <strong>[prefix]</strong>, the opportunity is hard blocked. Currently <strong>78 opportunities</strong> have no prefix or use an unrecognised tag (e.g. "No tag," "Other (TBC)," "agilePSD (TBC)"). OTEP cannot guess the type — agencies must correct the GigName prefix before the record can pass.</div>
         <div class="rule-grid">
-          <div class="rule-box rb-why"><strong>BO must choose one of:</strong>
-            <br>A. Hard block — route to remediation report, require agencies to add a prefix (recommended)
-            <br>B. Ingest as "Uncategorised" — display without type, no TC validation
-            <br>C. Attempt keyword inference — classify from GigName body (fragile, needs ongoing maintenance)
-          </div>
-          <div class="rule-box rb-data"><strong>Recommended: Option A</strong><br>Requiring a prefix enforces minimal data quality without guessing. Agencies already use the convention — these are outliers. A clear report message tells them exactly what to add.</div>
+          <div class="rule-box rb-why"><strong>Why hard block</strong>Type is required for filtering on CareerCompass. An untyped opportunity cannot be shown in filtered views and creates a poor applicant experience. Requiring agencies to fix the prefix enforces minimal data quality and takes only minutes per record.</div>
+          <div class="rule-box rb-data"><strong>Current impact</strong>78 records blocked — MSF (37), ESG (19), others (22). These are the top remaining blocker after v3 rule changes. The remediation report (v3) includes the full GigID list per agency.</div>
         </div>
       </div>
     </div>
@@ -334,17 +318,17 @@
       </div>
     </div>
 
-    <div class="rule-card" style="border-color:#B0CAE8;">
-      <div class="rule-card-header" style="background:#f8fbff;">
+    <div class="rule-card">
+      <div class="rule-card-header">
         <span class="rule-number">R8</span>
-        <span class="rule-name">Function must be present — ruling to confirm</span>
-        <span class="outcome-pill op-tbc">BO to confirm</span>
+        <span class="rule-name">Function — optional for all types (display-only)</span>
+        <span class="outcome-pill op-pass">Confirmed — I-014</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">Function is currently treated as <strong>required for all types</strong>. However, short-term opportunities and STIPs may not map cleanly to a single function. BO to confirm whether a missing Function should hard-block ingestion for all types, or only for permanent/long-term opportunities.</div>
+        <div class="rule-condition">Function is <strong>display-only</strong> — a missing Function does not block ingestion for any type. Officers browsing without a function filter see the opportunity; function-filtered views correctly exclude it. Amber (designer) handles the graceful null state on listing cards — no "Function: —" label. Confirmed 12 Jun 2026 (I-014).</div>
         <div class="rule-grid">
-          <div class="rule-box rb-data"><strong>Current impact</strong>174 opportunities missing Function across all types. Largest gaps: Other TBC (31), Secondment (52), Job (41), Gig (13). If confirmed required for all: all 174 remain blocked.</div>
-          <div class="rule-box rb-exc"><strong>Recommended position</strong>Require Function for all types. It is the primary discoverability filter on OTEP — without it, applicants cannot find the opportunity when browsing by function area.</div>
+          <div class="rule-box rb-data"><strong>Impact of this decision</strong>174 opportunities that were blocked solely on missing Function are now unblocked. These contributed to the ESG and NLB unlocks in the v3 re-run.</div>
+          <div class="rule-box rb-exc"><strong>Implementation note</strong>Ingestion pipeline skips Function validation entirely. OTEP listing page: if Function is null, the function chip on the card is hidden (not shown as empty). Amber to confirm final null state design.</div>
         </div>
       </div>
     </div>
@@ -356,10 +340,10 @@
         <span class="outcome-pill op-pass">Confirmed</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">Start date is <strong>required for Gig, STIP, agilePSD, Other (TBC), and No tag</strong>. It is <strong>not required</strong> for Secondment, Job, or SJR — these are evergreen or permanent-style roles where a fixed start date may not be applicable. BO confirmed this exemption on 10 June 2026.</div>
+        <div class="rule-condition">Start date is <strong>required for Gig and STIP</strong>. It is <strong>not required</strong> for Job or Secondment — these are standing roles where a fixed start date may not be applicable. Card shows "Ongoing / No fixed start" when absent. Confirmed 12 Jun 2026 (I-015).</div>
         <div class="rule-grid">
-          <div class="rule-box rb-data"><strong>Impact of this decision</strong>288 opportunities were missing start date. Secondment accounts for 200, Job for 61. With this exemption, up to 261 opportunities no longer blocked on this field alone — the single largest unblock from any BO decision.</div>
-          <div class="rule-box rb-exc"><strong>Implementation</strong>Exemption applied at the type level — no new schema field required. Ingestion pipeline skips start date validation when <code>type ∈ {Secondment, Job, SJR}</code>. Confirmed — no further BO sign-off needed.</div>
+          <div class="rule-box rb-data"><strong>Impact of this decision</strong>The single largest unlock from the 12 Jun session. 230 Secondments (ESG, MTI) and 87 Jobs blocked on start date are now passing. Still required for Gigs and STIPs — 27 records remain blocked on this field for those types.</div>
+          <div class="rule-box rb-exc"><strong>Implementation</strong>Exemption applied at type level — no schema change required. Ingestion pipeline skips start date validation when <code>type ∈ {Job, Secondment}</code>. Confirmed — no further sign-off needed.</div>
         </div>
       </div>
     </div>
@@ -367,11 +351,11 @@
     <div class="rule-card">
       <div class="rule-card-header">
         <span class="rule-number">R10</span>
-        <span class="rule-name">End date — Secondment, Job, SJR exempt (confirmed)</span>
-        <span class="outcome-pill op-pass">Confirmed</span>
+        <span class="rule-name">End date — Job and Secondment exempt (confirmed)</span>
+        <span class="outcome-pill op-pass">Confirmed — I-015</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">End date is <strong>required for Gig, STIP, agilePSD, Other (TBC), and No tag</strong>. It is <strong>not required</strong> for Secondment, Job, or SJR. BO confirmed this exemption on 10 June 2026. These types are permanent or standing roles and do not have a natural deadline for delisting.</div>
+        <div class="rule-condition">End date is <strong>required for Gig and STIP</strong>. It is <strong>not required</strong> for Job or Secondment — these are permanent or standing roles with no natural deadline for delisting. Confirmed 12 Jun 2026 (I-015, same decision as start date exemption).</div>
         <div class="rule-grid">
           <div class="rule-box rb-data"><strong>Impact of this decision</strong>51 opportunities missing end date; Secondment accounts for 38. With this exemption, those Secondment opportunities are no longer blocked on end date. Staleness detection (R3) does not apply to these types when end date is absent.</div>
           <div class="rule-box rb-why"><strong>Staleness handling</strong>For Secondment/Job/SJR with no end date, R3 staleness check is skipped. These opportunities remain in OTEP until the agency manually closes or delists them.</div>
@@ -383,13 +367,13 @@
       <div class="rule-card-header">
         <span class="rule-number">R11</span>
         <span class="rule-name">Time commitment — required for Gig and STIP only</span>
-        <span class="outcome-pill op-block">Blocked (Gig/STIP) · TBC (others)</span>
+        <span class="outcome-pill op-pass">Confirmed — I-013</span>
       </div>
       <div class="rule-body">
-        <div class="rule-condition">Time commitment is a <strong>hard required field for Gig and STIP</strong> — these are short-term assignments where duration is a core applicant expectation. It is <strong>not required</strong> for Secondment, Job, or SJR. For agilePSD and Other (TBC) types, the rule awaits BO confirmation.</div>
+        <div class="rule-condition">Time commitment is a <strong>hard required field for Gig and STIP</strong> — these are short-term assignments where duration is a core applicant expectation. It is <strong>not required</strong> for Job or Secondment — these are full-time roles by nature. Confirmed 12 Jun 2026 (I-013).</div>
         <div class="rule-grid">
-          <div class="rule-box rb-data"><strong>Current impact</strong>Gig: 5 missing TC (hard blocked). STIP: all 7 have TC (no block). agilePSD: 29 opportunities with TC absent — if required, all 29 become blocked; if not, only 5 remain blocked (missing Function).</div>
-          <div class="rule-box rb-exc"><strong>Recommended position for TBC types</strong>Treat agilePSD as job/secondment-equivalent → TC not required. Treat Other (TBC) on a per-tag basis — some variants (e.g. Innofest) are likely project-based and should require TC.</div>
+          <div class="rule-box rb-data"><strong>Current impact</strong>Gig: 5 records still missing TC (hard blocked — agency must add hours/week and dates). STIP: all passing on TC. Job/Secondment: TC validation skipped entirely. This closed a rule misfit that had been blocking 5 Jobs incorrectly.</div>
+          <div class="rule-box rb-exc"><strong>Implementation</strong>TC validation fires only when <code>type ∈ {Gig, STIP}</code>. No schema change required. Records that were previously blocked as Jobs due to missing TC now pass this check.</div>
         </div>
       </div>
     </div>
@@ -422,19 +406,17 @@
   </div>
 
   <!-- Summary decision table -->
-  <p class="section-title">Rule summary — field × type outcome matrix</p>
+  <p class="section-title">Rule summary — field × type outcome matrix (v3 rules — 12 Jun 2026)</p>
   <table class="summary-table">
     <thead>
       <tr>
         <th class="left">Field / Rule</th>
         <th>Gig</th>
         <th>STIP</th>
-        <th>Secondment</th>
-        <th>Job</th>
+        <th>Job / Secondment</th>
+        <th>PSFG</th>
         <th>SJR</th>
-        <th>agilePSD</th>
-        <th>Other (TBC)</th>
-        <th>No tag</th>
+        <th>No tag / unrecognised</th>
       </tr>
     </thead>
     <tbody>
@@ -442,11 +424,9 @@
         <td class="left">R4 · Type prefix</td>
         <td><span class="pill p-pass">✓</span></td>
         <td><span class="pill p-pass">✓</span></td>
-        <td><span class="pill p-pass">✓</span></td>
-        <td><span class="pill p-pass">✓</span></td>
-        <td><span class="pill p-pass">✓</span></td>
-        <td><span class="pill p-pass">✓</span></td>
-        <td><span class="pill p-flag">TBC</span></td>
+        <td><span class="pill p-pass">✓</span> <span style="font-size:9px;color:#155724;">I-017 confirmed</span></td>
+        <td><span class="pill p-flag">TBC</span> <span style="font-size:9px;color:#854F0B;">I-018 pending</span></td>
+        <td><span class="pill p-skip">Excluded</span> <span style="font-size:9px;color:#888780;">MVP</span></td>
         <td><span class="pill p-block">Blocked</span></td>
       </tr>
       <tr>
@@ -455,9 +435,7 @@
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
       </tr>
       <tr>
@@ -466,97 +444,98 @@
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
       </tr>
       <tr>
-        <td class="left">R8 · Function</td>
+        <td class="left">R8 · Function <span style="font-size:9px;color:#3B6D11;">I-014 ✓</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+        <td><span class="pill p-na">—</span></td>
+      </tr>
+      <tr>
+        <td class="left">R9 · Start date <span style="font-size:9px;color:#3B6D11;">I-015 ✓</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
       </tr>
       <tr>
-        <td class="left">R9 · Start date</td>
+        <td class="left">R10 · End date <span style="font-size:9px;color:#3B6D11;">I-015 ✓</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-na">—</span></td>
-        <td><span class="pill p-na">—</span></td>
-        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
+        <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
       </tr>
       <tr>
-        <td class="left">R10 · End date</td>
+        <td class="left">R11 · Time commitment <span style="font-size:9px;color:#3B6D11;">I-013 ✓</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-block">Req</span></td>
         <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-na">—</span></td>
         <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-      </tr>
-      <tr>
-        <td class="left">R11 · Time commitment</td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-block">Req</span></td>
-        <td><span class="pill p-na">—</span></td>
-        <td><span class="pill p-na">—</span></td>
-        <td><span class="pill p-na">—</span></td>
-        <td><span class="pill p-flag">TBC</span></td>
-        <td><span class="pill p-flag">TBC</span></td>
-        <td><span class="pill p-na">—</span></td>
       </tr>
     </tbody>
   </table>
   <p style="font-size:11px;color:#888780;margin-top:-10px;margin-bottom:1.5rem;">
     <strong style="color:#A32D2D;">Req</strong> = missing → BLOCKED &nbsp;·&nbsp;
-    <strong style="color:#854F0B;">Pend / TBC</strong> = awaiting BO decision &nbsp;·&nbsp;
-    <span style="color:#D3D1C7;">—</span> = not applicable, no validation run &nbsp;·&nbsp;
-    ✓ = passes this check
+    <strong style="color:#155724;">All confirmed</strong> — I-017 &amp; I-018 ratified 15 Jun 2026 &nbsp;·&nbsp;
+    <span style="color:#D3D1C7;">—</span> = not applicable, validation skipped &nbsp;·&nbsp;
+    ✓ = passes this check &nbsp;·&nbsp;
+    Excluded = out of MVP scope
   </p>
 
   <!-- Pending decisions -->
-  <p class="section-title">Decisions needed before rules can be finalised</p>
+  <p class="section-title">Decision status — all v3 rules ratified including I-017 and I-018 (15 Jun 2026)</p>
   <div class="pending-box">
-    <h3>4 open items — BO sign-off required</h3>
-    <div class="pending-row" style="background:#FEF3F2;border-radius:6px;padding:2px 4px;border-left:3px solid #FCA5A5;">
-      <strong style="color:#991B1B;">D5 ⚠</strong>
-      <span style="color:#991B1B;"><strong>Highest impact:</strong> How do Secondment, agilePSD, and Other (TBC) map to the 5 OTEP categories? 344 opportunities blocked pending this decision.</span>
+    <h3>All items confirmed — I-017 and I-018 ratified by Xian Zhang 15 Jun 2026</h3>
+    <div class="pending-row" style="background:#fdf9f3;border-radius:6px;padding:2px 4px;border-left:3px solid #F0C27F;">
+      <strong style="color:#854F0B;">I-018 ⚠</strong>
+      <span style="color:#155724;"><strong>OTEP-86 unblocked:</strong> 5-category model (STIPs, Gigs, Jobs, SJR, PSFG) confirmed by Xian Zhang 15 Jun 2026.</span>
       <span class="rule-ref">R4</span>
     </div>
-    <div class="pending-row">
-      <strong>D1</strong>
-      <span>Is time commitment required for <strong>agilePSD</strong> and <strong>Other (TBC)</strong> type opportunities?</span>
+    <div class="pending-row" style="background:#fdf9f3;border-radius:6px;padding:2px 4px;border-left:3px solid #F0C27F;">
+      <strong style="color:#155724;">I-017 ✓</strong>
+      <span style="color:#155724;"><strong>Card labelling confirmed:</strong> Secondments display as "Jobs" in CareerCompass. Confirmed by Xian Zhang 15 Jun 2026.</span>
+      <span class="rule-ref">R4</span>
+    </div>
+    <div class="pending-row" style="background:#EAF3DE;border-radius:6px;padding:2px 4px;">
+      <strong style="color:#3B6D11;">I-015 ✓</strong>
+      <span style="color:#3B6D11;"><strong>Confirmed 12 Jun:</strong> Start date optional for Job and Secondment. Hard required for Gig and STIP only.</span>
+      <span class="rule-ref">R9</span>
+    </div>
+    <div class="pending-row" style="background:#EAF3DE;border-radius:6px;padding:2px 4px;">
+      <strong style="color:#3B6D11;">I-014 ✓</strong>
+      <span style="color:#3B6D11;"><strong>Confirmed 12 Jun:</strong> Function is optional for all types — display-only, not a hard requirement.</span>
+      <span class="rule-ref">R8</span>
+    </div>
+    <div class="pending-row" style="background:#EAF3DE;border-radius:6px;padding:2px 4px;">
+      <strong style="color:#3B6D11;">I-013 ✓</strong>
+      <span style="color:#3B6D11;"><strong>Confirmed 12 Jun:</strong> Time commitment required for Gig and STIP only. Not applicable to Job, Secondment, SJR.</span>
       <span class="rule-ref">R11</span>
     </div>
     <div class="pending-row" style="background:#EAF3DE;border-radius:6px;padding:2px 4px;">
-      <strong style="color:#3B6D11;">D2 ✓</strong>
-      <span style="color:#3B6D11;"><strong>Confirmed 10 Jun:</strong> Start and end date are not mandatory for Secondment, Job, SJR.</span>
-      <span class="rule-ref">R9 · R10</span>
+      <strong style="color:#3B6D11;">I-009 ✓</strong>
+      <span style="color:#3B6D11;"><strong>Confirmed:</strong> SJR excluded from MVP ingestion entirely — separate module, not in launch scope.</span>
+      <span class="rule-ref">R4</span>
     </div>
-    <div class="pending-row">
-      <strong>D3</strong>
-      <span>What happens to <strong>stale opportunities</strong> (end_date past)? Skip all / skip stale+zero / flag / ingest as-is?</span>
+    <div class="pending-row" style="background:#EAF3DE;border-radius:6px;padding:2px 4px;">
+      <strong style="color:#3B6D11;">I-004 ✓</strong>
+      <span style="color:#3B6D11;"><strong>Confirmed:</strong> Lifecycle rule — visible if closing_date &gt; today OR closing_date IS NULL (evergreen). Nil sentinel = 00/01/1900.</span>
       <span class="rule-ref">R3</span>
-    </div>
-    <div class="pending-row">
-      <strong>D4</strong>
-      <span>What happens to opportunities with <strong>no type prefix</strong>? Hard block / ingest as Uncategorised / keyword inference?</span>
-      <span class="rule-ref">R5</span>
     </div>
   </div>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Rules drafted: 10 June 2026 &nbsp;·&nbsp; Status: DRAFT — 4 decisions open, D2 confirmed &nbsp;·&nbsp; Part of OTEP_Research series (file 09 of 15)
+    Source: OTEP_Remediation_Report_v3.xlsx &nbsp;·&nbsp; Rules ratified: 12 June 2026 (I-013, I-014, I-015) &nbsp;·&nbsp; Status: all rules confirmed — I-017 &amp; I-018 ratified 15 Jun 2026 &nbsp;·&nbsp; Updated 15 June 2026 &nbsp;·&nbsp; Part of OTEP_Research series (file 09)
   </div>
 </div>
 <script src="nav.js"></script>

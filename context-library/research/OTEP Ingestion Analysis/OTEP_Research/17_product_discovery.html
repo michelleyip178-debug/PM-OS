@@ -99,31 +99,31 @@
   <div class="doc-meta">
     <span><strong>Date</strong> 10 June 2026</span>
     <span><strong>Owner</strong> Michelle Yip</span>
-    <span><strong>Status</strong> Draft</span>
+    <span><strong>Status</strong> Updated 15 June 2026 — v3 rules confirmed</span>
   </div>
   <h1>OTG Ingestion — Product Discovery</h1>
-  <p class="subtitle">What we know, what's unresolved, and what needs to happen before Sprint 5.</p>
+  <p class="subtitle">What we know, what's resolved, and what's still pending Xian Zhang validation before Sprint 5.</p>
 
   <!-- TL;DR -->
   <div class="tldr-card">
-    <div class="tldr-label">TL;DR</div>
-    <p>The pipeline works. The data doesn't. 75% of OTG's 633 open gigs will hard-skip on first run, leaving CareerCompass launching with <strong>~160 opportunities</strong>. Secondment searches will return almost nothing — 89% of secondments are blocked.</p>
-    <p>The fix isn't engineering. It's two PM decisions with Pow Hwee (are start date and function required fields?) that unlock ~300 more gigs without any agency lifting a finger. After that, one remediation session with Enterprise Singapore unlocks another 178.</p>
+    <div class="tldr-label">TL;DR (updated 15 Jun — v3 rules)</div>
+    <p>The pipeline works. The data decisions are mostly made. v3 rules ratified 12 Jun: <strong>415 opportunities now passing</strong>, up from 160. Three key rule changes (I-013/I-014/I-015) unlocked 255 gigs without any agency lifting a finger.</p>
+    <p>Remaining blockers: type tag (78), end date (51), BU (47), start date Gig/STIP (27), agency (22). I-017 (Secondment→JOB mapping) and I-018 (5-category model) confirmed by Xian Zhang 15 Jun 2026. Agency remediation with Enterprise Singapore is the next unlock.</p>
   </div>
 
-  <p class="section-label">Three things to act on now</p>
+  <p class="section-label">Three things still to act on</p>
   <ul class="action-list">
     <li>
-      <span class="action-badge badge-today">Today</span>
-      <span>Confirm start date + function scope with Pow Hwee. Update OTEP-192 ACs immediately after.</span>
+      <span class="action-badge badge-today">By 20 Jun</span>
+      <span>I-017 (Secondment→JOB) and I-018 (5-category model) confirmed by Xian Zhang 15 Jun 2026. OTEP-86 unblocked.</span>
     </li>
     <li>
-      <span class="action-badge badge-week">This week</span>
-      <span>BO meeting (Jacky / Xian Zhang) to confirm minimum viable catalogue threshold and stale gig policy.</span>
+      <span class="action-badge badge-week">This sprint</span>
+      <span>Update OTEP-192 ACs with v3 rules (StartDate optional for Job/Secondment, Function optional all types, TC for Gig/STIP only).</span>
     </li>
     <li>
       <span class="action-badge badge-after">After OTEP-192</span>
-      <span>Send per-agency skip reports. Start with Enterprise Singapore — they're 38% of all blocked gigs.</span>
+      <span>Send per-agency skip reports. Enterprise Singapore (178 blocked) is the biggest unlock remaining.</span>
     </li>
   </ul>
 
@@ -150,35 +150,34 @@
       <div class="lbl">Open gigs in OTG source</div>
     </div>
     <div class="stat green">
-      <div class="num">160</div>
-      <div class="lbl">Passing — ready to ingest (25%)</div>
+      <div class="num">415</div>
+      <div class="lbl">Passing — v3 rules (65%)</div>
     </div>
     <div class="stat red">
-      <div class="num">473</div>
-      <div class="lbl">Blocked — will hard-skip (75%)</div>
+      <div class="num">205</div>
+      <div class="lbl">Still blocked (32%)</div>
     </div>
     <div class="stat amber">
-      <div class="num">346</div>
-      <div class="lbl">Open gigs past closing date</div>
+      <div class="num">13</div>
+      <div class="lbl">SJR — excluded MVP (I-009)</div>
     </div>
   </div>
 
-  <h3>What's blocking the 473</h3>
+  <h3>What's still blocking 205 gigs (v3 rules)</h3>
   <table>
     <thead>
-      <tr><th>Field missing</th><th>Gigs affected</th><th>Currently required?</th></tr>
+      <tr><th>Field missing</th><th>Gigs affected</th><th>v3 rule status</th></tr>
     </thead>
     <tbody>
-      <tr><td>Start date (GigStart)</td><td><strong>288</strong></td><td><span class="tag-amber">TBD — highest leverage</span></td></tr>
-      <tr><td>Function</td><td>174</td><td><span class="tag-amber">TBD — mostly Secondments</span></td></tr>
-      <tr><td>Type tag (missing / unrecognised)</td><td>163</td><td><span class="tag-red">Yes — hard skip</span></td></tr>
-      <tr><td>Business unit</td><td>47</td><td><span class="tag-amber">TBD</span></td></tr>
-      <tr><td>End date</td><td>51</td><td><span class="tag-gray">Partial — nil is valid</span></td></tr>
-      <tr><td>Agency (unresolvable)</td><td>27</td><td><span class="tag-red">Yes — hard skip</span></td></tr>
-      <tr><td>Time commitment</td><td>5</td><td><span class="tag-amber">TBD</span></td></tr>
+      <tr><td>Type tag (missing / unrecognised)</td><td><strong>78</strong></td><td><span class="tag-red">Hard block — agencies must fix at source</span></td></tr>
+      <tr><td>End date (Gig/STIP)</td><td>51</td><td><span class="tag-red">Required for Gig/STIP — I-015 confirmed</span></td></tr>
+      <tr><td>Business unit</td><td>47</td><td><span class="tag-red">Required — agencies must fix</span></td></tr>
+      <tr><td>Start date (Gig/STIP)</td><td>27</td><td><span class="tag-red">Required for Gig/STIP — I-015 confirmed</span></td></tr>
+      <tr><td>Agency (unresolvable)</td><td>22</td><td><span class="tag-red">Hard block</span></td></tr>
+      <tr><td>Time commitment (Gig/STIP)</td><td>5</td><td><span class="tag-green">Confirmed — I-013 (Gig/STIP only)</span></td></tr>
     </tbody>
   </table>
-  <p style="font-size:11px;color:#888780;">Many gigs fail on more than one field — counts above overlap. Net blocked: 473.</p>
+  <p style="font-size:11px;color:#888780;">v3 unlocked 255 gigs. Function (I-014) and StartDate/EndDate for Job/Secondment (I-015) are now confirmed optional — no longer blocking. Net still blocked: 205.</p>
 
   <h3>Blocked by type</h3>
   <table>
@@ -223,147 +222,87 @@
 
   <hr class="divider">
 
-  <!-- Open decisions -->
-  <h2>3. Open Decisions</h2>
-  <p>These are unresolved. Each one directly affects catalogue size or story ACs. They need owners and deadlines.</p>
+  <!-- Decisions — confirmed and pending -->
+  <h2>3. Decisions — Confirmed &amp; Pending</h2>
+  <p>All v3 rules now ratified. I-017 and I-018 confirmed by Xian Zhang 15 Jun 2026.</p>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#5DCAA5;">
     <div class="decision-header">
-      <div class="decision-num">A</div>
+      <div class="decision-num" style="background:#3b6d11;">&#10003;</div>
       <div>
-        <div class="decision-title">Is start date (GigStart) required or optional?</div>
-        <div class="decision-stakes">Affects 288 gigs — the single biggest lever</div>
+        <div class="decision-title" style="color:#0f6e56;">I-015 — Start date optional for Job &amp; Secondment</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Confirmed 12 Jun · Unlocked ~200 Secondments and ~61 Jobs</div>
       </div>
     </div>
-    <p>Secondments are standing roles. A start date may genuinely not exist for them. Gigs and STIPs are time-bound — the date is material to the officer's decision.</p>
-    <div class="options-label">Options</div>
-    <div class="option">
-      <div class="opt-letter">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Required for all types</div>
-        <div class="opt-note">288 gigs hard-skip. Blanket rule hits standing roles unfairly.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter rec">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Optional for Secondments + Jobs only (recommended)</div>
-        <div class="opt-note">Most of 288 pass. Matches role semantics — standing roles don't have a fixed start.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">C</div>
-      <div class="opt-body">
-        <div class="opt-title">Remove as required field entirely</div>
-        <div class="opt-note">Maximum unlock, but reduces listing quality for time-bound roles.</div>
-      </div>
-    </div>
-    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 ACs finalised</p>
+    <p>Secondments are standing roles — start date genuinely may not exist. Jobs similarly. Gig/STIP remain required (time-bound roles). PSFG: required. This matches option B from the original proposal.</p>
+    <p style="font-size:12px;color:#3b6d11;">Decision: I-015 ratified &nbsp;·&nbsp; Update OTEP-192 ACs before S5 grooming</p>
   </div>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#5DCAA5;">
     <div class="decision-header">
-      <div class="decision-num">B</div>
+      <div class="decision-num" style="background:#3b6d11;">&#10003;</div>
       <div>
-        <div class="decision-title">Is function required or display-only?</div>
-        <div class="decision-stakes">Affects 174 gigs, heavily overlapping with Secondments</div>
+        <div class="decision-title" style="color:#0f6e56;">I-014 — Function optional for all types (display-only)</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Confirmed 12 Jun · Unlocked 174 gigs</div>
       </div>
     </div>
-    <p>Function drives the filter on OTEP-86. If required, 174 gigs hard-skip but filter accuracy is preserved. If optional, those gigs appear in unfiltered browsing but not in function-filtered views.</p>
-    <div class="options-label">Options</div>
-    <div class="option">
-      <div class="opt-letter">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Required for all types</div>
-        <div class="opt-note">174 gigs hard-skip. Filter is accurate but smaller.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter rec">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Optional / display-only (recommended)</div>
-        <div class="opt-note">174 gigs pass. A gig without a function is still a valid opportunity — it just won't appear in function-filtered views.</div>
-      </div>
-    </div>
-    <div class="callout amber" style="margin-top:.75rem;">
-      <div class="callout-label">Design note for Amber</div>
-      If function is optional, the listing card needs a graceful null state. Empty function-filter results need a design too.
-    </div>
-    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 ACs finalised</p>
+    <p>Function is display-only on the listing card — a gig without a function is still a valid opportunity. Gigs missing function won't appear in function-filtered views, which is acceptable. Amber to design the null state for the listing card.</p>
+    <p style="font-size:12px;color:#3b6d11;">Decision: I-014 ratified</p>
   </div>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#5DCAA5;">
     <div class="decision-header">
-      <div class="decision-num">C</div>
+      <div class="decision-num" style="background:#3b6d11;">&#10003;</div>
       <div>
-        <div class="decision-title">Are competencies + time commitment required or optional?</div>
-        <div class="decision-stakes">Affects OTEP-87 detail page design and Léo's transform logic</div>
+        <div class="decision-title" style="color:#0f6e56;">I-013 — Time commitment required for Gig/STIP only</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Confirmed 12 Jun · agilePSD now classified as PSFG (TC not required)</div>
       </div>
     </div>
-    <p>If required: every ingested record has competency data — Amber designs for a populated section. If optional: records can be null — Amber designs both states (populated and empty). Open item #41: Pow Hwee to schedule meeting with core team.</p>
-    <p style="font-size:12px;color:#888780;">Owner: Pow Hwee (to schedule) + Michelle &nbsp;·&nbsp; Needed by: before S4/S5 OTEP-87 grooming</p>
+    <p>TC is not required for Job, Secondment, SJR, or PSFG (formerly agilePSD). Only Gig and STIP require it. This closes the "agilePSD TBC" uncertainty.</p>
+    <p style="font-size:12px;color:#3b6d11;">Decision: I-013 ratified</p>
   </div>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#5DCAA5;">
     <div class="decision-header">
-      <div class="decision-num">D</div>
+      <div class="decision-num" style="background:#3b6d11;">&#10003;</div>
       <div>
-        <div class="decision-title">Stale gig policy — pipeline exclusion or rely on lifecycle rule?</div>
-        <div class="decision-stakes">Affects 346 open gigs past their closing date</div>
+        <div class="decision-title" style="color:#0f6e56;">I-004 — Lifecycle rule confirmed: closing_date &gt; today OR NULL</div>
+        <div class="decision-stakes" style="color:#3b6d11;">Confirmed · Stale gigs ingest but are hidden by lifecycle rule</div>
       </div>
     </div>
-    <p>The existing lifecycle rule (<code style="font-size:11px;background:#f1efe8;padding:1px 5px;border-radius:3px;">closing_date &gt; today OR closing_date IS NULL</code>) already hides stale gigs from officers. This is a DB hygiene question, not an officer experience question.</p>
-    <div class="options-label">Options</div>
-    <div class="option">
-      <div class="opt-letter rec">A</div>
-      <div class="opt-body">
-        <div class="opt-title">Rely on lifecycle rule for MVP (recommended)</div>
-        <div class="opt-note">Stale gigs ingest, sit in DB, never visible to officers. Already works correctly.</div>
-      </div>
-    </div>
-    <div class="option">
-      <div class="opt-letter">B</div>
-      <div class="opt-body">
-        <div class="opt-title">Pipeline exclusion (stale + zero applicants)</div>
-        <div class="opt-note">255 fewer DB records. Cleaner audit trail. Add in S5/6 review.</div>
-      </div>
-    </div>
-    <div class="callout blue" style="margin-top:.75rem;">
-      <div class="callout-label">Also needed</div>
-      Hardcode exclusion of 3 test entries (GigIDs 13733, 14807, 14813) from ingestion. Michelle to add to OTEP-192 ACs.
-    </div>
-    <p style="font-size:12px;color:#888780;margin-top:.75rem;">Owner: Pow Hwee + Michelle &nbsp;·&nbsp; Needed by: before OTEP-192 closes</p>
+    <p>Stale gigs ingest into the DB but are never visible to officers. The lifecycle rule handles this at display time. No pipeline exclusion needed for MVP. Test entry exclusions (GigIDs 13733, 14807, 14813) confirmed.</p>
+    <p style="font-size:12px;color:#3b6d11;">Decision: I-004 confirmed</p>
   </div>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#EF9F27;">
     <div class="decision-header">
-      <div class="decision-num">E</div>
+      <div class="decision-num" style="background:#854f0b;">?</div>
       <div>
-        <div class="decision-title">Programme-type TC exemption (agilePSD, KidSTART, etc.)</div>
-        <div class="decision-stakes">Affects ~109 gigs in edge-case programme categories</div>
+        <div class="decision-title" style="color:#633806;">I-017 — Secondment maps to JOB category in CareerCompass</div>
+        <div class="decision-stakes" style="color:#155724;">Confirmed by Xian Zhang 15 Jun 2026 &nbsp;·&nbsp; 259 Secondments ingest as Jobs</div>
       </div>
     </div>
-    <p>agilePSD (29 gigs, all from PSD) is the cleanest case — fully dated, zero stale. Are programme types exempt from the time commitment requirement like Jobs and Secondments, or must they have TC like Gigs?</p>
-    <p style="font-size:12px;color:#888780;">Owner: Michelle → BOs (Jacky / Xian Zhang) &nbsp;·&nbsp; Needed by: before go-live date is set</p>
+    <p>Proposed mapping: Secondment opportunities display under the "Jobs" category in CC (alongside permanent Jobs). This is a CC UX decision, not an ingestion rule. The 127 Secondments that pass v3 field rules can ingest regardless — I-017 only affects the display category in CC.</p>
+    <p style="font-size:12px;color:#155724;">Confirmed: Xian Zhang 15 June 2026</p>
   </div>
 
-  <div class="decision-card">
+  <div class="decision-card" style="border-color:#EF9F27;">
     <div class="decision-header">
-      <div class="decision-num">F</div>
+      <div class="decision-num" style="background:#854f0b;">?</div>
       <div>
-        <div class="decision-title">What is the minimum viable catalogue threshold for launch?</div>
-        <div class="decision-stakes">No floor set = no go-live date can be confirmed</div>
+        <div class="decision-title" style="color:#633806;">I-018 — 5-category model for CareerCompass</div>
+        <div class="decision-stakes" style="color:#155724;">Confirmed by Xian Zhang 15 Jun 2026 &nbsp;·&nbsp; OTEP-86 unblocked</div>
       </div>
     </div>
-    <p>Recommended: 350+ ingested gigs with at least 3 opportunity types with 20+ each. Below 300 is thin — some filter views will return single digits.</p>
-    <p style="font-size:12px;color:#888780;">Owner: Michelle → BOs &nbsp;·&nbsp; Needed by: before S5 planning</p>
+    <p>Confirmed: STIPs, Gigs, Jobs (incl. Secondments — I-017 ratified 15 Jun), SJR (excluded MVP), PSFG. This replaces the old agilePSD category name. Xian Zhang confirmation needed before OTEP-86 display logic is built.</p>
+    <p style="font-size:12px;color:#155724;">Confirmed: Xian Zhang 15 June 2026</p>
   </div>
 
   <hr class="divider">
 
   <!-- What's confirmed -->
-  <h2>4. What's Already Confirmed</h2>
-  <p>These 10 decisions are settled. Don't re-open them.</p>
+  <h2>4. What's Confirmed (v3 — 12 June 2026)</h2>
+  <p>These decisions are settled. Don't re-open them.</p>
   <table>
     <thead>
       <tr><th>Decision</th><th>Detail</th><th>Date</th></tr>
@@ -371,14 +310,16 @@
     <tbody>
       <tr><td>Ingestion method</td><td>Excel file import (not API)</td><td>2026-05-14</td></tr>
       <tr><td>Sync cadence</td><td>One-time port only — no ongoing automated sync</td><td>2026-05-29</td></tr>
-      <tr><td>SJRs excluded</td><td>No apply flow, no card, no ingestion</td><td>2026-05-21</td></tr>
+      <tr><td>SJRs excluded — I-009</td><td>No apply flow, no card, no ingestion for SJR</td><td>2026-05-21</td></tr>
       <tr><td>Hard-skip rule</td><td>Any missing mapped field = entire row skipped</td><td>2026-06-08</td></tr>
       <tr><td>Unrecognised type prefixes</td><td>Hard-skip pending DevOps/DT fix at source</td><td>2026-06-04</td></tr>
-      <tr><td>formsg_url required</td><td>No apply URL = no point ingesting</td><td>2026-06-08</td></tr>
+      <tr><td>formsg_url non-blocking</td><td>No FormSG URL = still ingests, UI shows contact message</td><td>2026-06-08</td></tr>
       <tr><td>Nil closing date</td><td>"00/01/1900" = evergreen = valid, maps to nil</td><td>2026-05-29</td></tr>
-      <tr><td>Opportunity lifecycle</td><td>closing_date > today OR nil. Date-driven, not manual.</td><td>2026-05-13</td></tr>
-      <tr><td>OTEP-130 removed from S4</td><td>FormSG webhook moved to backlog — R1 concern</td><td>2026-06-10</td></tr>
-      <tr><td>Ingestion rules revisit</td><td>Structured review of skip rules in S5/6</td><td>2026-06-10</td></tr>
+      <tr><td>Lifecycle rule — I-004</td><td>closing_date > today OR nil. Stale gigs ingest but hidden from officers.</td><td>2026-06-12</td></tr>
+      <tr><td>TC rule — I-013</td><td>Time commitment required for Gig/STIP only. Job/Secondment/PSFG exempt.</td><td>2026-06-12</td></tr>
+      <tr><td>Function rule — I-014</td><td>Function optional (display-only) for all types. 174 gigs unlocked.</td><td>2026-06-12</td></tr>
+      <tr><td>Start/End date rule — I-015</td><td>StartDate/EndDate optional for Job and Secondment. Required for Gig/STIP/PSFG.</td><td>2026-06-12</td></tr>
+      <tr><td>Ringfencing — I-012</td><td>Agency-level only for MVP. BU/Function ringfencing deferred post-MVP.</td><td>2026-06-12</td></tr>
     </tbody>
   </table>
 
@@ -426,30 +367,25 @@
   <hr class="divider">
 
   <!-- Open items -->
-  <h2>6. Open Items Summary</h2>
+  <h2>6. Open Items Summary (v3 — updated 15 June 2026)</h2>
   <table>
     <thead>
       <tr><th>#</th><th>Item</th><th>Owner</th><th>By when</th></tr>
     </thead>
     <tbody>
-      <tr><td>A</td><td>Start date required or optional (per-type rule?)</td><td>Pow Hwee + Michelle</td><td><span class="tag-red">Today</span></td></tr>
-      <tr><td>B</td><td>Function required or optional?</td><td>Pow Hwee + Michelle</td><td><span class="tag-red">Today</span></td></tr>
-      <tr><td>C</td><td>Competencies + time commitment required or optional?</td><td>Pow Hwee to schedule</td><td><span class="tag-amber">Before OTEP-87 grooming</span></td></tr>
-      <tr><td>D</td><td>Stale gig policy — pipeline or lifecycle rule?</td><td>Pow Hwee + Michelle</td><td><span class="tag-amber">Before OTEP-192 closes</span></td></tr>
-      <tr><td>E</td><td>Programme-type TC exemption (agilePSD etc.)?</td><td>Michelle → BOs</td><td><span class="tag-amber">Before go-live set</span></td></tr>
-      <tr><td>F</td><td>Minimum viable catalogue threshold</td><td>Michelle → BOs</td><td><span class="tag-amber">Before S5 planning</span></td></tr>
-      <tr><td>G</td><td>Admin list for upload UI (OTEP-397)</td><td>Michelle</td><td><span class="tag-amber">Before OTEP-397 closes</span></td></tr>
-      <tr><td>H</td><td>OTEP-358 (nil-date spike) into S4 planning brief</td><td>Michelle</td><td><span class="tag-red">Thu</span></td></tr>
-      <tr><td>I</td><td>CFT sequence diagram (OTEP-391)</td><td>Hao Eng / Pow Hwee</td><td><span class="tag-red">This week</span></td></tr>
-      <tr><td>J</td><td>OTEP-348 sequencing — S3 or S4?</td><td>Pow Hwee</td><td><span class="tag-red">Squad Sync</span></td></tr>
-      <tr><td>K</td><td>WOG AD form — Michelle to fill in</td><td>Michelle</td><td><span class="tag-red">ASAP</span></td></tr>
-      <tr><td>L</td><td>Canonical type tag list — who owns it?</td><td>Michelle / OTG Ops</td><td><span class="tag-amber">Before agency outreach</span></td></tr>
-      <tr><td>M</td><td>Per-agency skip report distributed to top 3 agencies</td><td>Michelle + Rama</td><td><span class="tag-gray">After OTEP-192 closes</span></td></tr>
+      <tr><td>A</td><td style="color:#3b6d11;">&#10003; Start date rule — optional for Job/Secondment (I-015)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
+      <tr><td>B</td><td style="color:#3b6d11;">&#10003; Function rule — optional for all types (I-014)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
+      <tr><td>C</td><td style="color:#3b6d11;">&#10003; TC rule — Gig/STIP only; PSFG exempt (I-013)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
+      <tr><td>D</td><td style="color:#3b6d11;">&#10003; Stale gig policy — lifecycle rule confirmed (I-004)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
+      <tr><td>E</td><td>I-017 — Secondment→JOB mapping in CareerCompass</td><td>Xian Zhang</td><td><span class="tag-green" style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;">Confirmed 15 Jun</span></td></tr>
+      <tr><td>F</td><td>I-018 — 5-category model validation (STIPs/Gigs/Jobs/SJR/PSFG)</td><td>Xian Zhang</td><td><span class="tag-green" style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;">Confirmed 15 Jun</span></td></tr>
+      <tr><td>G</td><td>Update OTEP-192 ACs with v3 rules</td><td>Michelle</td><td><span class="tag-amber">Before S5 grooming</span></td></tr>
+      <tr><td>H</td><td>Per-agency skip report to Enterprise Singapore (178 blocked)</td><td>Michelle + Rama</td><td><span class="tag-gray">After OTEP-192 closes</span></td></tr>
     </tbody>
   </table>
 
   <div class="footer">
-    <p>OTG Ingestion Product Discovery &nbsp;·&nbsp; 10 June 2026 &nbsp;·&nbsp; Source: decisions-log.md, open-items.md, trio analysis 2026-06-09, OTG Oppr.xlsx</p>
+    <p>OTG Ingestion Product Discovery &nbsp;·&nbsp; Updated 15 June 2026 (v3 rules) &nbsp;·&nbsp; Source: decisions-log.md, 06_bo_prep.html, 09_ingestion_rules.html</p>
   </div>
 
 </div>
