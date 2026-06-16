@@ -97,12 +97,12 @@
     </div>
     <div class="stat-cell">
       <div class="stat-label">Blocked</div>
-      <div class="stat-value red">205</div>
+      <div class="stat-value red">218</div>
       <div class="stat-sub">Failed field validation (v3)</div>
     </div>
     <div class="stat-cell">
       <div class="stat-label">SJR Excluded</div>
-      <div class="stat-value amber">13</div>
+      <div class="stat-value amber">39</div>
       <div class="stat-sub">I-009 — excluded MVP</div>
     </div>
     <div class="stat-cell">
@@ -135,17 +135,17 @@
       <div class="stage-num">Phase 3</div>
       <div class="stage-name">Field Validation</div>
       <div class="stage-in">Records in: <strong>550</strong></div>
-      <div class="stage-out out-red">Hard blocked: <strong>395</strong></div>
-      <div class="stage-out">TBC pending: <span style="color:#D4880A;"><strong>173</strong></span></div>
-      <div class="stage-out out-green">Passes all: <strong>160</strong></div>
+      <div class="stage-out out-red">Hard blocked: <strong>218</strong></div>
+      <div class="stage-out">SJR excluded (MVP): <span style="color:#D4880A;"><strong>39</strong></span></div>
+      <div class="stage-out out-green">Passes all (v3): <strong>415</strong></div>
     </div>
     <div class="stage-card">
       <div class="stage-num">Phase 4</div>
       <div class="stage-name">Extraction</div>
-      <div class="stage-in">Records processed: <strong>160</strong></div>
-      <div class="stage-out out-green">FormSG URL found: <strong>94</strong></div>
-      <div class="stage-out">No FormSG URL: <span style="color:#888780;"><strong>66</strong></span></div>
-      <div class="stage-out out-green">Written to OTEP: <strong>160</strong></div>
+      <div class="stage-in">Records processed: <strong>415</strong></div>
+      <div class="stage-out out-green">FormSG URL found: <strong>~250</strong></div>
+      <div class="stage-out">No FormSG URL: <span style="color:#888780;"><strong>~165</strong></span></div>
+      <div class="stage-out out-green">Written to OTEP: <strong>415</strong></div>
     </div>
   </div>
 
@@ -169,20 +169,20 @@
     <div>&nbsp;</div>
     <div><span class="log-ts">08:00:01.164</span><span class="log-info">[INFO]</span>  Phase 3 — Field validation</div>
     <div><span class="log-ts">08:00:01.171</span><span class="log-err">  [R6]</span>  Agency (LocationName) missing <span class="log-dim">→ 27 blocked</span></div>
-    <div><span class="log-ts">08:00:01.178</span><span class="log-err">  [R7]</span>  BusinessUnit missing <span class="log-dim">→ 53 blocked</span></div>
+    <div><span class="log-ts">08:00:01.178</span><span class="log-err">  [R7]</span>  BusinessUnit missing <span class="log-dim">→ 47 blocked</span></div>
     <div><span class="log-ts">08:00:01.183</span><span class="log-ok">  [R8]</span>  Function missing <span class="log-dim">→ optional all types (I-014 confirmed) — not a blocker</span></div>
     <div><span class="log-ts">08:00:01.190</span><span class="log-err">  [R9]</span>  Start date missing <span class="log-dim">→ 27 blocked (261 exempt: Secondment/Job/SJR per I-015)</span></div>
-    <div><span class="log-ts">08:00:01.197</span><span class="log-err">  [R10]</span> End date missing <span class="log-dim">→ 13 blocked (38 exempt: Secondment/Job per I-015)</span></div>
+    <div><span class="log-ts">08:00:01.197</span><span class="log-err">  [R10]</span> End date missing <span class="log-dim">→ 51 blocked (end date still required all types under v3)</span></div>
     <div><span class="log-ts">08:00:01.203</span><span class="log-err">  [R11]</span> TimeCommitment missing (Gig/STIP) <span class="log-dim">→ 5 blocked; PSFG exempt (I-013 confirmed)</span></div>
-    <div><span class="log-ts">08:00:01.209</span><span class="log-info">[INFO]</span>  Phase 3 complete <span class="log-dim">160 pass all validations</span></div>
+    <div><span class="log-ts">08:00:01.209</span><span class="log-info">[INFO]</span>  Phase 3 complete <span class="log-dim">415 pass all validations (v3 rules); 218 blocked; 39 SJR excluded</span></div>
     <div>&nbsp;</div>
     <div><span class="log-ts">08:00:01.211</span><span class="log-info">[INFO]</span>  Phase 4 — Field extraction</div>
     <div><span class="log-ts">08:00:01.228</span><span class="log-ok">  [R12]</span> FormSG URL extraction <span class="log-dim">pattern=https://form\.gov\.sg/[a-zA-Z0-9]+</span></div>
-    <div><span class="log-ts">08:00:01.231</span><span class="log-dim">         found=94  not_found=66  (non-blocking — all 160 forwarded)</span></div>
+    <div><span class="log-ts">08:00:01.231</span><span class="log-dim">         found=~250  not_found=~165  (non-blocking — all 415 forwarded)</span></div>
     <div>&nbsp;</div>
     <div><span class="log-ts">08:00:01.233</span><span class="log-info">[INFO]</span>  Writing to OTEP target</div>
-    <div><span class="log-ts">08:00:05.189</span><span class="log-ok">[OK]  </span>  <span class="log-white">160 records upserted to OTEP</span> <span class="log-dim">duration=3.956s</span></div>
-    <div><span class="log-ts">08:00:05.195</span><span class="log-warn">[WARN]</span>  <span class="log-white">Remediation report generated</span> <span class="log-dim">→ 473 blocked opportunities written to remediation_20260610.xlsx</span></div>
+    <div><span class="log-ts">08:00:05.189</span><span class="log-ok">[OK]  </span>  <span class="log-white">415 records upserted to OTEP</span> <span class="log-dim">duration=3.956s</span></div>
+    <div><span class="log-ts">08:00:05.195</span><span class="log-warn">[WARN]</span>  <span class="log-white">Remediation report generated</span> <span class="log-dim">→ 218 blocked opportunities written to remediation_20260615.xlsx</span></div>
     <div><span class="log-ts">08:00:05.201</span><span class="log-ok">[OK]  </span>  <span class="log-white">Run complete</span> <span class="log-dim">total=4.159s exit=0</span></div>
   </div>
 
@@ -222,7 +222,7 @@
         <td>15 Jun 08:00 · scheduled</td>
         <td>633</td>
         <td style="color:#1D9E75;font-weight:600;">415</td>
-        <td style="color:#C0392B;">205</td>
+        <td style="color:#C0392B;">218</td>
         <td>4.4s</td>
         <td><span class="badge badge-success">✓ Complete</span></td>
       </tr>
@@ -275,7 +275,7 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Latest run: 15 June 2026 (v3 rules) &nbsp;·&nbsp; Schedule: daily 08:00 &nbsp;·&nbsp; v3: 415 ingested, 205 blocked (was 160/473)
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Latest run: 15 June 2026 (v3 rules) &nbsp;·&nbsp; Schedule: daily 08:00 &nbsp;·&nbsp; v3: 415 ingested, 218 blocked (was 160/473)
   </div>
 </div>
 

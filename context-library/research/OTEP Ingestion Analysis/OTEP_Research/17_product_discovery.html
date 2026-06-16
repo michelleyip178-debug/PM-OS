@@ -123,7 +123,7 @@
     </li>
     <li>
       <span class="action-badge badge-after">After OTEP-192</span>
-      <span>Send per-agency skip reports. Enterprise Singapore (178 blocked) is the biggest unlock remaining.</span>
+      <span>Send per-agency skip reports. Enterprise Singapore (~44 still blocked) is the biggest unlock remaining.</span>
     </li>
   </ul>
 
@@ -154,16 +154,16 @@
       <div class="lbl">Passing — v3 rules (65%)</div>
     </div>
     <div class="stat red">
-      <div class="num">205</div>
-      <div class="lbl">Still blocked (32%)</div>
+      <div class="num">218</div>
+      <div class="lbl">Still blocked (34%)</div>
     </div>
     <div class="stat amber">
-      <div class="num">13</div>
+      <div class="num">39</div>
       <div class="lbl">SJR — excluded MVP (I-009)</div>
     </div>
   </div>
 
-  <h3>What's still blocking 205 gigs (v3 rules)</h3>
+  <h3>What's still blocking 218 opportunities (v3 rules)</h3>
   <table>
     <thead>
       <tr><th>Field missing</th><th>Gigs affected</th><th>v3 rule status</th></tr>
@@ -177,7 +177,7 @@
       <tr><td>Time commitment (Gig/STIP)</td><td>5</td><td><span class="tag-green">Confirmed — I-013 (Gig/STIP only)</span></td></tr>
     </tbody>
   </table>
-  <p style="font-size:11px;color:#888780;">v3 unlocked 255 gigs. Function (I-014) and StartDate/EndDate for Job/Secondment (I-015) are now confirmed optional — no longer blocking. Net still blocked: 205.</p>
+  <p style="font-size:11px;color:#888780;">v3 unlocked 255 gigs. Function (I-014) and StartDate/EndDate for Job/Secondment (I-015) are now confirmed optional — no longer blocking. Net still blocked: 218.</p>
 
   <h3>Blocked by type</h3>
   <table>
@@ -190,8 +190,8 @@
       <tr><td>No tag (unclassifiable)</td><td>78</td><td>78</td><td><span class="tag-red">100% — permanent until fixed at source</span></td></tr>
       <tr><td>Gig</td><td>36</td><td>20</td><td><span class="tag-amber">56%</span></td></tr>
       <tr><td>STIP</td><td>7</td><td>5</td><td><span class="tag-amber">71%</span></td></tr>
-      <tr><td>agilePSD</td><td>29</td><td>5</td><td><span class="tag-green">17% — low-hanging fruit</span></td></tr>
-      <tr><td>SJR</td><td>39</td><td>13</td><td><span class="tag-gray">Excluded by design</span></td></tr>
+      <tr><td>PSFG (agilePSD)</td><td>29</td><td>5</td><td><span class="tag-green">17% — low-hanging fruit</span></td></tr>
+      <tr><td>SJR</td><td>39</td><td>39</td><td><span class="tag-gray">Excluded by design (I-009)</span></td></tr>
     </tbody>
   </table>
 
@@ -288,13 +288,13 @@
 
   <div class="decision-card" style="border-color:#EF9F27;">
     <div class="decision-header">
-      <div class="decision-num" style="background:#854f0b;">?</div>
+      <div class="decision-num" style="background:#3b6d11;">✓</div>
       <div>
-        <div class="decision-title" style="color:#633806;">I-018 — 5-category model for CareerCompass</div>
+        <div class="decision-title" style="color:#0f6e56;">I-018 — 5-category model for CareerCompass</div>
         <div class="decision-stakes" style="color:#155724;">Confirmed by Xian Zhang 15 Jun 2026 &nbsp;·&nbsp; OTEP-86 unblocked</div>
       </div>
     </div>
-    <p>Confirmed: STIPs, Gigs, Jobs (incl. Secondments — I-017 ratified 15 Jun), SJR (excluded MVP), PSFG. This replaces the old agilePSD category name. Xian Zhang confirmation needed before OTEP-86 display logic is built.</p>
+    <p>Confirmed: STIPs, Gigs, PSFG, Jobs (incl. Secondments — I-017 ratified 15 Jun), SJR (excluded MVP). This replaces the old agilePSD category name. OTEP-86 display logic now unblocked.</p>
     <p style="font-size:12px;color:#155724;">Confirmed: Xian Zhang 15 June 2026</p>
   </div>
 
@@ -335,7 +335,7 @@
       <tr><th>Agency</th><th>Blocked gigs</th><th>% of all blocked</th></tr>
     </thead>
     <tbody>
-      <tr><td><strong>Enterprise Singapore</strong></td><td>178</td><td><span class="tag-red">38%</span></td></tr>
+      <tr><td><strong>Enterprise Singapore</strong></td><td>~44</td><td><span class="tag-amber">~20% (was 38% pre-v3)</span></td></tr>
       <tr><td>MTI</td><td>42</td><td>9%</td></tr>
       <tr><td>MSF</td><td>40</td><td>8%</td></tr>
       <tr><td>NLB</td><td>20</td><td>4%</td></tr>
@@ -378,9 +378,9 @@
       <tr><td>C</td><td style="color:#3b6d11;">&#10003; TC rule — Gig/STIP only; PSFG exempt (I-013)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
       <tr><td>D</td><td style="color:#3b6d11;">&#10003; Stale gig policy — lifecycle rule confirmed (I-004)</td><td>Confirmed</td><td><span class="tag-green">Done 12 Jun</span></td></tr>
       <tr><td>E</td><td>I-017 — Secondment→JOB mapping in CareerCompass</td><td>Xian Zhang</td><td><span class="tag-green" style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;">Confirmed 15 Jun</span></td></tr>
-      <tr><td>F</td><td>I-018 — 5-category model validation (STIPs/Gigs/Jobs/SJR/PSFG)</td><td>Xian Zhang</td><td><span class="tag-green" style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;">Confirmed 15 Jun</span></td></tr>
+      <tr><td>F</td><td>I-018 — 5-category model validation (STIPs/Gigs/PSFG/Jobs/SJR)</td><td>Xian Zhang</td><td><span class="tag-green" style="background:#d4edda;color:#155724;padding:2px 6px;border-radius:4px;">Confirmed 15 Jun</span></td></tr>
       <tr><td>G</td><td>Update OTEP-192 ACs with v3 rules</td><td>Michelle</td><td><span class="tag-amber">Before S5 grooming</span></td></tr>
-      <tr><td>H</td><td>Per-agency skip report to Enterprise Singapore (178 blocked)</td><td>Michelle + Rama</td><td><span class="tag-gray">After OTEP-192 closes</span></td></tr>
+      <tr><td>H</td><td>Per-agency skip report to Enterprise Singapore (~44 still blocked)</td><td>Michelle + Rama</td><td><span class="tag-gray">After OTEP-192 closes</span></td></tr>
     </tbody>
   </table>
 

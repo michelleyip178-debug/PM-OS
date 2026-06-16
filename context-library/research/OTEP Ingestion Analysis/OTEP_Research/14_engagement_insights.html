@@ -76,7 +76,7 @@
 
   <div class="alert">
     <h3>The hidden problem: fixing data quality may not fix the catalogue</h3>
-    <p>Even among the 160 opportunities that currently pass all validation rules, <strong>76% have zero applicants</strong> and <strong>37% are stale</strong>. Data completeness is a necessary but not sufficient condition for a healthy OTEP catalogue. Engagement is a separate failure mode.</p>
+    <p>Even among the 415 opportunities that currently pass all validation rules (v3), the zero-applicant and staleness problems persist. Data completeness is a necessary but not sufficient condition for a healthy OTEP catalogue. Engagement is a separate failure mode.</p>
   </div>
 
   <!-- Stats -->
@@ -88,8 +88,8 @@
     </div>
     <div class="stat-cell">
       <div class="stat-label">Zero-applicant (passing opportunities)</div>
-      <div class="stat-value" style="color:#D4880A;">76%</div>
-      <div class="stat-sub">122 of 160 ingested opportunities have 0 applicants</div>
+      <div class="stat-value" style="color:#D4880A;">~76%</div>
+      <div class="stat-sub">~315 of 415 ingested opportunities (v3) likely have 0 applicants (pre-v3 rate: 122 of 160)</div>
     </div>
     <div class="stat-cell">
       <div class="stat-label">Stale rate (all open)</div>
@@ -132,8 +132,8 @@
     </div>
     <div class="dead-card warn">
       <div class="dc-head">Passing opportunities with zero applicants</div>
-      <div class="dc-stat" style="color:#D4880A;">122</div>
-      <div class="dc-note">Of the 160 opportunities that reach OTEP, 122 have 0 applicants. These pass the pipeline but fail at engagement. Data quality alone didn't fix the problem.</div>
+      <div class="dc-stat" style="color:#D4880A;">~315</div>
+      <div class="dc-note">Of the 415 opportunities that pass under v3 rules, ~76% are estimated to have 0 applicants (pre-v3: 122 of 160). These pass the pipeline but fail at engagement. Data quality alone didn't fix the problem.</div>
     </div>
     <div class="dead-card">
       <div class="dc-head">Stale opportunities that still pass validation</div>
@@ -173,16 +173,16 @@
         <td style="font-size:11px;color:#5f5e5a;">Without D3 resolution, OTEP will fill with expired listings. This is a user-experience risk, not just a data risk.</td>
       </tr>
       <tr>
-        <td style="font-weight:500;">agilePSD is the highest-quality type but has zero traction</td>
-        <td><span class="sev sev-med">Medium</span></td>
-        <td style="font-size:11px;color:#5f5e5a;">29 opportunities, 0 stale, all dates present, 0% zero-ap only if TC TBC resolves</td>
-        <td style="font-size:11px;color:#5f5e5a;">Resolve TC ruling for agilePSD first — quickest win for a clean cohort entering OTEP</td>
+        <td style="font-weight:500;">PSFG (formerly agilePSD) is the highest-quality type — 24 of 29 now passing</td>
+        <td><span class="sev sev-low">Low</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">29 opportunities, 0 stale, all dates present. TC-exempt confirmed (I-013, 12 Jun). 24 pass; 5 still blocked by missing Function.</td>
+        <td style="font-size:11px;color:#5f5e5a;">PSFG is the cleanest cohort entering OTEP. Agency outreach on Function for 5 remaining blocked records.</td>
       </tr>
       <tr>
-        <td style="font-weight:500;">Function field is the biggest single-field unblock available</td>
-        <td><span class="sev sev-med">Medium</span></td>
-        <td style="font-size:11px;color:#5f5e5a;">174 opportunities missing Function — largest field gap after type prefix</td>
-        <td style="font-size:11px;color:#5f5e5a;">A targeted agency outreach campaign on Function alone could unlock ~100 additional opportunities</td>
+        <td style="font-weight:500;">Function field now optional (I-014, 12 Jun) — no longer a blocking field</td>
+        <td><span class="sev sev-low">Resolved</span></td>
+        <td style="font-size:11px;color:#5f5e5a;">174 opportunities were missing Function — this was confirmed optional for all types under I-014 (12 Jun). These 174 are no longer blocked; they just won't appear in function-filtered views.</td>
+        <td style="font-size:11px;color:#5f5e5a;">No agency action required for ingestion. Agency outreach on Function improves discoverability but doesn't affect catalogue count.</td>
       </tr>
       <tr>
         <td style="font-weight:500;">No tag opportunities are a data governance gap, not a pipeline gap</td>

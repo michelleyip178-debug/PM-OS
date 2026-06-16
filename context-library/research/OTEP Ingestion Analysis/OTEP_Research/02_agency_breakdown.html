@@ -42,7 +42,7 @@
 
   <div class="header">
     <h1>OTEP Ingestion — Agency Breakdown</h1>
-    <p>Still-blocked opportunities by agency (v3 rules) &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting) &nbsp;·&nbsp; <span style="background:#fcebeb;color:#a32d2d;font-size:11px;padding:2px 8px;border-radius:4px;">205 still blocked (v3 rules)</span></p>
+    <p>Still-blocked opportunities by agency (v3 rules) &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting) &nbsp;·&nbsp; <span style="background:#fcebeb;color:#a32d2d;font-size:11px;padding:2px 8px;border-radius:4px;">218 still blocked (v3 rules)</span></p>
   </div>
 
   <p class="section-title">Top agencies — still-blocked opportunity count by type (v3 rules)</p>
@@ -182,7 +182,7 @@ tableData.forEach((r, i) => {
 });
 
 // v3 still-blocked by type — Secondments now roll up into Jobs; StartDate/Function no longer block Jobs/Secondments
-const blockedByType = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR':13,'Gig':0,'STIP':0};
+const blockedByType = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR (excl. MVP)':39,'Gig':0,'STIP':0};
 const totalByType =   {'No tag':78,'Job/Secondment':388,'Other (TBC)':56,'SJR':39,'Gig':36,'STIP':7};
 const tLabels = Object.keys(blockedByType);
 

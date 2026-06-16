@@ -18,7 +18,6 @@
   .cover-meta { display: flex; gap: 20px; flex-wrap: wrap; }
   .meta-item { font-size: 12px; color: #888780; }
   .meta-item strong { font-weight: 500; color: #1a1a18; }
-  .status-badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 10px; border-radius: 20px; background: #FAEEDA; color: #854F0B; }
 
   /* Section titles */
   .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 2rem 0 .85rem; padding-bottom: 6px; border-bottom: 1px solid #e0dfd8; }
@@ -28,45 +27,51 @@
   .impact-cell { background: #fff; padding: 1rem 1.1rem; }
   .impact-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .05em; color: #888780; margin-bottom: 4px; }
   .impact-value { font-size: 26px; font-weight: 300; letter-spacing: -.5px; color: #1a1a18; }
-  .impact-value span { font-size: 13px; font-weight: 400; color: #888780; }
   .impact-note { font-size: 11px; color: #5f5e5a; margin-top: 3px; }
-  .impact-arrow { display: flex; align-items: center; justify-content: center; font-size: 20px; color: #b4b2a9; background: #f8f7f3; }
 
   /* Decision cards */
   .decision-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 1.5rem; }
   .d-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; }
   .d-card-head { padding: .85rem 1rem; border-bottom: 0.5px solid #f1efe8; display: flex; align-items: center; gap: 8px; }
   .d-num { font-size: 10px; font-weight: 600; background: #f1efe8; color: #888780; border-radius: 20px; padding: 2px 8px; flex-shrink: 0; }
+  .d-num-confirmed { font-size: 10px; font-weight: 600; background: #EAF3DE; color: #3B6D11; border-radius: 20px; padding: 2px 8px; flex-shrink: 0; }
   .d-title { font-size: 13px; font-weight: 500; flex: 1; }
   .d-status { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 500; flex-shrink: 0; }
-  .ds-open   { background: #FAEEDA; color: #854F0B; }
-  .ds-closed { background: #EAF3DE; color: #3B6D11; }
+  .ds-confirmed { background: #EAF3DE; color: #3B6D11; border: 1px solid #84C98A; }
   .d-body { padding: .85rem 1rem; }
   .d-question { font-size: 12px; color: #5f5e5a; margin-bottom: 10px; line-height: 1.5; }
-  .d-options { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-  .d-option { font-size: 11px; padding: 5px 9px; border-radius: 6px; border: 0.5px solid #e0dfd8; color: #5f5e5a; display: flex; align-items: flex-start; gap: 6px; cursor: default; }
-  .d-option.rec { border-color: #1D9E75; background: #f2fbf7; color: #1a1a18; }
-  .d-option .opt-label { font-size: 10px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-  .opt-rec { color: #1D9E75; }
-  .opt-other { color: #b4b2a9; }
-  .d-impact { font-size: 11px; padding: 6px 9px; background: #f8f7f3; border-radius: 6px; color: #5f5e5a; border-left: 2px solid #e0dfd8; }
+  .d-option { font-size: 11px; padding: 5px 9px; border-radius: 6px; border: 0.5px solid #84C98A; background: #f4fbf4; color: #1a1a18; display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px; }
+  .opt-label { font-size: 10px; font-weight: 600; flex-shrink: 0; margin-top: 1px; color: #1D9E75; }
+  .d-impact { font-size: 11px; padding: 6px 9px; background: #f8f7f3; border-radius: 6px; color: #5f5e5a; border-left: 2px solid #e0dfd8; margin-top: 6px; }
   .d-impact strong { font-weight: 500; color: #1a1a18; }
   .d-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #378ADD; text-decoration: none; margin-top: 8px; }
   .d-link:hover { text-decoration: underline; }
+  .d-date { font-size: 10px; color: #3B6D11; font-weight: 500; margin-top: 4px; }
 
-  /* Catalogue impact scenario */
+  /* Blocker table */
+  .blocker-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+  .blocker-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .blocker-table th { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: #888780; padding: 8px 12px; background: #f8f7f3; border-bottom: 1px solid #e0dfd8; text-align: left; }
+  .blocker-table td { padding: 9px 12px; border-bottom: 0.5px solid #f1efe8; vertical-align: top; }
+  .blocker-table tr:last-child td { border-bottom: none; }
+  .blocker-table .count { font-weight: 500; color: #E24B4A; font-size: 13px; }
+  .blocker-table .fix { font-size: 11px; color: #888780; }
+  .who-eng { display: inline-block; font-size: 10px; font-weight: 500; background: #EAF3DE; color: #3B6D11; padding: 1px 7px; border-radius: 20px; }
+  .who-agency { display: inline-block; font-size: 10px; font-weight: 500; background: #FAEEDA; color: #854F0B; padding: 1px 7px; border-radius: 20px; }
+
+  /* Scenario bars */
   .scenario-wrap { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem; }
   .scenario-wrap h3 { font-size: 13px; font-weight: 500; margin-bottom: .5rem; }
   .scenario-wrap p { font-size: 12px; color: #5f5e5a; margin-bottom: 1rem; }
   .scenario-bars { display: flex; flex-direction: column; gap: 10px; }
   .sbar-row { display: flex; align-items: center; gap: 10px; }
-  .sbar-label { font-size: 11px; color: #5f5e5a; min-width: 170px; flex-shrink: 0; }
-  .sbar-track { flex: 1; height: 22px; background: #f1efe8; border-radius: 4px; overflow: hidden; position: relative; }
-  .sbar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 10px; font-weight: 600; color: #fff; min-width: 30px; transition: width .3s; }
+  .sbar-label { font-size: 11px; color: #5f5e5a; min-width: 200px; flex-shrink: 0; }
+  .sbar-track { flex: 1; height: 22px; background: #f1efe8; border-radius: 4px; overflow: hidden; }
+  .sbar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 10px; font-weight: 600; color: #fff; min-width: 30px; }
   .sbar-count { font-size: 11px; font-weight: 500; color: #1a1a18; min-width: 40px; text-align: right; }
-  .sbar-note { font-size: 10px; color: #888780; min-width: 140px; }
+  .sbar-note { font-size: 10px; color: #888780; min-width: 160px; }
 
-  /* File index grid */
+  /* File index */
   .file-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 1.5rem; }
   .file-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .9rem 1rem; text-decoration: none; color: inherit; display: block; transition: border-color .15s, box-shadow .15s; }
   .file-card:hover { border-color: #b4b2a9; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
@@ -80,7 +85,7 @@
   .fa-all  { background: #f1efe8; color: #5f5e5a; }
   .file-desc { font-size: 11px; color: #5f5e5a; line-height: 1.5; }
 
-  /* How to read this */
+  /* Guide */
   .guide { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; }
   .guide h3 { font-size: 12px; font-weight: 500; margin-bottom: .5rem; }
   .guide-steps { display: flex; gap: 0; }
@@ -89,6 +94,10 @@
   .guide-step:last-child::after { display: none; }
   .guide-step strong { font-weight: 500; color: #1a1a18; display: block; margin-bottom: 2px; font-size: 11px; }
   .guide-step .gs-num { font-size: 10px; font-weight: 600; color: #b4b2a9; }
+
+  /* Category chips */
+  .cat-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .cat-chip { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; }
 
   .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
 </style>
@@ -99,33 +108,33 @@
   <!-- Cover -->
   <div class="cover">
     <div class="cover-tag">OTEP · OTG Data Ingestion Analysis</div>
-    <h1>We have <strong>633 open opportunities</strong><br>on OTG. <strong>415 can now be ingested</strong> — up from 160.</h1>
-    <p class="cover-sub">3 rule changes agreed on 12 Jun unlocked 255 records. 205 remain blocked and need agency data fixes. This analysis covers what changed, what's still blocked, and what each agency needs to do.</p>
+    <h1>We have <strong>633 open opportunities</strong><br>on OTG. <strong>415 are cleared to ingest</strong> — up from 160.</h1>
+    <p class="cover-sub">All BO decisions are confirmed. The 218 remaining blocked records need agency data fixes — no further rule changes are pending. This analysis covers the current state, what's still blocked, and what each agency needs to do before the Oct pilot.</p>
     <div class="cover-meta">
-      <div class="meta-item"><strong>Updated</strong> 15 June 2026 (v3 rules)</div>
+      <div class="meta-item"><strong>Updated</strong> 15 June 2026</div>
       <div class="meta-item"><strong>Data source</strong> OTEP_Remediation_Report_v3.xlsx</div>
       <div class="meta-item"><strong>Open opportunities assessed</strong> 633</div>
-      <div class="meta-item"><strong>Status</strong> <span class="status-badge" style="background:#EAF3DE;color:#3B6D11;">3 rules confirmed · 205 still blocked</span></div>
+      <div class="meta-item"><strong>BO decisions</strong> <span style="display:inline-block;font-size:10px;font-weight:500;padding:2px 10px;border-radius:20px;background:#EAF3DE;color:#3B6D11;">All confirmed · 15 Jun 2026</span></div>
     </div>
   </div>
 
   <!-- Current state -->
-  <p class="section-title">Where things stand — v3 rules (15 Jun 2026)</p>
+  <p class="section-title">Where things stand — all rules confirmed (15 Jun 2026)</p>
   <div class="impact-strip">
     <div class="impact-cell">
-      <div class="impact-label">Now passing (v3 rules)</div>
+      <div class="impact-label">Cleared to ingest</div>
       <div class="impact-value" style="color:#1D9E75;">415</div>
       <div class="impact-note">Up from 160 — +255 unlocked</div>
     </div>
     <div class="impact-cell">
       <div class="impact-label">Still blocked</div>
-      <div class="impact-value" style="color:#E24B4A;">205</div>
-      <div class="impact-note">Need agency data fixes to pass</div>
+      <div class="impact-value" style="color:#E24B4A;">218</div>
+      <div class="impact-note">Agency data fixes needed</div>
     </div>
     <div class="impact-cell">
-      <div class="impact-label">SJR excluded (MVP)</div>
-      <div class="impact-value" style="color:#EF9F27;">13</div>
-      <div class="impact-note">Separate module — not ingested</div>
+      <div class="impact-label">SJR (excluded MVP)</div>
+      <div class="impact-value" style="color:#EF9F27;">39</div>
+      <div class="impact-note">In model, not ingested for MVP</div>
     </div>
     <div class="impact-cell">
       <div class="impact-label">Potential with agency fixes</div>
@@ -134,235 +143,260 @@
     </div>
   </div>
 
-  <!-- Decisions needed -->
-  <p class="section-title">6 BO decisions — 5 open, 1 confirmed · ordered by priority</p>
+  <!-- 5-category model -->
+  <p class="section-title">Confirmed 5-category model — CareerCompass</p>
+  <div style="background:#fff;border:0.5px solid #84C98A;border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+    <div style="font-size:12px;color:#3B6D11;font-weight:500;margin-bottom:.6rem;">All 5 categories confirmed by Xian Zhang · 15 Jun 2026 (I-017, I-018)</div>
+    <div class="cat-strip">
+      <span class="cat-chip" style="background:#EAF3DE;color:#3B6D11;">STIPs</span>
+      <span class="cat-chip" style="background:#EAF3DE;color:#3B6D11;">Gigs</span>
+      <span class="cat-chip" style="background:#EAF3DE;color:#3B6D11;">PSFG <span style="font-weight:400;font-size:10px;">(formerly agilePSD)</span></span>
+      <span class="cat-chip" style="background:#EAF3DE;color:#3B6D11;">Jobs <span style="font-weight:400;font-size:10px;">(incl. Secondments)</span></span>
+      <span class="cat-chip" style="background:#f1efe8;color:#888780;">SJR <span style="font-weight:400;font-size:10px;">excluded MVP</span></span>
+    </div>
+    <div style="font-size:11px;color:#5f5e5a;line-height:1.6;">
+      Secondments display under <strong>Jobs</strong> in CareerCompass (I-017). SJR is in the model but not ingested for MVP (I-009). PSFG replaces the agilePSD label. Engineering can finalise OTEP-86 filter logic.
+    </div>
+  </div>
+
+  <!-- BO decisions — all confirmed -->
+  <p class="section-title">BO decisions — all confirmed</p>
   <div class="decision-grid">
 
-    <!-- PRIORITY 1: D6 - resolve first, prerequisite for D5 Secondment -->
-    <div class="d-card" style="grid-column: 1 / -1; border-color:#FCA5A5;">
-      <div class="d-card-head" style="background:#FEF3F2; border-bottom-color:#FCA5A5;">
-        <span class="d-num">D6</span>
-        <span class="d-title">How should OTEP handle ringfenced (audience-filtered) opportunities?</span>
-        <span class="d-status ds-open" style="background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;">P1 · Resolve first</span>
-      </div>
-      <div class="d-body">
-        <p class="d-question"><strong>38% of open OTG opportunities (253 of 669) have audience filters</strong> — visible only to officers from specific agencies. Enterprise Singapore alone holds 169 ringfenced opportunities (67%), mostly internal Secondments and IJPs. OTEP must decide whether to exclude, enforce, or flag these. This decision also affects D5 — 51% of Secondments are ringfenced, so D6 is a prerequisite to resolving Secondment ingestion.</p>
-        <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Enforce ringfence in OTEP: each officer sees only opportunities their agency is eligible for. Best user experience. Requires officer agency data in OTEP session context.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Carve out ESG (169 internal-only opportunities) and flag the remaining 84 ringfenced opps with a "Restricted" badge. Pragmatic short-term fix.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">C</span>
-            <span>Exclude all 253 ringfenced opportunities — add R13 to pipeline. Simplest but loses 38% of the open catalogue.</span>
-          </div>
-        </div>
-        <div class="d-impact"><strong>At stake:</strong> 253 opportunities (38% of open catalogue) + OTEP's ability to serve personalised feeds. SJR is ringfence-free (0%) and safe to ingest immediately regardless of this decision.</div>
-        <a class="d-link" href="17_ringfencing_analysis.html" target="_blank">See full Ringfencing Analysis →</a>
-      </div>
-    </div>
-
-    <!-- PRIORITY 2: D5 - biggest volume unlock, depends on D6 for Secondments -->
-    <div class="d-card" style="grid-column: 1 / -1;">
-      <div class="d-card-head" style="background:#FEF3F2;border-bottom-color:#FCA5A5;">
-        <span class="d-num">D5</span>
-        <span class="d-title">How do Secondment, agilePSD, and Other (TBC) map to the 5 OTEP categories?</span>
-        <span class="d-status ds-open" style="background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;">P2 · Highest volume impact</span>
-      </div>
-      <div class="d-body">
-        <p class="d-question">OTEP recognises <strong>5 categories only</strong>: GIG, STIP, JOB, C@G Jobs, SJR. But <strong>344 open OTG opportunities</strong> carry prefixes (Secondment, agilePSD, Other variants) that don't map to any of these categories — they are blocked at classification (R4). This is now the single largest blocker in the pipeline.</p>
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">Secondment: 259 blocked</span>
-          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">agilePSD: 29 blocked</span>
-          <span style="font-size:11px;background:#FEE2E2;color:#991B1B;padding:3px 10px;border-radius:20px;font-weight:500;">Other (TBC): 56 blocked</span>
-        </div>
-        <div class="d-impact" style="border-left-color:#EF9F27;background:#FAEEDA;margin-bottom:10px;">⚠ <strong>D6 prerequisite for Secondments:</strong> 51% of Secondments (133 of 259) are ringfenced to specific agencies. The routing decision for Secondments cannot be finalised until D6 (ringfencing policy) is resolved. D6 should be discussed before D5.</div>
-        <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Map to nearest OTEP category — e.g. Secondment→JOB, agilePSD→GIG or SJR. Confirm exact mapping, update R4 classifier, re-run pipeline. No platform schema change needed.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Exclude Secondment, agilePSD, and Other from OTEP scope entirely. Only the 5 canonical categories are ingested. Simplest long-term, but 344 opportunities permanently out of scope.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">C</span>
-            <span>Create new OTEP categories for Secondment and/or agilePSD. Unlocks all 344 but requires OTEP platform schema change and re-classification logic.</span>
-          </div>
-        </div>
-        <div class="d-impact"><strong>At stake:</strong> 344 opportunities (54% of all currently blocked). This decision unblocks more opportunities than any other single action remaining. Note: JOB vs C@G Jobs split within the existing 129 "Job" opportunities also needs data verification.</div>
-        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See updated R4 classification in Ingestion Rules →</a>
-      </div>
-    </div>
-
-    <!-- PRIORITY 3: D3 - stale opp policy, trust/UX question -->
-    <div class="d-card">
-      <div class="d-card-head">
-        <span class="d-num">D3</span>
-        <span class="d-title">Stale opportunity policy</span>
-        <span class="d-status ds-open">P3 · Open</span>
-      </div>
-      <div class="d-body">
-        <p class="d-question"><strong>346 open opportunities have passed their end date</strong> — 74 by more than a year. 255 of these have zero applicants. Should these appear on OTEP?</p>
-        <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Exclude stale opportunities with zero applicants (255). Live stale opportunities with applicants (91) still pass — someone is interested.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Exclude all stale opportunities (346). Cleanest catalogue but removes some active-interest listings.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">C</span>
-            <span>Ingest all as-is. Applicants may apply to roles that no longer exist.</span>
-          </div>
-        </div>
-        <div class="d-impact"><strong>At stake:</strong> Applicant trust. Stale listings with no owner erode confidence in the platform.</div>
-        <div class="d-impact" style="margin-top:6px;">⚠ <strong>Baseline note:</strong> The current 12 ingestion rules do not include a staleness filter. Some of the 160 opportunities passing today may have past end dates. D3 would introduce this as a new filter — meaning the baseline of 160 could decrease slightly depending on which option is chosen.</div>
-        <a class="d-link" href="01_summary_dashboard.html" target="_blank">See staleness data in Summary Dashboard →</a>
-      </div>
-    </div>
-
-    <!-- PRIORITY 4: D4 - no type tag, enforcement -->
-    <div class="d-card">
-      <div class="d-card-head">
-        <span class="d-num">D4</span>
-        <span class="d-title">Opportunities with no type tag</span>
-        <span class="d-status ds-open">P4 · Open</span>
-      </div>
-      <div class="d-body">
-        <p class="d-question"><strong>78 opportunities have no [type prefix]</strong> in their name. Without a type, OTEP cannot classify or validate them. Most appear to be Jobs from MSF and Enterprise Singapore.</p>
-        <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Hard block — route to remediation report. Agencies must add a prefix before next ingestion run. Simple and enforceable.</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Ingest as "Uncategorised" — visible on OTEP but not type-filtered. Risks permanent orphan listings.</span>
-          </div>
-        </div>
-        <div class="d-impact"><strong>At stake:</strong> Tag discipline going forward. Without enforcement, new untyped opportunities will appear every ingestion run.</div>
-        <a class="d-link" href="03_unrecognised_type_analysis.html" target="_blank">See unrecognised type deep-dive →</a>
-      </div>
-    </div>
-
-    <!-- PRIORITY 5: D1 - conditional on D5, lower stakes -->
-    <div class="d-card">
-      <div class="d-card-head">
-        <span class="d-num">D1</span>
-        <span class="d-title">Time commitment for uncertain types</span>
-        <span class="d-status ds-open">P5 · Conditional</span>
-      </div>
-      <div class="d-body">
-        <p class="d-question">Is time commitment required for <strong>agilePSD</strong> and <strong>Other</strong> tagged opportunities? These 109 opportunities sit in limbo — their TC rule is unconfirmed.</p>
-        <div class="d-options">
-          <div class="d-option rec">
-            <span class="opt-label opt-rec">A ★</span>
-            <span>Treat like Secondment/Job — time commitment not required. 29 agilePSD opportunities unblock immediately (minus 5 with missing Function).</span>
-          </div>
-          <div class="d-option">
-            <span class="opt-label opt-other">B</span>
-            <span>Require time commitment — 109 more opportunities become hard-blocked and go into the remediation report.</span>
-          </div>
-        </div>
-        <div class="d-impact"><strong>At stake:</strong> Up to 80 additional opportunities passing ingestion if Option A is chosen.</div>
-        <div class="d-impact" style="border-left-color:#EF9F27;background:#FAEEDA;margin-top:6px;">⚠ <strong>Conditional on D5:</strong> This question only applies if D5 maps agilePSD and Other into an OTEP category (Option A). If D5 Option B is chosen (exclude these types), D1 is moot. Resolve D5 first.</div>
-        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See rule R11 in Ingestion Rules →</a>
-      </div>
-    </div>
-
-    <!-- CONFIRMED: D2 -->
     <div class="d-card" style="border-color:#84C98A;">
       <div class="d-card-head" style="background:#EAF3DE;">
-        <span class="d-num">D2</span>
-        <span class="d-title">Start &amp; end date exemptions for Secondments, Jobs, SJRs</span>
-        <span class="d-status" style="background:#EAF3DE;color:#3B6D11;border:1px solid #84C98A;">✓ Confirmed</span>
+        <span class="d-num-confirmed">I-013</span>
+        <span class="d-title">Time commitment — Gig and STIP only</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
       </div>
       <div class="d-body">
-        <p class="d-question"><strong>Confirmed 10 June 2026:</strong> Start date and end date are <strong>not mandatory</strong> for Secondment, Job, and SJR types. These are standing or evergreen roles where a fixed start/end date may not apply.</p>
-        <div class="d-options">
-          <div class="d-option rec" style="border-color:#84C98A;background:#f4fbf4;">
-            <span class="opt-label opt-rec">✓ Decision</span>
-            <span>Secondment, Job, and SJR are exempt from start date and end date requirements. Up to ~261 opportunities unblocked on these fields — the largest single unlock in the pipeline.</span>
-          </div>
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>TC required for Gig and STIP only. Job, Secondment, PSFG, and SJR are all exempt.</span>
         </div>
-        <div class="d-impact"><strong>Impact:</strong> Secondment (200), Job (61) no longer blocked on start date; Secondment (38) no longer blocked on end date. Exemption applied at type level — no schema change required.</div>
-        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See updated R9 &amp; R10 in Ingestion Rules →</a>
+        <div class="d-impact"><strong>Impact:</strong> 29 PSFG opportunities unblocked on TC. 5 Gig/STIP records still blocked — agencies need to add TC data.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-014</span>
+        <span class="d-title">Job function — optional for all types</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>job_function is optional and display-only for all opportunity types. Missing or unresolvable values ingest with null — not a skip condition.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> 174 opportunities unblocked on function. No agency action needed for this field.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-015</span>
+        <span class="d-title">Start date — optional for Job and Secondment</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>start_date optional for Internal Job and Secondment (standing roles, no fixed start by nature). Required for Gig, STIP, and PSFG.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> Major contributor to the +255 unlock. 27 Gig/STIP records still blocked — agencies need to add start date.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-004</span>
+        <span class="d-title">Lifecycle — closing date drives visibility</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>Opportunity is visible if closing_date &gt; today, or closing_date is null. Stale opportunities ingest but are hidden from officers — not excluded from the DB.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> Clean officer-facing catalogue. Stale records retained in DB for audit — no data loss.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-009</span>
+        <span class="d-title">SJR — excluded from MVP ingestion</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>SJR (39 records) excluded from MVP ingestion. SJR is in the 5-category model but has no apply flow in MVP — no OTG redirect built yet.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> 39 opportunities out of scope for Oct pilot. Post-MVP work item.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-012</span>
+        <span class="d-title">Ringfencing — agency-level for MVP</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>Agency-level ringfencing only for MVP. Officers see opportunities their agency is eligible for. Finer-grained filters (job family, grade) are post-MVP.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> Scopes OTEP-86 and OTEP-408 to agency-level eligibility check only. Simplifies the S5 engineering task.</div>
+        <div class="d-date">Ratified 12 Jun 2026</div>
+      </div>
+    </div>
+
+    <div class="d-card" style="border-color:#84C98A; grid-column: 1 / -1;">
+      <div class="d-card-head" style="background:#EAF3DE;">
+        <span class="d-num-confirmed">I-017 / I-018</span>
+        <span class="d-title">Secondment = Jobs · 5-category model confirmed</span>
+        <span class="d-status ds-confirmed">✓ Confirmed</span>
+      </div>
+      <div class="d-body">
+        <div class="d-option">
+          <span class="opt-label">✓</span>
+          <span>Secondments display under the Jobs category in CareerCompass and are treated identically to Internal Jobs for all ingestion rules. The confirmed 5-category model is: <strong>STIPs, Gigs, PSFG, Jobs, SJR</strong>. Engineering can finalise OTEP-86 filter display logic.</span>
+        </div>
+        <div class="d-impact"><strong>Impact:</strong> Unblocks OTEP-86 and OTEP-289. No separate Secondment type needed in the transform layer. 259 Secondment records ingest as Jobs.</div>
+        <div class="d-date">Confirmed by Xian Zhang · 15 Jun 2026</div>
+        <a class="d-link" href="09_ingestion_rules.html" target="_blank">See updated ingestion rules →</a>
       </div>
     </div>
 
   </div>
 
-  <!-- Catalogue impact scenarios -->
-  <p class="section-title">What the catalogue could look like — based on BO decisions</p>
+  <!-- What's still blocked -->
+  <p class="section-title">What's still blocked — agency data fixes needed</p>
+  <div class="blocker-wrap">
+    <table class="blocker-table">
+      <thead>
+        <tr>
+          <th>Blocker</th>
+          <th>Count</th>
+          <th>Types affected</th>
+          <th>Who fixes it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>No type tag</strong> — no OTG prefix, cannot classify</td>
+          <td class="count">78</td>
+          <td class="fix">MSF (37), ESG (19), MTI (7), others</td>
+          <td><span class="who-agency">Agencies</span></td>
+        </tr>
+        <tr>
+          <td><strong>End date missing</strong> — required for Gig; currently also blocking Job/Secondment</td>
+          <td class="count">51</td>
+          <td class="fix">Secondment (38), Job (9), Gig (3), Other (1)</td>
+          <td><span class="who-agency">Agencies</span> or <span class="who-eng">Rule change Q1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Business unit missing</strong> — required for all types</td>
+          <td class="count">47</td>
+          <td class="fix">Other TBC (23), Job (7), Secondment (7), Gig (4)</td>
+          <td><span class="who-agency">Agencies</span></td>
+        </tr>
+        <tr>
+          <td><strong>Start date missing</strong> — required for Gig and STIP</td>
+          <td class="count">27</td>
+          <td class="fix">Gig (4), No tag (17), Other TBC (6)</td>
+          <td><span class="who-agency">Agencies</span></td>
+        </tr>
+        <tr>
+          <td><strong>Agency field blank</strong> — missing in OTG export</td>
+          <td class="count">22</td>
+          <td class="fix">Job (13), Secondment (5), Other TBC (3)</td>
+          <td><span class="who-agency">Agencies / OTG data</span></td>
+        </tr>
+        <tr>
+          <td><strong>Time commitment missing</strong> — required for Gig and STIP</td>
+          <td class="count">5</td>
+          <td class="fix">Gig (5)</td>
+          <td><span class="who-agency">Agencies</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="background:#fff;border:0.5px solid #e0dfd8;border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.5rem;font-size:11px;color:#5f5e5a;line-height:1.7;">
+    <strong>Open engineering question (Q1):</strong> Should end_date be made optional for Job and Secondment — same logic as start_date (I-015)? If yes, 44 additional records unlock immediately (36 Secondment, 8 Job blocked only on end_date). Pending Léo and Pow Hwee assessment before S5 grooming. See <a href="outputs/analyses/2026-06-15-W25-ingestion-mvp-brief.md" style="color:#378ADD;">MVP brief</a> for full context.
+  </div>
+
+  <!-- Catalogue projection -->
+  <p class="section-title">Catalogue projection — what's in scope for the Oct pilot</p>
   <div class="scenario-wrap">
-    <h3>Projected opportunities passing ingestion under each scenario</h3>
-    <p>Starting from 160 opportunities that pass today. Each BO decision adds opportunities back to the catalogue.</p>
+    <h3>Opportunities passing ingestion — current and potential</h3>
+    <p>Starting from 415 confirmed today. Agency data fixes and one potential rule change can push the catalogue higher before the Oct pilot.</p>
     <div class="scenario-bars">
       <div class="sbar-row">
-        <span class="sbar-label">Today (no changes)</span>
+        <span class="sbar-label">Today (all rules confirmed)</span>
         <div class="sbar-track">
-          <div class="sbar-fill" style="width:25%;background:#D3D1C7;">160</div>
+          <div class="sbar-fill" style="width:66%;background:#1D9E75;">415</div>
         </div>
-        <span class="sbar-count">160</span>
-        <span class="sbar-note">Baseline</span>
+        <span class="sbar-count">415</span>
+        <span class="sbar-note">Confirmed baseline</span>
       </div>
       <div class="sbar-row">
-        <span class="sbar-label">+ D1 recommended (TC exempt)</span>
+        <span class="sbar-label">+ end_date optional for Job/Secondment (Q1)</span>
         <div class="sbar-track">
-          <div class="sbar-fill" style="width:38%;background:#85B7EB;">~240</div>
+          <div class="sbar-fill" style="width:73%;background:#5DCAA5;">~459</div>
         </div>
-        <span class="sbar-count">~240</span>
-        <span class="sbar-note">agilePSD + Other (TBC) unlock</span>
+        <span class="sbar-count">~459</span>
+        <span class="sbar-note">If Q1 approved — 44 more</span>
       </div>
       <div class="sbar-row">
-        <span class="sbar-label">+ D2 ✓ confirmed (start &amp; end date exempt: Secondment, Job, SJR)</span>
+        <span class="sbar-label">+ Agency data fixes (BU, TC, start date, agency)</span>
         <div class="sbar-track">
-          <div class="sbar-fill" style="width:60%;background:#5DCAA5;">~380</div>
+          <div class="sbar-fill" style="width:85%;background:#85B7EB;">~530</div>
         </div>
-        <span class="sbar-count">~380</span>
-        <span class="sbar-note">Secondments largely unblock</span>
-      </div>
-      <div class="sbar-row">
-        <span class="sbar-label">+ Agency cleanup (remediation report)</span>
-        <div class="sbar-track">
-          <div class="sbar-fill" style="width:80%;background:#378ADD;">~480+</div>
-        </div>
-        <span class="sbar-count">~480+</span>
+        <span class="sbar-count">~530</span>
         <span class="sbar-note">Agencies fix missing fields</span>
       </div>
       <div class="sbar-row">
-        <span class="sbar-label">Full potential (all issues resolved)</span>
+        <span class="sbar-label">+ Type tag fix (DevOps/DT at source)</span>
         <div class="sbar-track">
-          <div class="sbar-fill" style="width:100%;background:#1D9E75;">633</div>
+          <div class="sbar-fill" style="width:95%;background:#378ADD;">~570+</div>
+        </div>
+        <span class="sbar-count">~570+</span>
+        <span class="sbar-note">78 no-tag records if prefixes added</span>
+      </div>
+      <div class="sbar-row">
+        <span class="sbar-label">Full potential (incl. SJR, all issues resolved)</span>
+        <div class="sbar-track">
+          <div class="sbar-fill" style="width:100%;background:#D3D1C7;">633</div>
         </div>
         <span class="sbar-count">633</span>
-        <span class="sbar-note">All open opportunities ingested</span>
+        <span class="sbar-note">All open opps — SJR post-MVP</span>
       </div>
     </div>
   </div>
 
-  <!-- How to read this pack -->
+  <!-- How to read -->
   <p class="section-title">How to read this analysis pack</p>
   <div class="guide">
-    <h3>Suggested reading order for Business Owners</h3>
+    <h3>Suggested reading order</h3>
     <div class="guide-steps">
       <div class="guide-step">
         <span class="gs-num">1</span>
         <strong>This page</strong>
-        Decisions needed + catalogue impact
+        Decisions + current state
       </div>
       <div class="guide-step">
         <span class="gs-num">2</span>
-        <strong>BO Prep</strong>
-        Options &amp; recommendations in full
+        <strong>Post-Meeting Analysis</strong>
+        v3 rule changes and impact
       </div>
       <div class="guide-step">
         <span class="gs-num">3</span>
@@ -371,15 +405,24 @@
       </div>
       <div class="guide-step">
         <span class="gs-num">4</span>
-        <strong>Summary Dashboard</strong>
-        Full data picture if needed
+        <strong>Remediation Queue</strong>
+        Per-agency fix list
       </div>
     </div>
   </div>
 
-  <!-- Full analysis index -->
+  <!-- Full file index -->
   <p class="section-title">Full analysis — all files</p>
   <div class="file-grid">
+
+    <a class="file-card" href="post-meeting-analysis.html" target="_blank" style="border-color:#1D9E75;grid-column:1/-1;">
+      <div class="file-card-head">
+        <span style="font-size:10px;font-weight:600;background:#EAF3DE;color:#3B6D11;padding:2px 9px;border-radius:20px;">Updated · 15 Jun 2026</span>
+        <span style="font-size:13px;font-weight:500;">Post-Meeting Impact Analysis — v3 Rule Changes</span>
+        <span style="font-size:10px;padding:2px 9px;border-radius:20px;background:#EAF3DE;color:#3B6D11;font-weight:500;margin-left:auto;">PM / BO</span>
+      </div>
+      <p class="file-desc">Before vs after: how 5 rule changes unlocked 255 records. Decision-by-decision impact, updated funnel, confirmed 5-category model (STIPs, Gigs, PSFG, Jobs, SJR), and remaining agency remediation priorities.</p>
+    </a>
 
     <a class="file-card" href="01_summary_dashboard.html" target="_blank">
       <div class="file-card-head">
@@ -387,7 +430,7 @@
         <span class="file-name">Summary Dashboard</span>
         <span class="file-audience fa-all">All</span>
       </div>
-      <p class="file-desc">Overall picture — 633 open opportunities, 473 blocked, 160 passing. Missing field counts, type distribution, and stale opportunity breakdown.</p>
+      <p class="file-desc">Overall picture — 633 open opportunities, 415 passing, 218 blocked. Missing field counts, type distribution, and blocked breakdown.</p>
     </a>
 
     <a class="file-card" href="02_agency_breakdown.html" target="_blank">
@@ -396,7 +439,7 @@
         <span class="file-name">Agency Breakdown</span>
         <span class="file-audience fa-all">All</span>
       </div>
-      <p class="file-desc">Blocked opportunities by agency. Enterprise Singapore accounts for 178 of 473. Per-agency issue chips and blocked-rate chart.</p>
+      <p class="file-desc">Blocked opportunities by agency. Enterprise Singapore (44), MSF (39) lead. Per-agency issue chips and blocked-rate chart.</p>
     </a>
 
     <a class="file-card" href="03_unrecognised_type_analysis.html" target="_blank">
@@ -405,7 +448,7 @@
         <span class="file-name">Unrecognised Type Deep-dive</span>
         <span class="file-audience fa-pm">PM</span>
       </div>
-      <p class="file-desc">163 opportunities with no recognised type tag — the 78 with no prefix, 56 Other (TBC), 29 agilePSD. Resolution scenarios per variant.</p>
+      <p class="file-desc">78 opportunities with no type prefix — blocked at classification. Resolution requires agencies to add the correct OTG prefix or DevOps/DT to fix at source.</p>
     </a>
 
     <a class="file-card" href="04_oqa_risks_assumptions.html" target="_blank">
@@ -414,7 +457,7 @@
         <span class="file-name">Open Questions, Risks &amp; Assumptions</span>
         <span class="file-audience fa-bo">BO</span>
       </div>
-      <p class="file-desc">7 open questions for BO, 7 risks (high/medium/low), and 6 active assumptions baked into the ingestion logic.</p>
+      <p class="file-desc">Risks and active assumptions baked into the ingestion logic. BO decisions now all confirmed — residual risks relate to agency data quality and DevOps/DT source fix timeline.</p>
     </a>
 
     <a class="file-card" href="05_product_trio_prep.html" target="_blank">
@@ -423,7 +466,7 @@
         <span class="file-name">Product Trio Working Session</span>
         <span class="file-audience fa-pm">PM / Design / Eng</span>
       </div>
-      <p class="file-desc">5 problem areas with PM / Designer / Engineer perspectives, HMW questions, tiered solution ideas, and a 90-min agenda.</p>
+      <p class="file-desc">Prep for the 9 Jun product trio session that produced the v3 rule ratifications. Historical reference.</p>
     </a>
 
     <a class="file-card" href="06_bo_prep.html" target="_blank">
@@ -432,7 +475,7 @@
         <span class="file-name">BO Briefing — Decision Document</span>
         <span class="file-audience fa-bo">BO</span>
       </div>
-      <p class="file-desc">Non-technical deep-dive on all 4 decisions — options A/B/C for each, recommended defaults, and a 60-min meeting agenda.</p>
+      <p class="file-desc">Full decision document for the BO working session. All decisions now confirmed — use as the record of what was agreed and why.</p>
     </a>
 
     <a class="file-card" href="07_dq_by_opportunity_type.html" target="_blank">
@@ -441,7 +484,7 @@
         <span class="file-name">Data Quality by Opportunity Type</span>
         <span class="file-audience fa-all">All</span>
       </div>
-      <p class="file-desc">Field completeness cards for all 8 types. Secondment most blocked (88%); agilePSD healthiest (17%); No tag 100% by definition.</p>
+      <p class="file-desc">Field completeness cards per type under v3 rules. Jobs and PSFG now healthy; Secondment improved; No tag (78) remains 100% blocked by definition.</p>
     </a>
 
     <a class="file-card" href="08_ingestion_schema.html" target="_blank">
@@ -450,7 +493,7 @@
         <span class="file-name">Ingestion Schema</span>
         <span class="file-audience fa-eng">PM / Eng</span>
       </div>
-      <p class="file-desc">Field mapping from OTG source to OTEP target. Validation matrix (field × type), exclusion logic, and known schema gaps.</p>
+      <p class="file-desc">Field mapping from OTG source to OTEP target. Validation matrix (field × type) updated for all confirmed v3 rules. I-017 and I-018 resolved.</p>
     </a>
 
     <a class="file-card" href="09_ingestion_rules.html" target="_blank">
@@ -459,22 +502,58 @@
         <span class="file-name">Ingestion Business Rules</span>
         <span class="file-audience fa-bo">BO / PM</span>
       </div>
-      <p class="file-desc">11 rules across 3 phases. What triggers a BLOCKED, FLAGGED, EXCLUDED, or PASS outcome — in plain language for sign-off.</p>
+      <p class="file-desc">All rules ratified. What triggers BLOCKED, FLAGGED, EXCLUDED, or PASS — in plain language. All pending items resolved as of 15 Jun 2026.</p>
     </a>
 
-    <a class="file-card" href="post-meeting-analysis.html" target="_blank" style="border-color:#1D9E75;grid-column: 1 / -1;">
+    <a class="file-card" href="12_remediation_queue.html" target="_blank">
       <div class="file-card-head">
-        <span style="font-size:10px;font-weight:600;background:#EAF3DE;color:#3B6D11;padding:2px 9px;border-radius:20px;">NEW · 15 Jun 2026</span>
-        <span style="font-size:13px;font-weight:500;">Post-Meeting Impact Analysis — v3 Rule Changes</span>
-        <span style="font-size:10px;padding:2px 9px;border-radius:20px;background:#EAF3DE;color:#3B6D11;font-weight:500;margin-left:auto;">PM / BOs</span>
+        <span class="file-num">12</span>
+        <span class="file-name">Remediation Queue</span>
+        <span class="file-audience fa-bo">Agencies / BO</span>
       </div>
-      <p class="file-desc">Before vs after: how 3 rule changes (StartDate optional for Jobs, Function optional, TC for Gig/STIP only) unlocked 255 records. Decision-by-decision impact, updated funnel, 5-category model, and remediation priorities. Confirmed from v3 remediation report.</p>
+      <p class="file-desc">Per-record fix list for the 218 still-blocked opportunities. Agencies can use this to identify which OTG fields to update before the Oct pilot.</p>
+    </a>
+
+    <a class="file-card" href="15_agency_scorecard.html" target="_blank">
+      <div class="file-card-head">
+        <span class="file-num">15</span>
+        <span class="file-name">Agency Scorecard</span>
+        <span class="file-audience fa-bo">BO</span>
+      </div>
+      <p class="file-desc">Pass rate and blocked count per agency. Useful for prioritising which agencies to brief before the Oct pilot — especially ESG and MSF.</p>
+    </a>
+
+    <a class="file-card" href="17_ringfencing_analysis.html" target="_blank">
+      <div class="file-card-head">
+        <span class="file-num">17</span>
+        <span class="file-name">Ringfencing Analysis</span>
+        <span class="file-audience fa-pm">PM / Eng</span>
+      </div>
+      <p class="file-desc">Audience filter breakdown. I-012 confirmed: agency-level ringfencing for MVP. 132 ringfenced Secondments visible to ESG officers only. I-017 confirmed — Secondments ingest as Jobs.</p>
+    </a>
+
+    <a class="file-card" href="17_product_discovery.html" target="_blank">
+      <div class="file-card-head">
+        <span class="file-num">17b</span>
+        <span class="file-name">Product Discovery Summary</span>
+        <span class="file-audience fa-pm">PM</span>
+      </div>
+      <p class="file-desc">What we know, what's resolved, and what's left for S5+. All BO decisions confirmed. Remaining focus: agency remediation, end_date Q1 assessment, DevOps/DT source fix timeline.</p>
+    </a>
+
+    <a class="file-card" href="18_pilot_readiness.html" target="_blank">
+      <div class="file-card-head">
+        <span class="file-num">18</span>
+        <span class="file-name">Pilot Readiness</span>
+        <span class="file-audience fa-bo">PM / BO</span>
+      </div>
+      <p class="file-desc">Oct pilot readiness checklist by agency. ESG and MSF are the priority agencies to brief on data fixes given their blocked counts.</p>
     </a>
 
   </div>
 
   <div class="footer">
-    OTEP Ingestion Analysis &nbsp;·&nbsp; Updated 15 June 2026 (v3 rules) &nbsp;·&nbsp; All files are self-contained HTML — open any file directly in a browser &nbsp;·&nbsp; Remediation report: OTEP_Remediation_Report_v3.xlsx
+    OTEP Ingestion Analysis &nbsp;·&nbsp; Updated 15 June 2026 — all BO decisions confirmed &nbsp;·&nbsp; Data: OTEP_Remediation_Report_v3.xlsx &nbsp;·&nbsp; Deployed: otep-ingestion-analysis.vercel.app
   </div>
 
 </div>

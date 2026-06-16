@@ -77,15 +77,15 @@
     <div class="chip">
       <div class="chip-dot" style="background:#E24B4A;"></div>
       <div>
-        <div class="chip-val">473</div>
-        <div class="chip-label">Hard blocked</div>
+        <div class="chip-val">218</div>
+        <div class="chip-label">Hard blocked (v3 rules)</div>
       </div>
     </div>
     <div class="chip">
-      <div class="chip-dot" style="background:#EF9F27;"></div>
+      <div class="chip-dot" style="background:#888780;"></div>
       <div>
-        <div class="chip-val">173</div>
-        <div class="chip-label">TBC / pending BO ruling</div>
+        <div class="chip-val">473</div>
+        <div class="chip-label">Was hard blocked (pre-v3, archived)</div>
       </div>
     </div>
     <div class="chip">
@@ -126,7 +126,7 @@
         <th>Secondment</th>
         <th>Job</th>
         <th>SJR</th>
-        <th>agilePSD</th>
+        <th>PSFG</th>
         <th>Other (TBC)</th>
         <th>No tag</th>
         <th>Total</th>
@@ -175,7 +175,7 @@ const rules = [
   },
   {
     id:'R7', name:'Business Unit missing', outcome:'block',
-    total: 53, sub: '53 blocked — required for org routing',
+    total: 47, sub: '47 blocked — required for org routing',
     byType: { Gig:4, STIP:0, Secondment:7, Job:7, SJR:0, agilePSD:0, 'Other(TBC)':23, 'No tag':6 },
     note: null
   },
@@ -193,9 +193,9 @@ const rules = [
   },
   {
     id:'R10', name:'End date missing', outcome:'block',
-    total: 13, sub: '13 blocked — 38 exempt (Secondment/Job confirmed)',
-    byType: { Gig:3, STIP:0, Secondment:0, Job:0, SJR:0, agilePSD:0, 'Other(TBC)':1, 'No tag':0 },
-    note: { type:'exempt', text:'D2 ✓ confirmed: Secondment (38), Job (9) exempt from end date — not counted in violations.' }
+    total: 51, sub: '51 blocked — end date required for all types under v3',
+    byType: { Gig:3, STIP:0, Secondment:36, Job:8, SJR:0, agilePSD:0, 'Other(TBC)':3, 'No tag':1 },
+    note: { type:'block', text:'End date is required for all types under v3 rules. StartDate exemption (I-015) applies but end date exemption has not been confirmed — Q1 open in MVP brief.' }
   },
   {
     id:'R11', name:'Time commitment missing', outcome:'block',

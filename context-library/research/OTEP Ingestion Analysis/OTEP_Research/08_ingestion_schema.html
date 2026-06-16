@@ -411,18 +411,18 @@
     <div class="rule-item">
       <span class="rule-step">3</span>
       <div class="rule-body">
-        <strong>Stale opportunity check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
-        <div class="rule-note"><code>end_date &lt; today</code> and <code>Status = Open</code>. 346 opportunities currently affected. BO options: (A) skip all stale, (B) skip if stale AND zero applicants (255 opportunities), (C) ingest with a "closing soon" flag, (D) ingest as-is.</div>
+        <strong>Stale opportunity check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">I-004 confirmed — lifecycle rule</span>
+        <div class="rule-note"><code>closing_date &gt; today OR closing_date IS NULL</code> — confirmed by I-004. 346 opportunities with past end dates are excluded. Open opportunities without a closing date are included (standing roles).</div>
       </div>
-      <span class="rule-badge rb-tbc">TBC</span>
+      <span class="rule-badge rb-block" style="background:#eaf3de;color:#3b6d11;border-color:#84C98A;">Confirmed</span>
     </div>
     <div class="rule-item">
       <span class="rule-step">4</span>
       <div class="rule-body">
-        <strong>No-type-tag check</strong> &nbsp;<span style="font-size:10px;background:#e6f1fb;color:#185fa5;padding:1px 7px;border-radius:20px;font-weight:500;">BO decision pending</span>
-        <div class="rule-note">GigName does not start with <code>[</code> — no prefix present. 78 opportunities. BO options: (A) hard block and route to report, (B) ingest as "Uncategorised" type, (C) attempt fuzzy matching on GigName keywords.</div>
+        <strong>No-type-tag check</strong> &nbsp;<span style="font-size:10px;background:#eaf3de;color:#3b6d11;padding:1px 7px;border-radius:20px;font-weight:500;">Hard-skip confirmed</span>
+        <div class="rule-note">GigName does not start with <code>[</code> — no prefix present. 78 opportunities hard-blocked. Decision: excluded pending DevOps/DT fixing prefix at source. No fuzzy matching or Uncategorised ingest for MVP.</div>
       </div>
-      <span class="rule-badge rb-tbc">TBC</span>
+      <span class="rule-badge rb-block" style="background:#eaf3de;color:#3b6d11;border-color:#84C98A;">Confirmed</span>
     </div>
     <div class="rule-item">
       <span class="rule-step">5</span>
@@ -500,9 +500,9 @@
         <td class="col-target">Other</td>
         <td class="col-source">Any unmatched [prefix]</td>
         <td class="col-notes">[KidSTART], [Female Only], [Innofest], [OCMO 2026], [Overseas Posting] + 13 others</td>
-        <td><span class="tag tag-tbc">TBC</span></td>
+        <td><span class="tag tag-tbc">Unresolvable</span></td>
         <td class="col-type">56</td>
-        <td><span class="tag tag-cond">TC rule pending BO</span></td>
+        <td><span class="tag tag-cond">TC per resolved type (I-013)</span></td>
       </tr>
       <tr>
         <td class="col-target" style="color:#888780;">No tag</td>

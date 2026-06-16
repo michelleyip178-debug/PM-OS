@@ -118,7 +118,7 @@
   </table>
 
   <div class="footer">
-    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; Updated 15 June 2026 — v3: 415 pass (was 160), 205 still blocked &nbsp;·&nbsp; Funnel diagram reflects pre-v3 structure; see 09_ingestion_rules.html for current v3 rules
+    Source: OTG Oppr.xlsx — gigs_v2_report &nbsp;·&nbsp; Analysis: 10 June 2026 &nbsp;·&nbsp; Updated 15 June 2026 — v3: 415 pass (was 160), 218 still blocked &nbsp;·&nbsp; Funnel diagram reflects pre-v3 structure; see 09_ingestion_rules.html for current v3 rules
   </div>
 </div>
 
@@ -198,7 +198,7 @@ const dropouts = [
   { stage:'Business Unit missing',rules:'R7', in:550, dropped:53,  cause:'BusinessUnit null — required for OTEP org filtering. Worst in Other(TBC) type (23/56).' },
   { stage:'Start date missing',   rules:'R9', in:550, dropped:27,  cause:'After D2 exemption (Secondment/Job/SJR). Remaining 27 are Gig/No tag/Other.' },
   { stage:'End date missing',     rules:'R10',in:550, dropped:13,  cause:'After D2 exemption. Remaining 13 are Gig/Other(TBC) types.' },
-  { stage:'Time commitment',      rules:'R11',in:550, dropped:5,   cause:'Gig type only — 5 missing TC. agilePSD (29) pending BO ruling, not yet counted.' },
+  { stage:'Time commitment',      rules:'R11',in:550, dropped:5,   cause:'Gig type only — 5 missing TC. PSFG (29, formerly agilePSD) TC-exempt (I-013 confirmed 12 Jun). Only 5 Gig/STIP still blocked on TC.' },
 ];
 const maxDrop = Math.max(...dropouts.map(d=>d.dropped));
 const tbody = document.getElementById('dropoutBody');

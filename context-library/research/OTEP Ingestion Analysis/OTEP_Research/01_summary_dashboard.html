@@ -67,9 +67,9 @@
       <div class="sub">Intended to appear on OTEP</div>
     </div>
     <div class="metric danger">
-      <div class="val">205</div>
+      <div class="val">218</div>
       <div class="lbl">Blocked — will not ingest</div>
-      <div class="sub">32.4% of open opportunities</div>
+      <div class="sub">34.4% of open opportunities</div>
     </div>
     <div class="metric ok">
       <div class="val">415</div>
@@ -107,7 +107,7 @@
     <div class="chart-card">
       <h3>Distribution of all 633 open opportunities</h3>
       <div style="position:relative;height:260px;">
-        <canvas id="typeChart" role="img" aria-label="Doughnut chart: Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, agilePSD TBC 29, STIP 7">Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, agilePSD TBC 29, STIP 7</canvas>
+        <canvas id="typeChart" role="img" aria-label="Doughnut chart: Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, PSFG (formerly agilePSD) 29, STIP 7">Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, PSFG 29, STIP 7</canvas>
       </div>
     </div>
     <div class="chart-card">
@@ -132,13 +132,13 @@
     </div>
     <div class="metric warn">
       <div class="val">29</div>
-      <div class="lbl">agilePSD (TBC) — all from PSD</div>
-      <div class="sub">TC rule unconfirmed</div>
+      <div class="lbl">PSFG (formerly agilePSD) — all from PSD</div>
+      <div class="sub">TC exempt — confirmed I-013 (12 Jun)</div>
     </div>
   </div>
 
   <div class="status-row">
-    <span class="status-chip chip-red">205 blocked</span>
+    <span class="status-chip chip-red">218 blocked</span>
     <span class="status-chip chip-green">415 passing</span>
     <span class="status-chip chip-green">255 newly unlocked (v3 rules)</span>
     <span class="status-chip chip-gray">346 stale</span>
@@ -168,7 +168,7 @@ sorted.forEach(([label, count], i) => {
     </div>`;
 });
 
-const typeLabels = ['Secondment','Job','No tag','Other (TBC)','SJR','Gig','agilePSD (TBC)','STIP'];
+const typeLabels = ['Secondment','Job','No tag','Other (TBC)','SJR','Gig','PSFG (formerly agilePSD)','STIP'];
 const typeData = [259,129,78,56,39,36,29,7];
 const typeColors = ['#5DCAA5','#85B7EB','#7F77DD','#EF9F27','#AFA9EC','#378ADD','#1D9E75','#F09595'];
 
@@ -184,7 +184,7 @@ new Chart(document.getElementById('typeChart'), {
   }
 });
 
-const blockedTypes = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR':13,'Gig':0,'STIP':0,'agilePSD (TBC)':0};
+const blockedTypes = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR (excl. MVP)':39,'Gig':0,'STIP':0,'PSFG':0};
 new Chart(document.getElementById('blockedTypeChart'), {
   type: 'bar',
   data: {

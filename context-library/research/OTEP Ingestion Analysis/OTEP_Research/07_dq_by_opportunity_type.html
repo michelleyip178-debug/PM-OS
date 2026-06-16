@@ -123,13 +123,13 @@ const types = [
     fields: [
       { name: 'Function',      count: 31,  tbc: false },
       { name: 'Business unit', count: 23,  tbc: false },
-      { name: 'TC (TBC)',      count: 16,  tbc: true  },
+      { name: 'TC (exempt if type resolves to Job/Gig)', count: 16,  tbc: false },
       { name: 'Start date',    count: 6,   tbc: false },
       { name: 'Agency',        count: 3,   tbc: false },
       { name: 'End date',      count: 1,   tbc: false },
     ],
     stale: 22, zero_ap: 40,
-    note: '18 distinct unrecognised tag variants. Function and Business Unit are the dominant gaps. 16 opportunities have TC flagged as TBC pending BO ruling.'
+    note: '18 distinct unrecognised tag variants. Function and Business Unit are the dominant gaps. TC rule (I-013) is now confirmed — once type resolves to Gig/STIP, TC is required; for Job/Secondment types TC is exempt. Type prefix is the primary block.'
   },
   {
     name: 'Gig', color: '#378ADD', n: 36, blocked: 20,

@@ -141,7 +141,7 @@
     <strong>Confirmed (v3 rules, 12 Jun 2026):</strong> The +255 unlock is confirmed from the v3 remediation report (12 Jun 2026). Dry-run validation by Léo pending. StartDate optional for Jobs/Secondments, Function optional for all types, TC required for Gig/STIP only.
   </div>
   <div class="risk-box" style="margin-top:8px;">
-    <strong>Critical gap:</strong> 163 records remain blocked regardless of PM decisions — 78 "No tag," 56 "Other (TBC)," 29 "agilePSD (TBC)." These need type-tag fixes at source (DevOps + agencies). The <strong>Aug–Sep go-live threshold (≥350) is reachable without agency remediation</strong> under the new rules. Agency remediation is needed to get to 500+.
+    <strong>Critical gap:</strong> 163 records remain blocked regardless of PM decisions — 78 "No tag," 56 "Other (TBC)," 29 "PSFG (formerly agilePSD, TC-exempt per I-013)." These need type-tag fixes at source (DevOps + agencies). The <strong>Aug–Sep go-live threshold (≥350) is reachable without agency remediation</strong> under the new rules. Agency remediation is needed to get to 500+.
   </div>
 </div>
 
@@ -154,8 +154,8 @@
   </div>
   <div class="kpi red">
     <div class="kpi-label">Still Blocked</div>
-    <div class="kpi-value">205</div>
-    <div class="kpi-sub">32.4% — needs source fix</div>
+    <div class="kpi-value">218</div>
+    <div class="kpi-sub">34.4% — needs source fix</div>
   </div>
   <div class="kpi amber">
     <div class="kpi-label">Unresolvable (PM)</div>
@@ -184,7 +184,7 @@
     <div class="funnel-step f4"><span class="funnel-num">163</span><span class="funnel-lbl">No-tag → hard skip</span></div>
     <div class="funnel-step f2"><span class="funnel-num">~415</span><span class="funnel-lbl">Est. ingested ✓</span></div>
   </div>
-  <p style="font-size:12px;color:#777;margin-top:8px;">Funnel reflects new rules. "No-tag" = 78 no prefix + 56 Other/TBC + 29 agilePSD = 163 unresolvable.</p>
+  <p style="font-size:12px;color:#777;margin-top:8px;">Funnel reflects new rules. "No-tag" = 78 no prefix + 56 Other/TBC + 29 PSFG = 163 unresolvable.</p>
 </div>
 
 <!-- RULE CHANGES -->
@@ -225,7 +225,7 @@
 
   <div class="change-row blocked">
     <div style="flex:1">
-      <div class="change-title">5. "No tag" / "Other (TBC)" / "agilePSD" records — still blocked</div>
+      <div class="change-title">5. "No tag" / "Other (TBC)" / "PSFG (agilePSD)" records — still blocked</div>
       <div class="change-desc">78 + 56 + 29 = 163 records need valid type prefix at source. PM decisions can't resolve these. Remediation: DevOps + agencies fix OTG type tags before go-live.</div>
     </div>
     <div class="change-impact zero">0</div>
@@ -233,7 +233,7 @@
 
   <div class="change-row pending">
     <div style="flex:1">
-      <div class="change-title">6. 5-category model (STIPs / Gigs / Jobs / SJR / PSFG) — pending validation</div>
+      <div class="change-title">6. 5-category model (STIPs / Gigs / PSFG / Jobs / SJR) — pending validation</div>
       <div class="change-desc">New taxonomy supersedes "Internal Job / STIPs &amp; Gigs / SJR." The category model itself doesn't change the pass count above — it changes how records are labelled after ingestion. Confirmed: Xian Zhang 15 Jun 2026.</div>
     </div>
     <div class="change-impact zero">—</div>
@@ -402,7 +402,7 @@
 <!-- REMEDIATION PRIORITIES -->
 <div class="section">
   <h2>Remediation Priorities (post PM-decision unlocks)</h2>
-  <p style="font-size:13px;color:#555;margin-bottom:14px;">With v3 rules applied, the remaining 205 blocked records need agency/DevOps action. Here's where to start.</p>
+  <p style="font-size:13px;color:#555;margin-bottom:14px;">With v3 rules applied, the remaining 218 blocked records need agency/DevOps action. Here's where to start.</p>
   <div class="remediation-priority">
     <div class="rp-item high">
       <div class="rp-title">MSF — TypeTag Fix</div>
@@ -479,14 +479,14 @@
         <td>—</td>
       </tr>
       <tr>
-        <td>5-category model (STIPs/Gigs/Jobs/SJR/PSFG)</td>
-        <td><span class="pill pill-amber">🟡 Pending validation</span></td>
+        <td>5-category model (STIPs/Gigs/PSFG/Jobs/SJR)</td>
+        <td><span class="pill pill-green">✅ Confirmed 15 Jun 2026</span></td>
         <td>Labelling only (no pass/fail change)</td>
         <td>Confirmed 15 Jun 2026</td>
       </tr>
       <tr>
         <td>"Jobs" consolidation (Secondments + internal + C@G)</td>
-        <td><span class="pill pill-amber">🟡 Pending validation</span></td>
+        <td><span class="pill pill-green">✅ Confirmed 15 Jun 2026</span></td>
         <td>Labelling only — pass count already reflected above</td>
         <td>Confirmed 15 Jun 2026</td>
       </tr>
@@ -529,7 +529,7 @@
       </tr>
       <tr>
         <td>2</td>
-        <td><strong>Michelle: write 5-category mapping logic</strong> (OTG prefixes → STIPs/Gigs/Jobs/SJR/PSFG)</td>
+        <td><strong>Michelle: write 5-category mapping logic</strong> (OTG prefixes → STIPs/Gigs/PSFG/Jobs/SJR)</td>
         <td>Michelle</td>
         <td>w/c 15 Jun (before OTEP-86 grooming)</td>
         <td>Unblocks OTEP-86 filter + OTEP-289 taxonomy spike</td>
