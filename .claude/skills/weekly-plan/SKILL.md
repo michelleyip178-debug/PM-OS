@@ -465,6 +465,38 @@ quarter: Q[X] YYYY
 
 ---
 
+## Strategic Skill Prompt (include in every weekly plan output)
+
+At the end of every weekly plan, add a **This Week's Strategic Skill** block. Pick the one skill that best matches the sprint phase and week's context. One skill only — not a menu.
+
+**Selection logic:**
+
+| If this week has... | Suggest |
+|---|---|
+| Sprint planning ceremony | `/impact-sizing` — size the top stories before the room commits |
+| Grooming prep session | `/journey-map` or `/competitor-analysis` — give the team context before they scope |
+| Mid-sprint review | `/feature-metrics` — are success metrics defined for what's In Progress? |
+| Sprint close / retro | `/feature-results` — capture sprint outcomes while fresh |
+| SteerCo or BO strategy session | `/write-prod-strategy` or `/define-north-star` |
+| Free week (no major ceremony) | Pick from dormant skills: `/impact-sizing`, `/experiment-decision`, `/metrics-framework` |
+| Post-pilot launch week | `/activation-analysis` |
+
+**Output block to append to every weekly plan file:**
+
+```markdown
+## This Week's Strategic Skill
+
+**Suggested:** `/[skill-name]`
+
+**Why this week:** [One sentence — what's happening this week that makes this skill timely]
+
+**When to run:** [Specific moment — e.g. "before Thursday grooming", "after Friday retro"]
+
+**What you'll get:** [One sentence on the output]
+```
+
+---
+
 ## Output Quality Self-Check
 
 Before presenting output to the PM, verify:
@@ -474,3 +506,4 @@ Before presenting output to the PM, verify:
 - [ ] **LNO classification applied:** Key tasks are tagged as Leverage, Neutral, or Overhead to ensure the week is weighted toward high-leverage work
 - [ ] **Dependencies and blockers identified:** Each priority lists what it depends on (people, decisions, deliverables) and any known blockers with mitigation plans
 - [ ] **Carry-over items from last week addressed:** If `outputs/weekly-reviews/` or `outputs/weekly-plans/` contain incomplete items from last week, they are explicitly acknowledged as carried over, deferred, or dropped with reasoning
+- [ ] **Strategic skill block included:** One skill suggestion with timing and rationale appended to the plan

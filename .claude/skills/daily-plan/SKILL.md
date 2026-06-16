@@ -409,6 +409,24 @@ Lead with PM-owned blockers — items where *Michelle* owns the next move come f
 **Growth Nudge:**
 One sentence connecting today's work to one of Michelle's three growth areas: outcomes thinking / stakeholder influence / roadmapping and prioritisation. Keep it specific to today, not generic.
 
+**Strategic Skill Nudge (show only when a free block ≥ 45 min exists AND no strategic skill was run this week):**
+Check `outputs/analyses/` for any strategic skill output dated this week (e.g. `/feature-results`, `/metrics-framework`, `/journey-map`, `/impact-sizing`, `/competitor-analysis`). If none found, and a free block ≥ 45 min exists today, append one line to Heads Up:
+
+> **Strategic window:** [time block] free — consider running `/[skill]` ([one-line reason tied to what's live this sprint]).
+
+**Skill selection for the nudge — pick the most timely one:**
+
+| Today's context | Nudge skill |
+|---|---|
+| Sprint close day or day after retro | `/feature-results` |
+| Day before grooming or planning | `/impact-sizing` or `/journey-map` |
+| Mid-sprint, stories In Progress with no metrics defined | `/feature-metrics` |
+| BO or SteerCo prep this week | `/write-prod-strategy` or `/define-north-star` |
+| No ceremony this week, free slot available | Rotate through dormant skills: `/competitor-analysis`, `/experiment-decision`, `/metrics-framework` |
+| Post-pilot launch (once live) | `/activation-analysis` |
+
+**Rule:** One nudge per day max. If the weekly plan already has a strategic skill block and it was run today, skip the nudge. Never surface the same skill two days in a row.
+
 ---
 
 ### Step 4: Generate Daily Plan
