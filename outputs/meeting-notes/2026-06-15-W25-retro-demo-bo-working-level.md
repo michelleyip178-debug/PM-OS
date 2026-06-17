@@ -85,6 +85,12 @@ Good progress on competency management and opportunity listing — the core MVP 
 
 ---
 
+## Post-Meeting Notes
+
+**From Adrian (added 2026-06-16):** How do we market CareerCompass as trustworthy for internal mobility? Adrian's point: movement needs to feel encouraged and supported — not just mechanically possible. Officers need to feel confident that applying won't be held against them, and that the organisation genuinely backs mobility. This is a product comms / trust-design question as much as a feature question. Implications for: onboarding copy, how opportunities are framed, whether there's a visible signal of organisational endorsement on the listing or detail page.
+
+---
+
 ## Context for Future Reference
 
 **Ingestion volume context:** Many OTG records are being rejected by the current strict validation rule (2026-06-08 decision: hard-skip any row with missing fields). This is by design for data integrity, but the error volume at the BO demo made upload error messaging a visible pain point. The ingestion analysis (outputs/analyses/) should inform whether any rules can be safely relaxed in S5/6.

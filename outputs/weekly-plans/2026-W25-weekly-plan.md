@@ -121,7 +121,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 |-----|--------------|-----------------|---------------|
 | OTEP-192 (OTG ingestion) | QA | QA cleared | Update ACs to v3 rules; Léo to close |
 | OTEP-87 (C@G detail) | Grooming | Grooming-ready | Fix AC conflict; competency section gates on #41 |
-| Upload module | Discovery | Rama session outcome | Rama interview to happen this week — outputs to scope S5 |
+| Upload module | Discovery | ✅ Done — scope confirmed | Rama sync done 15 Jun. MVP = happy flow only (select type, attach file, confirmation screen). No validation error UI. Rama taking S5 inclusion decision to Pow Hwee. Update OTEP-397 spike ACs before S5 grooming. |
 | North Star brief | Not started | Section 1 drafted | Thursday protected block |
 
 ---
@@ -137,7 +137,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 | Mon 17:00 | PM Weekly catchup | R1 updates, cross-PM sharing | Light |
 | Tue–Fri | Daily standup | QA carry-in status, sprint pulse | No |
 | Thu PM | [Protected block] | North Star brief Section 1 | — |
-| TBC | Rama interview | Upload module discovery | Yes — prep doc ready |
+| ✅ Mon 15 Jun | Rama sync (done) | Upload module discovery | Scope confirmed: happy flow only. Notes: 2026-06-15-W25-file-upload-rama-sync.md |
 | TBC | Amber flow walkthrough | End-to-end flow review (#45) | Yes |
 
 **Meeting load:** Heavy Monday (5 meetings, 10am–5pm back-to-back). Tue–Fri lighter — morning execution blocks available.
@@ -165,7 +165,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 | Risk | Mitigation |
 |------|------------|
 | Keycloak blocker has no target date | Ask Pow Hwee at Monday standup; escalate to Adrian if no date by Tuesday |
-| Rama interview not yet booked | Book today — this gates S5 scope and upload module ownership decision |
+| ~~Rama interview not yet booked~~ | ✅ Done 15 Jun — scope confirmed, happy flow only |
 | North Star brief loses to execution again | Thursday PM block confirmed before Tuesday meetings fill the calendar |
 | Xian Zhang 5-category validation takes >1 week | Send with a "validate by Friday or flag blockers" ask |
 | OTG monthly progress report overdue (was due 10 Jun) | Monday too full — write and send Tuesday AM, first task |
