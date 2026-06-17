@@ -14,7 +14,7 @@
 
 | # | Ask Jace | Why it matters |
 |---|----------|----------------|
-| 1 | **What are the real Divisional KRs?** | My KRs must ladder to them. I used placeholders — need his wording. |
+| 1 | **What are the real Divisional KRs?** | My KRs must ladder to them. I used placeholders — need her wording. |
 | 2 | **Am I rated on meeting L2, or reaching L3?** | Drives weighting + how much KR 8 (roadmapping) counts. |
 | 3 | **Weighting: 80/20 delivery/growth — agree?** | Or shift toward the L3 growth pathway. |
 | 4 | **Committed vs stretch?** | My nomination: committed = KR 1,2,3,6 · stretch = KR 5,8. |
@@ -31,7 +31,49 @@
 | 360 Feedback Synthesis | ✅ Self-compiled · 5 solicited 360s sent → [360 doc](2026-06-18-apa-360-feedback-synthesis.md) |
 | Development / Rotation | ✅ Growth KRs · rotation open to discuss |
 | **Divisional KRs** | ⬜ **Need from Jace** (ask #1) |
-| Confirm FY window (CY26?) | ⬜ Quick check w/ Jace |
+| Confirm FY window (CY26?) | ✅ Confirmed CY26 (Jan–Dec 2026) |
+
+---
+
+## KR → OKR Mapping
+
+> **TL;DR — Why I used OTEP OKRs to derive my Divisional KRs:**
+> Jace hadn't shared the real Divisional KRs before this session, so I worked backwards from what I do have: the IAA-approved OTEP OKRs. These are the programme-level outcomes my work is directly accountable for — they're not a proxy, they're the actual measure of whether CareerCompass ships and delivers value. My DKRs are the mid-level translation of those OKRs into what needs to be true at MVP launch (Oct 2026): platform live, auth working, scope held, data quality unblocked. The KRs then ladder to the DKRs. This gives the appraisal a clean line of sight from my day-to-day delivery decisions all the way up to the IAA mandate — rather than waiting for top-down KRs that may not reflect the actual work.
+
+```
+OTEP OKRs (IAA-approved)
+├── OKR 2: 1,850 officers applied for dev opportunities by Q4 2028
+│   ├── DKR-A: Launch CareerCompass MVP (Oct 2026)
+│   │   ├── KR 1: Ship unified Opportunities (OTG + C@G E2E)
+│   │   ├── KR 2: Ship WOG AD Auth
+│   │   └── KR 3: Hold MVP scope discipline
+│   └── DKR-B: Trusted WOG-aligned platform with agency buy-in
+│       ├── KR 2: Ship WOG AD Auth
+│       ├── KR 3: Hold MVP scope discipline
+│       └── KR 5 ⚠️: Unblock OTG data quality (stretch — dependency)
+│
+├── OKR 1: 50% officers with updated competency profiles by Q4 2027
+│   └── DKR-B: Trusted WOG-aligned platform with agency buy-in
+│       └── KR 8: Roadmapping & R1 framing (R1 sequencing shapes Q1 2027 targets)
+│
+├── OKR 3: 80% agencies using analytics dashboards by Q1 2028
+│   └── DKR-B: Trusted WOG-aligned platform with agency buy-in
+│       └── KR 3: Hold MVP scope discipline
+│
+└── North Star: 50% officers complete one dev action by Dec 2028
+    └── DKR-A: Launch CareerCompass MVP (Oct 2026)
+        └── KR 1: Ship unified Opportunities (OTG + C@G E2E)
+
+─────────────────────────────────────────
+Growth KRs (L2→L3 Schema — not OKR-linked)
+└── DKR-C: Build product/delivery capability in Pathfinder squad
+    ├── KR 4: Land sprint goals (DoR-ahead consistently)
+    ├── KR 6: Recommend-first (BA→PM shift)
+    ├── KR 7: Build stakeholder influence
+    └── KR 9: Capability beyond core role (PMP AI session + adoption)
+```
+
+> Growth KRs sit under DKR-C, not the OTEP OKRs — they're Schema behaviours, not product outcomes. Flag this split with Jace on Ask #2 (meeting L2 vs reaching L3): it determines how much weight KR 6–9 carry in the overall rating.
 
 ---
 
@@ -43,11 +85,11 @@
 | **2. Ship WOG AD Auth** | Officers authenticate via WOG AD in prod; auth gates the experience | 0 → live | DKR-A, B | Committed |
 | **3. Hold MVP scope discipline** | Clean MVP/R1 boundary; every scope change triaged w/ a logged *recommendation*; gaps tracker closed/dated | 10 open / 3 deferred → all resolved or dated | DKR-A | Committed |
 | **4. Land sprint goals** | 20 stories → DoR ahead of planning; goal met or carry-in named (no silent slips) | In-sprint drafting → DoR-ahead, consistent hit-rate | DKR-A, C | — |
-| **5. Unblock OTG data quality** ⚠️ | Per-agency remediation reports + outreach driven; coverage up from ~160/633 | ~25% ingested → launch-ready by Aug–Sep | DKR-A | **Stretch — dependency** |
+| **5. Unblock OTG data quality** ⚠️ | Per-agency remediation reports + outreach driven; coverage up from ~160/633 | ~25% ingested → launch-ready by Oct 2026 | DKR-A | **Stretch — dependency** |
 
 ⚠️ **KR 5 caveat (raise in session):** the actual clean-up is DevOps + agencies (ESG/MTI/MSF). I own the reports + outreach, not their delivery. → *Rate me on the unblock work.*
 
-**Target dates:** all delivery KRs gate on **MVP go-live, Aug–Sep 2026.**
+**Target dates:** all delivery KRs gate on **MVP go-live, Oct 2026.**
 
 ---
 
@@ -80,7 +122,7 @@
 
 ## Inferred Divisional KRs (placeholder — replace w/ Jace's real ones)
 
-- **DKR-A:** Launch OTEP MVP (Opportunities + WOG Auth) to officers, Aug–Sep 2026
+- **DKR-A:** Launch OTEP MVP (Opportunities + WOG Auth) to officers, Oct 2026
 - **DKR-B:** Establish OTEP as a trusted, WOG-aligned platform w/ agency buy-in
 - **DKR-C:** Build product/delivery capability in the Pathfinder squad
 

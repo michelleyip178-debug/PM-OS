@@ -6,17 +6,18 @@
 
 ## What we're grooming
 
-Ringfencing = restricting which officers can see or apply to a given opportunity, based on eligibility criteria (agency, job family, grade, scheme of service). It's a post-auth, post-profile capability — it can only work once WOG AD login and officer profile data are in place.
+Ringfencing = restricting which officers can see a given opportunity based on eligibility criteria set by the posting agency. **Scope decision (2026-06-17):** Opportunity creation and criteria-setting stays in OTG — CareerCompass reads the ringfencing rules from the OTG ingestion pipeline and enforces them at display time only. No criteria-authoring UI in OTEP.
 
 **Stories in scope for this session:**
 
 | Jira | Story | Status | Sprint target |
 |------|-------|--------|---------------|
-| OTEP-127 | [Spike] Define ringfencing eligibility contract | Backlog | S5 |
-| — | Apply ringfencing: show/hide ineligible opportunities | Not written | S5 or S6 |
-| — | Agency admin: set audience criteria on posting | Not written | R1 (likely) |
+| OTEP-127 | [Spike] Define ringfencing display contract — OTG rules → CareerCompass listing | Backlog | S5 (1 pt, 0.5 day) |
+| OTEP-408 | [BE] Listing API — apply ringfencing eligibility filter | Backlog | S5 |
+| OTEP-409 | [FE] Listing — reflect ringfenced results | Backlog | S5 |
+| OTEP-390 | Ringfenced opportunity detail page states | Backlog | S5 |
 
-**The goal for 26 Jun:** use the session to discover and define the ringfencing tickets together with the squad. Come out with: (1) BO policy questions answered, (2) OTEP-127 ACs confirmed and estimated, (3) build story shells drafted with enough AC to go into S5/S6 grooming. This is a discovery-first grooming session, not a standard estimation run.
+**The goal for 26 Jun:** close OTEP-127 (2 BO questions remaining), estimate OTEP-408/409/390 as a block. This is now a standard estimation session — the architectural unknowns are largely resolved.
 
 ---
 
@@ -28,15 +29,20 @@ OTG lets opportunity owners set an "audience filter" when posting. Three filter 
 
 ### Data picture (ingestion analysis, updated 15 Jun)
 
-- 669 open opportunities total; **253 (38%) are ringfenced**
-- **Enterprise Singapore accounts for 172 of 253 ringfenced (68%).** ESG uses OTG as a near-pure internal HR platform — 127 of those are ESG-internal Secondments, not WOG-open roles.
+- 669 open opportunities in OTG total
+- **Jobs and Secondments excluded from MVP entirely (decision 2026-06-17, Adrian + Xian Zhang).** 102 of 669 (15%) removed from the MVP listing. BOs are aware of the volume affected.
+- **MVP listing scope: 567 opportunities** (STIPs, Gigs, SJRs, C@G External)
+- Of those, **217 (38%) are ringfenced** — all from GIG and STIP types
 
-| Type | Ringfenced | Rate | Note |
-|------|-----------|------|------|
-| Jobs (incl. Secondments) | 36 of 102 | 35% | Secondments: 51% ringfenced, ESG dominates |
-| GIG | 9 of 38 | 24% | All 9 are ESG-only |
-| STIP | 1 of 9 | 11% | Low impact |
-| SJR | 0 of 57 | 0% | Fully WOG-open |
+| Type | MVP? | Total | Ringfenced | Rate | Note |
+|------|------|-------|-----------|------|------|
+| Jobs (incl. Secondments) | ❌ Excluded from MVP | 102 | 36 | 35% | R1 — native creation needed first |
+| GIG | ✅ | 38 | 9 | 24% | All 9 ringfenced are ESG-only |
+| STIP | ✅ | 9 | 1 | 11% | Low impact |
+| SJR | ✅ | 57 | 0 | 0% | Fully WOG-open |
+| C@G External | ✅ | varies | 0 | 0% | C@G has no ringfencing |
+
+**ESG impact:** ESG accounts for the majority of ringfenced opportunities (172 of 253 in full OTG). With Jobs/Secondments excluded, ESG's ringfenced exposure drops to GIG-only (9 records). ESG remains a pilot agency — they are aware their Secondments won't appear at MVP.
 
 ### What's already decided (I-012, ratified 12 Jun)
 
@@ -54,58 +60,56 @@ OTG export (GIGS_V2_REPORT)
               → officer sees only eligible opportunities
 ```
 
-The engineering chain: (1) ingestion pipeline must join both OTG reports — not currently done; (2) officer's agency must be readable from session context — depends on WOG AD / Keycloak (OTEP-71, OTEP-304); (3) agency-resolution source (D-2) must be confirmed. The spike (OTEP-127) is really about pinning down steps 1 and 3.
+The engineering chain: (1) ingestion pipeline must join both OTG reports and store the eligible agency list on the opportunity record — not currently done; (2) officer's agency must be readable from session context — depends on WOG AD / Keycloak (OTEP-71, OTEP-304); (3) null/missing ringfencing field = treat as open to all (resolved 2026-06-17).
+
+**POCDEX is not in this chain.** Ringfencing criteria come from OTG at ingestion time, not from the officer's POCDEX profile. The spike confirms the OTG field mapping and display rule — not a POCDEX contract.
 
 ---
 
 ## The spike: OTEP-127
 
-**Goal:** Produce a written eligibility matrix and API contract doc. Answers: what POCDEX fields drive eligibility for each opportunity type, and what does the API payload from POCDEX look like?
+**Goal:** Close the two remaining display UX questions so OTEP-408/409/390 can be estimated and entered into S5. As-is OTG field mapping is known. Null/missing ringfencing field = open to all (resolved).
 
-**Why it's a spike, not a story:** We don't know yet whether POCDEX can serve eligibility data in real time, or whether OTEP needs to cache it. The spike resolves that architectural question. Build stories can only be estimated after the spike closes.
+**Why still a spike:** BO sign-off on display rule and message copy hasn't landed yet. Once it does, the spike closes and build stories can be estimated immediately.
 
-**Dependencies before the spike can start:**
+**1 point, 0.5 day. Updated in Jira 2026-06-17.**
 
-| Dependency | Status | Owner |
-|-----------|--------|-------|
-| WOG AD login (OTEP-71) | Backlog, no sprint | Pow Hwee |
-| POCDEX API service (OTEP-203) | Blocked — Core team Q&A pending | Core team (Pei Ern / Kingsley) → Pow Hwee |
-| POCDEX seed database (OTEP-202) | In S4 | Léo |
-| Agency-resolution source (D-2) | Unresolved | Pow Hwee |
-
-**New blocker on POCDEX (2026-06-17):** Pow Hwee has asked Core team two questions before OTEP-203 can proceed: (1) what data is expected from POCDEX? (2) how does Core team intend to set up profile data for QA and UAT with POCDEX data? Until Core team responds, OTEP-203 is blocked — which in turn blocks OTEP-127. The dependency chain is now: **Core team answers → Pow Hwee builds OTEP-203 → spike can start.**
-
-The spike cannot start until POCDEX 203/202 close in S4, Core team's Q&A is resolved, and D-2 is confirmed — so realistically mid-S5 at the earliest. It can still be estimated and ticketed in the 26 Jun session, with the start gate and Core team dependency noted explicitly in the AC.
-
-**Current Jira description (sparse):** "What POCDEX fields drive eligibility for each opportunity type? What does the API contract look like? Output: written eligibility matrix + API contract doc." Already estimated at 3 points.
-
-**Suggested ACs for the spike:**
-
-1. Eligibility matrix written: for each opportunity type (STIP, Gig, SJR, Jobs), lists which POCDEX fields are checked (agency, job family, grade, scheme of service, or others), the match logic (exact, prefix, list-membership), and the fallback when a field is null.
-2. API contract documented: endpoint, request params, response shape, error codes. Includes the "no eligibility criteria set" case (open = all officers eligible).
-3. POCDEX field availability confirmed: for each field used in the matrix, confirmed that POCDEX exposes it in the officer profile API.
-4. Architectural decision logged: real-time check vs OTEP-side cache, with justification.
-5. Output reviewed by Pow Hwee and signed off before spike closes.
-
-**Estimate check:** 3 points feels right for a spike with a bounded, written output. Push back only if POCDEX field mapping turns out to need a separate workshop with Daryll.
-
----
-
-## The 7 BO policy questions (open-item #43)
-
-These must be resolved before Amber can design eligibility states and before we can write build story ACs. Target: answered at or before the 26 Jun grooming session.
+**Remaining open questions (both need BO answer — open-item #43):**
 
 | # | Question | Why it matters |
 |---|----------|----------------|
-| 1 | Hide vs show-but-disable for ineligible officers | Changes the entire UX pattern — two different Figma flows |
-| 2 | Agency/comms implications of showing restricted postings | If "show-but-disable," do we surface the posting agency? Comms sensitivity. |
-| 3 | Does any pilot agency need "Exclude" mode (blocklist vs allowlist)? | Affects the data model — allowlist is simpler; blocklist needs extra logic |
-| 4 | Can criteria be stacked? (e.g. agency AND job family) | Determines whether it's a simple lookup or a rule engine |
-| 5 | Can audience be edited post-publish? | Affects edit flow and notification triggers |
-| 6 | How specific should the ineligibility message be? ("You are not eligible" vs "This is only for [agency] officers") | Legal/comms sensitivity; affects copy writing scope |
-| 7 | Should OTEP surface a positive eligibility signal for eligible officers? | Net-new feature if yes — needs its own story |
+| 1 | Hide the listing entirely vs show-but-disable apply CTA for ineligible officers? | Two completely different Figma flows; Amber can't design until this is answered |
+| 2 | Ineligibility message copy — how specific? ("Not available to you" vs "This is for [agency] officers only") | Legal/comms sensitivity; affects copy scope |
 
-**Also worth probing:** Do any pilot agencies actually plan to ringfence at launch? If none do, we can park questions 1–7 and treat the spike as a design-only deliverable for now. This is the hypothesis that could collapse the entire grooming agenda.
+**Already resolved (not spike questions anymore):**
+
+| Item | Resolution |
+|------|-----------|
+| OTG field mapping — which fields carry ringfencing criteria | Known from as-is analysis (RAW_GIG_AUDIENCE_FILTERS) |
+| Storage at ingestion — how OTEP stores the eligible agency list | Field on opportunity record, joined at ingestion |
+| Null/missing ringfencing field | Treat as open to all (decided 2026-06-17) |
+| EXCLUDE/blocklist mode (MDDI edge case) | Follow OTG behaviour: invert blocklist at ingestion → eligible set = all WOG agencies minus blocked list. Pipeline must handle both INCLUDE and EXCLUDE mode. Resolved 2026-06-17. |
+| POCDEX dependency | Removed — criteria come from OTG, not officer profile |
+
+**Dependencies before spike can start:** None. It can start as soon as BO answers Q1 and Q2.
+
+**Expected output:** Confirmed display rule + message copy (BO sign-off), go/no-go on OTEP-408/409/390 for S5.
+
+---
+
+## The 4 BO questions (open-item #43)
+
+Scope decision (2026-06-17): criteria-setting stays in OTG. Stacked criteria, post-publish editing, and audience editing are OTG's responsibility — not OTEP's. Five questions remain for BOs.
+
+| # | Question | Why it matters |
+|---|----------|----------------|
+| 1 | Hide the listing entirely vs show-but-disable apply CTA for ineligible officers? | Two different Figma flows; Amber is blocked until this is answered |
+| 2 | How specific should the ineligibility message be? ("Not available to you" vs "This is only for [agency] officers") | Legal/comms sensitivity; affects copy scope |
+| 3 | Should OTEP surface a positive eligibility signal for eligible officers? ("Available to you" badge) | Net-new feature if yes — needs its own story shell |
+| 4 | Jobs filter chip — show (returns empty until R1 when Internal Jobs/Secondments are ingested) vs hide entirely until R1? | Affects OTEP-86 filter chip display logic; "show empty" risks confusing officers at launch |
+| 5 | EXCLUDE/blocklist mode (MDDI edge case) — should blocked officers see any indication they are excluded, or is silent hide acceptable? | OTEP will invert the blocklist at ingestion (follow OTG behaviour — resolved). But ~100 blocked agencies won't see the posting and won't know why. Same hide-vs-message decision as Q1/Q2 applies here, but for a blocklist rather than an allowlist. BOs need to confirm: same treatment as standard ringfencing, or different message? |
+
+**Also worth probing:** Do any pilot agencies actually plan to ringfence at launch? If none do, we can park OTEP-127/408/409/390 as a design-only deliverable and let them sit in S6 backlog. This is the hypothesis that could collapse the entire grooming agenda.
 
 ---
 
@@ -113,43 +117,40 @@ These must be resolved before Amber can design eligibility states and before we 
 
 **Target outputs from 26 Jun:**
 
-1. **OTEP-127 (spike) — estimated and ticketed.** ACs above are the starting point. Pow Hwee validates POCDEX field availability in the room. Note the start gate in the ticket: "Can start once OTEP-203/202 done and D-2 confirmed."
+1. **OTEP-127 (spike) — confirm closed or close in session.** If BO Q1 and Q2 are answered before 26 Jun, the spike is done and you walk in with it closed. If not, close it live in the session with BOs present.
 
-2. **Officer experience build stories — shells drafted.** BO answers to questions 1, 2, 6 (hide/show, message specificity) determine the AC shape. If BOs are in the room, draft the ACs live. If not, come out with the question list answered and write ACs after.
+2. **OTEP-408/409/390 — estimate as a block.** These three are sequenced: 408 (BE) → 409 (FE) → 390 (detail page states). Pow Hwee estimates 408, FE estimates 409, Amber estimates 390. State the dependency order clearly so they're not treated as parallel.
 
-3. **Agency admin story — confirm R1 or MVP.** MVP assumption is criteria are set via script/config, not a self-service UI. If BOs expect a UI at launch, that's a net-new story that changes the S5/S6 scope. Pin this down in the session.
+3. **Agency admin story — confirm R1 (not MVP).** Criteria-setting stays in OTG. OTEP has no agency admin UI at MVP. State this as settled — not a question for the session.
 
-**What not to try to close in one session:** full AC detail on the build stories. The spike has to run first to confirm the POCDEX contract. Draft the shells, flag the open fields, and sequence the estimation for after the spike closes.
+**What not to try to close:** full AC detail on 408/409/390 if BO questions 1 and 2 haven't landed yet. In that case, draft shells, flag the two open fields, and hold final estimation until after BO sign-off.
 
 ---
 
 ## What to bring to the session
 
 **For you to prep:**
-- [ ] Send BO questions 1–7 to Jacky / Xian Zhang before 26 Jun — need written answers, not verbal
-- [ ] Chase Core team (Pei Ern / Kingsley) to answer Pow Hwee's two POCDEX questions before 26 Jun — this gates OTEP-203 and therefore the spike start date
-- [ ] Confirm with Pow Hwee: do any pilot agencies plan to ringfence at launch? (The "do we even need this at MVP?" check)
-- [ ] Confirm with Pow Hwee: is MVP admin = script-based config, not a UI? (Scopes out the agency admin story)
-- [ ] Review OTEP-127 ACs above with Pow Hwee before the session
+- [ ] Send BO questions 1–5 to Jacky / Xian Zhang before 26 Jun — need answers before estimation, even async is fine. Q5 (EXCLUDE/blocklist mode) is new — flag it explicitly so BOs know it's an edge case from OTG's current MDDI record
+- [ ] Probe: do any pilot agencies actually plan to ringfence at launch? Ask Jacky / Xian Zhang in the same message — this determines whether the stories enter S5 at all
+- [ ] OTEP-127 is already updated in Jira (2026-06-17) — confirm it's closed or close it live if BO answers arrive in the session
 
 **For Amber:**
 - [ ] No design work until BO Q1 (hide vs show-disable) is answered — block is real
-- [ ] Once Q1 is answered, she needs: the eligibility matrix from the spike and the ineligibility message copy (Q6)
+- [ ] Once Q1 is answered: eligible indicator treatment for OTEP-390 AC2 ("Available to you" badge direction)
 
 **For the squad in the session:**
-- Present OTEP-127 spike with the ACs above
-- Get Pow Hwee to validate: POCDEX field availability, API contract feasibility, 3-point estimate
-- Confirm spike target: mid-S5 start (dependent on 203/202 landing in S4)
-- Log any build story ACs that emerge from BO Q answers as a draft in the parking lot — don't try to estimate them in this session
+- Lead with the scope clarification: criteria-setting stays in OTG, OTEP display only. Framing for Pow Hwee: simpler build, no POCDEX dependency
+- Walk through OTEP-408 → 409 → 390 as a sequenced block; 408 must close before 409 starts
+- Confirm OTEP-127 closed before asking for 408/409/390 estimates
 
 ---
 
 ## Risk
 
-**D-9 (BO sign-off) is the single critical path item.** If the 7 questions aren't answered by 26 Jun, S5 ringfencing grooming produces nothing actionable. The spike can be estimated, but the build stories can't be written or sequenced.
+**BO sign-off (#43) is the single critical path item.** Down from 7 questions to 3 — much more tractable. If the 3 display questions aren't answered by 26 Jun, OTEP-408/409/390 can't be estimated.
 
-If BO answers arrive late: push ringfencing build stories to S6 and use S5 solely to run the spike. Auth stories (OTEP-71 et al.) fill the S5 slot instead — they have a cleaner dependency chain once WOG AD onboarding progresses.
+If BO answers arrive late: OTEP-127 spike can still close (OTG field questions are answered), but build stories slip to S6. S5 fills with OTEP-304 (session persistence), OTEP-281 (loading state), and OTEP-427 (ingestion tightening) instead. State this contingency upfront in the session — don't let it surface as a surprise mid-planning.
 
 ---
 
-*Source: OTEP-127 (Jira), open-items.md #43, sprint-allocation.md S5 table, decisions-log.md D-2, scan-2026-06-17.md D-9, 17_ringfencing_analysis.html (RAW_GIG_AUDIENCE_FILTERS, 669 records, updated 15 Jun 2026)*
+*Updated: 2026-06-17 — (1) creation/criteria stays in OTG, OTEP display-only; (2) Jobs + Secondments excluded from MVP (102 opps, BOs aware); (3) POCDEX dependency removed; (4) 7 BO questions → 3; (5) OTEP-127 reduced to 1pt/0.5 day. Sources: OTEP-127 (Jira), open-items.md #43, decisions-log.md 2026-06-17, 17_ringfencing_analysis.html (RAW_GIG_AUDIENCE_FILTERS, 669 records, updated 15 Jun 2026)*

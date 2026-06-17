@@ -51,8 +51,8 @@ Sprint 4 is active (15–28 Jun). S5 grooming must happen now — stories need t
 
 | Story ID | Title | Story Format | AC Written | AC Language | Design Status | Dependencies | Open Items | Ready? |
 |----------|-------|:---:|:---:|:---:|---|---|---|:---:|
-| OTEP-390 | Ringfenced detail page states | ✅ | ✅ | ✅ | ❌ Amber spec needed (AC2 eligible indicator) | OTEP-127 (BE eligibility), WOG AD #26, POCDEX #31 | Eligible indicator visual treatment; alternative opp ranking logic; EDM source param | ⚠️ |
-| OTEP-408 | [BE] Eligibility filter on listing API | ✅ | ✅ | ✅ | n/a | WOG AD #26, POCDEX #31, OTEP-127 spike output | All 3 gates must clear before S5 planning | ⚠️ |
+| OTEP-390 | Ringfenced detail page states | ✅ | ✅ | ✅ | ❌ Amber spec needed (AC2 eligible indicator) | OTEP-127 spike output | Eligible indicator visual treatment; display rule (hide vs disable, BO #43); ineligibility message copy (BO #43) | ⚠️ |
+| OTEP-408 | [BE] Eligibility filter on listing API | ✅ | ✅ | ✅ | n/a | OTEP-127 spike output | POCDEX no longer a gate — criteria read from OTG at ingestion (decision 2026-06-17). Gate = OTEP-127 spike output only. | ⚠️ |
 | OTEP-409 | [FE] Listing ringfenced/pinned results | ✅ | ✅ | ✅ | n/a | OTEP-408 must complete first | None beyond 408 | ⚠️ |
 | OTEP-304 | Session persistence | ✅ | ⚠️ Idle timeout TBD in AC | ✅ | n/a | Keycloak (no WOG AD dependency) | Idle timeout value unresolved — "30 minutes — TBD" in AC | ⚠️ |
 | OTEP-281 | Listing loading state (spinner) | ✅ | ✅ | ✅ | n/a | OTEP-268 must close first | Confirm OTEP-268 Done in S4 | ⚠️ |
@@ -81,7 +81,9 @@ ACs are well-written and outcome-oriented. Three items need resolution before gr
 
 ACs are clean and well-specified. One flag:
 
-1. **Gate dependency:** All three must clear before S5 planning (26 Jun): WOG AD domain submission (#26 Fabian), POCDEX read replica (#31 Daryll), OTEP-127 spike output accepted. **If WOG AD doesn't move by 26 Jun, this story and OTEP-409 cannot enter S5.** Flag this to Pow Hwee in the session and have a contingency ready (OTEP-281 + OTEP-304 + OTEP-427 as alternative S5 fill).
+1. **Gate dependency:** One gate remains before S5 planning (26 Jun): OTEP-127 spike output accepted by Pow Hwee. POCDEX is no longer a gate for ringfencing — criteria are read from OTG at ingestion, not derived from officer profile (decision 2026-06-17). WOG AD (#26) is a dependency for auth stories but not for the ringfencing build itself. **If OTEP-127 spike isn't closed before 26 Jun, this story and OTEP-409 cannot enter S5.** Flag this to Pow Hwee in the session and have a contingency ready (OTEP-281 + OTEP-304 + OTEP-427 as alternative S5 fill).
+
+2. **EXCLUDE/blocklist mode (MDDI edge case):** `RAW_GIG_AUDIENCE_FILTERS` has two modes — standard INCLUDE (allowlist) and EXCLUDE (blocklist, ~1 record, MDDI). The pipeline must handle both: for EXCLUDE records, derive the eligible set as all WOG agencies minus the blocked list. Treating EXCLUDE as an allowlist would incorrectly block MDDI officers from their own posting and open it to ~100 agencies. **AC to add:** "For records where filter mode = EXCLUDE, the eligible agency set is computed as all active WOG agencies minus the blocked agency list." Follow OTG's current behaviour — this is resolved, not a spike question.
 
 **AC language check:** Clean — ACs describe system behaviour at the API boundary, appropriate for a BE story.
 
@@ -159,7 +161,7 @@ By end of Sprint 5: Officers have a persistent session (OTEP-304), see a loading
 | OTEP-133 — close as absorbed into OTEP-390 | Michelle | Before session |
 | OTEP-268 — confirm Done in S4 (unblocks OTEP-281) | Pow Hwee / Thomas | Standup this week |
 | OTEP-88 S4 close status — Done or carry into S5? | Pow Hwee / Thomas | Standup this week |
-| Ringfencing BO sign-off (open item #43) — 7 policy questions before OTEP-127/408/409 can be built | Michelle → BOs | Before S5 backlog grooming (Thu 26 Jun) |
+| Ringfencing BO sign-off (open item #43) — 3 display UX questions remain (hide vs disable, message copy, eligibility signal). Creation/criteria stays in OTG (decision 2026-06-17). | Michelle → BOs | Before S5 backlog grooming (Thu 26 Jun) |
 | Amber flow walkthrough (open item #45) — full opportunity flow before S5 design starts | Amber to confirm date | End of this week |
 | 403 error page — confirm treatment with LifeSG (open item #44) | Michelle | Before S5 design lock |
 
@@ -176,14 +178,14 @@ Ready responses for out-of-scope topics that will come up:
 - **"Multiple WOG AD roles / group memberships?"** → "Two roles only for MVP: officer and admin. Granular RBAC is R1."
 - **"What if officer is on secondment — which agency do they see?"** → "Out of MVP scope. Cross-posting and secondment agency resolution is R1."
 - **"Should we warn officers if their session will expire?"** → "WOG-16 (pre-expiry session warning) is deferred. Idle timeout (OTEP-304) is the fallback. R1."
-- **"Category / job-family filters?"** → "Type filter (5-category model) is in MVP. Job-family filter is also in MVP — it's in OTEP-427 scope. Agency and grade filters are R1."
+- **"Category / job-family filters?"** → "Type filter (4-category model: Jobs, STIPs, Gigs, SJRs) is in MVP. Job-family filter is also in MVP — it's in OTEP-427 scope. Agency and grade filters are R1."
 - **"Can officers see agency/grade eligibility criteria on the detail page?"** → "Not in MVP. Detail page shows 'not available to you' only — no breakdown of why. R1."
 
 ---
 
 ### Pow Hwee Will Probably Ask...
 
-- **"What's the WOG AD situation — are OTEP-390/408/409 actually deliverable in S5?"** — Answer: approval clock running since 10 Jun, 2–4 weeks. If it doesn't land before 26 Jun, these three stories can't be planned. Contingency is OTEP-427 + CSC SSO fill. State this upfront so it's not a surprise.
+- **"What's the WOG AD situation — are OTEP-390/408/409 actually deliverable in S5?"** — Answer: WOG AD is no longer a gate for the ringfencing build (criteria come from OTG, not officer profile). The gate is OTEP-127 spike output — which is now a 1-point, half-day spike with 2 BO questions remaining. If those BO answers land before 26 Jun, ringfencing stories can enter S5. WOG AD is still needed for auth stories (OTEP-71/110/304) but doesn't block OTEP-408/409.
 - **"What's the idle timeout for OTEP-304?"** — Lock the number before the session. 30 minutes unless IM8 says otherwise.
 - **"What does 'Available to you' look like on the detail page?"** — Have Amber's proposal ready, even if it's a sketch. Pow Hwee won't estimate without a visual direction.
 - **"Does OTEP-409 have a hard dependency on OTEP-408 being Done first?"** — Yes. They must be sequenced; FE cannot be built until the BE filter contract is confirmed. State this clearly so they're not treated as parallel.

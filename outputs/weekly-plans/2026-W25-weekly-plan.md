@@ -3,7 +3,7 @@ week: 2026-W25
 week_start: 2026-06-15
 week_end: 2026-06-19
 quarter: Q2 2026
-sprint: Sprint 4 (15–26 Jun 2026) — Week 1 of 2
+sprint: Sprint 4 (15–28 Jun 2026) — Week 1 of 2
 ---
 
 # Weekly Plan — Week of 15 June 2026 (W25)
@@ -18,7 +18,7 @@ sprint: Sprint 4 (15–26 Jun 2026) — Week 1 of 2
 
 ## Strategic Context
 
-**Quarter Goal:** MVP go-live week of 19–23 Oct 2026. S4 (15–26 Jun) is dev sprint 4 of 9.
+**Quarter Goal:** MVP go-live week of 19–23 Oct 2026. S4 (15–28 Jun) is dev sprint 4 of 9.
 
 **North Star Progress:** Not formally tracked yet — North Star brief itself is a W25 deliverable.
 
@@ -152,7 +152,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 - [ ] S4 board reconciliation — carried from Friday EOD (W24 → W25)
 - [ ] North Star brief — zero progress for 3 weeks (W22–W24 → W25, now urgent)
 - [ ] Mark R1 scope follow-up — not started (W24 → W25)
-- [ ] OTG monthly progress report — was due Wed 10 Jun, still outstanding (overdue → W25)
+- [x] OTG monthly progress report — ✅ Delegated to Jobelle 2026-06-17. Jobelle to own going forward.
 
 **Learnings applied:**
 - "Priority 3 loses to operational urgency every week" → Thursday PM is blocked for SteerCo work before the week starts. Proactive, not reactive.
@@ -168,7 +168,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 | ~~Rama interview not yet booked~~ | ✅ Done 15 Jun — scope confirmed, happy flow only |
 | North Star brief loses to execution again | Thursday PM block confirmed before Tuesday meetings fill the calendar |
 | Xian Zhang 5-category validation takes >1 week | Send with a "validate by Friday or flag blockers" ask |
-| OTG monthly progress report overdue (was due 10 Jun) | Monday too full — write and send Tuesday AM, first task |
+| ~~OTG monthly progress report overdue~~ | ✅ Delegated to Jobelle 2026-06-17 |
 
 ---
 
@@ -196,6 +196,6 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 
 ---
 
-*Generated: 2026-06-15. Updated: 2026-06-15 (calendar synced — 5 meetings Monday confirmed).*
+*Generated: 2026-06-15. Updated: 2026-06-17 (stale-check — sprint end date corrected 15–28 Jun; Rama upload sync confirmed done 15 Jun).*
 *Source: W24 weekly review, sprint-status.md, tasks-active.md, open-items.md, risks.md, Google Calendar API*
 *Next: Run `/daily-plan` each morning. Run `/jira-sync` after S4 sprint is activated in Jira.*
