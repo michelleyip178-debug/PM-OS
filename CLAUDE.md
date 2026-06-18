@@ -146,7 +146,7 @@ When the PM uses a skill command (e.g., `/prd-draft`, `/meeting-notes`), Claude 
 
 All skills are registered as native slash commands. You can invoke them by typing `/skill-name` or Claude may auto-load them when relevant.
 
-**Available Skills (43 total - fully context-aware and cross-integrated):**
+**Available Skills (46 total - fully context-aware and cross-integrated):**
 
 All skills now check your workspace context first, reference related analyses, and connect insights like a real PM would.
 
@@ -205,6 +205,11 @@ All skills now check your workspace context first, reference related analyses, a
 - `/jira-sync` - Refresh stale Jira ticket files + sprint allocations from live Jira (inverse of stale-check: fixes the cache that everything reads)
 - `/launch-checklist` - Comprehensive product launch planning (prioritized checklist with owners, dependencies, critical path)
 - `/code-first-draft` - Initial feature implementation from PRD specs (explores codebase, creates implementation plan, writes code with tests)
+
+**Sprint Cadence:**
+- `/grooming-close` - Run after every grooming session: gates stories to DoR, writes `ready-for-sprint` label to Jira, reports Ready shelf depth vs velocity-derived buffer target
+- `/sprint-pulse` - Run daily: pulls last 24h of activity on active sprint stories, buckets into AC-landed / blocked-needs-nudge / noise — replaces manual board scan
+- `/sprint-check` - Run Thursday of Week 2: reads Ready shelf depth, flags dependency traps, produces pre-planning brief before sprint planning
 
 **Fun:**
 - `/ralph-wiggum` - Devil's advocate PRD/document reviewer with humor and sharp critique (finds logical gaps, questionable assumptions, and missing data)
@@ -356,9 +361,10 @@ These workflows chain skills together for common PM activities:
 
 **Daily PM Workflow:**
 1. Morning: `/daily-plan` to get your prioritized plan with meeting context
-2. During meetings: Take raw notes or record
-3. After each meeting: `/meeting-notes` to process into structured notes + action items
-4. End of day: `/stale-check` to catch tracker drift before it walks into tomorrow's standup, then `/slack-message` for any follow-ups needed
+2. After standup: `/sprint-pulse` to get a filtered view of what changed on your sprint stories overnight (replaces manual board scan)
+3. During meetings: Take raw notes or record
+4. After each meeting: `/meeting-notes` to process into structured notes + action items
+5. End of day: `/stale-check` to catch tracker drift before it walks into tomorrow's standup, then `/slack-message` for any follow-ups needed
 
 **Weekly PM Cycle:**
 1. Monday morning: `/weekly-plan` to set the week's priorities
@@ -376,6 +382,13 @@ These workflows chain skills together for common PM activities:
 6. `/launch-checklist` to plan the launch
 7. `/feature-results` to analyze post-launch results
 8. Feed learnings back into next cycle
+
+**Sprint Cadence:**
+1. Before grooming: `/groom-prep` or `/groom` to prepare the brief
+2. After grooming session ends: `/grooming-close` to gate stories to DoR, write `ready-for-sprint` to Jira, and check shelf depth
+3. Daily (after standup): `/sprint-pulse` to get a filtered pull of overnight activity — AC landed, blocked, or noise
+4. Thursday Week 2 (pre-planning): `/sprint-check` to read shelf depth and flag dependency traps
+5. Thursday Week 2 (after sprint-check): `/sprint-plan-prep` to draft sprint goal and opening statement
 
 **Strategic Planning:**
 1. `/define-north-star` to validate or set your North Star metric

@@ -7,7 +7,7 @@ Your AI-powered copilot for modern product management. Built for Claude Code and
 Most PMs use AI the same way they use Google: one-off questions, zero context. This system works differently.
 
 - **Context over prompting.** AI is only as good as the context you give it. PM OS organizes your company knowledge, writing styles, stakeholder profiles, and past decisions so every output sounds like it came from someone who actually works there.
-- **Workflows, not chat.** 43 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, and retrospectives. Each one builds on the others.
+- **Workflows, not chat.** 46 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, retrospectives, and sprint cadence. Each one builds on the others.
 - **Ship the draft, then iterate.** Documents are living artifacts. A 1-page PRD that ships Monday beats a 10-page spec that ships never.
 
 ## What You Get
@@ -64,8 +64,8 @@ pm-operating-system/
 ├── CLAUDE.md                    # Master instructions for Claude
 │
 ├── .claude/                     # Claude Code configuration
-│   ├── skills/                  # 43 registered PM skills
-│   ├── commands/                # 14 OTEP delivery commands (sprint/ceremony/daily rhythm)
+│   ├── skills/                  # 46 registered PM skills
+│   ├── commands/                # 17 OTEP delivery commands (sprint/ceremony/daily rhythm)
 │   └── agents/                  # sprint-trio (spawnable sprint analysis)
 │
 ├── setup/                       # Installation and configuration
@@ -97,8 +97,8 @@ Unlike ChatGPT or regular Claude:
 ### Three Layers of Context
 
 1. **Project Knowledge** (`context-library/`) - Company info, writing styles, stakeholder profiles that apply across all your work
-2. **Skills** (`.claude/skills/`) - 43 registered PM skills for recurring tasks
-3. **Commands** (`.claude/commands/`) - 14 OTEP delivery commands for the sprint/ceremony/daily rhythm (e.g. `/groom`, `/retro`, `/week`). These operate on the linked PM-skills-ALL-1 workspace.
+2. **Skills** (`.claude/skills/`) - 46 registered PM skills for recurring tasks
+3. **Commands** (`.claude/commands/`) - 17 OTEP delivery commands for the sprint/ceremony/daily rhythm (e.g. `/groom`, `/retro`, `/week`, `/sprint-pulse`). These operate on the linked PM-skills-ALL-1 workspace.
 4. **Sub-Agents** (`sub-agents/` + `.claude/agents/`) - Specialized reviewers, plus the spawnable `sprint-trio` agent
 
 When you ask Claude to draft a PRD, it automatically:
@@ -163,7 +163,7 @@ Claude will automatically route your question to the right tool and return resul
 - [ ] Customize the slash commands for your workflow
 - [ ] Add example PRDs from your company to `context-library/example-prds/`
 
-## Available Slash Commands (43 Total)
+## Available Slash Commands (46 Total)
 
 Type `/` in Claude Code to see autocomplete menu with all commands.
 
@@ -189,6 +189,11 @@ Type `/` in Claude Code to see autocomplete menu with all commands.
 - `/expansion-strategy` - Revenue expansion tactics
 - `/experiment-decision` - When to A/B test vs ship
 - `/experiment-metrics` - STEDII framework
+
+### Sprint Cadence
+- `/grooming-close` - Run after every grooming session: gates stories to DoR, writes `ready-for-sprint` label to Jira, reports Ready shelf depth vs velocity target
+- `/sprint-pulse` - Run daily after standup: filters last 24h of sprint activity into AC-landed / blocked-needs-nudge / noise (replaces manual board scan)
+- `/sprint-check` - Run Thursday Week 2: reads Ready shelf depth, flags dependency traps, produces pre-planning brief
 
 ### Cache & Tracker Hygiene
 - `/jira-sync` - Refresh the local Jira ticket cache + sprint allocations from live Jira (diff-first; default = active sprint, open tickets only)
@@ -240,7 +245,17 @@ Please review [prd-file.md] from the perspective of an engineer, designer, and e
 ```
 Run `/jira-sync` first, then `/stale-check` — the first fixes the source, the second fixes everything that reads it. See `00-hub/sync-workflow.md` for the full daily/weekly rhythm.
 
-### Prep for sprint grooming / planning
+### Run the sprint cadence
+```
+/groom-prep        # before the grooming session
+/groom             # grooming brief
+/grooming-close    # after the session: gate stories to DoR, write label to Jira, check shelf
+/sprint-pulse      # daily after standup: filtered activity pull, replaces board scan
+/sprint-check      # Thursday Week 2: shelf depth + dependency traps before planning
+/sprint-plan-prep  # Thursday Week 2: sprint goal + candidate stories
+```
+
+### Prep for sprint grooming / planning (deep analysis)
 ```
 Use the sprint-trio agent to review the active sprint.
 ```
