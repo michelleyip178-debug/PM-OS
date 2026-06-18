@@ -27,7 +27,7 @@ _65 Sprint 4 stories checked · 8 had activity in the last 24h · 2 need your at
 | OTEP-408 | [BE] Listing API eligibility filter | ✅ Ready | None — gates documented, team knows them |
 | OTEP-409 | [FE] Listing — ringfenced pinned results | ✅ Ready | None — depends on OTEP-408 as expected |
 | OTEP-390 | Ringfenced detail page states | ⚠️ Needs work | 3 open questions — Amber indicator spec is the blocker |
-| OTEP-304 | Remain authenticated during active session | ✅ Ready | 30-min idle timeout confirmed IM8-compliant (2026-06-18) |
+| OTEP-304 | Remain authenticated during active session | ✅ Ready | Timeout owned by WOG AD — OTEP handles expired token state only. AC updated 2026-06-18. |
 | OTEP-281 | Loading state for listing | ❌ Not yet | OTEP-268 must be Done first (currently in QA in S4) |
 
 **Actions before S5 grooming:**

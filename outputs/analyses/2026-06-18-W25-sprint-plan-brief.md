@@ -34,7 +34,7 @@ By end of Sprint 5, an officer can log in with real WOG AD credentials, browse a
 | OTEP-408 | [BE] Listing API eligibility filter | ✅ Ready | None — design gates documented, team briefed |
 | OTEP-409 | [FE] Listing — ringfenced pinned results | ✅ Ready | Depends on OTEP-408 as expected; not a blocker |
 | OTEP-390 | Ringfenced detail page states | ⚠️ Needs work | Amber indicator spec outstanding; AC2 loose until she confirms eligible visual |
-| OTEP-304 | Remain authenticated during active session | ✅ Ready | 30-min idle timeout confirmed IM8-compliant (2026-06-18) — write value into Jira AC |
+| OTEP-304 | Remain authenticated during active session | ✅ Ready | Timeout owned by WOG AD, not OTEP — OTEP handles expired token state only. AC updated 2026-06-18. |
 | OTEP-281 | Loading state for listing | ❌ Hold | OTEP-268 must be Done first — currently in QA in S4 |
 | OTEP-87 | View C@G opportunity summary | ⚠️ Partial | ACs exist in story file; Jira ACs need reconciling (FormSG vs C@G deep-link conflict flagged by Pow Hwee) |
 
