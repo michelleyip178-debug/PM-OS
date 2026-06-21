@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R1 Application Flow — Jamming Draft</title>
+<style>
+  :root{
+    --ink:#1a1f24; --muted:#5b6670; --line:#e3e8ee; --bg:#ffffff;
+    --accent:#2563eb; --accent-soft:#eff4ff;
+    --must:#16a34a; --must-bg:#ecfdf3;
+    --should:#2563eb; --should-bg:#eff4ff;
+    --could:#d97706; --could-bg:#fff7ed;
+    --wont:#9ca3af; --wont-bg:#f3f4f6;
+    --warn:#b45309; --warn-bg:#fffbeb; --warn-line:#fcd34d;
+    --danger:#dc2626; --danger-bg:#fef2f2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:#f5f7fa; margin:0; line-height:1.55; font-size:15px;
+  }
+  .page{max-width:880px; margin:32px auto; background:var(--bg); padding:48px 56px;
+    box-shadow:0 1px 3px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.06); border-radius:10px;}
+  header.doc{border-bottom:2px solid var(--ink); padding-bottom:18px; margin-bottom:8px;}
+  h1{font-size:27px; margin:0 0 6px; letter-spacing:-.4px;}
+  .meta{color:var(--muted); font-size:13px;} .meta b{color:var(--ink);}
+  .status-pill{display:inline-block; background:var(--warn-bg); color:var(--warn);
+    border:1px solid var(--warn-line); padding:3px 10px; border-radius:999px;
+    font-size:12px; font-weight:600; margin-top:10px;}
+  .trio-pill{display:inline-block; background:var(--accent-soft); color:var(--accent);
+    border:1px solid #cdddff; padding:3px 10px; border-radius:999px;
+    font-size:12px; font-weight:600; margin-top:10px; margin-left:6px;}
+  h2{font-size:18px; margin:34px 0 12px; padding-top:18px; border-top:1px solid var(--line); letter-spacing:-.2px;}
+  h2:first-of-type{border-top:none; padding-top:0;}
+  h3{font-size:15.5px; margin:20px 0 6px;}
+  p{margin:9px 0;} ul,ol{margin:8px 0; padding-left:20px;} li{margin:5px 0;}
+  code{background:#f0f2f5; padding:1px 5px; border-radius:4px; font-size:.88em;
+    font-family:"SF Mono",Menlo,Consolas,monospace;}
+  .lead{background:var(--accent-soft); border-left:4px solid var(--accent);
+    padding:14px 18px; border-radius:0 8px 8px 0; font-size:16px; margin:14px 0;}
+  blockquote{background:var(--warn-bg); border-left:4px solid var(--warn-line);
+    margin:16px 0; padding:13px 18px; border-radius:0 8px 8px 0; color:#5a4a1f;}
+  blockquote p{margin:5px 0;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:13.5px;}
+  th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  th{background:#f7f9fc; font-weight:600; font-size:12.5px; text-transform:uppercase; letter-spacing:.3px; color:var(--muted);}
+  .epic{border:1px solid var(--line); border-radius:9px; padding:16px 20px; margin:14px 0; background:#fcfdff;}
+  .epic h3{margin-top:0;}
+  .epic .tag{font-size:11px; font-weight:700; padding:2px 8px; border-radius:5px; margin-left:8px; vertical-align:middle;}
+  .tag-spine{background:var(--accent-soft); color:var(--accent);}
+  .q{color:var(--muted); font-size:13.5px;}
+  .arrow{color:var(--accent); font-weight:600;}
+  .moscow td:first-child{font-weight:700; white-space:nowrap;}
+  tr.must td:first-child{color:var(--must);} tr.must{background:var(--must-bg);}
+  tr.should td:first-child{color:var(--should);} tr.should{background:var(--should-bg);}
+  tr.could td:first-child{color:var(--could);} tr.could{background:var(--could-bg);}
+  tr.wont td:first-child{color:var(--wont);} tr.wont{background:var(--wont-bg);}
+  .callout{background:var(--accent-soft); border:1px solid #cdddff; border-radius:8px; padding:13px 18px; margin:14px 0; font-size:14px;}
+  .settled{background:var(--must-bg); border:1px solid #b7e4c7; border-radius:8px; padding:10px 16px; margin:12px 0; font-size:13.5px; color:#1d5b35;}
+  .danger{background:var(--danger-bg); border:1px solid #fbb4b4; border-radius:8px; padding:11px 16px; margin:12px 0; font-size:13.5px; color:#8a1c1c;}
+  .rec{background:#f0f7ff; border-left:3px solid var(--accent); padding:8px 12px; margin:8px 0; font-size:13.5px;}
+  .footer{margin-top:36px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:12.5px;}
+  @media print{
+    body{background:#fff;} .page{box-shadow:none; margin:0; max-width:100%; padding:24px 28px;}
+    h2{page-break-after:avoid;} .epic,table,blockquote{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="doc">
+  <h1>R1 Application Flow — Jamming Draft</h1>
+  <div class="meta">
+    <b>Session:</b> R1 jam with Adrian · Mon 22 Jun PM &nbsp;·&nbsp;
+    <b>Owner:</b> Michelle &nbsp;·&nbsp; <b>Source:</b> Mark's 5 Jun R1 brief
+  </div>
+  <span class="status-pill">DRAFT — provisional until Mark sign-off (#40)</span>
+  <span class="trio-pill">✓ trio-reviewed 19 Jun (5 findings folded in)</span>
+</header>
+
+<blockquote>
+  <p><b>For the jam with Adrian, Mon 22 Jun.</b> A draft to react to, not a locked scope. Goal: agree the R1 epics and a rough priority order, so we can open the R1 story pipeline. Provisional until Mark confirms (#40). I take whatever we shape to Mark right after.</p>
+</blockquote>
+
+<div class="callout">
+  <b>The one-line takeaway for Monday:</b> walk in recommending <b>narrow Epic A (Internal Jobs + Secondments only)</b> and naming the <b>criteria-authoring / POCDEX-write trap</b> before Adrian does. That turns the jam from "defend five epics" into "agree the core and the flex" — which is the jam's real job.
+</div>
+
+<h2>Where MVP stands <span style="font-weight:400;color:var(--muted);font-size:14px;">(Adrian's gate: "is the opportunity page locked?")</span></h2>
+<p><b>Direction: locked.</b> 4-category type model, ringfencing as read-only display, FormSG-redirect apply for MVP. None of this changes under R1.</p>
+<p><b>Build: still closing out this sprint (S4).</b> 8 stories in QA, search/sort and C@G in flight, OTEP-87 in backlog. Not "done," but done enough in <i>direction</i> that R1 scoping won't be invalidated.</p>
+<p><b>So: clear to jam.</b> The one MVP build decision R1 touches is the apply CTA — see OTEP-87 at the end.</p>
+
+<h2>The R1 picture in one line</h2>
+<div class="lead">
+  MVP gets an officer to the <i>door</i> of an opportunity, with postings from OTG ingestion. <b>R1 brings both ends in-house:</b> agencies <i>create</i> opportunities directly in CareerCompass, and officers <i>apply</i> without leaving it. CareerCompass stops being a read-only window onto OTG and becomes the <b>system of record</b>.
+</div>
+
+<h2>The 5 epics</h2>
+
+<div class="epic">
+  <h3>Epic A — Opportunity Creation <span class="tag tag-spine">SPINE · new 19 Jun</span></h3>
+  <p>Agencies author and manage postings <b>directly in CareerCompass</b> — structured creation form, posting lives in OTEP's DB, validation + publish workflow, edit/close lifecycle. Native agency-admin capability (decided 2 Jun: creation moved R4 → R1).</p>
+  <p><b>Why it's a spine:</b> flips CareerCompass into the <b>system of record</b>. Prerequisite that lets <b>Internal Jobs + Secondments re-enter</b> (pulled from MVP for lack of creation tooling). Reverses the OTEP-127 "criteria stays in OTG" posture — the ringfencing-criteria <i>write</i> path comes into scope.</p>
+  <div class="danger"><b>Scope reality — 2–3x expansion.</b> Net-new agency-admin UI + creation data model + validation/publish workflow, against <b>Thomas as sole FE</b> in a 3-month window. The capacity conversation, not a footnote.</div>
+  <div class="rec"><b>Recommend: narrow creation, not all five types.</b> Lead with <b>Internal Jobs + Secondments only</b> for R1 (the two with no other home post-OTG). Full 5-type (add STIP/Gig/PSFG) = stretch. Roughly halves the build, still delivers the system-of-record promise for the types that need it. Walk in with this and Adrian's strongest challenge is already answered.</div>
+  <div class="rec"><b>SJR default: NOT in R1 creation.</b> Excluded from MVP ingestion (21 May), apply deferred. OUT unless Mark explicitly pulls it in — don't let it default in.</div>
+  <div class="rec"><b>Criteria authoring: recommend phasing OUT of R1 → R1.5.</b> It reverses a logged BO decision <i>and</i> re-opens the <b>POCDEX write path</b>, currently blocked on Core (#31). Keeping it out keeps R1 off the blocker. Name it as a conscious choice, not a silent scope bomb.</div>
+  <div class="danger"><b>Agency-admin auth — open dependency.</b> Creation needs an <i>agency-admin</i> auth surface, distinct from the officer login (WOG AD) still being onboarded (#26, not approved). Who is an admin, how they authenticate, whether it's built — all undefined. Foundational to Epic A. (→ Pow Hwee / Fabian)</div>
+  <p><b>C@G is the exception — keep it as native as possible.</b> Stays on its own rails (own source/integration), not authored through the generic create form.</p>
+  <p class="q"><span class="arrow">→</span> Open: narrow vs full 5-type? How does "C@G as native as possible" resolve? Criteria authoring R1 or R1.5 (rec R1.5)? Agency-admin auth — exists, who owns it? (Mark / Jacky / Pow Hwee / Fabian)</p>
+</div>
+
+<div class="epic">
+  <h3>Epic B — Streamlined Application <span class="tag tag-spine">SPINE</span></h3>
+  <p>The end-to-end in-Compass apply flow. <b>HR side:</b> agencies post job types incl. secondments directly (distinct from the MVP interim-form workaround for OTG agencies without a <code>formsg_url</code>). <b>Officer side:</b> a full <b>in-Compass native OTEP form</b> — not an embedded third-party (FormSG/C@G) form. Compass owns it, pre-filled from the officer's profile, posting to OTEP's backend. No redirects, no embeds.</p>
+  <p><b>Why it's the apply core:</b> the rest hangs off this — status tracking needs a submitted application, Saved Jobs needs a form to resume, Smart Assistant pre-fills <i>this</i> form. (Epic A is upstream — can't apply to a posting that wasn't created.)</p>
+  <div class="settled"><b>Form architecture — decided:</b> native OTEP form, not a FormSG/C@G embed. Was the biggest estimate driver; now settled. Remaining detail for Pow Hwee: form data model + submission posting (feeds Epic C).</div>
+  <div class="danger"><b>Cross-squad dependency.</b> Profile pre-fill (competencies + work history) sits on the competency SSOT owned by Imelda's squad, via an in-code interface, endpoint specs still in flight (Léo ↔ Kingsley, #18/#41). Both B's pre-fill and E's mapping ride on a contract that isn't finalised — same shape that pushed auth to S4+. Don't treat pre-fill as a given.</div>
+</div>
+
+<div class="epic">
+  <h3>Epic C — Status Tracking</h3>
+  <p>End-to-end application monitoring, native in OTEP. OTEP owns the state machine: submitted → under review → outcome. <b>No ATS integration in R1</b> — R2 or when a vendor is confirmed.</p>
+  <p><b>Depends on:</b> Epic B (need a submitted application to have a status).</p>
+  <p class="q"><span class="arrow">→</span> Open (data): states? who triggers transitions? who sees status — officer only or HR too? (Pow Hwee)</p>
+  <div class="rec"><b>Design load (not just a data model):</b> submitted → under review → <b>outcome</b> is a user-facing emotional journey. The "outcome = rejection" state and the "no applications yet" empty state are real design surfaces, currently unnamed. (→ Amber)</div>
+</div>
+
+<div class="epic">
+  <h3>Epic D — Saved Jobs</h3>
+  <p>Officers save/bookmark opportunities and resume in-progress applications without losing data.</p>
+  <p><b>Why it pairs with B:</b> "resume an application" only means something once there's an in-Compass form to half-fill. The "save an opportunity" half is lighter and could ship earlier.</p>
+  <p class="q"><span class="arrow">→</span> Open: persist across sessions? what happens when a saved posting closes (expiry)? (Pow Hwee)</p>
+</div>
+
+<div class="epic">
+  <h3>Epic E — Smart Assistant</h3>
+  <p>Auto-populates the officer's strengths/experience fields on the form from their OTEP profile. <b>R1 scope deliberately narrow:</b> profile-driven pre-fill only. NOT CV-upload inference (CIE flow, OTEP-205 — separate).</p>
+  <p><b>Depends on:</b> Epic B (pre-fills B's form).</p>
+  <div class="rec"><b>Design caveat — the pre-fill interaction is load-bearing, even if the inference is cut.</b> The pre-filled-then-editable form is a known UX trap: what does the officer see when pre-fill is wrong, partial, or stale (#18)? <b>Separate the pre-fill interaction design (must exist in B regardless) from the smart inference (can flex to Could).</b> Don't let cutting E leave B's core interaction undesigned.</div>
+  <p class="q"><span class="arrow">→</span> Open: which profile fields map to which form fields? Field-mapping exercise. (Amber / Pow Hwee)</p>
+</div>
+
+<h2>First-cut priority order <span style="font-weight:400;color:var(--muted);font-size:14px;">(my proposal — react to it)</span></h2>
+<table>
+  <tr><th>#</th><th>Epic</th><th>Why here</th><th>Conf.</th></tr>
+  <tr><td>1</td><td><b>A — Creation (narrow: IJ + Secondment)</b></td><td>Upstream spine, biggest build (2–3x at full scope). Narrow-first: only IJ + Secondment (no other home); full 5-type + criteria authoring = stretch. The capacity driver.</td><td>High (narrow)<br>Low (full)</td></tr>
+  <tr><td>2</td><td><b>B — Streamlined Application</b></td><td>Apply spine, officer payoff. The native form the other apply epics hang off. Scoped parallel with A, but <b>built sequentially — FE is the constraint</b>.</td><td>High</td></tr>
+  <tr><td>3</td><td><b>C — Status Tracking</b></td><td>Other half of "apply inside Compass." Without it officers submit into a black box. New data model — scope early.</td><td>High</td></tr>
+  <tr><td>4</td><td><b>D — Saved Jobs</b></td><td>High value, lower cost. "Save" ships semi-independently; "resume" waits on B. Parallel-track candidate.</td><td>Med</td></tr>
+  <tr><td>5</td><td><b>E — Smart Assistant</b></td><td>Enhancement on B's form, not standalone. Makes a working form better; doesn't make the flow work.</td><td>Med</td></tr>
+</table>
+<p><b>The shape:</b> <b>two spines, A and B</b> — creation (agency) and application (officer). The <i>scoping</i> parallelises; the <i>build</i> serialises through one FE. C scoped alongside B, ships after. D/E flex. <b>If R1 is cut: E first, then the "resume" half of D. The create-apply-track core (A-narrow + B + C) is non-negotiable.</b></p>
+<blockquote>
+  <p><b>The capacity reality — FE <i>and</i> design.</b> A is a 2–3x expansion with <b>Thomas as sole FE</b> in 3 months. A and B are two net-new surfaces — <b>built sequentially, not in parallel</b>. Each needs a full design pass (forms, validation, error, empty, confirmation, edit/close states) against <b>Amber, shared across squads</b>. Double constraint: serial FE <i>and</i> shared design. Honest read: <b>A+B+C at full breadth likely does not fit.</b> Realistic R1 = <b>A-narrow + B + C-minimal</b>, everything else flexing.</p>
+</blockquote>
+<div class="danger"><b>Fallback shape (have it ready):</b> if even A-narrow + B + C doesn't fit, the smallest thing that delivers is <b>A-narrow + B → submission lands, no native status tracking yet (status = email/manual interim, C slips to R1.5).</b> Still closes the create→apply loop for the orphaned types. Don't walk in without an answer to "what if it doesn't fit?"</div>
+
+<h2>The cut line — MoSCoW <span style="font-weight:400;color:var(--muted);font-size:14px;">(the framework for the jam)</span></h2>
+<p>Shared vocabulary for the "what's in R1" decision. This is the slide.</p>
+<table class="moscow">
+  <tr><th>Bucket</th><th>Epics</th><th>The line</th></tr>
+  <tr class="must"><td>MUST</td><td><b>A-narrow</b> (IJ + Secondment) · B — Application · C — Status Tracking</td><td>R1's promise <i>is</i> create-apply-track for the orphaned types. Drop any one and R1 doesn't deliver.</td></tr>
+  <tr class="should"><td>SHOULD</td><td>D — Saved Jobs ("save" half) · <b>A full 5-type</b> (add STIP/Gig/PSFG)</td><td>High value. The full-type stretch lives here — in if capacity allows, first real thing to drop if not.</td></tr>
+  <tr class="could"><td>COULD</td><td>E — Smart Assistant (inference) · D's "resume" half</td><td>Enhancements on a working form. First to flex. <i>(B's pre-fill interaction stays in B regardless — only the inference is Could.)</i></td></tr>
+  <tr class="wont"><td>WON'T</td><td><b>Criteria authoring</b> · recommender · ATS · CIE/CV inference · <b>SJR creation</b></td><td>Explicitly out. Criteria authoring re-opens the blocked POCDEX write path (#31) → R1.5. Named so they don't creep in.</td></tr>
+</table>
+<div class="callout">
+  <b>How to run it:</b> ask Adrian to challenge the <b>Musts</b> first (agree A-narrow + B + C and the hard part's done). Then negotiate the <b>Should/Could line</b> — full-type vs narrow creation is the big one, where capacity bites. The <b>Won'ts</b> defend the boundary — especially criteria authoring, the silent scope-and-blocker trap.<br><br>
+  <b>If he pushes on order within a bucket</b> ("why D over E?"): RICE — D has higher Reach + lower Effort than E. Score only the contested pair.
+</div>
+
+<h2>Scope boundaries to hold</h2>
+<table>
+  <tr><th>Item</th><th>Where it lives</th><th>Don't let it creep into R1</th></tr>
+  <tr><td>ATS integration</td><td>R2+</td><td>OTEP owns a native state machine for R1; no vendor.</td></tr>
+  <tr><td>CV upload / CIE inference (OTEP-205)</td><td>Separate / MVP</td><td>Smart Assistant = profile pre-fill only.</td></tr>
+  <tr><td>Interim apply form (OTG, no <code>formsg_url</code>)</td><td>MVP workaround</td><td>Separate from R1 HR posting; coexists.</td></tr>
+  <tr><td><b>Ringfencing-criteria authoring</b></td><td><b>R1.5 (recommend)</b></td><td>Reverses OTEP-127 and re-opens the POCDEX write path (#31, blocked on Core). Criteria stays OTG-read for R1.</td></tr>
+  <tr><td><b>SJR creation</b></td><td><b>Out unless Mark pulls it in</b></td><td>Excluded from MVP ingestion (21 May), apply deferred. Don't let it default into Epic A.</td></tr>
+  <tr><td><b>C@G creation</b></td><td><b>Native to C@G</b></td><td>"As native as possible." Own source/rails; not the generic create form.</td></tr>
+  <tr><td><b>Opportunity recommender</b></td><td><b>R1, separate track</b></td><td>Discovery, not apply flow. Different epic set, hypothesis-stage. Separate session.</td></tr>
+</table>
+
+<h2>Open questions to settle <span style="font-weight:400;color:var(--muted);font-size:14px;">(jam agenda)</span></h2>
+<p>Each P0 has a <b>recommended answer</b> — walk in proposing, not just asking.</p>
+<p><b style="color:var(--warn)">P0 — blocks any sprint planning</b></p>
+<ol>
+  <li><b>Creation breadth — narrow vs full?</b> <i>Recommend: narrow (IJ + Secondment) for R1, full 5-type as Should/stretch.</i> The single biggest scope lever. (Adrian / Mark)</li>
+  <li><b>Criteria authoring — R1 or R1.5?</b> <i>Recommend: R1.5.</i> Re-opens the blocked POCDEX write path (#31). Keep R1 off it. (Pow Hwee / Jacky)</li>
+  <li><b>Agency-admin auth — does it exist, who owns it?</b> <i>No recommendation — genuine unknown.</i> Creation can't ship without an admin auth surface; officer-auth chain (#26) still unapproved. Foundational. (Pow Hwee / Fabian)</li>
+  <li><b>Mark's confirmation</b> of the shaped epic set after the jam (Adrian first, then Mark).</li>
+</ol>
+<div class="settled"><b>Settled going in:</b> (a) apply form is a <b>native in-Compass OTEP form</b> (not FormSG/C@G embed). (b) <b>SJR not in R1 creation</b> unless Mark pulls it in. (c) <b>C@G stays native</b> to its own rails.</div>
+<p><b style="color:var(--accent)">P1 — needed before the affected epic is groomed</b></p>
+<ol start="5">
+  <li>Status tracking: states, transitions, visibility — <i>plus outcome/rejection + empty-state design</i> (Epic C → Pow Hwee + Amber)</li>
+  <li>Profile pre-fill contract: competency SSOT endpoint specs (Léo ↔ Kingsley, #18/#41) — gates B's pre-fill and E's mapping</li>
+  <li>Saved jobs: cross-session persistence + expiry on closed postings (Epic D)</li>
+  <li>Smart Assistant: profile-field → form-field mapping (Epic E)</li>
+</ol>
+
+<h2>One MVP decision this affects</h2>
+<p><b>OTEP-87 (C@G detail + apply CTA):</b> R1's native in-Compass form changes the apply destination — MVP points the CTA at a FormSG/C@G redirect, R1 replaces it. Implication: <b>don't over-build the redirect flow in MVP</b> if R1 is ~2 sprints out. A line at the jam so Adrian's team doesn't gold-plate a throwaway.</p>
+
+<h2>Two things to handle around the jam</h2>
+<div class="danger"><b>Sequence the DevOps chat (#49) BEFORE the jam on Mon 22.</b> The STIP+Gig merge discussion is the same afternoon, and Epic A's creation form has to author the very types being merged. Settle the taxonomy first or the create-form scope shifts under us mid-session.</div>
+<div class="callout"><b>R1 pilot-cohort instability — watch item.</b> R1 internal-marketplace heavy users include WSG, mid-merger into SWDA (effective 1 Jul, Workday-only by Jan 2027 — exactly the R1 window). The pilot cohort may be organisationally unstable during R1. Not a jam blocker; flag for R1 readiness.</div>
+
+<div class="footer">
+  Draft 2026-06-19 for the Mon 22 Jun jam · Trio-reviewed (PM + Tech Lead + Designer), 5 findings folded in · Provisional until Mark sign-off (#40) · Source: r1-scope-brief 2026-06-05 · Recommender = separate track.
+</div>
+
+</div>
+</body>
+</html>

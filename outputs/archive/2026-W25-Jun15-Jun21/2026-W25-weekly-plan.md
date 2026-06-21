@@ -10,7 +10,7 @@ sprint: Sprint 4 (15–28 Jun 2026) — Week 1 of 2
 
 ## TL;DR
 
-- **Top 3:** (1) S4 board stabilised and QA tail cleared, (2) OTG ingestion v3 ACs + 5-category mapping locked, (3) July SteerCo deliverables — North Star brief started
+- **Top 3:** (1) S4 board stabilised and QA tail cleared, (2) OTG ingestion v3 ACs + 4-category mapping locked, (3) co-prep the SteerCo demo with Imelda/Rama/Pow Hwee
 - **Meeting load:** Heavy Monday (5 meetings 10am–5pm); execution windows are mornings Tue–Thu
 - **Key milestone:** S4 has a clean foundation by Wednesday. SteerCo prep starts before Friday.
 
@@ -20,10 +20,10 @@ sprint: Sprint 4 (15–28 Jun 2026) — Week 1 of 2
 
 **Quarter Goal:** MVP go-live week of 19–23 Oct 2026. S4 (15–28 Jun) is dev sprint 4 of 9.
 
-**North Star Progress:** Not formally tracked yet — North Star brief itself is a W25 deliverable.
+**North Star Progress:** Not formally tracked yet. The North Star brief is owned by another team (for-info SteerCo deliverable), not Michelle.
 
 **This Week's Focus:**
-S4 started Monday against two inherited problems: a board not fully reconciled and July SteerCo deliverables with zero momentum for three weeks. This week fixes both. Sprint execution comes first (Mon–Tue), then ingestion unblocks (Tue–Wed), then strategic work starts Thursday even if it means calendar protection.
+S4 started Monday against an inherited problem: a board not fully reconciled. This week fixes that. Sprint execution comes first (Mon–Tue), then ingestion unblocks (Tue–Wed). The SteerCo demo co-prep with Imelda/Rama/Pow Hwee runs alongside — Michelle co-preps her listing slice into the consolidated narrative; she does not own the SteerCo deck.
 
 ---
 
@@ -60,26 +60,27 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 
 ---
 
-### Priority 2: OTG ingestion unblocks — v3 ACs + 5-category mapping
+### Priority 2: OTG ingestion unblocks — v3 ACs + 4-category mapping
 
 **Why this matters:**
 - Advances: Sprint 4 goal — "trust that data is current and accurate"
-- Impact: OTEP-192 is in QA; without locked ACs, Léo can't close it. 5-category mapping gates OTEP-86 grooming.
+- Impact: OTEP-192 is in QA; without locked ACs, Léo can't close it. 4-category mapping gates OTEP-86 grooming.
 
 **Success looks like:**
 - OTEP-192 ACs updated to v3 rules (ratified 12 Jun) — Léo has what he needs
-- 5-category mapping document delivered to Xian Zhang for validation
+- 4-category mapping document drafted; delivery to Xian Zhang gated on the Mon (22 Jun) DevOps chat confirming the OTG type-prefix fix (D 2026-06-04)
 - Per-agency remediation reports generated (identifies which agencies need data fixes before launch)
 - open-item #41 (endpoint specs Léo + Kingsley) has a meeting booked or async update sent
 
 **Key tasks:**
 - [ ] Update OTEP-192 ACs with all 3 rule changes from 12 Jun session (StartDate optional, Function optional, TimeCommitment rules) (Est: 1 hr)
-- [ ] Write 5-category mapping logic document → send to Xian Zhang with validation ask (Est: 2 hrs)
+- [ ] Draft 4-category mapping logic document this week; **send to Xian Zhang after Mon 22 Jun DevOps chat** confirms the OTG type-prefix fix (Est: 2 hrs)
 - [ ] Run per-agency remediation report — identify which agencies have records that still fail v3 rules (Est: 2 hrs)
 - [ ] Ping Léo: confirm hard-skip vs optional field distinction for OTEP-427 (Est: 30 min)
 
 **Dependencies:**
-- Needs from: Xian Zhang — validation of 5-category model (gates OTEP-86 and OTEP-289)
+- Needs from: DevOps/DT — OTG type-prefix fix confirmed at Mon 22 Jun chat (gates the 4-cat mapping before it can go to Xian Zhang)
+- Needs from: Xian Zhang — validation of 4-category model (gates OTEP-86 and OTEP-289)
 - Needs from: Léo → Kingsley — endpoint spec alignment (#41)
 - Blocks: OTEP-86 grooming, OTEP-289 go/no-go
 
@@ -88,26 +89,29 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 
 ---
 
-### Priority 3: July SteerCo deliverables — start North Star brief
+### Priority 3: Co-prep the SteerCo demo (with Imelda, Rama, Pow Hwee)
+
+> **Scope corrected 2026-06-19:** The SteerCo deck and deliverables (North Star brief, transition plan, gap analysis) are **not Michelle's** — they're for-info and owned by other teams. Michelle's job is to **co-prep the consolidated-narrative demo** for the Mark/GK session (per the 2 Jun two-tier demo decision). Michelle co-preps; others present.
 
 **Why this matters:**
-- Advances: Strategic pillar — GK/Mark context for programme health
-- Impact: Three weeks with zero progress. SteerCo is in July. If it doesn't start this week, it's a crisis.
-- Risk if not done: Arrive at SteerCo with no brief, no transition plan, no gap analysis — this is the pattern that damages credibility with GK and Mark
+- Advances: Programme-health visibility to GK/Mark via a coherent cross-squad demo
+- Impact: The Mark/GK session uses a consolidated narrative where PMs cover each other's parts — needs joint prep across the trio, not a solo deck
+- Risk if not done: A disjointed demo where workstreams don't hang together; Michelle's listing slice not rehearsed into the shared story
 
 **Success looks like:**
-- North Star brief: structure written, section 1 drafted (what the North Star is and why it matters now)
-- Follow-up sent to Mark confirming R1 scope (open-item #40 — needed before R1 sprint planning)
-- Transition plan + gap analysis: owner identified and briefed (this does not need to be Michelle's doc to write)
+- Michelle's S4 slice is demo-ready: the "usable listing experience" (cards, detail, filters, login/logout, open/closed, error states — 20 Done) framed as a clean narrative beat
+- Trio aligned on the consolidated flow: who covers what, the through-line across Imelda's, Rama's, and Michelle's parts
+- R1 scope ask sent to Mark (#40) — still Michelle's, separate from the demo
 
 **Key tasks:**
-- [ ] Thursday PM (block calendar): Draft North Star brief structure + Section 1 (Est: 2 hrs)
+- [ ] Sync with Imelda, Rama, Pow Hwee on the consolidated demo narrative + segment ownership (Est: 1 hr)
+- [ ] Prep Michelle's listing-experience demo beat — script + what to show (Est: 1 hr)
 - [ ] Send R1 scope confirmation ask to Mark — reference r1-scope-brief-2026-06-05.md (Est: 30 min)
-- [ ] Identify who writes transition plan + gap analysis; brief them and set a deadline (Est: 30 min)
 
 **Dependencies:**
-- Needs from: Mark — R1 scope sign-off (#40)
-- Blocks: R1 sprint planning, July SteerCo readiness
+- Needs from: Imelda / Rama / Pow Hwee — alignment on the shared narrative
+- Needs from: Mark — R1 scope sign-off (#40, separate from demo)
+- Open: SteerCo / Mark-GK demo date not pinned in trackers — confirm
 
 **Linked to:**
 - outputs/decisions/r1-scope-brief-2026-06-05.md
@@ -122,7 +126,6 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 | OTEP-192 (OTG ingestion) | QA | QA cleared | Update ACs to v3 rules; Léo to close |
 | OTEP-87 (C@G detail) | Grooming | Grooming-ready | Fix AC conflict; competency section gates on #41 |
 | Upload module | Discovery | ✅ Done — scope confirmed | Rama sync done 15 Jun. MVP = happy flow only (select type, attach file, confirmation screen). No validation error UI. Rama taking S5 inclusion decision to Pow Hwee. Update OTEP-397 spike ACs before S5 grooming. |
-| North Star brief | Not started | Section 1 drafted | Thursday protected block |
 
 ---
 
@@ -136,7 +139,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 | Mon 16:00 | OTEP Retro and Demo | S3 retrospective + demo | Light |
 | Mon 17:00 | PM Weekly catchup | R1 updates, cross-PM sharing | Light |
 | Tue–Fri | Daily standup | QA carry-in status, sprint pulse | No |
-| Thu PM | [Protected block] | North Star brief Section 1 | — |
+| TBC | SteerCo demo co-prep | Align consolidated narrative w/ Imelda, Rama, Pow Hwee | Yes |
 | ✅ Mon 15 Jun | Rama sync (done) | Upload module discovery | Scope confirmed: happy flow only. Notes: 2026-06-15-W25-file-upload-rama-sync.md |
 | TBC | Amber flow walkthrough | End-to-end flow review (#45) | Yes |
 
@@ -150,12 +153,11 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 - [ ] OTEP-127/130 in-or-out call — still un-contracted (W24 → W25)
 - [ ] OTEP-87 AC fix — Pow Hwee flagged twice (W24 → W25)
 - [ ] S4 board reconciliation — carried from Friday EOD (W24 → W25)
-- [ ] North Star brief — zero progress for 3 weeks (W22–W24 → W25, now urgent)
 - [ ] Mark R1 scope follow-up — not started (W24 → W25)
 - [x] OTG monthly progress report — ✅ Delegated to Jobelle 2026-06-17. Jobelle to own going forward.
 
 **Learnings applied:**
-- "Priority 3 loses to operational urgency every week" → Thursday PM is blocked for SteerCo work before the week starts. Proactive, not reactive.
+- "Priority 3 loses to operational urgency every week" → protect a block for demo co-prep before the week fills. (Note: the North Star brief that drove this for 3 weeks was never Michelle's — corrected 19 Jun.)
 - S4 board must be clean Monday AM — not Friday EOW handover.
 
 ---
@@ -166,8 +168,8 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 |------|------------|
 | Keycloak blocker has no target date | Ask Pow Hwee at Monday standup; escalate to Adrian if no date by Tuesday |
 | ~~Rama interview not yet booked~~ | ✅ Done 15 Jun — scope confirmed, happy flow only |
-| North Star brief loses to execution again | Thursday PM block confirmed before Tuesday meetings fill the calendar |
-| Xian Zhang 5-category validation takes >1 week | Send with a "validate by Friday or flag blockers" ask |
+| SteerCo demo not rehearsed into shared narrative | Sync with trio early; prep Michelle's listing beat before the demo date is on top of her |
+| 4-cat mapping blocked by DevOps prefix fix, then Xian Zhang validation >1 week | DevOps chat Mon 22 Jun unblocks the mapping; send same day with a "validate by Fri or flag blockers" ask |
 | ~~OTG monthly progress report overdue~~ | ✅ Delegated to Jobelle 2026-06-17 |
 
 ---
@@ -178,7 +180,7 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 |--------|-----------|-------|
 | Sprint delivery (listing experience) | 50% | → Core |
 | OTG ingestion (data accuracy) | 30% | → On track |
-| Strategic / SteerCo (North Star, R1) | 20% | ↑ Recovering after 3 weeks of zero |
+| Strategic / SteerCo (demo co-prep, R1) | 20% | → Demo co-prep with trio; deck owned elsewhere |
 
 ---
 
@@ -186,8 +188,8 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 
 **How we'll know this week was successful:**
 1. S4 board is clean (spine confirmed, OTEP-127/130 called, OTEP-87 AC fixed) by Tuesday EOD
-2. OTEP-192 ACs updated and 5-category mapping sent to Xian Zhang by Wednesday
-3. North Star brief Section 1 exists as a written document by Friday
+2. OTEP-192 ACs updated; 4-category mapping drafted (delivery to Xian Zhang gated on Mon 22 Jun DevOps chat)
+3. SteerCo demo co-prep underway: trio aligned on consolidated narrative, Michelle's listing beat scripted
 
 **Leading indicators to check mid-week (Wed):**
 - QA tickets moving: at least 3 of 9 carry-in items closed
@@ -196,6 +198,6 @@ S4 started Monday against two inherited problems: a board not fully reconciled a
 
 ---
 
-*Generated: 2026-06-15. Updated: 2026-06-17 (stale-check — sprint end date corrected 15–28 Jun; Rama upload sync confirmed done 15 Jun).*
+*Generated: 2026-06-15. Updated: 2026-06-18 (stale-check — 5-category → 4-category per I-018 revised 06-16). Prior: 2026-06-17 (sprint end 15–28 Jun; Rama upload done).*
 *Source: W24 weekly review, sprint-status.md, tasks-active.md, open-items.md, risks.md, Google Calendar API*
 *Next: Run `/daily-plan` each morning. Run `/jira-sync` after S4 sprint is activated in Jira.*
