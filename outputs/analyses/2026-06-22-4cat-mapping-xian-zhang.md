@@ -1,78 +1,74 @@
 ---
 date: 2026-06-22
-to: Xian Zhang
-purpose: Validate OTG → CareerCompass category mapping before S5 grooming
-status: DRAFT — fill in [CONFIRMED TYPE NAME] after DevOps chat
+decision: DevOps confirmation — 22 Jun 2026, 10:00
+purpose: Document MVP category model decision
+status: FINAL — no merge in MVP, PSFG conditional on policy intent
 ---
 
-# OTG → CareerCompass Category Mapping — Validation Request
+# MVP Opportunity Categories — Decision Summary
 
-Hi Xian Zhang,
-
-Following the decision to simplify the opportunity type model for MVP, I'd like to confirm the mapping with you before we update the sprint stories and lock the filter design for Sprint 5. This is a quick validation — I just need a thumbs-up or any corrections before **Thursday 26 June** (S5 grooming).
+**Decision made today (22 Jun, 10:00):**
+- ✅ STIP and Gig remain separate (no merge in MVP)
+- ✅ PSFG inclusion conditional on policy intent + programme support
 
 ---
 
-## Proposed Category Mapping
+## MVP Category Model
 
-This is what officers will see in CareerCompass at MVP. Categories are officer-facing groupings, not the internal OTG posting types.
-
-| CareerCompass Category | What it covers | OTG source types | Live at MVP? |
+| Category | OTG source types | Status | Notes |
 |---|---|---|---|
-| **[CONFIRMED TYPE NAME]** | Short-term attachments and project-based tasks — opportunities with a defined time commitment and end date | `STIP`, `Gig` | Yes |
-| **Jobs** | Internal roles, secondments, and Careers@Gov external jobs | `Job`, `Secondment`, C@G source | Yes |
-| **SJR** | Structured job rotations | `SJR` | No — excluded from MVP listing |
-| **PSFG** | Voluntary, skills-based public service opportunities | TBD | No — deferred to R1 |
+| **STIP** | `STIP` prefix | ✅ Included | Separate filter chip (unchanged from S4) |
+| **Gig** | `Gig` prefix | ✅ Included | Separate filter chip (unchanged from S4) |
+| **Jobs** | `Job`, `Secondment`, C@G | ✅ Included | Display badge for C@G |
+| **SJR** | `SJR` prefix | ❌ Excluded | Not visible in listing |
+| **PSFG** | TBD | 🟡 Conditional | Only if: (1) strong policy intent, (2) programme is strongly supported |
 
-**Notes:**
-- STIP and Gig are merged into a single filter chip and card label at MVP. The underlying data retains both values; this is a display-layer change only. *(Pending DevOps confirmation that no schema change is needed.)*
-- C@G opportunities appear in the same listing as OTG opportunities. They are visually badged as "Careers@Gov" so officers know they're leaving CareerCompass to apply.
-- SJR and PSFG are not visible in the MVP listing. Officers looking for these will not see them.
-
----
-
-## Why PSFG is deferred — and what needs to change
-
-PSFG has its own category in the model (I-016) and will be included when the data is ready. Three structural gaps in the current OTG data are blocking it.
-
-**1. No competency tagging (0 of 20 PSFG records)**
-Every PSFG record has N/A in the Talents field. CareerCompass surfaces opportunities based on competency gaps — without tags, PSFG can't be matched to any officer. It would appear as a flat, unranked list with no relevance signal, which is a worse experience than OTG today.
-
-**2. Incomplete apply flow (10 of 20 records have no FormSG link)**
-Half of all PSFG opportunities have no extractable apply path. If half the catalogue is a dead end at launch, that's not an edge case — it's the default experience. Officers clicking "Apply" on a PSFG card would hit a broken state at the moment of highest intent.
-
-**3. No participation tracking**
-Sign-ups happen via external FormSG links and are never written back to OTG. This means we can't measure officer behaviour on PSFG in the pilot — any data we collect would be structurally empty, not a real signal on adoption.
-
-**Conditions for inclusion (PSFG comes in once these are met):**
-
-| Condition | What's needed | Who to chase |
-|-----------|--------------|-------------|
-| Competency tagging | Host orgs tag OCCs/FCs on each PSFG opportunity before posting | PSFG programme team / OTG team |
-| Standardised apply flow | All live PSFG opportunities have a valid FormSG link | OTG team (otg@psd.gov.sg) |
-| Participation tracking | Agreed mechanism to capture sign-up data | PSFG programme team |
-
-Once these three conditions are confirmed, we scope the ingestion work and assign it a sprint. This is a sequencing decision, not a rejection.
+**What changed from last week's plan:**
+- ❌ No STIP+Gig merge (stays separate)
+- ❌ No recategorisation brief needed
+- 🟡 PSFG moves from "deferred to R1" to "conditional on leadership priority"
 
 ---
 
-## What's changing from the previous model
+## PSFG Inclusion Conditions
 
-The old working model had STIP and Gig as separate filter chips. We're merging them because:
-- Both types have identical business rules (time commitment required, FormSG apply flow)
-- Officers don't distinguish between them when searching — they just want "shorter-term opportunities"
-- Fewer filter chips reduce cognitive load on the listing page
+PSFG can be included in MVP only if both conditions are met:
+
+### Condition 1: Strong Policy Intent
+Leadership must confirm PSFG is a priority for MVP (not just R1 nice-to-have). This means:
+- Explicit go/no-go from Jace and Adrian
+- PSFG is aligned with quarterly OKRs
+- Resource commitment from programme team
+
+### Condition 2: Programme Support
+PSFG team must own the data quality gaps before launch:
+
+| Gap | Current State | Needed by MVP |
+|---|---|---|
+| **Competency tagging** | 0 of 20 records have tags | Host orgs commit to tag before posting |
+| **Apply flow coverage** | 50% have no FormSG link | 100% valid apply path confirmed |
+| **Participation tracking** | Sign-ups not captured | Agreed mechanism to measure officer behaviour |
+
+If both conditions are met: scope the ingestion work and assign it a sprint (likely S5 or S6).
 
 ---
 
-## What I need from you
+## What This Means This Week
 
-1. **Is the merged category name ([CONFIRMED TYPE NAME]) clear to officers?** Does it accurately describe both STIP and Gig opportunities in plain language?
-2. **Does the Jobs grouping make sense?** Secondments and internal job postings show up together with Careers@Gov roles — is this the right bundling from a BO perspective?
-3. **Any concerns about SJR or PSFG being absent from MVP?** Both are excluded — confirming you're aligned before we lock the sprint.
+**OTEP-86 (filter by type):**
+- ✅ No changes needed — STIP and Gig remain separate filter chips
+- ✅ ACs are already correct — can close as-is
+- ✅ No rework required
 
-A quick reply or a 15-min chat this week works. I need confirmation before **Thursday 26 June 14:00 (S5 grooming)**.
+**PSFG path:**
+- 🟡 Conditional — waiting on Jace/Adrian policy intent check
+- If MVP priority: Programme team owns data fixes
+- If R1 priority: Current gaps are acceptable, launch without it
+
+**Next action:**
+- Thu 25 Jun: Jace check-in — confirm PSFG policy intent
+- Fri 26 Jun: S5 grooming proceeds with clean category model
 
 ---
 
-*Background: Decision I-018 (OTG Ingestion Decision Log, 2026-06-12, revised 2026-06-16). Recategorisation approach confirmed: Option A+C (display label merge now, data model cleanup pre-R1).*
+*Decision made: 22 Jun 2026, 10:00 DevOps chat. No merge, PSFG conditional on policy intent + programme support.*
