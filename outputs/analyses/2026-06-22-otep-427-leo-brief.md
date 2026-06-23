@@ -3,52 +3,51 @@
 
 ---
 
-## What I need from you
+## What I want the officer to experience
 
-OTEP-192 implemented the agreed ingestion rules. OTEP-427 is the validation spike on top of it -- I need you to review your own implementation against the decision log and tell me if anything doesn't match or wasn't covered.
+When an officer opens the platform, every opportunity they see should be:
 
-**Effort:** ~2-3 hours your side. Need this by **Thu 25 Jun EOD** for S5 grooming.
+- **Actionable** -- they can read what it is, understand what's expected, and apply. No dead ends, no missing information that stops them from taking the next step.
+- **Current** -- only open opportunities. Nothing that's already closed or expired.
+- **Clear on type** -- they know whether they're looking at a Gig, STIP, Job, or SJR. Unlabelled or unrecognized opportunities shouldn't appear.
+- **Complete enough to apply** -- if the FormSG link is broken or missing, there's no way to apply. That opportunity shouldn't show up.
 
----
-
-## Rule-by-rule validation (AC 1)
-
-Go through each agreed rule below and confirm whether OTEP-192 implements it correctly. Flag any gaps.
-
-| Rule | Decision | Implemented correctly? |
-|---|---|---|
-| I-008 | Hard-skip any record with a missing or unresolvable required mapped field | |
-| I-009 | SJR excluded from MVP listing and ingestion | |
-| I-011 | MVP ingests open opportunities only; all expired excluded | |
-| I-012 | MVP ring-fencing = agency-level only | |
-| I-013 | TimeCommitment required for STIPs and Gigs only | |
-| I-014 | Function field is optional / display-only (all types) | |
-| I-015 | StartDate optional for Jobs (Job + Secondment types) | |
-
-For each rule: yes / no / partial -- and if partial or no, what's the gap?
+If a record from OTG can't meet this bar, it should be excluded from the platform entirely -- not shown in a broken or incomplete state.
 
 ---
 
-## Edge cases from live OTG data (AC 2)
+## What that means for ingestion
 
-During implementation of OTEP-192, what edge cases did you hit from the actual OTG data that the rules didn't cleanly handle? I need at least 5 documented with a defined handling rule (hard-skip, optional field, error log, or transform).
+For OTEP-192, this translates to dropping any record that would result in a bad officer experience:
 
-Prompts if nothing comes to mind:
-- Records with no type prefix or an unrecognized type
-- Missing or malformed FormSG URL
-- Closing date in the past
-- Competency field missing vs. null vs. unexpected format
-- No BusinessUnit field with all other fields present
+**Drop the record entirely if:**
+- Opportunity type is unrecognized (officer wouldn't know what they're looking at)
+- Closing date is in the past (opportunity is no longer open)
+- FormSG URL is missing, malformed, or leads to a non-existent form (officer can't apply)
+- Any required field needed to understand or apply for the opportunity is missing or unresolvable
+
+**Ingest with the field absent if:**
+- Function field is missing (nice to have, doesn't block understanding or application)
+- StartDate is missing for Jobs and Secondments (not always known upfront)
+- Job Function is missing (ingest the record, but log it -- this affects ringfencing later)
 
 ---
 
-## One open question for you: FormSG URL validation
+## My ask
 
-If the ingestion job checks whether a FormSG URL resolves to a real form (live HTTP call per record), what's the failure mode if FormSG is unreachable? Does the job fail, skip the record, or retry? If this isn't handled, flag it.
+Need your input by **Wed 24 Jun EOD** -- S5 planning is Thursday.
+
+I want you to assess whether these rules correctly capture the officer experience I described. Specifically:
+
+1. **Do the rules make sense technically?** Anything that won't work, is ambiguous, or will cause problems in the data?
+2. **What edge cases in the OTG data aren't covered?** Based on what you've seen in the data, are there situations where a record would slip through that shouldn't -- or get dropped that should be kept?
+3. **FormSG URL validation** -- if we validate live that a URL resolves to a real form, what happens if FormSG is unreachable during ingestion? Does the job fail, skip the record, or retry? Worth defining.
+
+I need at least 5 edge cases documented with a handling rule each (drop, ingest with field absent, log, or transform).
 
 ---
 
 ## Not in scope for you
 
-- BusinessUnit optionality (I-019) -- I'm deciding this with Pow Hwee
-- Endpoint design review -- Hao is handling AC 4
+- Job Function optionality -- already decided (optional, log when absent)
+- Endpoint design review -- Pow Hwee and Hao are handling that separately

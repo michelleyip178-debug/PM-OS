@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerCompass R1 — Jamming Session | Jun 24 2026</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:   #0f2240;
+  --blue:   #1a3f72;
+  --accent: #2e7dce;
+  --teal:   #0d8a7d;
+  --amber:  #d97706;
+  --red:    #b91c1c;
+  --green:  #15803d;
+  --light:  #f4f7fb;
+  --white:  #ffffff;
+  --border: #dde4ef;
+  --text:   #1e293b;
+  --muted:  #64748b;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #111827;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  color: var(--text);
+}
+
+/* ── CHROME ── */
+#chrome {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  z-index: 10;
+  pointer-events: none;
+}
+#topbar {
+  background: rgba(15,34,64,0.97);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  height: 48px;
+  flex-shrink: 0;
+  pointer-events: all;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#topbar .title { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; }
+#controls { display: flex; align-items: center; gap: 10px; }
+#counter { color: rgba(255,255,255,0.45); font-size: 12px; min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
+.btn {
+  background: rgba(255,255,255,0.1); border: none; color: white;
+  padding: 6px 18px; border-radius: 6px; cursor: pointer; font-size: 13px;
+  transition: background .15s; user-select: none;
+}
+.btn:hover { background: rgba(255,255,255,0.2); }
+.btn:disabled { opacity: .3; cursor: default; }
+
+/* ── STAGE ── */
+#stage {
+  position: fixed;
+  top: 48px; left: 0; right: 0; bottom: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ── SLIDE SCALER ── */
+#scaler {
+  width: 1280px; height: 720px;
+  transform-origin: center center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── SLIDES STRIP ── */
+#strip {
+  display: flex;
+  width: 100%; height: 100%;
+  transition: transform .38s cubic-bezier(.4,0,.2,1);
+}
+
+.slide {
+  min-width: 1280px; width: 1280px; height: 720px;
+  overflow: hidden;
+  position: relative;
+  background: var(--light);
+  display: flex; flex-direction: column;
+}
+
+/* ═══════════════════════════════
+   SHARED LAYOUT PIECES
+   ═══════════════════════════════ */
+.s-header {
+  background: var(--navy);
+  padding: 22px 56px 20px;
+  flex-shrink: 0;
+  display: flex; align-items: baseline; gap: 16px;
+}
+.s-num { font-size: 11px; color: rgba(255,255,255,.35); font-weight: 700; letter-spacing:.1em; text-transform:uppercase; flex-shrink:0; }
+.s-title { font-size: 28px; font-weight: 700; color: white; line-height: 1.2; }
+.s-tag { margin-left: auto; font-size: 12px; background: rgba(255,255,255,.1); border-radius:20px; padding:4px 14px; color:rgba(255,255,255,.65); white-space:nowrap; flex-shrink:0; }
+.s-body { flex: 1; padding: 36px 56px; overflow: hidden; display: flex; flex-direction: column; gap: 18px; }
+
+/* ═══════════════════════════════
+   COVER
+   ═══════════════════════════════ */
+.cover {
+  background: linear-gradient(140deg, #0a1929 0%, #0f2240 50%, #1a3f72 100%);
+  color: white;
+  align-items: center; justify-content: center; text-align: center;
+}
+.cover .eyebrow { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:20px; }
+.cover h1 { font-size:56px; font-weight:800; line-height:1.1; color:white; margin-bottom:18px; }
+.cover .sub { font-size:20px; color:rgba(255,255,255,.65); line-height:1.5; max-width:680px; margin:0 auto 40px; }
+.accent-bar { width:56px; height:5px; background:var(--accent); border-radius:3px; margin:18px auto; }
+.chips { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.chip { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); border-radius:24px; padding:8px 20px; font-size:14px; color:rgba(255,255,255,.8); }
+
+/* ═══════════════════════════════
+   HEADLINE BOX
+   ═══════════════════════════════ */
+.hbox {
+  background: var(--navy); color:white;
+  border-radius:10px; padding:22px 28px;
+  font-size: 18px; line-height: 1.5; font-weight: 500;
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════
+   CARDS
+   ═══════════════════════════════ */
+.card {
+  background: white; border:1px solid var(--border); border-radius:10px; padding:22px 24px;
+}
+.card h3 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.card p  { font-size:14px; color:var(--muted); line-height:1.55; }
+.card ul { padding-left:18px; }
+.card li { font-size:14px; color:var(--muted); line-height:1.65; }
+.card .label { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+
+.card.al { border-left:4px solid var(--accent); }
+.card.tl { border-left:4px solid var(--teal); }
+.card.am { border-left:4px solid var(--amber); }
+.card.rl { border-left:4px solid var(--red); }
+.card.gl { border-left:4px solid var(--green); }
+.card.dark { background:var(--navy); border-color:var(--navy); }
+.card.dark h3, .card.dark p, .card.dark li { color:rgba(255,255,255,.85); }
+.card.dark .label { color:rgba(255,255,255,.4); }
+
+/* ═══════════════════════════════
+   GRIDS
+   ═══════════════════════════════ */
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.g4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; }
+.g3-1 { display:grid; grid-template-columns:3fr 2fr; gap:18px; }
+
+/* ═══════════════════════════════
+   EPIC BADGES
+   ═══════════════════════════════ */
+.eb { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:4px 12px; border-radius:14px; margin-bottom:8px; }
+.ea { background:#dbeafe; color:#1e40af; }
+.eb2{ background:#d1fae5; color:#065f46; }
+.ec { background:#fef3c7; color:#92400e; }
+.ed { background:#ede9fe; color:#5b21b6; }
+
+/* ═══════════════════════════════
+   TABLE
+   ═══════════════════════════════ */
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th { background:var(--navy); color:white; padding:11px 16px; text-align:left; font-size:12px; font-weight:600; }
+td { padding:11px 16px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text); }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:#f8fafc; }
+
+/* ═══════════════════════════════
+   PILLS
+   ═══════════════════════════════ */
+.pill { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; }
+.pm  { background:#fee2e2; color:#991b1b; }
+.ps  { background:#fef9c3; color:#854d0e; }
+.pc  { background:#ede9fe; color:#5b21b6; }
+.pw  { background:#f1f5f9; color:#475569; }
+
+/* ═══════════════════════════════
+   JOURNEY STEPS
+   ═══════════════════════════════ */
+.steps { display:flex; flex-direction:column; gap:0; }
+.step  { display:flex; gap:14px; align-items:flex-start; padding:10px 0; }
+.step + .step { border-top:1px dashed var(--border); }
+.snum {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:700; color:white; margin-top:1px;
+}
+.snum.ac { background:var(--accent); }
+.snum.tl { background:var(--teal); }
+.snum.am { background:var(--amber); }
+.snum.nv { background:var(--navy); }
+.sbody h4 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:2px; }
+.sbody p  { font-size:13px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════
+   SEAM BOX / NOTE BOX
+   ═══════════════════════════════ */
+.seam {
+  background:#fff7ed; border:2px solid var(--amber); border-radius:10px;
+  padding:16px 20px;
+}
+.seam .slabel { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); margin-bottom:6px; }
+.seam p { font-size:14px; color:#92400e; line-height:1.5; }
+.note {
+  background:#eff6ff; border-left:4px solid var(--accent); border-radius:0 8px 8px 0;
+  padding:14px 18px; font-size:14px; color:#1d4ed8; line-height:1.5;
+}
+
+/* ═══════════════════════════════
+   OKR ROWS
+   ═══════════════════════════════ */
+.okr  { display:flex; gap:16px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border); }
+.okr:last-child { border-bottom:none; }
+.oico { font-size:24px; flex-shrink:0; width:36px; margin-top:2px; }
+.okr h4 { font-size:16px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.okr p  { font-size:14px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════
+   OPEN QUESTIONS
+   ═══════════════════════════════ */
+.oq { display:flex; gap:14px; align-items:flex-start; padding:14px 18px; background:white; border:1px solid var(--border); border-radius:10px; }
+.oq + .oq { margin-top:10px; }
+.qnum { background:var(--red); color:white; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; margin-top:2px; }
+.qbody h4  { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.qbody .rec { font-size:13px; color:var(--teal); font-style:italic; margin-top:4px; }
+.qbody .qf  { font-size:13px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════
+   DEP CHAIN
+   ═══════════════════════════════ */
+.chain { display:flex; align-items:center; gap:8px; padding:20px 0 8px; }
+.dnode { background:var(--navy); color:white; padding:14px 20px; border-radius:10px; font-size:13px; font-weight:700; text-align:center; min-width:130px; }
+.dnode .ds { font-size:11px; color:rgba(255,255,255,.55); font-weight:400; margin-top:4px; }
+.dnode.hi { background:var(--accent); }
+.dnode.r1 { background:var(--teal); }
+.darr { font-size:22px; color:var(--muted); padding:0 4px; }
+
+/* ═══════════════════════════════
+   GAP ITEMS
+   ═══════════════════════════════ */
+.gap { display:flex; gap:14px; align-items:flex-start; padding:13px 16px; background:white; border:1px solid var(--border); border-radius:9px; }
+.gap + .gap { margin-top:8px; }
+.gpri { font-size:10px; font-weight:700; padding:4px 10px; border-radius:5px; flex-shrink:0; text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+.p0 { background:#fee2e2; color:#991b1b; }
+.p1 { background:#fef3c7; color:#92400e; }
+.p2 { background:#ede9fe; color:#5b21b6; }
+.gbody h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+.gbody p  { font-size:13px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════
+   PERSONA CARD
+   ═══════════════════════════════ */
+.pc-head { padding:16px 20px; border-radius:10px 10px 0 0; color:white; font-size:16px; font-weight:700; display:flex; align-items:center; gap:10px; }
+.pc-body { background:white; border:1px solid var(--border); border-top:none; border-radius:0 0 10px 10px; padding:16px 20px; }
+.pc-body strong { font-size:14px; color:var(--navy); display:block; margin-bottom:4px; }
+.pc-body p { font-size:13px; color:var(--muted); line-height:1.5; margin-bottom:8px; }
+.pc-body em { font-size:13px; font-style:normal; font-weight:700; }
+
+/* ═══════════════════════════════
+   CODE BOX
+   ═══════════════════════════════ */
+.codebox {
+  background:#0f2240; border-radius:10px; padding:20px 24px;
+  font-family: 'SF Mono', 'Fira Code', monospace; font-size:13px;
+  line-height:1.8; color:rgba(255,255,255,.82); white-space:pre;
+}
+
+/* ═══════════════════════════════
+   CLOSE SLIDE
+   ═══════════════════════════════ */
+.close-slide {
+  background: linear-gradient(140deg, #0a1929 0%, #0f2240 50%, #1a3f72 100%);
+  color:white; align-items:center; justify-content:center; text-align:center;
+}
+.close-slide h1 { font-size:48px; font-weight:800; line-height:1.15; color:white; margin-bottom:16px; }
+.close-slide .sub { font-size:18px; color:rgba(255,255,255,.65); line-height:1.6; max-width:620px; margin:0 auto 36px; }
+</style>
+</head>
+<body>
+
+<div id="chrome">
+  <div id="topbar">
+    <span class="title">CareerCompass R1 — Jamming Session &nbsp;·&nbsp; Wed 24 Jun 2026 &nbsp;·&nbsp; Michelle → Adrian</span>
+    <div id="controls">
+      <button class="btn" id="prev" onclick="move(-1)">← Prev</button>
+      <span id="counter">1 / 21</span>
+      <button class="btn" id="next" onclick="move(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<div id="stage">
+  <div id="scaler">
+    <div id="strip">
+<!-- ══════════════════════════════════════════════════════
+     01 · COVER
+══════════════════════════════════════════════════════ -->
+<div class="slide cover">
+  <div class="eyebrow">CareerCompass · R1 Product Jam</div>
+  <div class="accent-bar"></div>
+  <h1>Shaping R1:<br>The Application Experience</h1>
+  <p class="sub">Define the R1 epics at a high level and agree a rough priority order so we can open the story pipeline.</p>
+  <div class="chips">
+    <span class="chip">📅 Wed 24 Jun 2026</span>
+    <span class="chip">👤 Michelle → Adrian</span>
+    <span class="chip">🎯 R1 target: Q1 2027</span>
+    <span class="chip">⚠️ Provisional until Mark #40</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     02b · CURRENT STATE — THE PROBLEM
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">01</span>
+    <span class="s-title">What's broken today</span>
+    <span class="s-tag">The problem</span>
+  </div>
+  <div class="s-body" style="gap:14px;">
+    <div class="hbox" style="font-size:16px;">CareerCompass is a read-only job board. An officer can browse and discover — then hits Apply and leaves the platform entirely. Nothing comes back.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card rl">
+          <div class="label">Officer journey today</div>
+          <div class="steps" style="gap:0;">
+            <div class="step" style="padding:7px 0;"><div class="snum am" style="font-size:11px;width:24px;height:24px;">1</div><div><strong style="font-size:13px;">Browse Compass</strong> <span style="font-size:13px;color:var(--muted);">— discovers opportunity, reads detail</span></div></div>
+            <div class="step" style="padding:7px 0;"><div class="snum am" style="font-size:11px;width:24px;height:24px;">2</div><div><strong style="font-size:13px;">Clicks Apply</strong> <span style="font-size:13px;color:var(--muted);">— redirected to FormSG or C@G external site</span></div></div>
+            <div class="step" style="padding:7px 0;"><div class="snum am" style="font-size:11px;width:24px;height:24px;">3</div><div><strong style="font-size:13px;">Fills form from scratch</strong> <span style="font-size:13px;color:var(--muted);">— no profile pre-fill, manual entry</span></div></div>
+            <div class="step" style="padding:7px 0;"><div class="snum am" style="font-size:11px;width:24px;height:24px;">4</div><div><strong style="font-size:13px;">Submits externally</strong> <span style="font-size:13px;color:var(--muted);">— Compass has zero record of this</span></div></div>
+            <div class="step" style="padding:7px 0;"><div class="snum" style="font-size:11px;width:24px;height:24px;background:var(--red);">5</div><div><strong style="font-size:13px;">Waits. Hears nothing.</strong> <span style="font-size:13px;color:var(--muted);">— no status, no notification, must chase manually</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card rl">
+          <div class="label">Agency side today</div>
+          <ul style="padding-left:16px;margin-top:4px;">
+            <li style="font-size:13px;color:var(--muted);line-height:1.7;"><strong>Internal Jobs + Secondments are orphaned.</strong> No creation tooling exists anywhere. These types were pulled from MVP.</li>
+            <li style="font-size:13px;color:var(--muted);line-height:1.7;">Applications arrive via FormSG or email — manual, unstructured.</li>
+            <li style="font-size:13px;color:var(--muted);line-height:1.7;">No manager queue. No shortlisting. No status-back mechanism.</li>
+            <li style="font-size:13px;color:var(--muted);line-height:1.7;">Status updates = HR chasing candidates individually.</li>
+          </ul>
+        </div>
+        <div class="seam" style="margin-top:0;">
+          <strong>Why this blocks the North Star:</strong> 10% of officers completing a development action by Mar 2027 can't be measured if every application happens outside the platform and never comes back. R1 closes this gap.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     03 · R1 IN ONE LINE
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">02</span>
+    <span class="s-title">R1 in one line</span>
+    <span class="s-tag">Framing</span>
+  </div>
+  <div class="s-body">
+    <div class="g2" style="flex:1;align-items:stretch;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card" style="flex:1;">
+          <div class="label">MVP</div>
+          <h3 style="font-size:20px;margin-bottom:12px;">A better listing page</h3>
+          <p style="font-size:15px;">Browse · Filter · View · Click out to apply.</p>
+          <p style="font-size:15px;margin-top:10px;">CareerCompass is a <strong>read-only window</strong> onto OTG.</p>
+        </div>
+        <div class="card dark" style="flex:1;">
+          <div class="label">R1</div>
+          <h3 style="font-size:20px;margin-bottom:12px;">The system of record</h3>
+          <p style="font-size:15px;">Agencies create in CareerCompass. Officers apply without leaving. Create → post → pre-fill → submit → track → save.</p>
+          <p style="font-size:15px;margin-top:10px;color:rgba(255,255,255,.9);font-weight:600;">CareerCompass owns the full cycle.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
+        <div class="card" style="text-align:center;padding:20px;">
+          <div style="font-size:32px;margin-bottom:8px;">🏛️</div>
+          <div style="font-size:14px;font-weight:700;color:var(--navy);">Create it</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">Agency authors in Compass</div>
+        </div>
+        <div class="card" style="text-align:center;padding:20px;">
+          <div style="font-size:32px;margin-bottom:8px;">✍️</div>
+          <div style="font-size:14px;font-weight:700;color:var(--navy);">Apply in-Compass</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">Pre-filled · No redirects</div>
+        </div>
+        <div class="card" style="text-align:center;padding:20px;">
+          <div style="font-size:32px;margin-bottom:8px;">📊</div>
+          <div style="font-size:14px;font-weight:700;color:var(--navy);">Track the outcome</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">Status back within 24 hrs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     04 · WHY R1 NOW
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">03</span>
+    <span class="s-title">Why R1 now — the OKR case</span>
+    <span class="s-tag">Rationale</span>
+  </div>
+  <div class="s-body" style="justify-content:center;">
+    <div class="okr">
+      <div class="oico">🎯</div>
+      <div>
+        <h4>North Star: 10% completion rate by Mar 2027</h4>
+        <p>10% of officers complete a development action originating from CareerCompass. You can't hit this if "apply" still means leaving the platform. MVP establishes the baseline — R1 moves the needle.</p>
+      </div>
+    </div>
+    <div class="okr">
+      <div class="oico">👥</div>
+      <div>
+        <h4>OKR 2: 1,850 officers applied via CareerCompass by Q4 2028</h4>
+        <p>The funnel starts at R1. Every sprint it slips is compounded time lost on adoption. FormSG redirects don't count toward this number.</p>
+      </div>
+    </div>
+    <div class="okr">
+      <div class="oico">⏱️</div>
+      <div>
+        <h4>Status latency OKR: ≤24 hours from hiring manager action</h4>
+        <p>Needs a native state machine and vendor webhook agreements — both have multi-week lead times. Can't be retrofitted after R2.</p>
+      </div>
+    </div>
+    <div class="okr">
+      <div class="oico">🔄</div>
+      <div>
+        <h4>OTG feature parity: 50% of required features built in CareerCompass by Q1 2027</h4>
+        <p>Native opportunity creation (Epic A) is the primary driver. Without it, OTG migration stalls and pilot agencies can't cut over.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     13 · USER JOURNEYS OVERVIEW
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">04</span>
+    <span class="s-title">Ideal R1 user journeys — 3 personas, 3 lanes</span>
+    <span class="s-tag">User experience</span>
+  </div>
+  <div class="s-body">
+    <div class="g3" style="flex:1;align-items:stretch;">
+      <div>
+        <div class="pc-head" style="background:var(--accent);">👤 Persona 1</div>
+        <div class="pc-body" style="height:calc(100% - 54px);">
+          <strong>Intentional Mover</strong>
+          <p>Senior officer, targeted, time-pressured. Already decided to apply before opening the platform — the apply flow is where you win or lose them.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--accent);font-weight:700;">Epics A + B + C critical</p>
+          <p style="margin-top:6px;font-size:13px;color:var(--muted);font-style:italic;">"I don't want to retype everything I already gave HR."</p>
+        </div>
+      </div>
+      <div>
+        <div class="pc-head" style="background:var(--teal);">👤 Persona 2</div>
+        <div class="pc-body" style="height:calc(100% - 54px);">
+          <strong>Passive Watcher</strong>
+          <p>Early career, open but not searching. Needs a holding space for opportunities they're considering. Every session starts from zero without saved jobs.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--teal);font-weight:700;">Epic D is the activation feature</p>
+          <p style="margin-top:6px;font-size:13px;color:var(--muted);font-style:italic;">"I'll apply when I'm ready — I just don't want to lose it."</p>
+        </div>
+      </div>
+      <div>
+        <div class="pc-head" style="background:var(--amber);">🏛️ Persona 3</div>
+        <div class="pc-body" style="height:calc(100% - 54px);">
+          <strong>Posting Manager</strong>
+          <p>Agency HR officer. Manages 5–20 active postings. Tracks everything in email + spreadsheet today. Needs the loop closed in one system.</p>
+          <p style="margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;">Epics A + C unlock this persona</p>
+          <p style="margin-top:6px;font-size:13px;color:var(--muted);font-style:italic;">"I don't want to chase HR records to assess one applicant."</p>
+        </div>
+      </div>
+    </div>
+    <div class="seam">
+      <div class="slabel">⚠️ The Seam — still undiscovered</div>
+      <p>The handoff from officer submission (Lane 1) to posting manager queue (Lane 3) is undesigned. This is where the 24hr latency OKR actually lives — and the highest-risk surface in R1. See next slide.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     14 · LANE 1
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">05</span>
+    <span class="s-title">Lane 1 — Officer applies (Intentional Mover)</span>
+    <span class="s-tag">Epics B + C</span>
+  </div>
+  <div class="s-body">
+    <div class="g2" style="flex:1;">
+      <div class="steps">
+        <div class="step">
+          <div class="snum ac">1</div>
+          <div class="sbody"><h4>Browse listing + open detail page</h4><p>Filter by type, search by keyword. Officer already knows what they want (MVP feature).</p></div>
+        </div>
+        <div class="step">
+          <div class="snum ac">2</div>
+          <div class="sbody"><h4>Click Apply → pre-filled form appears in-Compass</h4><p>Profile fields auto-populate: name, grade, agency, competencies. <strong>No redirect.</strong> (Epic B)</p></div>
+        </div>
+        <div class="step">
+          <div class="snum ac">3</div>
+          <div class="sbody"><h4>Review, edit, add motivation statement</h4><p>Corrects stale pre-fill. Adds what's genuinely new. The correction flow needs intentional design.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum ac">4</div>
+          <div class="sbody"><h4>Submit → confirmation + reference number</h4><p>"Your application has been submitted." Timestamp and reference visible immediately.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum ac">5</div>
+          <div class="sbody"><h4>"My Applications" tab — live status tracking</h4><p>Submitted → Under Review → Outcome. No more chasing by email. (Epic C)</p></div>
+        </div>
+        <div class="step">
+          <div class="snum ac">6</div>
+          <div class="sbody"><h4>Push notification when status changes</h4><p>Officer sees the update without logging in to check. "Even a 'no decision yet' is better than silence."</p></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;justify-content:center;">
+        <div class="card tl">
+          <h3>⭐ Aha moment</h3>
+          <p>Officer sees their profile already loaded into the form. "I don't have to retype everything." This is when R1 earns trust and justifies switching from OTG.</p>
+        </div>
+        <div class="card am">
+          <h3>⚠️ Risk: stale pre-fill</h3>
+          <p>Pre-fill that's wrong is worse than no pre-fill. Officers who see inaccurate data lose trust faster than they gain it.</p>
+        </div>
+        <div class="card rl">
+          <h3>⚠️ Leap of faith: channel choice (A1)</h3>
+          <p>Will officers choose CareerCompass over navigating to OTG by habit? MVP apply-CTR data (Oct–Nov 26) validates this. If CTR &lt;10%, investigate before R1 build starts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     15 · LANE 2
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">06</span>
+    <span class="s-title">Lane 2 — Save and return (Passive Watcher)</span>
+    <span class="s-tag">Epic D</span>
+  </div>
+  <div class="s-body">
+    <div class="hbox" style="font-size:16px;">This persona isn't disengaged — they're <em>deferring</em>. Without Saved Jobs, every session starts from zero and CareerCompass can't build a habit.</div>
+    <div class="g2" style="flex:1;">
+      <div class="steps">
+        <div class="step">
+          <div class="snum tl">1</div>
+          <div class="sbody"><h4>Browses listing — not ready to apply</h4><p>Sporadic session. Sees something interesting but doesn't want to commit right now.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum tl">2</div>
+          <div class="sbody"><h4>Saves the opportunity (Epic D)</h4><p>Bookmarks it. Closes tab. Cross-session persistence — it's still there when they come back.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum tl">3</div>
+          <div class="sbody"><h4>Leaves, comes back later</h4><p>"Saved Jobs" tab surfaces it on re-entry. No starting from zero.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum tl">4</div>
+          <div class="sbody"><h4>"Closes in 3 days" nudge</h4><p>Deadline proximity indicator creates mild urgency. Officer decides to act.</p></div>
+        </div>
+        <div class="step">
+          <div class="snum tl">5</div>
+          <div class="sbody"><h4>Decides to apply → joins Lane 1</h4><p>Saved job is the entry point into the apply flow (Epic B). The lanes connect.</p></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;justify-content:center;">
+        <div class="card al">
+          <h3>Why this is the re-login lever</h3>
+          <p>The 9% OTG re-login rate is this persona's symptom. Saved Jobs + filter persistence convert a one-time visitor into a returning user — which is what the re-login metric improvement requires.</p>
+        </div>
+        <div class="card">
+          <h3>Open design questions</h3>
+          <ul>
+            <li>Cross-session persistence — how long? 90 days? Forever?</li>
+            <li>What happens when a saved posting closes?</li>
+            <li>Does saving trigger a deadline notification?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     16 · LANE 3
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">07</span>
+    <span class="s-title">Lane 3 — Posting Manager: create + review</span>
+    <span class="s-tag">Epics A + C</span>
+  </div>
+  <div class="s-body">
+    <div class="g2" style="flex:1;">
+      <div>
+        <div class="label" style="margin-bottom:10px;">Creation journey (Epic A)</div>
+        <div class="steps">
+          <div class="step">
+            <div class="snum am">1</div>
+            <div class="sbody"><h4>Programme cycle opens → "Create Posting"</h4><p><em>"Is this instead of OTG?"</em> Must be unambiguous. Dual-posting is the failure mode that kills trust.</p></div>
+          </div>
+          <div class="step">
+            <div class="snum am">2</div>
+            <div class="sbody"><h4>Fills structured form</h4><p>Type, title, competencies, duration, closing date. Agency name pre-filled. Per-type templates reduce blank-page friction.</p></div>
+          </div>
+          <div class="step">
+            <div class="snum am">3</div>
+            <div class="sbody"><h4>⭐ Preview pane — sees the officer view before publishing</h4><p><em>"Oh — this is what they see."</em> Control OTG never gave them. This is the aha moment.</p></div>
+          </div>
+          <div class="step">
+            <div class="snum am">4</div>
+            <div class="sbody"><h4>Publish → immediately live in listing</h4><p>"Live now, X officers in pilot agencies can see it." No approval lag (confirm if agency policy requires a gate).</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:10px;">Review journey (Epic C)</div>
+        <div class="steps">
+          <div class="step">
+            <div class="snum nv">5</div>
+            <div class="sbody"><h4>Applications land in dashboard</h4><p>Structured profile per applicant — not email. Name, grade, agency, competency tags visible without chasing HR systems.</p></div>
+          </div>
+          <div class="step">
+            <div class="snum nv">6</div>
+            <div class="sbody"><h4>Shortlist / update status</h4><p>Marks: Shortlisted / Not Proceeding / Hold. Optional note for audit trail. Officers auto-notified on each change.</p></div>
+          </div>
+          <div class="step">
+            <div class="snum nv">7</div>
+            <div class="sbody"><h4>Close posting / mark filled</h4><p>Posting closes, listing shows "closed" state. No more late submissions arriving after deadline.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     17 · THE SEAM
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">08</span>
+    <span class="s-title">The seam — the biggest undiscovered surface</span>
+    <span class="s-tag">Risk</span>
+  </div>
+  <div class="s-body">
+    <p style="font-size:15px;color:var(--muted);">The officer-apply journey and the posting-manager journey both go quiet at the same point. Nobody owns stages 7 and 10 — routing in, and status back. That's not an oversight; it's because the seam is undecided.</p>
+    <div class="codebox">  Officer                    CareerCompass              Posting Manager
+  ──────────────────────────────────────────────────────────────────────
+  Clicks Apply
+         └──────► In-Compass form (Epic B)
+                  Officer submits
+                         │
+         ════════ THE SEAM ════════  ← nobody owns this yet
+                         ▼
+                                   Applications dashboard  ◄── Manager reviews
+                                   Manager updates status        (Epic C)
+                         ◄──── status syncs back ──────────────┘
+  Officer sees update
+  in "My Applications"</div>
+    <div class="g2">
+      <div class="card al">
+        <h3>World A — ATS integration</h3>
+        <p>Submission posts to ATS. ATS is the system of record. Status events webhook back to OTEP. <strong>Risk:</strong> integration depth + vendor agreement lead time (multi-week external clock).</p>
+      </div>
+      <div class="card tl">
+        <h3>World B — OTEP-native (recommended)</h3>
+        <p>OTEP builds the record store, routing, and state machine. More build but fully owned. The posting-manager journey <strong>only exists in World B</strong> if OTEP builds this. Otherwise FormSG emails stay in inboxes and nothing changes for the manager.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     06 · 4 EPICS OVERVIEW
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">09</span>
+    <span class="s-title">The 4 R1 epics</span>
+    <span class="s-tag">Overview</span>
+  </div>
+  <div class="s-body">
+    <div class="g4" style="flex:1;align-items:stretch;">
+      <div class="card">
+        <div class="eb ea">Epic A</div>
+        <h3>Opportunity Creation</h3>
+        <p>Agencies author postings directly in CareerCompass. Native form, native DB, publish workflow, edit/close lifecycle.</p>
+        <p style="margin-top:10px;font-size:13px;color:var(--accent);font-weight:600;">Scope: IJ + Secondment (narrow)</p>
+      </div>
+      <div class="card">
+        <div class="eb eb2">Epic B</div>
+        <h3>Streamlined Application + Smart Pre-fill</h3>
+        <p>Native in-Compass form, pre-populated from officer's profile. No redirects. Officer submits without leaving Compass.</p>
+        <p style="margin-top:10px;font-size:13px;color:var(--teal);font-weight:600;">Pre-fill = profile-driven only</p>
+      </div>
+      <div class="card">
+        <div class="eb ec">Epic C</div>
+        <h3>Status Tracking</h3>
+        <p>End-to-end monitoring in OTEP. State machine: Submitted → Under Review → Outcome. No ATS integration in R1.</p>
+        <p style="margin-top:10px;font-size:13px;color:var(--amber);font-weight:600;">Depends on: Epic B</p>
+      </div>
+      <div class="card">
+        <div class="eb ed">Epic D</div>
+        <h3>Saved Jobs</h3>
+        <p>Officers bookmark opportunities and resume applications. "Save" ships semi-independently. "Resume" waits on Epic B.</p>
+        <p style="margin-top:10px;font-size:13px;color:#5b21b6;font-weight:600;">Parallel-track candidate</p>
+      </div>
+    </div>
+    <div class="note">Critical path: A and B are the two spines (creation + application). Build serialises through one FE dev (Thomas). C is scoped alongside B, ships after. D runs in parallel.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     07 · EPIC A
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">10</span>
+    <span class="s-title">Epic A — Opportunity Creation</span>
+    <span class="s-tag">Priority 1</span>
+  </div>
+  <div class="s-body">
+    <div class="hbox" style="font-size:16px;">The spine. Flips CareerCompass from read-only into the system of record — and re-opens the door for Internal Jobs + Secondments that have no other home post-OTG.</div>
+    <div class="g2" style="flex:1;">
+      <div class="card tl">
+        <h3>Recommended scope — narrow, not full</h3>
+        <ul>
+          <li><strong>Internal Jobs + Secondments only</strong> — no other home</li>
+          <li>Structured creation form (per-type fields)</li>
+          <li>Officer-view preview pane <em>(the aha moment)</em></li>
+          <li>Publish → immediately live in listing</li>
+          <li>Agency-scoped auth — manager posts for own agency</li>
+          <li>Edit / unpublish an existing posting</li>
+        </ul>
+        <p style="margin-top:12px;font-size:13px;color:var(--teal);font-weight:600;">Narrow = ~half the build vs full 5-type. This is the main capacity lever.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card am">
+          <h3>Scope flags for the jam</h3>
+          <ul>
+            <li>Full 5-type creation = Should, not Must</li>
+            <li>Criteria authoring: <strong>OUT</strong> — re-opens POCDEX write path (#31)</li>
+            <li>SJR creation: <strong>NOT in R1</strong> unless Mark pulls it in</li>
+            <li>C@G stays on its own rails — not this form</li>
+          </ul>
+        </div>
+        <div class="card rl">
+          <h3>⚠️ Open dependency — agency-admin auth</h3>
+          <p>Who can post? How do they authenticate? Currently zero discovery. Pow Hwee + Fabian need to weigh in before Epic A can be fully scoped.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     08 · EPIC B
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">11</span>
+    <span class="s-title">Epic B — Streamlined Application + Smart Pre-fill</span>
+    <span class="s-tag">Priority 2</span>
+  </div>
+  <div class="s-body">
+    <div class="g2" style="flex:1;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card al">
+          <h3>Apply core</h3>
+          <p>Full in-Compass form — native OTEP, not FormSG. Compass owns the form, posts to OTEP backend. Officer submits without leaving. No redirects.</p>
+        </div>
+        <div class="card tl">
+          <h3>Smart pre-fill (bundled sub-feature)</h3>
+          <p>Auto-populates strengths and experience from the officer's OTEP profile. <strong>Profile-driven only</strong> — not CV/CIE inference (OTEP-205, separate capability).</p>
+        </div>
+        <div class="card" style="background:#f8f9fa;border-style:dashed;">
+          <h3>Design note</h3>
+          <p style="font-size:13px;">What does the officer see when pre-fill is wrong, partial, or stale? That interaction needs design regardless of how much "smart" inference we add.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card am">
+          <h3>⚠️ Cross-squad dependency (#18 / #41)</h3>
+          <p>Profile pre-fill rides on the competency SSOT owned by Imelda's squad. Endpoint specs between Léo and Kingsley still in flight. Pre-fill is not a given until that contract is finalised.</p>
+        </div>
+        <div class="seam">
+          <div class="slabel">🔴 P0 open question — for the jam</div>
+          <p><strong>"Application within CareerCompass"</strong> — does it mean <em>absolutely no redirects</em>, or that the experience <em>starts</em> in Compass? This changes R1 engineering load by an order of magnitude.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     09 · EPIC C
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">12</span>
+    <span class="s-title">Epic C — Status Tracking</span>
+    <span class="s-tag">Priority 3</span>
+  </div>
+  <div class="s-body">
+    <div class="hbox" style="font-size:16px;">Closes the "submit into a black box" problem. Scope the data model early even if it ships after Epic B.</div>
+    <div class="g2" style="flex:1;">
+      <div class="card">
+        <h3>What it delivers</h3>
+        <ul>
+          <li>OTEP owns the state machine: Submitted → Under Review → Outcome</li>
+          <li>Officer sees live status in "My Applications" tab</li>
+          <li>Push notification when status changes</li>
+          <li>Posting Manager updates status; officers auto-notified</li>
+          <li>No ATS integration — OTEP-native state machine only for R1</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card am">
+          <h3>Design surfaces to define now</h3>
+          <ul>
+            <li>"Outcome = rejection" state</li>
+            <li>"No applications yet" empty state</li>
+            <li>Who triggers status transitions — manager manually or ATS event?</li>
+            <li>Who sees the status — officer only, or HR dashboard too?</li>
+            <li>Notification mechanism (none in MVP — needs its own design)</li>
+          </ul>
+        </div>
+        <div class="note">The 24-hr latency OKR lives in the <strong>status-back-to-officer path</strong>, not in the apply flow. Teams over-invest in visible apply UX and under-invest here.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     10 · EPIC D
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">13</span>
+    <span class="s-title">Epic D — Saved Jobs</span>
+    <span class="s-tag">Priority 4</span>
+  </div>
+  <div class="s-body">
+    <div class="hbox" style="font-size:16px;">High officer value, lower build cost. The "save" half ships semi-independently as a parallel track to C.</div>
+    <div class="g2" style="flex:1;">
+      <div class="card tl">
+        <div class="eb" style="background:#d1fae5;color:#065f46;margin-bottom:8px;">Must have</div>
+        <h3>Save an opportunity</h3>
+        <p>Bookmark any opportunity. Find it later in a "Saved Jobs" tab. Cross-session persistence required.</p>
+        <p style="margin-top:12px;font-size:13px;color:var(--teal);font-weight:600;">Ships semi-independently — can run in parallel with C. Lower risk.</p>
+        <ul style="margin-top:12px;">
+          <li>What happens when a saved posting closes?</li>
+          <li>"Closes in 3 days" deadline nudge</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card" style="background:#fafafa;border-style:dashed;">
+          <div class="eb" style="background:#ede9fe;color:#5b21b6;margin-bottom:8px;">First to cut</div>
+          <h3>Resume an in-progress application</h3>
+          <p>Save draft mid-form, pick up later. Depends on Epic B. <strong>Only build if MVP abandonment data shows >40% drop-off mid-form</strong> (data available Oct 2026).</p>
+        </div>
+        <div class="card al">
+          <h3>Why this matters</h3>
+          <p>The <strong>9% OTG re-login rate</strong> reflects Passive Watcher officers who browse once and don't return. Saved Jobs is the activation feature — without it, re-login improvement is structurally blocked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     11 · PRIORITY ORDER
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">14</span>
+    <span class="s-title">Priority order</span>
+    <span class="s-tag">What to agree today</span>
+  </div>
+  <div class="s-body">
+    <table>
+      <thead><tr><th width="40">#</th><th width="260">Epic</th><th>Why here</th><th width="140">Confidence</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><span class="eb ea" style="margin-bottom:0;">A</span> Creation (narrow: IJ + Secondment)</td>
+          <td>Upstream spine. Biggest build at full scope — narrow-first halves the risk. IJ + Secondment have no other home post-OTG.</td>
+          <td><span class="pill pm">High (narrow)</span></td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><span class="eb eb2" style="margin-bottom:0;">B</span> Streamlined Apply + Pre-fill</td>
+          <td>Officer-facing payoff. The native form everything else hangs off. Smart pre-fill is a sub-feature — not a separate epic.</td>
+          <td><span class="pill pm">High</span></td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><span class="eb ec" style="margin-bottom:0;">C</span> Status Tracking</td>
+          <td>Closes the "submit into a black box" problem. New data model — scope early even if it ships after B.</td>
+          <td><span class="pill pm">High</span></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><span class="eb ed" style="margin-bottom:0;">D</span> Saved Jobs</td>
+          <td>High value, lower build cost. "Save" can ship semi-independently. "Resume" waits on B and abandonment data.</td>
+          <td><span class="pill ps">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="g2">
+      <div class="card rl">
+        <h3>If R1 has to cut</h3>
+        <p>D's "resume" half goes first, then D entirely. <strong>A-narrow + B + C is the non-negotiable core.</strong> Without all three, R1 doesn't close the create→apply→track loop.</p>
+      </div>
+      <div class="card am">
+        <h3>Fallback shape (have this ready)</h3>
+        <p>If A-narrow + B + C doesn't fit in 3 months: <strong>A-narrow + B, with C as email/manual interim slipping to R1.5.</strong> Still closes the loop for the orphaned types.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     12 · MOSCOW
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">15</span>
+    <span class="s-title">MoSCoW</span>
+    <span class="s-tag">Framework for the jam</span>
+  </div>
+  <div class="s-body">
+    <table style="flex:1;">
+      <thead><tr><th width="110">Bucket</th><th width="340">Epics</th><th>The line</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pm">Must</span></td>
+          <td><span class="eb ea" style="margin-bottom:0;">A</span> narrow (IJ+Secondment) &nbsp; <span class="eb eb2" style="margin-bottom:0;">B</span> apply + pre-fill &nbsp; <span class="eb ec" style="margin-bottom:0;">C</span> status tracking</td>
+          <td>R1's promise = create-apply-track. Drop any one and R1 doesn't deliver. These three together are the minimum viable R1.</td>
+        </tr>
+        <tr>
+          <td><span class="pill ps">Should</span></td>
+          <td><span class="eb ed" style="margin-bottom:0;">D</span> "Save" half &nbsp;&nbsp; Full 5-type creation (STIP + Gig + PSFG)</td>
+          <td>High value. Full-type creation is the first real cut if capacity bites — narrow scope is the lever.</td>
+        </tr>
+        <tr>
+          <td><span class="pill pc">Could</span></td>
+          <td><span class="eb ed" style="margin-bottom:0;">D</span> "Resume application" half</td>
+          <td>Enhancement on a working form. Only build if MVP abandonment data confirms the need (&gt;40% drop-off).</td>
+        </tr>
+        <tr>
+          <td><span class="pill pw">Won't (R1)</span></td>
+          <td>Ringfencing-criteria authoring · ATS integration · CV/CIE inference · SJR creation · Opportunity recommender</td>
+          <td>Named explicitly so they don't creep in mid-jam. Criteria authoring re-opens POCDEX write path (#31).</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>How to run the room:</strong> get Adrian to challenge the Musts first. If he agrees A-narrow + B + C is the core, the hard part is done. Then negotiate the Should/Could line — full 5-type vs narrow is the big lever.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     19 · OPEN QUESTIONS
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">16</span>
+    <span class="s-title">Open questions for the jam</span>
+    <span class="s-tag">Get these before you leave the room</span>
+  </div>
+  <div class="s-body">
+    <div class="oq">
+      <div class="qnum">1</div>
+      <div class="qbody">
+        <h4>"Application within CareerCompass" — what does it actually mean?</h4>
+        <p class="qf">Absolutely no redirects, or that the experience <em>starts</em> in Compass? Changes R1 engineering load by an order of magnitude — the difference between rebuilding 5 complex forms natively vs intercepting FormSG flows.</p>
+        <p class="rec">→ Recommend: native form, no redirects. Need Adrian to confirm this is the intention.</p>
+      </div>
+    </div>
+    <div class="oq">
+      <div class="qnum">2</div>
+      <div class="qbody">
+        <h4>ATS fork — World A (ATS-backed) vs World B (OTEP-native)?</h4>
+        <p class="qf">Decides both the apply mechanism and whether the posting-manager journey exists in R1 at all. Don't leave without a direction.</p>
+        <p class="rec">→ Recommend: World B for R1. ATS integration = R2 when a vendor is confirmed.</p>
+      </div>
+    </div>
+    <div class="oq">
+      <div class="qnum">3</div>
+      <div class="qbody">
+        <h4>Creation breadth — narrow (IJ + Secondment) vs full 5-type?</h4>
+        <p class="qf">One FE dev, 3 months, three net-new builds (creation + apply + the seam). Narrow = ~half the Epic A build. This is the main capacity lever.</p>
+        <p class="rec">→ Recommend: narrow for R1. Full 5-type as Should/stretch if capacity allows.</p>
+      </div>
+    </div>
+    <div class="oq">
+      <div class="qnum">4</div>
+      <div class="qbody">
+        <h4>When do we take the shaped epics to Mark for #40 sign-off?</h4>
+        <p class="qf">Epics stay provisional until Mark confirms. Don't let the team start detailed R1 planning before that sign-off.</p>
+        <p class="rec">→ Target: take to Mark within the week. Keep the provisional window short.</p>
+      </div>
+    </div>
+    <div class="note" style="margin-top:auto;">
+      <strong>What "done" looks like today:</strong> Adrian agrees A-narrow + B + C as the Must core, gives a direction on questions 1 and 2, and confirms the Mark sequence. Everything else follows up async.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     18 · DISCOVERY GAPS
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">17</span>
+    <span class="s-title">Discovery gaps — what still needs answers before Sep grooming</span>
+    <span class="s-tag">Gaps</span>
+  </div>
+  <div class="s-body">
+    <div class="gap">
+      <span class="gpri p0">P0</span>
+      <div class="gbody"><h4>ATS fork (World A vs B) — C1 still unresolved</h4><p>Rewrites stages 7-12 entirely. Manager journey doesn't exist in World B without OTEP building the record store and state machine. THE gate for everything downstream. Needs a decision today.</p></div>
+    </div>
+    <div class="gap">
+      <span class="gpri p0">P0</span>
+      <div class="gbody"><h4>Vendor access agreements — OTG, C@G, ATS (Experiment 6)</h4><p>No webhook contract = no status tracking = 24hr latency OKR undeliverable. External approval clocks have multi-week lead times. Should have started in Sprint 3.</p></div>
+    </div>
+    <div class="gap">
+      <span class="gpri p0">P0</span>
+      <div class="gbody"><h4>Agency-admin auth model</h4><p>Who can create postings? How do they authenticate? Epic A is undesigned without this. Currently zero discovery exists here. Pow Hwee + Fabian need to weigh in.</p></div>
+    </div>
+    <div class="gap">
+      <span class="gpri p1">P1</span>
+      <div class="gbody"><h4>Profile-to-form field mapping (Experiment 5 — Pow Hwee, S4-5)</h4><p>Pre-fill (Epic B) depends on this. If ≥3 required fields are missing, profile enrichment must come before pre-fill stories. Has this spike run?</p></div>
+    </div>
+    <div class="gap">
+      <span class="gpri p1">P1</span>
+      <div class="gbody"><h4>OTG/C@G webhook spike (Experiment 2 — Pow Hwee, S4-5)</h4><p>Technical foundation for status tracking. Webhook vs polling determines latency architecture. Status of this spike?</p></div>
+    </div>
+    <div class="gap">
+      <span class="gpri p2">P2</span>
+      <div class="gbody"><h4>Officer research sessions (Experiments 1, 3, 4)</h4><p>Apply CTR baseline, profile data quality audit, abandonment funnel. Mostly MVP-launch dependent — on schedule for Oct-Nov 2026.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     20 · SCOPE BOUNDARIES
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">18</span>
+    <span class="s-title">Scope boundaries to hold</span>
+    <span class="s-tag">What's out of R1</span>
+  </div>
+  <div class="s-body">
+    <table style="flex:1;">
+      <thead><tr><th width="240">Item</th><th width="160">Status</th><th>Why out</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ATS integration</strong></td><td>R2 when vendor confirmed</td><td>OTEP owns the native state machine for R1. ATS = a different system contract, a different sprint.</td></tr>
+        <tr><td><strong>CV upload / CIE inference (OTEP-205)</strong></td><td>Separate track</td><td>Smart pre-fill = profile fields only. CV inference is its own capability with its own story pipeline.</td></tr>
+        <tr><td><strong>Ringfencing-criteria authoring</strong></td><td>R1.5</td><td>Re-opens POCDEX write path (#31) which is currently blocked. Authoring comes after ringfencing display is stable.</td></tr>
+        <tr><td><strong>Job Function ringfencing</strong></td><td>Location INCLUDE ships MVP; JF filters in R1+</td><td>Job Function is optional in ingestion. Agency-level Location INCLUDE is reliable for MVP. JF + Function INCLUDE filters come in R1+.</td></tr>
+        <tr><td><strong>SJR creation</strong></td><td>Out unless Mark pulls it in</td><td>SJR has no MVP footprint at all (not ingested, no apply). Re-adding in R1 is a full net-new integration lane.</td></tr>
+        <tr><td><strong>C@G creation</strong></td><td>Own rails</td><td>C@G has its own system. Not folded into the generic OTEP creation form.</td></tr>
+        <tr><td><strong>Opportunity recommender</strong></td><td>Separate track</td><td>Still hypothesis-stage. Needs a separate discovery track before it's buildable.</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Criteria authoring is the item most likely to creep in — it sounds like a natural R1 addition but it re-opens the POCDEX write path that is currently blocked (#31). Call it out explicitly if it comes up.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     02 · MVP STATUS
+══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="s-header">
+    <span class="s-num">19</span>
+    <span class="s-title">Where MVP stands</span>
+    <span class="s-tag">Appendix</span>
+  </div>
+  <div class="s-body">
+    <div class="hbox">Direction locked. Build still closing out. Clear to jam on R1 epics.</div>
+    <div class="g2" style="flex:1;">
+      <div class="card gl">
+        <h3>✅ Direction is locked</h3>
+        <ul>
+          <li>4-category model: STIP · Gig · Jobs · SJR — confirmed</li>
+          <li>Ringfencing as read-only display (MVP scope)</li>
+          <li>FormSG-redirect apply for MVP</li>
+          <li>6-agency pilot: PSD · ESG · MDDI · URA · MCCY · CAAS</li>
+          <li>DevOps opportunity categories decision confirmed this morning</li>
+        </ul>
+      </div>
+      <div class="card am">
+        <h3>⚠️ Build still closing out</h3>
+        <ul>
+          <li>8 stories still in QA (cards, filters, login, error states…)</li>
+          <li>Search + sort in flight (OTEP-405/495)</li>
+          <li>C@G listing in progress (OTEP-88)</li>
+          <li>S5 planning Thursday — need ingestion clarity first</li>
+        </ul>
+        <p style="margin-top:12px;font-size:13px;color:var(--amber);font-weight:600;">The opportunity-page <em>direction</em> is stable enough for R1 scoping — the <em>build</em> isn't done.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     21 · CLOSE
+══════════════════════════════════════════════════════ -->
+<div class="slide close-slide">
+  <div class="eyebrow">CareerCompass R1 Jam · Jun 24 2026</div>
+  <div class="accent-bar"></div>
+  <h1>Shape the proposal.<br>Then take it to Mark.</h1>
+  <p class="sub">Today: agree the Must core (A-narrow + B + C) and the priority order.<br>After today: Mark sign-off (#40) before anyone starts detailed planning or commits capacity.</p>
+  <div class="chips">
+    <span class="chip">🎯 Must: A-narrow · B · C</span>
+    <span class="chip">📋 Should: D "save" · Full 5-type</span>
+    <span class="chip">❌ Won't: ATS · CIE · Criteria authoring</span>
+    <span class="chip">⏭️ Next: Mark #40 sign-off</span>
+  </div>
+</div>
+
+
+    </div><!-- /strip -->
+  </div><!-- /scaler -->
+</div><!-- /stage -->
+
+<script>
+  let cur = 0;
+  const strip = document.getElementById('strip');
+  const scaler = document.getElementById('scaler');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const slides = strip.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function scale() {
+    const stage = document.getElementById('stage');
+    const sw = stage.clientWidth;
+    const sh = stage.clientHeight;
+    const s = Math.min(sw / 1280, sh / 720);
+    scaler.style.transform = `scale(${s})`;
+  }
+
+  function go(n) {
+    cur = Math.max(0, Math.min(total - 1, n));
+    strip.style.transform = `translateX(-${cur * 1280}px)`;
+    counter.textContent = `${cur + 1} / ${total}`;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+
+  function move(d) { go(cur + d); }
+
+  window.addEventListener('resize', scale);
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); move(1); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); move(-1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End')  go(total - 1);
+  });
+
+  scale();
+  go(0);
+</script>
+</body>
+</html>

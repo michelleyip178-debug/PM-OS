@@ -7,30 +7,26 @@ priority: Medium
 status: In Progress
 ---
 
-# OTEP-427: Tighten OTG Ingestion Logic — Validate Rules + Decide BusinessUnit
+# OTEP-427: Tighten OTG Ingestion Logic — Validate Rules + Decide Job Function
 
-## Summary
+## Problem we're solving
 
-Validate that all v3 ingestion rules are correctly implemented, identify and handle edge cases from live OTG import, decide on BusinessUnit field optionality, and confirm endpoint design adequacy so that Léo can run a production-ready dry-run against all 311 OTG records.
+OTG data is inconsistent. Records vary in completeness -- some have missing fields, expired dates, broken FormSG links, or unrecognizable opportunity types. Without clear ingestion rules, bad records make it onto the platform and officers see opportunities that are incomplete, broken, or not meant for them.
+
+OTG also embeds ringfencing criteria in each record, but it's not always present. Without a clear policy on how to handle that, opportunities either reach the wrong people or get unnecessarily blocked.
+
+This spike defines both: what gets ingested (quality rules) and who can see what (ringfencing criteria). Engineering can't build OTEP-192 confidently without these decisions made first.
 
 ---
 
-## Description
+## Summary
 
-**Problem:**
-OTEP-192 (OTG ingestion job) implemented v3 rules, but several questions remain open:
-- Are all rules (I-008 through I-015) correctly coded?
-- What edge cases emerge from live OTG data that we haven't tested?
-- Can BusinessUnit field be optional for MVP? (would unlock 16–22 additional records)
-- Is the ingestion endpoint design adequate for long-term, or does rework need to be scoped?
-
-**Why it matters:**
-Léo can't confidently run the dry-run against all 311 records until these are resolved. Without this spike, S5 starts with uncertainty about ingestion viability. This is a gate for OTEP-202 (seeding) and ringfencing work.
+Define and validate the ingestion rules for OTG opportunities -- what gets ingested, what gets dropped, and who can see what. Covers quality rules (hard-skip criteria, optional fields), edge cases from live OTG data, Job Function optionality, and MVP ringfencing criteria. Output feeds directly into OTEP-192 implementation and OTEP-127 ringfencing.
 
 **Approach:**
 1. Review OTEP-192 implementation against v3 decisions
 2. Test edge cases from live import
-3. Make BusinessUnit field decision (optional or required)
+3. Make Job Function field decision (optional or required)
 4. Review endpoint design for long-term viability
 5. Run and validate dry-run results
 
@@ -51,9 +47,9 @@ Léo can't confidently run the dry-run against all 311 records until these are r
 | I-016 | PSFG is its own category (voluntary, skills-based) | 🟡 Pending Xian Zhang validation | OTEP-86, OTEP-289 |
 | I-017 | "Jobs" consolidates Secondments + Internal Jobs + C@G jobs | 🟡 Pending Xian Zhang validation | OTEP-86, card labelling |
 | I-018 | 4-category model: STIPs · Gigs · Jobs · SJRs (PSFG deferred from MVP) | ✅ Ratified | OTEP-86, OTEP-289 |
-| I-019 | BusinessUnit field optionality for MVP | 🔴 Open — this spike decides | OTEP-192 validation, dry-run count |
+| I-019 | Job Function field is optional for MVP ingestion. When present, ringfencing logic must factor it in; when absent, no BU filter is applied. | ✅ Ratified | OTEP-192 validation, OTEP-127 ringfencing |
 
-> Full decision detail in `context-library/decisions/otg-ingestion-decision-log.md`. I-010 and I-019 are the two open gates relevant to this spike.
+> Full decision detail in `context-library/decisions/otg-ingestion-decision-log.md`. I-010 remains open (ESG HR confirmation needed). I-019 is now ratified.
 
 ---
 
@@ -84,14 +80,14 @@ Léo can't confidently run the dry-run against all 311 records until these are r
 - Opportunity with no type prefix (unrecognized type)
 - Missing or malformed FormSG URL
 - Closing date in the past (should be excluded per I-011)
-- No BusinessUnit field with all other fields present (OTEP-427 decision)
+- No Job Function field with all other fields present (OTEP-427 decision)
 - Competency field missing vs. null vs. unexpected format
 - FormSG URL that resolves to non-existent form
 
 ---
 
-### AC 3: BusinessUnit Field Optionality Decision Made
-- [ ] Decision documented: Is BusinessUnit required or optional for MVP?
+### AC 3: Job Function Field Optionality Decision Made
+- [ ] Decision documented: Is Job Function required or optional for MVP?
 - [ ] If optional: Updated validation rules coded, tested with 16–22 records that lack BU, impact on catalogue size confirmed
 - [ ] If required: Rationale documented, count of records excluded on this basis logged
 - [ ] Decision recorded in decision log (I-XXX)
@@ -123,7 +119,7 @@ Léo can't confidently run the dry-run against all 311 records until these are r
 
 - [ ] All ACs met
 - [ ] Edge case documentation updated in decision log or ingestion brief
-- [ ] BusinessUnit decision added to I-018 or new decision entry
+- [ ] Job Function decision added to I-018 or new decision entry
 - [ ] Endpoint design review summary added to decision log
 - [ ] Dry-run results shared with Léo + Michelle + Pow Hwee
 - [ ] Any follow-on work (endpoint rework, further edge cases) captured as future stories
@@ -156,7 +152,7 @@ Léo can't confidently run the dry-run against all 311 records until these are r
 
 **Effort estimate:** ~4–6 hours PM spike (Michelle) + ~2–3 hours engineering (Léo for dry-run, Hao for endpoint review).
 
-**Success criteria:** Dry-run results are predictable, all failures align with documented rules, BusinessUnit decision is made, endpoint design is cleared or rework is scoped. No surprises for S5 ingestion work.
+**Success criteria:** Dry-run results are predictable, all failures align with documented rules, Job Function decision is made, endpoint design is cleared or rework is scoped. No surprises for S5 ingestion work.
 
 ---
 

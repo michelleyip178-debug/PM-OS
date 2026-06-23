@@ -37,13 +37,30 @@ The data shows the EXCLUDE filter is almost never used (1 instance vs. 242 INCLU
 
 ---
 
-## Implication for BusinessUnit field optionality (I-019)
+## Ringfencing criteria (agreed)
 
-BU appears as an active filter in criterion 2 (9 opps use "BU + Function INCLUDE" for domain-specific ringfencing). This means making BU optional on the opportunity record may have ringfencing consequences -- but only if the opportunity's BU field is what drives the filter.
+### MVP scope
 
-**Open question:** Is the BU field on the opportunity record the same BU used in the ringfencing filter, or does the ringfencing filter use the applicant's BU?
+One criterion in scope for MVP, aligned with I-012 (ring-fencing = agency-level only):
 
-- If opportunity BU drives the filter: making BU optional could cause those 9 opps to lose ringfencing criteria, becoming unintentionally WOG-wide visible
-- If applicant BU drives the filter: making opportunity BU optional is lower risk
+| Scenario | Filter | Logic |
+|---|---|---|
+| Opportunity belongs to a specific agency | Location INCLUDE (host agency) | If Location is present in the record, apply it |
+| All other opportunities (WOG-wide, cross-agency, learning events, STIPs) | No filter | Visible to all by default |
 
-This needs to be confirmed with Pow Hwee before deciding I-019.
+**Structural rule:** Whitelist model only -- define who CAN see an opportunity, not who can't. No EXCLUDE filters. This formalises what the data already shows (242 INCLUDE vs. 1 EXCLUDE in live data).
+
+### Deferred to R1+
+
+| Scenario | Filter |
+|---|---|
+| Role requires specialist domain skills | Job Function + Function INCLUDE |
+| Multi-agency collaboration | Location INCLUDE (all partner agencies) |
+
+Rationale for deferral: Job Function is optional in ingestion, making Job Function-based ringfencing unreliable for MVP. Lower volume (9 opps) and higher implementation complexity -- better to get Location-based ringfencing right first.
+
+---
+
+## Implication for Job Function field optionality (I-019)
+
+Job Function is an active filter for 9 opps using "Job Function + Function INCLUDE" for domain-specific ringfencing. This is deferred to R1+. For MVP, Job Function is optional during ingestion -- records without it are ingested and visible to all by default. The ingestion job should log which records came in without Job Function so the R1+ ringfencing implementation has visibility into incomplete records.
