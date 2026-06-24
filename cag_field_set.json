@@ -1,0 +1,356 @@
+{
+  "d": {
+    "results": [
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0001')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0001')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0001",
+        "Descr": "Accounting, Audit, Finance",
+        "Count": "115"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0002')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0002')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0002",
+        "Descr": "Administration Support",
+        "Count": " 82"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0003')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0003')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0003",
+        "Descr": "Arts/Cultural/Heritage ",
+        "Count": "  7"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0004')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0004')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0004",
+        "Descr": "Building and Estate Management ",
+        "Count": " 65"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0005')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0005')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0005",
+        "Descr": "Conciliation/ Mediation ",
+        "Count": "  1"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0006')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0006')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0006",
+        "Descr": "Conciliation/ Mediation and Statistics ",
+        "Count": "  3"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0007')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0007')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0007",
+        "Descr": "Corporate Strategy/Top Management ",
+        "Count": " 17"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0008')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0008')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0008",
+        "Descr": "Customer Service ",
+        "Count": " 32"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0009')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0009')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0009",
+        "Descr": "Economics/Statistics ",
+        "Count": " 14"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0010')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0010')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0010",
+        "Descr": "Education ",
+        "Count": "157"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0011')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0011')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0011",
+        "Descr": "Enforcement ",
+        "Count": " 54"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0012')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0012')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0012",
+        "Descr": "Engineering ",
+        "Count": "210"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0013')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0013')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0013",
+        "Descr": "Foreign Service ",
+        "Count": " 10"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0014')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0014')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0014",
+        "Descr": "Healthcare ",
+        "Count": " 31"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0015')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0015')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0015",
+        "Descr": "Home Team Uniformed Services ",
+        "Count": " 16"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0016')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0016')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0016",
+        "Descr": "Human Resources ",
+        "Count": " 80"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0017')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0017')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0017",
+        "Descr": "InfoComm, Technology, New Media Communications ",
+        "Count": "404"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0018')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0018')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0018",
+        "Descr": "International Relations ",
+        "Count": " 23"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0019')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0019')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0019",
+        "Descr": "Investigation ",
+        "Count": "  4"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0020')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0020')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0020",
+        "Descr": "Landscape/Horticulture ",
+        "Count": "  7"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0021')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0021')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0021",
+        "Descr": "Law/Legal Services ",
+        "Count": " 23"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0022')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0022')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0022",
+        "Descr": "Marketing/Business Development ",
+        "Count": " 40"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0023')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0023')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0023",
+        "Descr": "Occupational Safety and Health ",
+        "Count": "  6"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0024')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0024')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0024",
+        "Descr": "Organisation Development ",
+        "Count": " 14"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0025')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0025')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0025",
+        "Descr": "Others ",
+        "Count": "141"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0026')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0026')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0026",
+        "Descr": "Policy Formulation ",
+        "Count": "116"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0027')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0027')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0027",
+        "Descr": "Public Relations/Corporate Communications/Psychology ",
+        "Count": " 48"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0028')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0028')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0028",
+        "Descr": "Public Service Leadership ",
+        "Count": "  2"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0029')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0029')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0029",
+        "Descr": "Research and Analysis ",
+        "Count": " 37"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0030')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0030')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0030",
+        "Descr": "Sciences (e.g. life sciences, bio-technology etc.) ",
+        "Count": " 15"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0031')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0031')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0031",
+        "Descr": "Singapore Armed Forces ",
+        "Count": ""
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0032')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0032')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0032",
+        "Descr": "Social and Community Development ",
+        "Count": " 92"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0033')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0033')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0033",
+        "Descr": "Statistics ",
+        "Count": " 19"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0034')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0034')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0034",
+        "Descr": "Training and Development ",
+        "Count": " 23"
+      },
+      {
+        "__metadata": {
+          "id": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0035')",
+          "uri": "http://p3aavsngw07.intraprd.hrp.gov.sg/sap/opu/odata/sap/ZGERCGS001_SRV/FieldSet('0035')",
+          "type": "ZGERCGS001_SRV.Field"
+        },
+        "Indus": "0035",
+        "Descr": "Translators/Interpreters ",
+        "Count": ""
+      }
+    ]
+  }
+}

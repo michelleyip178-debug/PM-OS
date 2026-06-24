@@ -4,11 +4,11 @@
 | | |
 |---|---|
 | **Release** | R1 |
-| **Target** | Mar 2027 |
-| **Status** | Provisional — pending Mark sign-off (#40) |
+| **Target** | Jan 2027 |
+| **Status** | Confirmed — scope locked post-review; pending Mark sign-off (#40) |
 | **Author** | Michelle Yip |
-| **Last updated** | 23 Jun 2026 |
-| **Reviewed with** | Adrian (jam, Wed 24 Jun 2026) |
+| **Last updated** | 24 Jun 2026 |
+| **Reviewed with** | Scope confirmed post-senior review; jam with Adrian scheduled Wed 24 Jun 2026 (pending) |
 
 ---
 
@@ -18,7 +18,7 @@ MVP gets an officer to the *door* of an opportunity — browse, filter, view, cl
 
 Agencies create opportunities directly in CareerCompass. Officers apply without leaving it. The application is tracked from submission to outcome. CareerCompass stops being a read-only window onto OTG and becomes the system of record.
 
-**R1 = Create it. Post it. Pre-fill it. Submit it. Track it. Save it.**
+**R1 = Create it. Post it. Pre-fill it. Submit it. Track it. Save it. Sync it.**
 
 ---
 
@@ -30,7 +30,7 @@ Three OKR targets only unlock if R1 ships on time:
 |-----|--------|-------------------|
 | **North Star** | 10% of onboarded officers complete a development action by Mar 2027 | Without in-Compass apply, officers can't complete an action within the platform. R1 is the only release that can hit this milestone. |
 | **OKR 2** | 1,850 officers applied via CareerCompass by Q4 2028 | ~405–540 applications expected in the pilot cohort in Q1 '27 alone — ~22–29% of the lifetime OKR target in the first 3 months. |
-| **Status latency** | Application status updates ≤24 hours of hiring-manager action by Q1 '27 | Requires a native state machine in OTEP. Can't be retrofitted after R2. |
+| **Status latency** | Application status updates ≤24 hours of hiring-manager action by Q1 '27 | Requires a defined state machine — now ATS-backed (World A). Architecture must be confirmed before Epic C is groomed. Can't be retrofitted after R2. |
 
 **Pilot cohort at R1 launch:** ~5,400 officers across 6 agencies (PSD, ESG, MDDI, URA, MCCY, CAAS), staggered rollout.
 
@@ -130,7 +130,7 @@ The 24-hour latency OKR lives in this seam — specifically in the status-sync p
 
 ---
 
-## The 4 Epics
+## The 5 Epics
 
 ### Epic A — Opportunity Creation
 
@@ -178,20 +178,26 @@ A native in-Compass application form — no FormSG redirect. Pre-populated from 
 
 ### Epic C — Status Tracking
 
-End-to-end application monitoring, native in OTEP. OTEP owns the state machine:
+End-to-end application monitoring with integration to ATS, HRPS, and Cumulus. OTEP owns the state machine:
 
 **Submitted → Under Review → Outcome**
 
-No ATS integration in R1. OTEP builds and owns the record store, routing logic, and state machine. World B (OTEP-native) is the recommended path — it's the only way the posting-manager journey exists in R1.
+**Scope change (confirmed, post-review):** ATS integration is now in scope for R1 (previously World B / OTEP-native only). Status tracking integrates with ATS, HRPS, and Cumulus so status updates are visible inside CareerCompass and reflected in existing HR systems simultaneously.
 
-**Depends on:** Epic B (needs a submitted application to have a status).
+**This reverses the World B recommendation from the Jun 24 jam.** World A (ATS-backed) is now the confirmed direction. Implications:
+- The posting-manager journey must be re-examined — it no longer depends solely on an OTEP-native state machine
+- The ATS integration spec and vendor/system ownership must be confirmed before Epic C can be groomed
+- Webhook or polling architecture decision moves from R2 planning to R1 scope
+
+**Depends on:** Epic B (needs a submitted application to have a status). ATS/HRPS/Cumulus integration specs confirmed with Pow Hwee.
 
 **Design decisions to make early:**
-- Who triggers each transition — officer, HR, or system? Each answer is a different backend shape.
+- Who triggers each transition — officer, HR, ATS system event, or OTEP? Each answer is a different backend shape.
 - "Outcome = rejection" is the most emotionally sensitive screen in the release — needs design attention alongside the data model, not after.
 - Who sees the status — officer only, or HR dashboard too? (→ Amber + Pow Hwee)
+- How does status sync work when ATS is the system of record? Push (webhook) vs pull (polling)?
 
-**Note:** The 24hr latency OKR lives in the status-back-to-officer path, not the apply flow. Don't over-invest in the visible apply UX at the expense of this.
+**Note:** The 24hr latency OKR lives in the status-back-to-officer path, not the apply flow. ATS integration adds latency risk to this path — surface to Pow Hwee before grooming.
 
 ---
 
@@ -210,22 +216,45 @@ Officers save and bookmark opportunities, and resume in-progress applications wi
 
 ---
 
+### Epic E — Competency Management v1
+
+Ensure officer competencies are in sync between CareerCompass and existing HR systems (HRPS, Cumulus, POCDEX).
+
+**Why it's in R1:** Pre-fill quality (Epic B) and status tracking integrity (Epic C) both depend on competency data being accurate and current. If officer profiles in CareerCompass are stale or misaligned from HR system records, pre-fill erodes trust and matching logic fails before R1 has a chance to prove value.
+
+**Scope boundary — critical open question:**
+This epic has two very different shapes depending on the answer to one question:
+
+| Scope | What it means | Build complexity |
+|---|---|---|
+| **Read-only sync** | CareerCompass reads competency data from POCDEX/HRPS at login; officer profile stays current without manual entry | Moderate — depends on open items #18/#41 |
+| **Read + write-back** | Officers update competencies in CareerCompass; changes sync back to HRPS/Cumulus | High — requires POCDEX write path (Core #31), currently blocked |
+
+**Recommendation:** Confirm with Imelda / Daryll before grooming. If write-back is intended, this epic re-opens the POCDEX write path (Core #31) that was explicitly closed at R1. That is a sequencing risk and needs a new decision log entry.
+
+**Dependency:** Competency SSOT contract between Léo and Kingsley (open items #18/#41). Epic E cannot be groomed until the schema is stable.
+
+**Explicitly out (until scope is confirmed):** Competency authoring UI, criteria matching (Epic A deferred item), CV inference (OTEP-205).
+
+---
+
 ## Priority Order + Critical Path
 
 | Priority | Epic | Why | Confidence |
 |----------|------|-----|------------|
-| 1 | **A — Opportunity Creation (all 5 types)** | Upstream spine. All 5 types in scope: IJ, Secondment, STIP, Gig, PSFG (PSFG conditional on policy intent). Full creation is the Must — not a stretch. | High (4 types confirmed) / PSFG conditional |
-| 2 | **B — Streamlined Application + Smart Pre-fill** | Officer-facing payoff. The native form everything else hangs off. | High |
-| 3 | **C — Status Tracking** | Closes the "submit into a black box" problem. New data model — scope early even if it ships after B. | High |
-| 4 | **D — Saved Jobs** | High officer value, lower build cost. "Save an opportunity" can ship semi-independently as a parallel track. | Medium |
+| 1 | **A — Opportunity Creation (all types incl. Secondments)** | Upstream spine. HR can post all job types in Compass, eliminating OTG dependency for creation entirely. | High |
+| 2 | **B — Streamlined Application + Smart Pre-fill** | Officer-facing payoff. Native in-Compass apply form (no redirects, excl. C@G). Pre-filled from OTEP profile. | High |
+| 3 | **C — Status Tracking (ATS/HRPS/Cumulus integration)** | Closes the status black hole. World A confirmed — ATS integration in scope. Scope early; architecture decision gates the whole epic. | High — but integration complexity is new risk |
+| 4 | **E — Competency Management v1** | Pre-fill and matching quality depend on competency data accuracy. Scope boundary (read vs write) must be confirmed before grooming. | Medium — pending scope boundary confirmation |
+| 5 | **D — Saved Jobs** | High officer value, lower build cost. "Save an opportunity" ships semi-independently as a parallel track. | Medium |
 
-**The critical path:** A and B are the two spines — different surfaces so scoping parallelises, but build serialises through one FE (Thomas). C is scoped alongside B, ships after. D is the parallel-track candidate.
+**The critical path:** A and B are the two delivery spines. C and E are integration-heavy — both gate on external system specs that aren't fully defined. D is the parallel-track candidate.
 
-**If R1 has to cut:** D's "resume application" half goes first, then D entirely. A (full 5-type) + B + C is the non-negotiable core. Without all three, R1 doesn't close the create → apply → track loop.
+**If R1 has to cut:** D goes first. If integration specs slip, E's write-back scope defers to R1.5 (read-only sync only). A + B + C is the non-negotiable floor.
 
-**If PSFG policy intent isn't confirmed:** PSFG creation defers to R1.5. The other 4 types (IJ, Secondment, STIP, Gig) proceed as planned.
+**If PSFG policy intent isn't confirmed:** PSFG creation defers to R1.5. IJ, Secondment, STIP, Gig proceed.
 
-**Capacity flag:** Full 5-type creation is a materially larger build than the narrow scope. Capacity check needed against the sprint plan before R1 grooming opens — particularly with Thomas as the single FE across A and B.
+**Capacity flag:** ATS integration (Epic C) + Competency Management (Epic E) both add system integration work that wasn't in the original scope. Capacity check against the sprint plan is a blocker before R1 grooming opens — Thomas remains the single FE across A and B.
 
 ---
 
@@ -233,10 +262,10 @@ Officers save and bookmark opportunities, and resume in-progress applications wi
 
 | Bucket | Epics | The line |
 |--------|-------|----------|
-| **Must** | A — full 5-type creation (IJ, Secondment, STIP, Gig, PSFG*) · B (apply + pre-fill) · C (status tracking) | R1's promise = create → apply → track. Drop any one and R1 doesn't deliver. *PSFG conditional on leadership policy intent. |
-| **Should** | D (Saved Jobs — "save" half) | High officer value, lower build cost. Semi-independent parallel track. |
-| **Could** | D's "resume application" half | Enhancement on a working form. Data-gated — only if abandonment >40%. |
-| **Won't (this release)** | Ringfencing-criteria authoring · ATS integration · CIE/CV inference · SJR creation · opportunity recommender | Named so they don't creep in. Criteria authoring re-opens POCDEX write path (Core #31) — explicitly out. |
+| **Must** | A (creation — all types incl. Secondments) · B (native apply + pre-fill, excl. C@G) · C (status tracking + ATS/HRPS/Cumulus integration) | R1's promise = create → apply → track. Drop any one and R1 doesn't close the loop. |
+| **Should** | E (Competency Management v1 — read-only sync at minimum) · D (Saved Jobs — "save" half) | E is a quality gate for pre-fill and matching. D is high officer value, low build cost. Both are semi-independent parallel tracks. |
+| **Could** | E's write-back scope (if POCDEX write path unblocked) · D's "resume application" half | E write-back re-opens Core #31 — only if Imelda's squad confirms the path is clear. D "resume" is data-gated on abandonment >40%. |
+| **Won't (this release)** | Ringfencing-criteria authoring · Smart Assistant (→ R3) · CIE/CV inference · SJR creation · opportunity recommender · Intelligence Dashboard (roadmap item, not in current sprint scope) | Smart Assistant explicitly moved to R3 (confirmed post-review). Criteria authoring re-opens POCDEX write path — explicitly out unless E's write-back scope is confirmed. |
 
 ---
 
@@ -254,9 +283,9 @@ Early career, open but not searching. Browses → saves an opportunity → close
 *Why it matters:* The 9% OTG re-login rate is this persona's symptom. Saved Jobs converts a one-time visitor into a returning user.
 
 **Lane 3 — Posting Manager (Epics A + C)**
-Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form → sees officer preview pane → publishes → applications land in a structured dashboard → shortlists / updates status → officers auto-notified → closes posting.
+Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form → sees officer preview pane → publishes → applications routed to ATS → shortlists / updates status in ATS → status synced back to CareerCompass → officers notified → closes posting.
 
-*Unlock condition:* This persona's dashboard only exists if we build the record store and state machine in OTEP (World B). World A — ATS integration — means this manager journey doesn't exist in R1.
+*Unlock condition:* World A (ATS integration) is confirmed. The posting-manager journey now depends on the ATS integration spec being defined — which ATS, how status events flow back to OTEP, and who owns the integration. This is unresolved and is a go/no-go gate for Epic C. Manager dashboard shape may also change depending on whether OTEP surfaces applicant data or defers to the ATS.
 
 **The undesigned seam:** Both Lane 1 and Lane 3 go quiet at the same point. The officer-submits → submission-routes-to-manager-queue → status-back-to-officer chain is where the 24hr latency OKR actually lives. This is the highest-risk undesigned surface in R1.
 
@@ -264,13 +293,18 @@ Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form �
 
 ## Decisions Needed Before R1 Grooming Opens
 
-| # | Decision | Options | Recommendation |
-|---|----------|---------|---------------|
-| 1 | "Apply within CareerCompass" — does it mean no redirects at all, or that the experience *starts* in Compass? | (a) Fully native, no redirects · (b) Starts in Compass, redirects at submission | (a) Native form, no redirects |
-| 2 | ATS fork — World A (ATS-backed state machine + webhooks) vs World B (OTEP-native state machine)? | (a) ATS integration · (b) OTEP-native | World B for R1. ATS integration is R2+ when a vendor is confirmed. |
-| 3 | PSFG in R1 or R1.5? | (a) R1 if policy intent confirmed · (b) R1.5 if not | Confirm with Jace (Thu 25 Jun). IJ, Secondment, STIP, Gig are in regardless. |
-| 4 | Criteria authoring — R1 or R1.5? | (a) R1 · (b) R1.5 | R1.5. Keeps R1 off the POCDEX write blocker (Core #31). |
-| 5 | Agency-admin auth — does it exist, who owns it? | To be confirmed | Unknown — go/no-go gate for Epic A. (→ Pow Hwee / Fabian) |
+| # | Decision | Status | Owner |
+|---|----------|--------|-------|
+| 1 | "Apply within CareerCompass" — native, no redirects (excl. C@G) | ✅ Confirmed | — |
+| 2 | ATS fork — World A (ATS integration) vs World B (OTEP-native) | ✅ Confirmed — World A, ATS/HRPS/Cumulus integration in scope | — |
+| 3 | Smart Assistant | ✅ Confirmed — R3, out of R1 | — |
+| 4 | Saved Jobs | ✅ Confirmed — in R1 | — |
+| 5 | Competency Management v1 | ✅ Confirmed in scope — **scope boundary open:** read-only sync vs write-back? | Imelda / Daryll |
+| 6 | PSFG in R1 or R1.5? | Open | Jace / Adrian |
+| 7 | Criteria authoring — R1 or R1.5? | Recommended R1.5 (POCDEX write path blocked) | Pow Hwee |
+| 8 | Agency-admin auth — does it exist, who owns it? | Open — go/no-go gate for Epic A | Pow Hwee / Fabian |
+| 9 | ATS integration spec — which ATS, who owns the API contract? | Open — go/no-go gate for Epic C | Pow Hwee / Fabian |
+| 10 | 24hr latency OKR measurement point — from ATS manager action, or from status appearing in CareerCompass? | Open — affects whether OKR is achievable with ATS integration | Adrian / Pow Hwee |
 
 ---
 
@@ -278,11 +312,14 @@ Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form �
 
 | Risk | Severity | Mitigation |
 |------|----------|------------|
+| ATS integration owner unknown | RED — blocks Epic C grooming | World A is now confirmed but no one has named which ATS, who owns the integration spec, or what the API contract looks like. This must be confirmed before Epic C is groomed. |
+| Competency Management v1 scope boundary unconfirmed | RED — if write-back is intended, re-opens Core #31 | Confirm with Imelda / Daryll: read-only sync or write-back? If write-back, POCDEX write path is back on the table and must be scoped before grooming. |
 | Agency-admin auth undefined | RED — go/no-go gate for Epic A | Confirm with Pow Hwee / Fabian before pipeline opens. If it doesn't exist, Epic A cannot ship. |
-| "Rejection" screen in Epic C under-designed | RED — most emotionally sensitive screen in release | Amber to scope this alongside C's data model pass, not after. |
-| Epic C state machine unresolved | AMBER | Confirm who triggers each status transition (officer / HR / system) with Pow Hwee before grooming. Each answer is a different backend shape. |
-| Epic B pre-fill at risk until #18/#41 closes | AMBER | Competency SSOT endpoint contract between Léo and Kingsley not yet finalised. Pre-fill is not a given until it is. |
-| Thomas (FE) is single point of failure for A and B | RED | Full 5-type creation + native apply form both route through Thomas. Scope is materially larger now that A covers all types. Capacity check against the sprint plan is a blocker before R1 grooming opens. |
+| "Rejection" screen in Epic C under-designed | RED — most emotionally sensitive screen in release | Amber to scope this alongside C's data model pass, not after. ATS integration adds uncertainty to what data is available at rejection time. |
+| Epic C state machine unresolved — now more complex with ATS | AMBER → RED | World A means status transitions may originate from an external ATS event, not from OTEP. Who triggers each transition must be confirmed with Pow Hwee before grooming. Each answer is a different backend shape. |
+| Epic B pre-fill at risk until #18/#41 closes | AMBER | Competency SSOT endpoint contract between Léo and Kingsley not yet finalised. Pre-fill quality depends on this — and now so does Epic E. |
+| Thomas (FE) is single point of failure for A, B, and potentially C | RED | Scope has grown: full-type creation (A) + native apply (B) + ATS integration surface (C) all route through FE. Capacity check against the sprint plan is a blocker before R1 grooming opens. |
+| 24hr status latency OKR at risk with ATS integration | AMBER | ATS integration introduces external system latency that OTEP doesn't control. Need to confirm whether the latency OKR (≤24hrs) is measured from manager action in ATS or from status appearing in CareerCompass — these are different targets. |
 
 ---
 
@@ -291,12 +328,14 @@ Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form �
 | Item | Reason |
 |------|--------|
 | Ringfencing-criteria authoring | Re-opens POCDEX write path — blocked on Core #31. Comes R1.5. |
-| ATS integration | R2+ when a vendor is confirmed. |
+| Smart Assistant (auto-populate strengths + CV build) | Confirmed R3 post-review. Reduces AI complexity in R1. |
 | SJR creation | Excluded from MVP ingestion; out unless Mark pulls it in. |
 | CV upload / CIE inference (OTEP-205) | Separate capability. Smart pre-fill = profile-driven only. |
 | Job Function ringfencing | Agency-level ringfencing ships MVP. Job Function filters come R1+. |
+| C@G native apply | C@G stays on its own rails — explicitly excluded from in-Compass apply (confirmed). Officers applying to C@G jobs redirect as today. |
 | C@G creation | Stays on its own rails — not the generic create form. |
 | Opportunity recommender | Still hypothesis-stage. |
+| ATS as posting system of record | ATS integration is in scope for status sync — but OTEP owns the posting record, not the ATS. ATS as posting SOR is R2+. |
 
 ---
 
@@ -310,15 +349,17 @@ Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form �
 
 | Action | Owner | By when |
 |--------|-------|---------|
-| Agree epic set + priority order | Adrian + Michelle | Wed 24 Jun jam |
+| Confirm Competency Management v1 scope boundary (read-only vs write-back) | Michelle → Imelda / Daryll | Before R1 grooming opens |
+| Confirm ATS integration spec — which system, who owns API contract | Michelle → Pow Hwee / Fabian | Before Epic C is groomed |
 | Confirm agency-admin auth path | Pow Hwee / Fabian | Before R1 pipeline opens |
-| Finalise competency SSOT contract (#18/#41) | Léo + Kingsley | Ongoing — gate for Epic B pre-fill |
-| Epic C state machine decision (who triggers transitions) | Pow Hwee + Michelle | Before C is groomed |
+| Finalise competency SSOT contract (#18/#41) | Léo + Kingsley | Ongoing — gate for Epic B pre-fill and Epic E |
+| Epic C state machine decision — who triggers status transitions (more complex now with ATS) | Pow Hwee + Michelle | Before C is groomed |
+| Clarify 24hr latency OKR measurement point with ATS integration | Michelle → Adrian | Before Epic C is groomed |
 | Early design pass on rejection/outcome screen | Amber | Alongside Epic C data model |
-| Mark sign-off on shaped epic set (#40) | Michelle → Mark | Immediately after jam |
+| Mark sign-off on shaped epic set (#40) | Michelle → Mark | Pending |
 | Open R1 story pipeline | Michelle | After Mark confirms |
 
 ---
 
-*Provisional until Mark confirms scope (#40). Shaped in jam with Adrian, Wed 24 Jun 2026.*
-*Sources: R1 jam draft v3 (2026-06-22), impact sizing (2026-06-18), OTEP roadmap OKRs 2026–27.*
+*Scope confirmed post-senior review. Jam with Adrian pending (Wed 24 Jun 2026). Story pipeline opens after Mark sign-off (#40). Last updated: 24 Jun 2026.*
+*Sources: Post-review confirmed scope slide, manager briefing (2026-06-23-r1-manager-briefing-reforge.md), R1 jam draft v3 (2026-06-22), impact sizing (2026-06-18), OTEP roadmap OKRs 2026–27.*
