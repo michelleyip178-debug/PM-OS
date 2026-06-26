@@ -41,9 +41,9 @@ mcps_used: Google Calendar (direct API), Jira (live script)
 
 ## Standup Lens
 
-- **9 stories in QA with sprint closing tomorrow** — OTEP-305 (Keycloak login/logout) is the highest risk; ask if Keycloak dependency is resolved or flagging as S5 carry-in
-- **OTEP-392 (Keycloak federated logout) still In Progress, unassigned** — who owns this? Get a name or park to S5 today
-- **Michelle WIP (OTEP-127, OTEP-427, OTEP-358): all In Progress** — if no engineer is blocked on these today, that's the signal to park OTEP-427 now
+- **10 stories in QA with sprint closing tomorrow** — OTEP-305 (Keycloak login/logout) is the highest risk; ask if Keycloak dependency is resolved or flagging as S5 carry-in
+- **OTEP-392 (Keycloak federated logout) moved to QA** — confirm test coverage before EOD or flag as S5 carry-in
+- **Michelle WIP (OTEP-427, OTEP-358): 2 In Progress** — OTEP-127 ✅ Done. Park OTEP-427 today; OTEP-358 is the remaining live spike.
 
 ---
 
@@ -69,10 +69,10 @@ Grooming is your highest-leverage PM act this week — you're not facilitating a
 
 | Status | Count | Notable |
 |--------|-------|---------|
-| In Progress | 15 | Michelle: OTEP-127 (ringfencing), OTEP-427 (ingestion), OTEP-358 (nil-date) |
-| QA | 9 | OTEP-86, 268, 85, 305, 128, 284, 129, 438, 406 |
-| Done | 27 | OTEP-397 (upload spike, Michelle) ✅ |
-| Backlog | 15 | |
+| In Progress | 12 | Michelle: OTEP-427 (ingestion), OTEP-358 (nil-date). OTEP-127 ✅ Done |
+| QA | 10 | OTEP-86, 268, 85, 305, 128, 284, 129, 438, 406, 392 |
+| Done | 29 | OTEP-127 (ringfencing) ✅, OTEP-397 (upload spike) ✅ + 7 others |
+| Backlog | — | |
 
 ### QA Tail to Watch (sprint closes tomorrow)
 

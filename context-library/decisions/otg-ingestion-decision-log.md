@@ -17,15 +17,17 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 | ID | Decision | Date | Status | Gates |
 |----|----------|------|--------|-------|
-| I-018 | 5-category model: STIPs · Gigs · Jobs · SJR · PSFG | 2026-06-12 | 🟡 Pending Xian Zhang validation | OTEP-86, OTEP-289 |
-| I-017 | "Jobs" consolidates Secondments + Internal Jobs + C@G jobs | 2026-06-12 | 🟡 Pending Xian Zhang validation | OTEP-86, card labelling |
-| I-016 | PSFG is its own category (voluntary, skills-based) | 2026-06-12 | 🟡 Pending Xian Zhang validation | OTEP-86, OTEP-289 |
+| I-020 | Competency field is optional across all pipeline sources (OTG + C@G) | 2026-06-26 | ✅ Ratified | OTEP-192 ACs, OTEP-437, OTEP-87 |
+| I-019 | WOG 29-category taxonomy is the canonical filter layer (replaces C@G Indus codes) | 2026-06-25 | ✅ Ratified | OTEP-437, OTEP-ingestion-v3 Story 4, OTEP-318 |
+| I-018 | MVP category model: Jobs · STIPs · Gigs (3 categories). SJR + PSFG excluded. | 2026-06-26 | ✅ Ratified | OTEP-86, OTEP-289 |
+| I-017 | "Jobs" consolidates Secondments + Internal Jobs + C@G jobs | 2026-06-12 | ✅ Ratified | OTEP-86, card labelling |
+| I-016 | PSFG excluded from MVP (deferred post-MVP) | 2026-06-26 | ✅ Ratified | OTEP-86, OTEP-289 |
 | I-015 | StartDate optional for Jobs (Job + Secondment types) | 2026-06-12 | ✅ Ratified | OTEP-192 ACs, OTEP-427 |
 | I-014 | Function field is optional / display-only (all types) | 2026-06-12 | ✅ Ratified | OTEP-192 ACs, OTEP-427 |
 | I-013 | TimeCommitment required for STIPs and Gigs only | 2026-06-12 | ✅ Ratified | OTEP-192 ACs |
 | I-012 | MVP ring-fencing = agency-level only | 2026-06-12 | ✅ Ratified | OTEP-127, ring-fencing spike |
 | I-011 | MVP ingests open opportunities only; all expired excluded | 2026-06-12 | ✅ Ratified (reinforces I-008) | OTEP-192 |
-| I-010 | C@G as source of truth where a job exists in both OTG and C@G | 2026-06-12 | 🔴 Open — ESG HR confirmation needed | OTEP-348, ESG ingestion |
+| I-010 | C@G as source of truth where a job exists in both OTG and C@G | 2026-06-12 | 🔴 Open — waiting on Xian Zhang → ESG HR | OTEP-348, ESG ingestion |
 | I-009 | SJR excluded from MVP listing and ingestion | 2026-05-21 | ✅ Ratified | OTEP-192, listing filter |
 | I-008 | Hard-skip any record with missing or unresolvable mapped field | 2026-06-08 | ✅ Ratified | OTEP-192 skip logic |
 | I-007 | Unrecognised type prefixes hard-skip pending source fix | 2026-06-04 | ✅ Ratified | OTEP-192 type tag validation |
@@ -42,39 +44,74 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 ---
 
-### I-018 — 5-category model: STIPs · Gigs · Jobs · SJR · PSFG
+### I-020 — Competency field is optional across all pipeline sources
 
-**Date:** 2026-06-12
+**Date:** 2026-06-26
 
-**Status:** 🟡 Pending Xian Zhang team validation (target: w/c 15 Jun)
+**Status:** ✅ Ratified
 
-**Source:** OTG Opportunities → CareerCompass meeting, 12 Jun 2026
+**Decision:** `comp_requirements` (competencies) is an optional field for ingestion across both OTG and C@G pipelines. A record missing competencies is still ingested. Missing competencies do not trigger a hard skip.
 
-**Decision:** CareerCompass displays five user-facing categories. These reflect how officers experience opportunities, not internal HR mechanisms.
+**Why:** C@G jobs structurally have no competency data. Since Léo is building a unified ingestion pipeline for both OTG and C@G, making competencies a hard-skip requirement would block all C@G jobs. OTG data confirms all current open records have competencies (100% coverage across Gigs, STIPs, Jobs, SJRs), so this rule relaxation has no impact on OTG catalogue size.
 
-| CC Category | Maps from (OTG types) | Notes |
-|---|---|---|
-| STIPs | `STIP` prefix | Time-bound, require TC |
-| Gigs | `Gig` prefix | Time-bound, require TC |
-| Jobs | `Job`, `Secondment` prefixes + C@G jobs | StartDate optional |
-| SJR | `SJR` prefix | MVP excluded — separate module |
-| PSFG | TBD prefix | Voluntary, skills-based — new category |
+**UI behaviour when competencies are missing:** Show the "no competencies" banner directing officers to update their profile (decided in S5 grooming 2026-06-25). Do not show a match signal. Card hides the competency section rather than showing an empty/negative state (per grooming decision).
 
-**Why:** Categories must reflect officer intent ("I want a secondment opportunity"), not the posting mechanism ("this is internally classified as a short-term interest program"). The old working list (Internal Job / STIPs & Gigs / SJR) mapped HR taxonomy onto user experience.
+**What to update:** OTEP-192 ACs (remove competency as hard-skip field). OTEP-437 (C@G ingestion — competency field optional). OTEP-87 (competency section on detail page — handle null gracefully).
 
-**Supersedes:** Working type list from D 2026-05-13 ("remove OTG label; keep Internal Job, SJR, STIPs & Gigs").
+---
 
-**What it gates:** OTEP-86 (type filter), OTEP-289 (taxonomy mapping spike). Do not groom either against the old taxonomy.
+### I-019 — WOG 29-category taxonomy is the canonical filter layer
 
-**Pending:** Xian Zhang team to validate mapping before it's locked. Michelle to circulate the OTG prefix → CC category mapping doc by w/c 15 Jun.
+**Date:** 2026-06-25
+
+**Status:** ✅ Ratified
+
+**Decision:** CareerCompass uses a 29-category WOG taxonomy as the canonical filter display layer. Both OTG and C@G opportunities translate their native job classification to a WOG category at ingestion and store it as `wog_job_category`. C@G Indus codes are no longer the canonical taxonomy — they are an intermediate source that translates to WOG.
+
+**WOG taxonomy (29 categories):** Partnership & Engagement · Corporate Administration · Education & Skills Development · Emergency Preparedness & Response · Regulatory · Environment & Resources · Finance · Governance, Risk & Controls · Infocomm Technology & Smart Systems · Human Resource · Industry & Sector Development · International Relations · Land & Estate Management · Legal · Organisation Development · Planning · Policy & Planning · Procurement · Programme & Project Management · Public Communications · Research & Innovation · Service Delivery · Social & Community Services · Trade & Economy · Urban & Physical Planning · Arts & Culture · Programme Evaluation · Internal Audit · Science, Tech & Engineering
+
+**Why:** A single WOG taxonomy gives officers a consistent filter experience regardless of whether opportunities come from OTG or C@G. C@G Indus codes are source-specific and not designed as a user-facing taxonomy.
+
+**What it changes:**
+- OTEP-437: C@G ingestion now translates Indus code → WOG (was passthrough). Updated.
+- OTEP-ingestion-v3 Story 4: OTG ingestion now translates job_family → WOG (was OTG → C@G Indus). Updated.
+- OTEP-318 (filter UI): Filter labels are WOG categories (not C@G Indus labels).
+
+**Mapping reference:** `context-library/decisions/wog-taxonomy-mapping.md`
+
+**Pending:** OTG A–K job families not yet mapped — add to Story 4 translation map when confirmed by HR.
+
+---
+
+### I-018 — MVP category model: Jobs · STIPs · Gigs (3 categories)
+
+**Date:** 2026-06-26 (updated from 2026-06-12 draft)
+
+**Status:** ✅ Ratified
+
+**Source:** OTG Opportunities → CareerCompass meeting 12 Jun 2026 (initial); confirmed 2026-06-26.
+
+**Decision:** CareerCompass MVP displays three user-facing categories. SJR and PSFG are both excluded from MVP.
+
+| CC Category | Maps from (OTG types) | C@G source | Notes |
+|---|---|---|---|
+| Jobs | `Job`, `Secondment` prefixes | C@G jobs | Internal Jobs + Secondments + C@G Jobs. StartDate optional. No TC. |
+| STIPs | `STIP` prefix | — | Time-bound. TC required. |
+| Gigs | `Gig` prefix | — | Time-bound. TC required. |
+| ~~SJR~~ | ~~`SJR` prefix~~ | — | **Excluded MVP** — separate module (I-009 stands) |
+| ~~PSFG~~ | ~~TBD prefix~~ | — | **Excluded MVP** — deferred to post-MVP |
+
+**Why:** Categories reflect officer intent, not HR mechanisms. SJR is nomination-based and requires a separate module. PSFG prefix not yet identified in OTG data and deferred.
+
+**What it gates:** OTEP-86 (type filter — 3 types only), OTEP-289 (taxonomy mapping spike). Safe to groom against this model now.
 
 ---
 
 ### I-017 — "Jobs" consolidates Secondments + Internal Jobs + C@G jobs
 
-**Date:** 2026-06-12
+**Date:** 2026-06-12 (ratified 2026-06-26)
 
-**Status:** 🟡 Pending Xian Zhang team validation
+**Status:** ✅ Ratified
 
 **Source:** OTG Opportunities → CareerCompass meeting, 12 Jun 2026
 
@@ -88,19 +125,17 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 ---
 
-### I-016 — PSFG is its own category
+### I-016 — PSFG excluded from MVP
 
-**Date:** 2026-06-12
+**Date:** 2026-06-26 (supersedes 2026-06-12 draft)
 
-**Status:** 🟡 Pending Xian Zhang team validation
+**Status:** ✅ Ratified
 
-**Source:** OTG Opportunities → CareerCompass meeting, 12 Jun 2026
+**Decision:** PSFG is excluded from MVP. It is not a CareerCompass category for MVP launch. Deferred to post-MVP.
 
-**Decision:** Public Service for Good (PSFG) opportunities are a separate CC category — not folded into Gigs or Jobs.
+**Why:** PSFG prefix/tag is not yet identified in OTG data. Including it in MVP without a confirmed source mapping is not feasible. The voluntary, skills-based nature of PSFG also warrants a separate UX consideration beyond MVP scope.
 
-**Why:** PSFG is voluntary and skills-based. The officer intent and posting workflow are fundamentally different from a STIP or a secondment. Mixing them degrades filter quality.
-
-**Open:** PSFG prefix/tag in OTG data not yet identified. Needs mapping before OTEP-289 can close.
+**What it unblocks:** OTEP-86 type filter and OTEP-289 taxonomy spike can now proceed with 3 categories only (Jobs, STIPs, Gigs).
 
 ---
 
@@ -188,7 +223,7 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 **Date:** 2026-06-12
 
-**Status:** 🔴 Open — ESG HR confirmation needed before building
+**Status:** 🔴 Open — waiting on Xian Zhang to reach out to ESG HR
 
 **Source:** OTG Opportunities → CareerCompass meeting, 12 Jun 2026
 
@@ -198,7 +233,7 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 **What's blocked:** ESG ingestion build in OTEP-348. Don't build the dedup logic before Xian Zhang confirms the ESG HR answer.
 
-**Owner:** Xian Zhang → ESG HR contact. Michelle to chase.
+**Owner:** Xian Zhang (to reach out to ESG HR). Updated 2026-06-26 — no longer Michelle to chase; ball is with Xian Zhang.
 
 ---
 
@@ -333,11 +368,11 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 | # | Question | Owner | Blocks |
 |---|----------|-------|--------|
-| Q-1 | Does ESG double-post to both OTG and C@G? Which version is authoritative? | Xian Zhang → ESG HR | I-010, OTEP-348 ESG ingestion |
+| Q-1 | Does ESG double-post to both OTG and C@G? Which version is authoritative? | Xian Zhang (reaching out to ESG HR — updated 2026-06-26) | I-010, OTEP-348 ESG ingestion |
 | Q-2 | Can BusinessUnit be optional for MVP? Would unlock ~16 more records. | Léo + Pow Hwee (OTEP-427) | I-008 required field list |
-| Q-3 | What OTG prefix maps to PSFG? Are there PSFG records in the current dataset? | Michelle + Xian Zhang | I-016, OTEP-289 |
-| Q-4 | Final 5-category model confirmed by Xian Zhang? | Xian Zhang team | I-018, OTEP-86, OTEP-289 |
-| Q-5 | Do competencies at ingestion trigger a hard skip if missing? | Pow Hwee | OTEP-192 ACs, OTEP-87 |
+| ~~Q-3~~ | ~~What OTG prefix maps to PSFG?~~ | — | ✅ Resolved — PSFG excluded from MVP (I-016). No longer relevant. |
+| ~~Q-4~~ | ~~Final category model confirmed?~~ | — | ✅ Resolved — 3-category model ratified 2026-06-26 (I-018): Jobs · STIPs · Gigs. |
+| ~~Q-5~~ | ~~Do competencies at ingestion trigger a hard skip if missing?~~ | ~~Pow Hwee~~ | ✅ Resolved — see I-020. Competencies are optional; C@G jobs have none. |
 
 ---
 
@@ -356,6 +391,10 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 | Date | Change |
 |------|--------|
+| 2026-06-26 | I-018 ratified: MVP category model locked at 3 categories (Jobs · STIPs · Gigs). SJR excluded (I-009 stands). PSFG excluded (I-016 updated). I-017 ratified. Q-3 and Q-4 closed. |
+| 2026-06-26 | Added I-020: competency field optional across OTG + C@G pipelines. C@G jobs have no competencies — unified pipeline requires this. Q-5 closed. |
+| 2026-06-26 | I-010 owner updated: Xian Zhang to reach out to ESG HR (no longer Michelle to chase). |
+| 2026-06-25 | Added I-019: WOG 29-category taxonomy as canonical filter layer. C@G Indus codes no longer canonical. Updated OTEP-437 and ingestion Story 4 scope. |
 | 2026-06-12 | Added I-010 through I-018 from OTG Opportunities meeting. Marked I-008 required field table updated with new optional rules. |
 | 2026-06-09 | Added I-008 (hard-skip, Pow Hwee), I-007 (type tag). |
 | 2026-06-08 | Added I-006 (formsg_url required). |
