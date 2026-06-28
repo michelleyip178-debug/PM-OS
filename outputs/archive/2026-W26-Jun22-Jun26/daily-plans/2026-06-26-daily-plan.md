@@ -31,12 +31,12 @@ mcps_used: Google Calendar (direct API), Jira (live script)
 | 9:30–10:30 | OTEP Squad Sync | No prep | Debrief grooming output, discuss QA tail, align on S5 start state |
 | 11:00–11:15 | OTEP Team 2 Standup | No prep | See Standup Lens — ask who's landing QA today |
 | 14:00–15:00 | SHIP-HATS Webinar: New pCloudy Capabilities | Skip or background | Ways of Working Retro no longer on calendar — may be cancelled |
-| 15:00–16:00 | Internal Demo Session | ⚠️ Team alignment beforehand | NEW — title says "Team Alignment Required Beforehand"; use 11:15–14:00 block to align team |
+| 15:00–16:00 | Internal Demo Session | ~~⚠️ Team alignment beforehand~~ | ❌ Cancelled — dev environment not working. Team to resolve Monday morning. Demo moves to Monday. |
 | 16:00–17:00 | Sprint 4 Finalisation | ⚠️ QA carry-in list | Shifted 1hr later; confirm Done count, document S5 carry-ins, run `/archive` |
 
 **Free blocks:**
 - **10:30–11:00** (30 min) → Park OTEP-427 in Jira
-- **11:15–14:00** (2h45) → Park OTEP-358 + team alignment prep for 15:00 demo + draft R1 #40 ask if not sent
+- **11:15–14:00** (2h45) → Park OTEP-358 + review S5 designs on Figma + draft R1 #40 ask if not sent (demo prep dropped — demo moved to Monday)
 - After 17:00 → EOD cleanup, confirm S5 board state, any outstanding async
 
 ---
@@ -54,7 +54,7 @@ mcps_used: Google Calendar (direct API), Jira (live script)
 - **⚠️ OTEP-427 + OTEP-358 still In Progress** per live Jira — parking was flagged Thursday and didn't happen. Do both in the 10:30 block before standup.
 - **⚠️ R1 #40 ask** — no file found in `outputs/decisions/` from Jun 24. If not sent to Mark, this is an open loop walking into S5. Use the 11:15 block to draft or confirm it was sent another way.
 - **⚠️ Ways of Working Retro** — no longer on calendar; may be cancelled. Confirm with team at Squad Sync if it's moved or dropped.
-- **⚠️ Internal Demo Session at 15:00** — "Team Alignment Required Beforehand" is in the title. Find out what alignment is needed and with whom; use the 11:15–14:00 block. Check with Imelda/Pow Hwee/Rama if this is the consolidated-narrative demo.
+- **⚠️ Internal Demo cancelled** — dev environment not working. Team resolves Monday morning; demo rescheduled to Monday. Use the freed 15:00 block for S4 finalisation prep or async.
 - **QA tail of 10** — accept that most carry to S5. Goal at finalisation is to document the list cleanly, not to force closes.
 - **Sprint 4 Finalisation shifted to 16:00** — adjust your afternoon accordingly.
 - **S5 starts Sunday 29 Jun** — board should be clean by EOD today; no open PM WIP.
@@ -73,7 +73,7 @@ Go into retro with one concrete example of scope drift or a prioritisation trade
 |--------|-------|---------|
 | In Progress | 12 | Michelle: OTEP-427 (ingestion), OTEP-358 (nil-date) |
 | QA | 10 | OTEP-86, 268, 85, 305, 128, 284, 129, 438, 406, 392 |
-| Done | 29 | OTEP-127 ✅, OTEP-397 ✅, OTEP-482 ✅ + 26 others |
+| Done | 31 | OTEP-127 ✅, OTEP-397 ✅, OTEP-482 ✅, OTEP-536 ✅, OTEP-440 ✅ + 26 others |
 | Backlog | 15 | — |
 
 ### QA Stories to Confirm Land vs Carry

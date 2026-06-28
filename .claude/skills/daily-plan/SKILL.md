@@ -220,7 +220,23 @@ If Gmail MCP not available:
 
 ---
 
-**C. Active PRDs & Initiatives:**
+**C. Figma Design Review:**
+
+Check if any designs are pending review — look for:
+- Stories going into the next sprint (pre-grooming or pre-planning context)
+- Stories currently In Progress where design is the dependency
+- Any Figma links referenced in recent meeting notes (`outputs/meeting-notes/`) or Jira tickets (`03-stories/jira-sync/`)
+
+If designs are pending, add a task to the earliest free block ≥ 30 min: `[ ] Review [story/feature] designs on Figma — confirm ACs match design before [grooming/planning/sprint start]`
+
+Cadence guidance:
+- **Pre-grooming or pre-planning:** Always include — confirm designs are ready before stories go in
+- **Active design sprint:** Include if Amber flagged a design ready or a story AC needs design validation
+- **Sprint close / retro day:** Skip unless explicitly flagged
+
+---
+
+**E. Active PRDs & Initiatives:**
 
 Scan `outputs/prds/` and `context-library/prds/`:
 - Check file modification dates (recently updated = active)
@@ -243,7 +259,7 @@ Cross-reference with `context-library/strategy/`:
 
 ---
 
-**D. Tasks & Sprint State (live Jira scripts → cache → MCP):**
+**F. Tasks & Sprint State (live Jira scripts → cache → MCP):**
 
 **Primary path — run the live Jira scripts** (these read from the active sprint on Jira directly, so they're always current; prefer them over cached files):
 
@@ -275,7 +291,7 @@ Categorize:
 
 ---
 
-**E. Metrics to Monitor (Analytics MCP or files):**
+**G. Metrics to Monitor (Analytics MCP or files):**
 
 Check `context-library/launches/` for features launched in past 2 weeks.
 
@@ -298,7 +314,7 @@ Flag:
 
 ---
 
-**F. Stakeholder Intelligence:**
+**H. Stakeholder Intelligence:**
 
 For each person you're meeting today:
 

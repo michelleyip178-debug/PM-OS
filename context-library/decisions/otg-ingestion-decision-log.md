@@ -1,7 +1,7 @@
 ---
 title: OTG Ingestion — Decision Log
 owner: Michelle Yip
-last_updated: 2026-06-12
+last_updated: 2026-06-26
 relates_to: OTEP-192, OTEP-86, OTEP-289, OTEP-348, OTEP-427, OTEP-358
 ---
 
@@ -17,6 +17,8 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 | ID | Decision | Date | Status | Gates |
 |----|----------|------|--------|-------|
+| I-022 | Ringfencing eligibility: active ringfencing requires user to pass all three dimension filters (BU, Function, Location) | 2026-06-26 | ✅ Ratified | OTEP-192, eligibility matching |
+| I-021 | BusinessUnit is optional for all opportunity types | 2026-06-26 | ✅ Ratified | OTEP-192 ACs, OTEP-427 |
 | I-020 | Competency field is optional across all pipeline sources (OTG + C@G) | 2026-06-26 | ✅ Ratified | OTEP-192 ACs, OTEP-437, OTEP-87 |
 | I-019 | WOG 29-category taxonomy is the canonical filter layer (replaces C@G Indus codes) | 2026-06-25 | ✅ Ratified | OTEP-437, OTEP-ingestion-v3 Story 4, OTEP-318 |
 | I-018 | MVP category model: Jobs · STIPs · Gigs (3 categories). SJR + PSFG excluded. | 2026-06-26 | ✅ Ratified | OTEP-86, OTEP-289 |
@@ -31,7 +33,7 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 | I-009 | SJR excluded from MVP listing and ingestion | 2026-05-21 | ✅ Ratified | OTEP-192, listing filter |
 | I-008 | Hard-skip any record with missing or unresolvable mapped field | 2026-06-08 | ✅ Ratified | OTEP-192 skip logic |
 | I-007 | Unrecognised type prefixes hard-skip pending source fix | 2026-06-04 | ✅ Ratified | OTEP-192 type tag validation |
-| I-006 | `formsg_url` required — no apply action without it | 2026-06-08 | ✅ Ratified | OTEP-192, detail page |
+| I-006 | `formsg_url` optional — missing triggers no-apply-link UI state (Amber's design) | 2026-06-26 | ✅ Ratified (updated) | OTEP-192, detail page |
 | I-005 | Nil closing date (`00/01/1900`) = evergreen = valid | 2026-05-29 | ✅ Ratified | OTEP-358, ingestion |
 | I-004 | Opportunity lifecycle: visible if `closing_date > today OR closing_date IS NULL` | 2026-05-13 | ✅ Ratified | Listing visibility rule |
 | I-003 | Sync cadence: one-time port only, no ongoing automated sync | 2026-05-29 | ✅ Ratified | OTEP-192, OTEP-348 |
@@ -41,6 +43,47 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 ---
 
 ## Decision Detail
+
+---
+
+### I-022 — Ringfencing eligibility: all three dimension filters must pass
+
+**Date:** 2026-06-26
+
+**Status:** ✅ Ratified
+
+**Decision:** When a gig has `ringfencing_active = Yes`, it is only surfaced to a user if they pass all three ringfencing dimension filters simultaneously:
+
+1. **Business Unit (always INCLUDE):** User's business unit must be in `ringfencing_bu_values`
+2. **Function (always INCLUDE):** User's function must be in `ringfencing_function_values`
+3. **Location (INCLUDE or EXCLUDE):** If INCLUDE — user's agency must be in `ringfencing_location_values`. If EXCLUDE — user's agency must NOT be in the list.
+
+All three conditions are AND-ed. Failing any one dimension = ineligible. When `ringfencing_active = No`, skip all checks — gig is open to everyone.
+
+**Edge case decisions:**
+- **Missing user attribute:** If a user's BU or function is not recorded, they fail that filter (safe default — don't surface opportunities the gig manager didn't intend).
+- **Multiple user values:** If a user belongs to multiple BUs or functions, any match on any value = pass for that dimension.
+- **Empty filter values on an active gig:** Treat as "no one passes" (fail-closed). Flag as a data quality issue to source admin.
+
+**Why:** Ringfencing is the gig manager's intent signal — if they scoped a gig, we respect it fully. AND logic is the only safe default; OR logic would surface opportunities to users the manager explicitly excluded.
+
+**What to update:** OTEP-192 eligibility matching logic. Confirm with Léo that all three dimension columns are ingested even when `ringfencing_active = No` (empty strings, not nulls, to avoid parsing ambiguity).
+
+---
+
+### I-021 — BusinessUnit is optional for all opportunity types
+
+**Date:** 2026-06-26
+
+**Status:** ✅ Ratified
+
+**Decision:** `business_unit` is an optional field at ingestion. Records missing a business unit are ingested. Missing business unit does not trigger a hard skip.
+
+**Why:** BusinessUnit is display-only context — an officer can still evaluate and apply to an opportunity without it. Making it required was blocking ~16 records unnecessarily. Relaxing it is consistent with the same approach taken for function (I-014).
+
+**Catalogue impact:** Unlocks ~16 previously blocked records (MDDI, NLB, WSG).
+
+**What to update:** OTEP-192 ACs (remove business_unit as hard-skip field). OTEP-427 ACs (reflect as optional). Remove from the I-008 required field list.
 
 ---
 
@@ -272,7 +315,7 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 | StartDate | **Optional for Job and Secondment types (I-015). Required for Gig and STIP.** |
 | Function | **Optional for all types (I-014). Display-only.** |
 | TimeCommitment | **Required for Gig and STIP only (I-013). N/A for Jobs.** |
-| BusinessUnit | Still required — open question whether to relax (see OTEP-427) |
+| BusinessUnit | **Optional for all types (I-021). Display-only.** |
 
 ---
 
@@ -290,15 +333,17 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 ---
 
-### I-006 — `formsg_url` required — record without it is skipped
+### I-006 — `formsg_url` optional — missing triggers no-apply-link UI state
 
-**Date:** 2026-06-08
+**Date:** 2026-06-08 (updated 2026-06-26)
 
-**Status:** ✅ Ratified
+**Status:** ✅ Ratified (updated)
 
-**Source:** 2026-06-09-otg-ingestion-trio.md
+**Source:** 2026-06-09-otg-ingestion-trio.md; updated 2026-06-26
 
-**Decision:** If `formsg_url` is missing from a record, that record hard-skips. Without a FormSG URL there is no apply action and no value to the officer in surfacing the opportunity.
+**Decision:** `formsg_url` is optional at ingestion. A record missing a FormSG URL is still ingested. When missing, the detail page shows Amber's no-apply-link design state rather than hard-skipping the record.
+
+**Why updated:** Amber has a design-ready edge case for the no-apply-link state. Hard-skipping was unnecessarily discarding otherwise valid opportunities — the UI can handle the gap gracefully.
 
 ---
 
@@ -369,7 +414,7 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 | # | Question | Owner | Blocks |
 |---|----------|-------|--------|
 | Q-1 | Does ESG double-post to both OTG and C@G? Which version is authoritative? | Xian Zhang (reaching out to ESG HR — updated 2026-06-26) | I-010, OTEP-348 ESG ingestion |
-| Q-2 | Can BusinessUnit be optional for MVP? Would unlock ~16 more records. | Léo + Pow Hwee (OTEP-427) | I-008 required field list |
+| ~~Q-2~~ | ~~Can BusinessUnit be optional for MVP?~~ | — | ✅ Resolved — BusinessUnit is optional (I-021). Unlocks ~16 records. |
 | ~~Q-3~~ | ~~What OTG prefix maps to PSFG?~~ | — | ✅ Resolved — PSFG excluded from MVP (I-016). No longer relevant. |
 | ~~Q-4~~ | ~~Final category model confirmed?~~ | — | ✅ Resolved — 3-category model ratified 2026-06-26 (I-018): Jobs · STIPs · Gigs. |
 | ~~Q-5~~ | ~~Do competencies at ingestion trigger a hard skip if missing?~~ | ~~Pow Hwee~~ | ✅ Resolved — see I-020. Competencies are optional; C@G jobs have none. |
@@ -391,6 +436,9 @@ Every product, data, and rule decision for the OTG → CareerCompass ingestion p
 
 | Date | Change |
 |------|--------|
+| 2026-06-26 | I-006 updated: `formsg_url` changed from required/hard-skip to optional. Missing → ingest, show Amber's no-apply-link UI state. `formsg_url` confirmed as a native export field (field 27). |
+| 2026-06-26 | Added I-022: Ringfencing eligibility logic — active ringfencing requires user to pass all 3 dimension filters (BU + Function + Location, AND-ed). Edge cases: missing user attr = fail; multi-value user = any match passes; empty filter values on active gig = fail-closed. |
+| 2026-06-26 | Added I-021: BusinessUnit is optional for all types. Unlocks ~16 records. Q-2 closed. I-008 required field table updated. |
 | 2026-06-26 | I-018 ratified: MVP category model locked at 3 categories (Jobs · STIPs · Gigs). SJR excluded (I-009 stands). PSFG excluded (I-016 updated). I-017 ratified. Q-3 and Q-4 closed. |
 | 2026-06-26 | Added I-020: competency field optional across OTG + C@G pipelines. C@G jobs have no competencies — unified pipeline requires this. Q-5 closed. |
 | 2026-06-26 | I-010 owner updated: Xian Zhang to reach out to ESG HR (no longer Michelle to chase). |
