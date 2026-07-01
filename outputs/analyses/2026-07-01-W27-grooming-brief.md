@@ -21,7 +21,7 @@ stories_scored: 21
 2. **OTEP-329** — Keycloak client secret externalization — ✅ clean chore, no blockers
 
 **Tier 2 — Goal-aligned, needs light cleanup (core of the session):**
-3. **OTEP-87** — View C@G Opportunity Detail — restructure AC into bullets, scrub stale FormSG/opportunity-type language
+3. **OTEP-87** — View C@G Opportunity Detail — restructure AC into bullets, scrub stale FormSG/opportunity-type language. ⚠️ **Live Jira update:** this is now **In Progress**, assigned to Thomas — not an untouched backlog candidate. Confirm with Thomas what's already built before grooming ACs live, so the session isn't rewriting requirements against code that already exists.
 4. **OTEP-336** — Competency match signal (listing cards) — tighten AC3 language; groom jointly with OTEP-570 (shared BE subtask)
 5. **OTEP-570** — Matched competencies (detail page) — tighten AC5 language; groom jointly with OTEP-336
 6. **OTEP-571** — Card layout swap (time commitment vs. competency) — confirm it isn't already shipping in Sprint 5 (status is QA, not Backlog) before spending time on it
@@ -51,29 +51,29 @@ stories_scored: 21
 
 ## Scoring Table
 
-| Story ID | Title | Story Format | AC Written | AC Language | Design Status | Dependencies | Open Items | Ready? |
-|---|---|---|---|---|---|---|---|---|
-| OTEP-87 | View C@G Opportunity Detail | ⚠️ prose, not bullets | ✅ | ⚠️ 1 flag (payload/analytics mention) | ❌ not noted | OTEP-377/378/379/89; #18; #49 | Stale FormSG/type language unresolved | ⚠️ |
-| OTEP-289 | [Spike] Filter by Functions | ✅ (spike format) | ✅ | N/A | N/A | Superseded by OTEP-437? | Confirm close vs. keep | ⚠️ |
-| OTEP-304 | Session stays authenticated | ✅ | ✅ | ⚠️ 1 minor flag | ❌ not noted | #26/#42 (WOG AD timeout) | #52 Hao Eng leave risk | ⚠️ |
-| OTEP-328 | OpenTelemetry integration | N/A (chore) | ✅ | N/A | N/A | None | Already Done — close it | ❌ |
-| OTEP-329 | Keycloak secret externalization | N/A (chore) | ✅ | ✅ (chore-appropriate) | N/A | None | None | ✅ |
-| OTEP-336 | Competency match signal (listing) | ✅ | ✅ 6 ACs | ⚠️ 1 flag (endpoint named in AC) | ❌ not noted | Shared w/ OTEP-570; #18, #41 | Endpoint specs pending | ⚠️ |
-| OTEP-348 | OTG ingestion scheduler/observability | N/A (chore) | ⚠️ 3 TBCs | ✅ (chore) | N/A | OTEP-192; conflicts #34 | Léo flags re-evaluation needed | ❌ |
-| OTEP-390 | Ringfenced detail page states | ✅ | ✅ thorough | ✅ mostly clean | ⚠️ explicitly open | #43 hard block | 3 open questions in ticket | ❌ |
-| OTEP-393 | Keycloak login theme | N/A (chore) | ⚠️ notes, not ACs | ✅ (chore) | ❌ blocked, asset missing | Scope question from Thomas | Build-or-skip undecided | ❌ |
-| OTEP-403 | OTG import hardening | N/A (tech debt) | ❌ no formal ACs | N/A | N/A | Overlaps OTEP-348 | Not yet committed scope | ⚠️ |
-| OTEP-404 | Page size tablet/mobile | ✅ implied | ❌ | N/A | ❌ not noted | None | Needs ACs from scratch | ❌ |
-| OTEP-408 | [BE] Ringfencing eligibility filter | ✅ | ✅ terse | ⚠️ pure mechanism language | N/A (BE) | #43 + #31 hard block | Inherits both blockers | ❌ |
-| OTEP-409 | [FE] Listing reflects ringfencing | ✅ | ✅ | ✅ mostly OK | Depends on OTEP-390 | Hard dep on OTEP-408 | Inherits #43/#31 | ❌ |
-| OTEP-437 | Filter by job family | ✅ | ✅ 4 ACs + mapping table | ✅ clean | Depends on OTEP-86 filter UI | Supersedes OTEP-289; #49 | ⚠️ mapping rows unresolved | ✅ |
-| OTEP-444 | Azure/Entra AD mock for testing | N/A (spike) | ❌ no formal ACs | N/A | N/A | #26, #42 | Decision not yet locked | ❌ |
-| OTEP-483 | Technical tasks Sprint 4 (umbrella) | N/A | ❌ | N/A | N/A | Parent of -484/-485 | Stale sprint label | ❌ |
-| OTEP-484 | ER diagram generation update | N/A | ❌ | N/A | N/A | Child of -483 | No description | ❌ |
-| OTEP-485 | Update deps in otep-service | N/A | ❌ | N/A | N/A | Child of -483 | No description | ❌ |
-| OTEP-570 | Matched competencies (detail page) | ✅ | ✅ 8 ACs | ⚠️ 1 flag (endpoint named in AC) | ❌ not noted, implies Amber | Shared w/ OTEP-336; #18, #41 | Same as OTEP-336 | ⚠️ |
-| OTEP-571 | Swap card layout | ✅ minor | ⚠️ minimal | ✅ OK, could tighten | Implied | Coupled to OTEP-336 | Status is QA — may not belong here | ⚠️ |
-| OTEP-283 | Ministry icons on detail page | ✅ | ✅ 1 line | ⚠️ "system must display" | Icon source resolved; mapping WIP | None tracked | 19 agencies unmapped, fallback undecided | ⚠️ |
+| Story ID | Title | Live Status / Owner | Story Format | AC Written | AC Language | Design Status | Dependencies | Open Items | Ready? |
+|---|---|---|---|---|---|---|---|---|---|
+| OTEP-87 | View C@G Opportunity Detail | **In Progress** — Thomas | ⚠️ prose, not bullets | ✅ | ⚠️ 1 flag (payload/analytics mention) | ❌ not noted | OTEP-377/378/379/89; #18; #49 | Stale FormSG/type language unresolved | ⚠️ |
+| OTEP-289 | [Spike] Filter by Functions | Backlog — Thomas | ✅ (spike format) | ✅ | N/A | N/A | Superseded by OTEP-437? | Confirm close vs. keep | ⚠️ |
+| OTEP-304 | Session stays authenticated | In Progress — Hao Eng | ✅ | ✅ | ⚠️ 1 minor flag | ❌ not noted | #26/#42 (WOG AD timeout) | #52 Hao Eng leave risk | ⚠️ |
+| OTEP-328 | OpenTelemetry integration | **Done** — Thomas | N/A (chore) | ✅ | N/A | N/A | None | Already Done — close it | ❌ |
+| OTEP-329 | Keycloak secret externalization | Backlog — Pow Hwee | N/A (chore) | ✅ | ✅ (chore-appropriate) | N/A | None | None | ✅ |
+| OTEP-336 | Competency match signal (listing) | Backlog — Unassigned | ✅ | ✅ 6 ACs | ⚠️ 1 flag (endpoint named in AC) | ❌ not noted | Shared w/ OTEP-570; #18, #41 | Endpoint specs pending | ⚠️ |
+| OTEP-348 | OTG ingestion scheduler/observability | Backlog — Unassigned | N/A (chore) | ⚠️ 3 TBCs | ✅ (chore) | N/A | OTEP-192; conflicts #34 | Léo flags re-evaluation needed | ❌ |
+| OTEP-390 | Ringfenced detail page states | Backlog — Unassigned | ✅ | ✅ thorough | ✅ mostly clean | ⚠️ explicitly open | #43 hard block | 3 open questions in ticket | ❌ |
+| OTEP-393 | Keycloak login theme | Backlog — Unassigned | N/A (chore) | ⚠️ notes, not ACs | ✅ (chore) | ❌ blocked, asset missing | Scope question from Thomas | Build-or-skip undecided | ❌ |
+| OTEP-403 | OTG import hardening | Backlog — Léo | N/A (tech debt) | ❌ no formal ACs | N/A | N/A | Overlaps OTEP-348 | Not yet committed scope | ⚠️ |
+| OTEP-404 | Page size tablet/mobile | Backlog — Thomas | ✅ implied | ❌ | N/A | ❌ not noted | None | Needs ACs from scratch | ❌ |
+| OTEP-408 | [BE] Ringfencing eligibility filter | Backlog — Unassigned | ✅ | ✅ terse | ⚠️ pure mechanism language | N/A (BE) | #43 + #31 hard block | Inherits both blockers | ❌ |
+| OTEP-409 | [FE] Listing reflects ringfencing | Backlog — Unassigned | ✅ | ✅ | ✅ mostly OK | Depends on OTEP-390 | Hard dep on OTEP-408 | Inherits #43/#31 | ❌ |
+| OTEP-437 | Filter by job family | Backlog — Unassigned | ✅ | ✅ 4 ACs + mapping table | ✅ clean | Depends on OTEP-86 filter UI | Supersedes OTEP-289; #49 | ⚠️ mapping rows unresolved | ✅ |
+| OTEP-444 | Azure/Entra AD mock for testing | Backlog — Léo | N/A (spike) | ❌ no formal ACs | N/A | N/A | #26, #42 | Decision not yet locked | ❌ |
+| OTEP-483 | Technical tasks Sprint 4 (umbrella) | Backlog — Unassigned | N/A | ❌ | N/A | N/A | Parent of -484/-485 | Stale sprint label | ❌ |
+| OTEP-484 | ER diagram generation update | Backlog — Unassigned | N/A | ❌ | N/A | N/A | Child of -483 | No description | ❌ |
+| OTEP-485 | Update deps in otep-service | Backlog — Unassigned | N/A | ❌ | N/A | N/A | Child of -483 | No description | ❌ |
+| OTEP-570 | Matched competencies (detail page) | Backlog — Unassigned | ✅ | ✅ 8 ACs | ⚠️ 1 flag (endpoint named in AC) | ❌ not noted, implies Amber | Shared w/ OTEP-336; #18, #41 | Same as OTEP-336 | ⚠️ |
+| OTEP-571 | Swap card layout | **QA** — Hao Eng | ✅ minor | ⚠️ minimal | ✅ OK, could tighten | Implied | Coupled to OTEP-336 | Status is QA — may not belong here | ⚠️ |
+| OTEP-283 | Ministry icons on detail page | Backlog — Unassigned | ✅ | ✅ 1 line | ⚠️ "system must display" | Icon source resolved; mapping WIP | None tracked | 19 agencies unmapped, fallback undecided | ⚠️ |
 
 ---
 
@@ -155,6 +155,15 @@ stories_scored: 21
 > **Self-check before closing:** Have you reviewed every AC for mechanism-language? ✅ Done above (6 flagged, rewrites provided). Have you checked for conflicting rules across ACs in the same story or across paired stories? ✅ Done above (OTEP-390 vs. 408/409; OTEP-348 vs. #34). If Pow Hwee raises either in the room, that's a prep gap — this brief should have caught it first.
 
 ---
+
+## Jira Re-Sync — 2026-07-01
+
+Re-pulled all 21 stories directly against live Jira (REST API — Atlassian MCP unavailable this session, needs re-auth via `/mcp`). One drift found and fixed in the ticket cache:
+
+- **OTEP-87: Status corrected Backlog → In Progress** in `03-stories/jira-sync/Sprint-34619-OTEP-Pathfinder-Sprint-5/OTEP-87.md`, stamped `Synced from Jira: 2026-07-01`. Assignee (Thomas) and points (8) already matched. This is reflected in the Scoring Table and Tier 2 note above.
+- All other 20 tickets' Status/Assignee/Story Points already matched live Jira — no further cache changes needed.
+
+**Flagged, not auto-fixed:** the `03-stories/jira-sync/` folder has duplicate copies of most of these 21 tickets sitting under two different naming conventions for the same sprints (e.g. both `Sprint-34619-OTEP-Pathfinder-Sprint-5/` and `OTEP-Pathfinder-12541-Sprint-5-34619/` exist for Sprint 5, with stale content in the older-named copies). This is a pre-existing structural duplication across the whole cache, not something introduced by this sync — cleaning it up means deleting ~dozens of stale files and is a bigger job than today's ask. Flagging for a dedicated `/jira-sync all` pass with a single batched delete-confirmation, per the skill's duplicate-handling rule.
 
 *Generated: 2026-07-01 | Source: live Jira sync (Sprint-34619-OTEP-Pathfinder-Sprint-5 backlog stories), 00-hub/open-items.md, 00-hub/sprint-status.md*
 *Next: Lock a Sprint 6 goal before the session starts (none currently set) — recommend "deepen listing relevance: job family filtering + competency match visibility."*
