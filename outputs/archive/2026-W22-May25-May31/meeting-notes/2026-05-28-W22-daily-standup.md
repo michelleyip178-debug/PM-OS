@@ -67,7 +67,7 @@ Two issues surfaced at standup: a design system ambiguity in Figma that's blocki
 
 ## Sprint 3 Risk Flag
 
-This design system gap validates the pre-planning risk already noted in `outputs/analyses/sprint-3-planning-prep-2026-05-28.md`:
+This design system gap validates the pre-planning risk already noted in `../analyses/2026-05-28-W22-sprint-3-planning-prep.md`:
 
 > "Thomas and Amber haven't done their design-vs-implementation review yet — we should factor in time for that this sprint and not assume design is locked."
 

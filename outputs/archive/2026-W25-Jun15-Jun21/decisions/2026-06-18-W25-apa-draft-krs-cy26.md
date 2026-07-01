@@ -27,7 +27,7 @@
 |----------------|--------|
 | Comprehensive Goal Analysis | ✅ KR 1–5 active · KR 6–10 KIV |
 | Schema Mapping (L2→L3) | ✅ Done — Schema's own language |
-| 360 Feedback Synthesis | ✅ Self-compiled · 5 solicited 360s sent → [360 doc](2026-06-18-apa-360-feedback-synthesis.md) |
+| 360 Feedback Synthesis | ✅ Self-compiled · 5 solicited 360s sent → [360 doc](2026-06-18-W25-apa-360-feedback-synthesis.md) |
 | Development / Rotation | ✅ Growth KRs · rotation open to discuss |
 | **Divisional KRs** | N/A — no divisional KRs this cycle |
 | Confirm FY window (CY26?) | ✅ Confirmed CY26 (Jan–Dec 2026) |

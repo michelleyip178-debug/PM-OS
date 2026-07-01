@@ -6,7 +6,7 @@
 
 **Type:** Engineering sync / daily standup — FE/BE progress, integration blockers, S4 alignment
 
-**Related:** OTEP-86 (type filter), OTEP-289 (filter-by-function spike), OTEP-192/348 (OTG ingestion + scheduler), OTEP-350 (WOG AD), OTEP-352 (POCDEX), OTEP-438 (admin placeholder); same-morning [OTG Opportunities notes](2026-06-12-otg-opportunities-careercompass-ingestion.md)
+**Related:** OTEP-86 (type filter), OTEP-289 (filter-by-function spike), OTEP-192/348 (OTG ingestion + scheduler), OTEP-350 (WOG AD), OTEP-352 (POCDEX), OTEP-438 (admin placeholder); same-morning [OTG Opportunities notes](2026-06-12-W24-otg-opportunities-careercompass-ingestion.md)
 
 ---
 

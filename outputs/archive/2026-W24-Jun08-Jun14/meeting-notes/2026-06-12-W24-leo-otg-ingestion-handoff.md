@@ -4,7 +4,7 @@
 
 **Context:** The 12 Jun OTG Opportunities → CareerCompass meeting changed several ingestion rules. This is what's safe to build now vs what's blocked on validation, so you're not chasing a moving target.
 
-**Source:** [OTG meeting notes](2026-06-12-otg-opportunities-careercompass-ingestion.md)
+**Source:** [OTG meeting notes](2026-06-12-W24-otg-opportunities-careercompass-ingestion.md)
 
 ---
 

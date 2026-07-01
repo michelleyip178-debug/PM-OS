@@ -162,4 +162,4 @@ Three gates need action this week — not next sprint, this week:
 
 ---
 
-*Source: sprint-allocation.md, sprint-status.md, feature-results-sprint-3.md, otep-roadmap-okrs-2627.md, 2026-06-12-otg-opportunities-careercompass-ingestion.md. Updated: 2026-06-16.*
+*Source: sprint-allocation.md, sprint-status.md, feature-results-sprint-3.md, otep-roadmap-okrs-2627.md, 2026-06-12-W24-otg-opportunities-careercompass-ingestion.md. Updated: 2026-06-16.*

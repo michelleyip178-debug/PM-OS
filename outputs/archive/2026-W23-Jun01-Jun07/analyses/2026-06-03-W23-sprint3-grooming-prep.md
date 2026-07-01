@@ -79,4 +79,4 @@ POINT:           the full board incl. QA tail · 87 = 13 until contract defined
 BACK THE ENG:    358 inside 192 · spikes before stories · 322 to drain QA · start 350
 ```
 
-Full reasoning: [three-POV analysis](2026-06-03-sprint3-three-povs.md) · [PM backlog review](2026-06-03-pow-hwee-sprint3-backlog-review.md) · [engineer POV](2026-06-03-sprint3-engineer-pov.md) · [capacity + S4 impact](2026-06-03-sprint3-fe-capacity-and-sprint4-impact.md).
+Full reasoning: [three-POV analysis](2026-06-03-W23-sprint3-three-povs.md) · [PM backlog review](2026-06-03-W23-pow-hwee-sprint3-backlog-review.md) · [engineer POV](2026-06-03-W23-sprint3-engineer-pov.md) · [capacity + S4 impact](2026-06-03-W23-sprint3-fe-capacity-and-sprint4-impact.md).

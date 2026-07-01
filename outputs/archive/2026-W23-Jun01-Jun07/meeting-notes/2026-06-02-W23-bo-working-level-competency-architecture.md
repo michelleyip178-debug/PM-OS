@@ -3,7 +3,7 @@
 **Date:** 2 June 2026
 **Meeting Type:** Working-level architecture / strategy review
 **Topic:** Competency data model, source-of-truth, and sync between HR systems (HRPS/Cumulus) and Compass (OTEP)
-**Related:** Follows the [25 May BO Strategic Review](../../context-library/meetings/2026-05-25-bo-strategic-review-notes.md); touches live Core competency stories (OTEP-105, 112, 310, 311, 340)
+**Related:** Follows the [25 May BO Strategic Review](../../2026-W22-May25-May31/meeting-notes/2026-05-25-W22-bo-strategic-review-notes.md); touches live Core competency stories (OTEP-105, 112, 310, 311, 340)
 
 > ⚠️ **Internal — strategic.** Contains workforce-planning positioning and a not-yet-decided governance question. Keep to working team + leadership until the SSOT direction is set.
 
@@ -150,4 +150,4 @@ Full competency-architecture summary covering: current 2-step data model (HR syn
 
 ---
 
-*Processed: 2026-06-03 · Next: `/decision-doc` for the SSOT fork · `/status-update` to surface the governance ask · update [decisions-log.md](../../../PM-skills-ALL-1/06-skills-and-decisions/decisions-log.md)*
+*Processed: 2026-06-03 · Next: `/decision-doc` for the SSOT fork · `/status-update` to surface the governance ask · update [decisions-log.md](../../../decisions/2026-05-29-W22-decisions-log.md)*

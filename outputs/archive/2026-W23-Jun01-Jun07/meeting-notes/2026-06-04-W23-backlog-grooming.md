@@ -82,20 +82,20 @@ You + Barry discussed publishing early August for SEO, with a maintenance/coming
 
 You led the Pathfinder portion — but it was the **OTG ingestion / data-quality / S5-direction** thread, not the **S4 C@G + apply backlog** you prepped. Your prepped intake — OTEP-319 apply, 86/317 filters, 87/88/89 C@G, the OTEP-348 sharpen, the 127/130 in-or-out call — **never got sized in this session.**
 
-**So the S4 stories still need grooming before Sprint Planning (Thu wk 2).** Your [grooming brief](../analyses/grooming-brief-2026-06-04.md) and [prep doc](2026-06-04-grooming-prep-s4-s5.md) are still live and unused — the prep holds, it just didn't get spent today. Flag at standup or book a focused Pathfinder grooming slot.
+**So the S4 stories still need grooming before Sprint Planning (Thu wk 2).** Your [grooming brief](../analyses/grooming-brief-2026-06-04.md) and [prep doc](2026-06-04-W23-grooming-prep-s4-s5.md) are still live and unused — the prep holds, it just didn't get spent today. Flag at standup or book a focused Pathfinder grooming slot.
 
 ---
 
 ## Timeline Risks
 
-- **TIMELINE RISK:** Michelle placed the OTG upload UI in "Sprint 5 or 6" and WOG AD linkage in S5 — but the [adopted plan](../analyses/2026-06-04-adopt-powhwee-plan-reconciliation.md) has S5 auth as "realistic landing" gated on WOG AD onboarding (#26), which hasn't started (2+ wk lead). If WOG AD slips, both the S5 auth *and* the API productionalisation Michelle described slip with it. Confirm the WOG AD clock is actually running.
+- **TIMELINE RISK:** Michelle placed the OTG upload UI in "Sprint 5 or 6" and WOG AD linkage in S5 — but the [adopted plan](../analyses/2026-06-04-W23-adopt-powhwee-plan-reconciliation.md) has S5 auth as "realistic landing" gated on WOG AD onboarding (#26), which hasn't started (2+ wk lead). If WOG AD slips, both the S5 auth *and* the API productionalisation Michelle described slip with it. Confirm the WOG AD clock is actually running.
 - **TIMELINE RISK:** Soft-launch "early August" overlaps VAPT (early Aug, per decision 2026-06-02) and feature freeze (end S8). Tight. Confirm sequencing with Barry.
 
 ---
 
 ## Context for Future Reference
 - Interim-apply-form → R1: aligns with the native-apply→R1 amendment (decision 2026-06-04) and the ATS pivot.
-- OTG prefix problem → feeds OTEP-192/348/358 (nil-date + data quality). Same issue as [today's standup](2026-06-04-standup.md).
+- OTG prefix problem → feeds OTEP-192/348/358 (nil-date + data quality). Same issue as [today's standup](2026-06-04-W23-standup.md).
 - Competency feature is Core-squad; relevant to Pathfinder only via OTEP-87's competency block (cut from S4, gated on SSOT #18).
 
 <details><summary>Raw transcript</summary>

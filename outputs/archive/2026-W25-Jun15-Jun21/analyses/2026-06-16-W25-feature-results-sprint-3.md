@@ -163,8 +163,8 @@ Sprint 3 delivered the core listing and detail experience on live OTG data — f
 
 - Sprint 3 retro + BO demo notes: [2026-06-15-W25-retro-demo-bo-working-level.md](../meeting-notes/2026-06-15-W25-retro-demo-bo-working-level.md)
 - Mid-sprint review: [2026-06-08-mid-sprint-review.md](../../../PM-skills-ALL-1/04-ceremonies/post-meeting-capture/2026-06-08-mid-sprint-review.md)
-- OTG ingestion discovery: [2026-06-10-W24-otg-ingestion-product-discovery.md](2026-06-10-W24-otg-ingestion-product-discovery.md)
-- Sprint 4 planning prep: [2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md](2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md)
-- Decisions log: [decisions-log.md](../../../PM-skills-ALL-1/06-skills-and-decisions/decisions-log.md)
+- OTG ingestion discovery: [2026-06-10-W24-otg-ingestion-product-discovery.md](../../2026-W24-Jun08-Jun14/analyses/2026-06-10-W24-otg-ingestion-product-discovery.md)
+- Sprint 4 planning prep: [2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md](../../2026-W24-Jun08-Jun14/analyses/2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md)
+- Decisions log: [decisions-log.md](../../../decisions/2026-05-29-W22-decisions-log.md)
 
 *No PostHog data available — CareerCompass is pre-pilot. All metrics are delivery metrics, not user outcome metrics. First user outcome data will be available after pilot launch (target: Oct 2026).*

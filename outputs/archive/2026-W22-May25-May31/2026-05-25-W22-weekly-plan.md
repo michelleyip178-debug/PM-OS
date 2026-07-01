@@ -51,7 +51,7 @@ Sprint 2 is active and building. The pressure is upstream: CSC SSO is a blocking
 
 **Linked to:**
 - PRD: `context-library/prds/wog-authentication.md`
-- Meeting notes: `outputs/meeting-notes/2026-05-25-otep-standup-slack.md`
+- Meeting notes: `meeting-notes/2026-05-25-W22-otep-standup-slack.md`
 
 ---
 
@@ -104,7 +104,7 @@ Sprint 2 is active and building. The pressure is upstream: CSC SSO is a blocking
 
 **Linked to:**
 - PRD: `context-library/prds/pocdex.md`
-- Meeting notes: `outputs/meeting-notes/2026-05-25-otep-standup-slack.md`
+- Meeting notes: `meeting-notes/2026-05-25-W22-otep-standup-slack.md`
 
 ---
 

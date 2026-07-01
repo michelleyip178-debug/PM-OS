@@ -33,7 +33,7 @@ A few things live in BOTH, at different altitudes. Don't treat them as duplicate
 | Content | PM-skills (detailed/delivery) | PM-OS (summary/copilot) |
 |---|---|---|
 | PRDs | `02-prd/` full spec + acceptance criteria + Jira | `context-library/prds/` knowledge card |
-| Decisions | `06-skills-and-decisions/decisions-log.md` | `outputs/decisions/` decision docs |
+| Decisions | `outputs/decisions/2026-05-29-W22-decisions-log.md` | `outputs/decisions/` decision docs |
 | Meetings | `04-ceremonies/` | `outputs/meeting-notes/` |
 
 **Flow is one-directional:** draft/think in PM-OS → finalize into PM-skills for delivery.

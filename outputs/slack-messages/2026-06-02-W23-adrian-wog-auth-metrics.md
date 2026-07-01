@@ -23,4 +23,4 @@ Full outline here: [link]. Happy to firm up before Sprint 4 grooming (auth's S4+
 
 ---
 
-*Send via Slack. Attach/link the full outline (`outputs/status-updates/2026-06-02-wog-auth-success-metrics-outline.md`).*
+*Send via Slack. Attach/link the full outline (`../status-updates/2026-06-02-W23-wog-auth-success-metrics-outline.md`).*

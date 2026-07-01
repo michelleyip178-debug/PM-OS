@@ -42,7 +42,7 @@ Auto-populates officer strengths and experience fields on application forms, dra
 | ATS integration | Deferred R2+ | No vendor confirmed; native state machine for R1 |
 | Interim apply form (OTG-only agencies, no `formsg_url`) | MVP workaround | Separate from R1 HR posting capability; decision logged 2026-06-04 |
 | CV upload / CIE inference (OTEP-205) | MVP / separate | Not extended for R1 Smart Assistant |
-| Opportunity recommender | R1 (separate) | See [opportunity-recommender-hypotheses-2026-06-05.md](../research-synthesis/opportunity-recommender-hypotheses-2026-06-05.md) |
+| Opportunity recommender | R1 (separate) | See [opportunity-recommender-hypotheses-2026-06-05.md](../../research-synthesis/2026-06-05-W23-opportunity-recommender-hypotheses.md) |
 
 ---
 

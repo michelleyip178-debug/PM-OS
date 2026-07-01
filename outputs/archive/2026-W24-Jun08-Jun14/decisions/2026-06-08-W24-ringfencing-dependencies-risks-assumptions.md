@@ -2,7 +2,7 @@
 date: 2026-06-08
 type: Risk & Dependency Analysis
 topic: OTEP-127 Ringfencing — dependencies, risks, and assumptions
-linked-decision-doc: outputs/meeting-notes/2026-06-08-bo-edge-cases-decisions.md
+linked-decision-doc: outputs/meeting-notes/2026-06-08-W24-bo-edge-cases-decisions.md
 ---
 
 # Ringfencing: Dependencies, Risks & Assumptions
@@ -17,7 +17,7 @@ linked-decision-doc: outputs/meeting-notes/2026-06-08-bo-edge-cases-decisions.md
 - **OTEP-202 (seed POCDEX database)** — no sprint assigned yet. Eligibility checks are meaningless without officer data in POCDEX.
 - **WOG AD auth (open item #26)** — POCDEX reads officer profile via WOG AD identity. If WOG AD onboarding slips, POCDEX can't identify the officer, and the eligibility check has no subject.
 - **OTG ingestion carrying audience criteria** — OTEP can only enforce ringfencing if the "Limit to" criteria from OTG's Audience Setup is ingested and stored. Not yet confirmed this field is in the data model — open question to Pow Hwee.
-- **BO sign-off (open item #43)** — Amber and Pow Hwee are both blocked until the 7 BO questions are answered. See [BO decision doc](../meeting-notes/2026-06-08-bo-edge-cases-decisions.md).
+- **BO sign-off (open item #43)** — Amber and Pow Hwee are both blocked until the 7 BO questions are answered. See [BO decision doc](../meeting-notes/2026-06-08-W24-bo-edge-cases-decisions.md).
 
 **The critical chain:** WOG AD (#26) → POCDEX production (#31) → seed data (OTEP-202) → eligibility check. Four links, all must close before S5 ringfencing can build. Any one slipping pushes OTEP-127 out.
 
@@ -44,5 +44,5 @@ linked-decision-doc: outputs/meeting-notes/2026-06-08-bo-edge-cases-decisions.md
 
 ---
 
-*Linked to: [BO Decision Request](../meeting-notes/2026-06-08-bo-edge-cases-decisions.md)*
+*Linked to: [BO Decision Request](../meeting-notes/2026-06-08-W24-bo-edge-cases-decisions.md)*
 *Open item: #43 in [open-items.md](../../../PM-skills-ALL-1/00-hub/open-items.md)*

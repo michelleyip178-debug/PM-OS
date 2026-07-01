@@ -136,5 +136,5 @@ The "impact" isn't uplift — it's the unlock. Without POCDEX authorisation, not
 - [Epic: POCDEX-side Officer Authorisation](../decisions/2026-06-18-W25-epic-pocdex-authorisation.md)
 - [POCDEX PRD](../../PM-skills-ALL-1/02-prd/prd-pocdex-integration.md)
 - [POCDEX productionisation plan](../../PM-skills-ALL-1/06-skills-and-decisions/pocdex-api-productionisation-plan.md)
-- [APA KR 3](../decisions/2026-06-18-W26-apa-draft-krs-cy26.md)
+- [APA KR 3](../decisions/2026-06-18-W25-apa-draft-krs-cy26.md)
 - [OTEP OKRs](../../PM-skills-ALL-1/06-skills-and-decisions/otep-roadmap-okrs-2627.md)

@@ -7,7 +7,7 @@ source: live Jira S3 pull 2026-06-03 (Pathfinder Sprint 34617, 49 issues); desig
 
 # Sprint 3 Through Three Lenses — PM, Engineer, Designer
 
-Three roles look at the same 49-issue board and worry about different things. The value isn't the three lists — it's **where they agree (act on it), where they conflict (you decide), and the blind spots each has.** Full single-lens write-ups: [PM/backlog review](2026-06-03-pow-hwee-sprint3-backlog-review.md) · [Engineer POV](2026-06-03-sprint3-engineer-pov.md).
+Three roles look at the same 49-issue board and worry about different things. The value isn't the three lists — it's **where they agree (act on it), where they conflict (you decide), and the blind spots each has.** Full single-lens write-ups: [PM/backlog review](2026-06-03-W23-pow-hwee-sprint3-backlog-review.md) · [Engineer POV](2026-06-03-W23-sprint3-engineer-pov.md).
 
 ---
 

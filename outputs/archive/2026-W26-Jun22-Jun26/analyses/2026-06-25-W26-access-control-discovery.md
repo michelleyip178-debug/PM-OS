@@ -197,4 +197,4 @@ POCDEX is no longer the access gate. It is the data source for ringfencing (whic
 
 ---
 
-*Feeds into: [POCDEX authorisation PRD (XFN Kickoff)](../prds/pocdex-authorisation-xfn-kickoff.md) · [Epic scope](../archive/2026-W25-Jun15-Jun21/decisions/2026-06-18-W25-epic-pocdex-authorisation.md)*
+*Feeds into: [POCDEX authorisation PRD (XFN Kickoff)](../../../prds/2026-06-25-W26-pocdex-authorisation-xfn-kickoff.md) · [Epic scope](../../2026-W25-Jun15-Jun21/decisions/2026-06-18-W25-epic-pocdex-authorisation.md)*

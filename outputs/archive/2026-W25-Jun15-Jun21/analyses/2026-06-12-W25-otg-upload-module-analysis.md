@@ -116,7 +116,7 @@ If the upload module comes in at the realistic range (17–24pts), it **cannot f
 
 ## 4. Discovery questions
 
-30 questions identified. 11 answered, 19 open. Full checklist: `outputs/analyses/2026-06-12-otg-upload-discovery-checklist.md`.
+30 questions identified. 11 answered, 19 open. Full checklist: `2026-06-12-W25-otg-upload-discovery-checklist.md`.
 
 **The 5 that block scoping:**
 
@@ -276,4 +276,4 @@ Build the full wizard (17–24 pts) including schema fingerprinting, run history
 
 ---
 
-*Last updated: 2026-06-12. Related files: `otg-ingestion-brief.md`, `otg-ingestion-decision-log.md`, `2026-06-12-otg-upload-discovery-checklist.md`, `2026-06-12-otg-upload-signoff-trio-prep.md`.*
+*Last updated: 2026-06-12. Related files: `otg-ingestion-brief.md`, `otg-ingestion-decision-log.md`, `2026-06-12-W25-otg-upload-discovery-checklist.md`, `../decisions/2026-06-12-W25-otg-upload-signoff-trio-prep.md`.*

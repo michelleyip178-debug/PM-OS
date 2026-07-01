@@ -362,4 +362,4 @@ Agency HR. Manages 5–20 active postings. Creates posting in OTEP native form �
 ---
 
 *Scope confirmed post-senior review. Jam with Adrian pending (Wed 24 Jun 2026). Story pipeline opens after Mark sign-off (#40). Last updated: 24 Jun 2026.*
-*Sources: Post-review confirmed scope slide, manager briefing (2026-06-23-r1-manager-briefing-reforge.md), R1 jam draft v3 (2026-06-22), impact sizing (2026-06-18), OTEP roadmap OKRs 2026–27.*
+*Sources: Post-review confirmed scope slide, manager briefing (2026-06-23-W26-r1-manager-briefing-reforge.md), R1 jam draft v3 (2026-06-22), impact sizing (2026-06-18), OTEP roadmap OKRs 2026–27.*

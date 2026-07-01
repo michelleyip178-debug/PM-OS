@@ -201,8 +201,8 @@ Confirm with Pow Hwee + Amber before OTEP-318 ACs are written.
 ## Related Files
 
 - [Categorisation Research (May 2026)](../../../PM-skills-ALL-1/01-discovery/research/categorisation-research.md) — original OTG vs C@G filter comparison; recommended hybrid model
-- [OTG Ingestion Discovery (Jun 2026)](../archive/2026-W24-Jun08-Jun14/analyses/2026-06-10-W24-otg-ingestion-product-discovery.md) — 75% skip rate; function field decisions
-- [MVP Category Model Decision (22 Jun 2026)](2026-06-22-4cat-mapping-xian-zhang.md) — STIP/Gig/Jobs/PSFG decision; no merge
+- [OTG Ingestion Discovery (Jun 2026)](../../2026-W24-Jun08-Jun14/analyses/2026-06-10-W24-otg-ingestion-product-discovery.md) — 75% skip rate; function field decisions
+- [MVP Category Model Decision (22 Jun 2026)](2026-06-22-W26-4cat-mapping-xian-zhang.md) — STIP/Gig/Jobs/PSFG decision; no merge
 - [C@G FieldSet raw data](../../cag_field_set.json) — SAP OData v2 response; 35 Indus codes with live counts
 - [Opportunities Listing PRD](../../../PM-skills-ALL-1/02-prd/prd-opportunities.md) — OTEP-318 ACs TBC; CompBank deferred to R1
 

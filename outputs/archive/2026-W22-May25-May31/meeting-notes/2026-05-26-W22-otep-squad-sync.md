@@ -79,8 +79,8 @@ Pathfinder sprint work (Sprint 5: OTEP-88, 89, 130, 133) is advancing. Before an
 - [FormSG Integration PRD](../../context-library/prds/formsg-integration.md)
 - [R1 Seamless Application PRD](../../context-library/prds/r1-seamless-application-draft.md)
 - [OTEP-130: Apply for STIP/Gig via FormSG link](../../../PM-skills-ALL-1/03-stories/jira-sync/OTEP-Pathfinder-Sprint-5/OTEP-130.md)
-- [BO Strategic Review Notes (2026-05-25)](./2026-05-25-bo-strategic-review-notes.md)
-- [Pow Hwee Adhoc Notes (2026-05-25)](./2026-05-25-adhoc-pow-hwee.md)
+- [BO Strategic Review Notes (2026-05-25)](./2026-05-25-W22-bo-strategic-review-notes.md)
+- [Pow Hwee Adhoc Notes (2026-05-25)](./2026-05-25-W22-adhoc-pow-hwee.md)
 
 ---
 

@@ -296,5 +296,5 @@ After first generation, common tweaks:
 ---
 
 *Generated: 2026-06-23*
-*Source: r1-napkin-sketch-low-fi.md, r1-epic-brief-confluence.md*
+*Source: 2026-06-23-W26-r1-napkin-sketch-low-fi.md, r1-epic-brief-confluence.md*
 *Tool: v0.dev | Next fidelity: Figma mid-fi after Adrian jam*

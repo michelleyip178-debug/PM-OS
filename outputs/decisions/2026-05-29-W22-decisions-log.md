@@ -97,7 +97,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Impact:** Affects OTEP-192 (ingestion job) ACs and the deactivation logic in Fanxu's implementation.
 
-**Source:** [Sprint 3 Planning Prep](../analyses/sprint-3-planning-prep-2026-05-28.md)
+**Source:** [Sprint 3 Planning Prep](../archive/2026-W22-May25-May31/analyses/2026-05-28-W22-sprint-3-planning-prep.md)
 
 ---
 
@@ -115,7 +115,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Impact:** OTEP-192 does not include alerting ACs. Ops runbook may be needed as a manual compensating control.
 
-**Source:** [Sprint 3 Planning Prep](../analyses/sprint-3-planning-prep-2026-05-28.md)
+**Source:** [Sprint 3 Planning Prep](../archive/2026-W22-May25-May31/analyses/2026-05-28-W22-sprint-3-planning-prep.md)
 
 ---
 
@@ -135,7 +135,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Risk:** Amber's Figma audit is blocked on Rama's answer about whether a new design system is being adopted programme-wide. Ping Rama is P0 before Sprint 3.
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -153,7 +153,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Open item:** Mark's role and what he needs to see is still unconfirmed. Resolve before demo.
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -171,7 +171,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Revisit trigger:** Victor to define requirements before adding to a future sprint.
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -197,7 +197,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Owner:** Fanxu
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -218,7 +218,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Impact:** Affects API design — hide and delete are separate endpoints (or at minimum separate operations). Also affects UI state: hidden state needs to be stored and retrievable.
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -243,7 +243,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Owner:** Kingsley
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -261,7 +261,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Impact:** Amber to audit Figma. Kingsley to check API field names.
 
-**Source:** [Sprint 3 Planning Notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
+**Source:** [Sprint 3 Planning Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
 
 ---
 
@@ -279,7 +279,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Next steps:** Michelle to design event taxonomy and metric definitions. Rama to handle tooling setup. Target: w/c 1 Jun.
 
-**Source:** [Squad Sync Notes](../meeting-notes/2026-05-26-otep-squad-sync.md)
+**Source:** [Squad Sync Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-26-W22-otep-squad-sync.md)
 
 ---
 
@@ -302,7 +302,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Note:** This decision was made bottom-up (Pow Hwee raised technical fragility → confirmed at squad sync). BO alignment happened same day.
 
-**Source:** [Squad Sync Notes](../meeting-notes/2026-05-26-otep-squad-sync.md), [Adhoc Pow Hwee Notes](../meeting-notes/2026-05-25-adhoc-pow-hwee.md)
+**Source:** [Squad Sync Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-26-W22-otep-squad-sync.md), [Adhoc Pow Hwee Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-adhoc-pow-hwee.md)
 
 ---
 
@@ -324,7 +324,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 - Deep link with valid session: ✅ No re-login needed
 - If not logged in: redirects to OTEP's login page
 
-**Source:** [CSC SSO Feasibility Plan](../analyses/2026-05-25-csc-sso-feasibility-plan.md), [Adhoc Pow Hwee Notes](../meeting-notes/2026-05-25-adhoc-pow-hwee.md)
+**Source:** [CSC SSO Feasibility Plan](../archive/2026-W22-May25-May31/analyses/2026-05-25-W22-csc-sso-feasibility-plan.md), [Adhoc Pow Hwee Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-adhoc-pow-hwee.md)
 
 ---
 
@@ -342,7 +342,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 **Next steps:** Michelle to schedule session with Daryll post-29 May job family discussion. Loop in Acacia on data model before that session.
 
-**Source:** [Adhoc Pow Hwee Notes](../meeting-notes/2026-05-25-adhoc-pow-hwee.md)
+**Source:** [Adhoc Pow Hwee Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-adhoc-pow-hwee.md)
 
 ---
 
@@ -362,7 +362,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 - Native application form (R1) is the long-term answer
 - Comms update needed: officers will see "most" opportunities, not all
 
-**Source:** [BO Strategic Review Notes](../meeting-notes/2026-05-25-bo-strategic-review-notes.md)
+**Source:** [BO Strategic Review Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-bo-strategic-review-notes.md)
 
 ---
 
@@ -383,7 +383,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 - Competency ratings (self/peer/supervisor) need stronger justification before inclusion
 - Career development cluster (goals, supervisor views, career conversations) targeted for R3/R4
 
-**Source:** [BO Strategic Review Notes](../meeting-notes/2026-05-25-bo-strategic-review-notes.md)
+**Source:** [BO Strategic Review Notes](../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-bo-strategic-review-notes.md)
 
 ---
 

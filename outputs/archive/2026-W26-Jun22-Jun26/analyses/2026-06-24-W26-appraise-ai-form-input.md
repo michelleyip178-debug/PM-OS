@@ -80,7 +80,7 @@
 
 | What | How to Get It | When | Status |
 |---|---|---|---|
-| Decisions log (D-001 to D-026+) | Already exists: outputs/decisions/decisions-log.md — export to PDF at go-live showing all decisions with rationale and status | Before submission | Ready to export |
+| Decisions log (D-001 to D-026+) | Already exists: outputs/decisions/2026-05-29-W22-decisions-log.md — export to PDF at go-live showing all decisions with rationale and status | Before submission | Ready to export |
 | Open items log (49 items) | Already exists: PM-skills-ALL-1/00-hub/open-items.md — take a snapshot at go-live showing all items resolved or explicitly dated | Oct go-live | Pending snapshot |
 
 ---

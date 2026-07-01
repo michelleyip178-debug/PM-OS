@@ -180,7 +180,7 @@ Note on labels: The BO doc marks features as [Must have in OTEP] or [Good to hav
 
 ## Related Files
 
-- [Meeting Prep Notes](../meeting-notes/2026-05-25-bo-strategic-review-prep.md)
+- [Meeting Prep Notes](../meeting-notes/2026-05-25-W22-bo-strategic-review-prep.md)
 - Source doc: "Feature Expectations for OTEP" (PDF walked through by Xian Zhang GUO, 2026-05-25)
 - [Opportunities Listing PRD](../../context-library/prds/opportunities-listing.md)
 - [FormSG Integration PRD](../../context-library/prds/formsg-integration.md)

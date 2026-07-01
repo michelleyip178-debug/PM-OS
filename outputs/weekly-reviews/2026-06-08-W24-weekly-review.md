@@ -112,7 +112,7 @@ sprint: Sprint 3 final week → Sprint 4 starts Mon 15 Jun
 
 2. **OTG ingestion unblocks** — deliver 5-category mapping logic to Xian Zhang for validation (gates OTEP-86 grooming), generate per-agency remediation reports, update OTEP-192 ACs to v3 rules. Léo is in QA and needs the ACs locked.
 
-3. **Rama interview session — upload module** — run the structured discovery interview (doc prepared: `outputs/decisions/2026-06-12-rama-interview-session.md`). The output determines what scope goes into S5 and whether the Rama/Imelda ownership question resolves before the sprint.
+3. **Rama interview session — upload module** — run the structured discovery interview (doc prepared: `../archive/2026-W25-Jun15-Jun21/decisions/2026-06-12-W25-rama-interview-session.md`). The output determines what scope goes into S5 and whether the Rama/Imelda ownership question resolves before the sprint.
 
 ### Items to Unblock by Monday
 

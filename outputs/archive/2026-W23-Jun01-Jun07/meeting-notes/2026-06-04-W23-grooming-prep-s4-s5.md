@@ -68,4 +68,4 @@ S5 board is empty. S5 goal: *real WOG AD login + full C@G detail + CSC SSO scope
 > **Self-check:** OTEP-87 AC fixed in Jira before the room · 127/130 in-or-out recommendation ready · S4 goal = catch-up (spine carries) · S5 = clear gates, don't size.
 
 ---
-*Built from: [grooming brief](../analyses/grooming-brief-2026-06-04.md) · [adoption reconciliation](../analyses/2026-06-04-adopt-powhwee-plan-reconciliation.md) · live Jira 2026-06-04 (S4 = 9 issues; S3 spine all Backlog/unassigned).*
+*Built from: [grooming brief](../analyses/grooming-brief-2026-06-04.md) · [adoption reconciliation](../analyses/2026-06-04-W23-adopt-powhwee-plan-reconciliation.md) · live Jira 2026-06-04 (S4 = 9 issues; S3 spine all Backlog/unassigned).*

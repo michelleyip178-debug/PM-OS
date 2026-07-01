@@ -202,7 +202,7 @@
 - [ ] Send thank you
 - [ ] Pull exact quotes against the assumption map above
 - [ ] Update the status column in `2026-05-20-r1-assumption-priority-matrix.md`
-- [ ] Log outcomes in `decisions-log.md`
+- [ ] Log outcomes in `../../../decisions/2026-05-29-W22-decisions-log.md`
 - [ ] Run `/user-research-synthesis` once you have 3+ sessions per track
 
 ---

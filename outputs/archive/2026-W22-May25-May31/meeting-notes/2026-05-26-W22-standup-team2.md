@@ -108,7 +108,7 @@ Thomas flagged this directly. The Sprint Review + Retro is **Friday 29 May**. Wi
 
 - [Sprint Status](../../../../PM-skills-ALL-1/00-hub/sprint-status.md)
 - [Sprint Calendar](../../../../PM-skills-ALL-1/04-ceremonies/sprint-calendar.md)
-- [OTEP Squad Sync Notes (2026-05-26)](./2026-05-26-otep-squad-sync.md)
+- [OTEP Squad Sync Notes (2026-05-26)](./2026-05-26-W22-otep-squad-sync.md)
 - [FormSG Integration PRD](../../context-library/prds/formsg-integration.md)
 
 ---

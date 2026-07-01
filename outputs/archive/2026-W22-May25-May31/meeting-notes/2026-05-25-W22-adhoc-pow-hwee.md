@@ -22,7 +22,7 @@ Quick sync covering integration blockers, sprint health, and two open scope ques
 
 2. **CSC SSO can proceed independently**
    - Does not require the same timeline as WOG AD onboarding
-   - Should be achievable without long lead time (see [CSC SSO Feasibility Plan](../../outputs/analyses/2026-05-25-csc-sso-feasibility-plan.md))
+   - Should be achievable without long lead time (see [CSC SSO Feasibility Plan](../analyses/2026-05-25-W22-csc-sso-feasibility-plan.md))
 
 3. **Sprint alignment confirmed**
    - Sprint plan vs roadmap is aligned

@@ -130,5 +130,5 @@ A 30-45 min session with Daryll to close four things:
 
 ---
 
-*Full evidence trail: `context-library/prds/pocdex.md`, `outputs/meeting-notes/2026-05-25-otep-standup-slack.md`*
+*Full evidence trail: `context-library/prds/pocdex.md`, `../archive/2026-W22-May25-May31/meeting-notes/2026-05-25-W22-otep-standup-slack.md`*
 *Next: Schedule planning session with Daryll. Confirm OTEP-202 timeline.*

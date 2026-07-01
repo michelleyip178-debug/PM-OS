@@ -336,7 +336,7 @@ In order of urgency:
 1. **Today:** Confirm start date and function scope with Pow Hwee (items A, B). Two conversations. Update OTEP-192 ACs immediately after.
 2. **Today:** Add test entry exclusion (GigIDs 13733, 14807, 14813) to OTEP-192 ACs.
 3. **Thu:** Add OTEP-358 to S4 planning brief.
-4. **This week:** Schedule BO meeting (Jacky/Xian Zhang) on items E and F. Use the BO meeting brief already prepared (`bo-meeting-questions-otg-ingestion-2026-06-09.md`).
+4. **This week:** Schedule BO meeting (Jacky/Xian Zhang) on items E and F. Use the BO meeting brief already prepared (`../meeting-notes/2026-06-09-W24-bo-meeting-questions-otg-ingestion.md`).
 5. **This week:** Fill in WOG AD form (item K — unrelated to ingestion but on Michelle's critical path).
 6. **After OTEP-192 closes:** Generate per-agency skip report. Start remediation outreach with Enterprise Singapore first.
 7. **S5/6:** Schedule the ingestion rules review, using this document and the live skip log data as inputs.
@@ -344,5 +344,5 @@ In order of urgency:
 ---
 
 *Written: 2026-06-10*
-*Source files: decisions-log.md, open-items.md, 2026-06-09-otg-ingestion-trio.md, 2026-06-09-otg-ingestion-impact-trio-prep.md, 2026-06-09-otg-excel-data-dictionary.md, bo-meeting-questions-otg-ingestion-2026-06-09.md, otg-lifecycle.md, risks.md*
+*Source files: decisions-log.md, open-items.md, 2026-06-09-otg-ingestion-trio.md, 2026-06-09-otg-ingestion-impact-trio-prep.md, 2026-06-09-otg-excel-data-dictionary.md, 2026-06-09-W24-bo-meeting-questions-otg-ingestion.md, otg-lifecycle.md, risks.md*
 *Tickets in scope: OTEP-192, OTEP-284, OTEP-319, OTEP-348, OTEP-358, OTEP-391, OTEP-397, OTEP-87, OTEP-86*

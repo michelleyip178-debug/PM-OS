@@ -466,5 +466,5 @@ These were intentionally left as tweakable rather than specified:
 ---
 
 *Generated: 2026-06-23*
-*Source: r1-napkin-sketch-low-fi.md, r1-epic-brief-confluence.md, ideation session 2026-06-23*
-*Tool: Figma Make | Previous: v0.dev prompt (r1-prototype-prompt-v0.md)*
+*Source: 2026-06-23-W26-r1-napkin-sketch-low-fi.md, r1-epic-brief-confluence.md, ideation session 2026-06-23*
+*Tool: Figma Make | Previous: v0.dev prompt (2026-06-23-W26-r1-prototype-prompt-v0.md)*

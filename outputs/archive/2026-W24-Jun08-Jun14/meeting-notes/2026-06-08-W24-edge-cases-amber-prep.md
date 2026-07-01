@@ -161,7 +161,7 @@ The opportunity exists but it's not for this officer. They need an explanation �
 
 **Rule:** don't silently disable. If the officer can see the opportunity, they deserve to know why they can't apply.
 
-**Decision:** ❌ Not yet made — Michelle to walk in with a position. See [BO decision doc](2026-06-08-bo-edge-cases-decisions.md).
+**Decision:** ❌ Not yet made — Michelle to walk in with a position. See [BO decision doc](2026-06-08-W24-bo-edge-cases-decisions.md).
 
 <mark>**Decision needed:** hide or show-but-disable? Amber cannot design this until resolved.</mark> 👈 Amber
 
@@ -175,7 +175,7 @@ The opportunity is specifically open to this officer. That's a signal worth surf
 
 **Rule:** a positive eligibility signal reduces hesitation. But only show it if it's reliably accurate — a false positive is worse than silence.
 
-**Decision:** ❌ Not yet made — yes or no on the eligibility indicator. See [BO decision doc](2026-06-08-bo-edge-cases-decisions.md).
+**Decision:** ❌ Not yet made — yes or no on the eligibility indicator. See [BO decision doc](2026-06-08-W24-bo-edge-cases-decisions.md).
 
 <mark>**Decision needed:** show eligibility indicator or stay silent?</mark> 👈 Amber
 
@@ -300,4 +300,4 @@ Amber has a full S4 plate already (OTEP-88 badge, OTEP-87 C@G detail, OTEP-110 l
 
 *Prep generated: 2026-06-08*
 *Source: OTEP_EdgeCases_Proposal.pdf + 2026-06-08-mid-sprint-review.md + Amber's message 2026-06-08*
-*BO decisions needed: [2026-06-08-bo-edge-cases-decisions.md](2026-06-08-bo-edge-cases-decisions.md) — ringfencing policy + empty listing scenario, needed before S5 planning (Thu 26 Jun)*
+*BO decisions needed: [2026-06-08-W24-bo-edge-cases-decisions.md](2026-06-08-W24-bo-edge-cases-decisions.md) — ringfencing policy + empty listing scenario, needed before S5 planning (Thu 26 Jun)*

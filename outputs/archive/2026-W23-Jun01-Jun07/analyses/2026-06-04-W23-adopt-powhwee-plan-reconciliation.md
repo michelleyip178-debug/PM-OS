@@ -83,4 +83,4 @@ His page was last edited **26 May**. These are wrong on the page and need correc
 
 ---
 
-*Supersedes the standalone framing in [S4 anticipated-scope](2026-06-04-sprint4-anticipated-scope.md) — that doc's readiness/AC detail still holds, but his plan is now the scope source of truth. Decision logged in [decisions-log.md](../../../PM-skills-ALL-1/06-skills-and-decisions/decisions-log.md) 2026-06-04.*
+*Supersedes the standalone framing in [S4 anticipated-scope](2026-06-04-W23-sprint4-anticipated-scope.md) — that doc's readiness/AC detail still holds, but his plan is now the scope source of truth. Decision logged in [decisions-log.md](../../../decisions/2026-05-29-W22-decisions-log.md) 2026-06-04.*

@@ -173,8 +173,8 @@ The two programme-owned workstreams have no named owner today. Without them, the
 
 | Document | What it covers |
 |---|---|
-| `outputs/analyses/2026-06-12-otg-upload-module-analysis.md` | Full scope analysis, sizing, operational risks, scope options |
-| `outputs/analyses/2026-06-12-otg-upload-discovery-checklist.md` | 30 discovery questions, 11 answered, 19 open |
+| `../analyses/2026-06-12-W25-otg-upload-module-analysis.md` | Full scope analysis, sizing, operational risks, scope options |
+| `../analyses/2026-06-12-W25-otg-upload-discovery-checklist.md` | 30 discovery questions, 11 answered, 19 open |
 | `context-library/prds/otg-ingestion-brief.md` | 5-minute product brief on OTG ingestion including upload user journey |
 | `context-library/decisions/otg-ingestion-decision-log.md` | All 18 ingestion decisions, ratified and open |
 | `context-library/research/OTEP Ingestion Analysis/OTEP_Remediation_Report_v3.xlsx` | Per-agency blocked records for agency remediation sessions |

@@ -36,7 +36,7 @@ Maybe C@G genuinely is the priority — but that should be *my* decision with a 
 
 ## 3. ⚠️ OTEP-87 competency scope is a product question wearing a UI costume.
 
-OTEP-87 "(revised)" is in the sprint with the note "Leo and Thomas to work out the shape of the response." Two days ago, the **BO Working Level meeting exposed that competencies have no source of truth** — the consumer-vs-system-of-record fork is still open ([notes](../meeting-notes/2026-06-02-bo-working-level-competency-architecture.md)).
+OTEP-87 "(revised)" is in the sprint with the note "Leo and Thomas to work out the shape of the response." Two days ago, the **BO Working Level meeting exposed that competencies have no source of truth** — the consumer-vs-system-of-record fork is still open ([notes](../meeting-notes/2026-06-02-W23-bo-working-level-competency-architecture.md)).
 
 So engineers are about to design the data shape for a competency section whose *governance is unsettled.* That's how you build the wrong thing efficiently.
 
@@ -82,7 +82,7 @@ Short version, product-first:
 These are real but they're Pow Hwee's / the team's job, not where my attention should sit:
 
 - **Carry-over tail is invisible in the proposal.** 25 open tickets are already live on the board (12 in QA from Sprint 2) that the backlog doesn't mention. Real load = proposed ~24 + carry-over ~25 = the 49 on the board. The team should surface this in grooming.
-- **Capacity:** one FE dev (Thomas), ~20 FE stories. Won't fit; second full-stack dev arrives S4, not S3. See [capacity analysis](2026-06-03-sprint3-fe-capacity-and-sprint4-impact.md).
+- **Capacity:** one FE dev (Thomas), ~20 FE stories. Won't fit; second full-stack dev arrives S4, not S3. See [capacity analysis](2026-06-03-W23-sprint3-fe-capacity-and-sprint4-impact.md).
 - **Owner gaps:** OTEP-85, 86, 192, 317, 319, 87 all unassigned on the live board.
 - **New tickets to create:** C@G API ingest, CI enforcement, 3 tech-debt items.
 - **Reconciliation is clean** — everything proposed is already ticketed and on the board; no structural mismatch.

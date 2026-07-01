@@ -178,4 +178,4 @@ Pre-empted so you're not caught off guard. He catches **(1) AC rule conflicts, (
 
 ---
 
-*Companion docs: [Sprint 4 grooming agenda](2026-06-03-sprint4-grooming-agenda.md) (intake + PM decisions) · [Sprint 4 trio analysis](2026-06-03-sprint4-trio.md) (the why behind the cuts).*
+*Companion docs: [Sprint 4 grooming agenda](2026-06-03-sprint4-grooming-agenda.md) (intake + PM decisions) · [Sprint 4 trio analysis](2026-06-03-W23-sprint4-trio.md) (the why behind the cuts).*

@@ -95,4 +95,4 @@ Adrian and Xian Zhang are aligned on PSFG exclusion from MVP. Two reasons confir
 1. Voluntary nature of PSFG means officer intent is materially different from STIPs/Gigs/Jobs.
 2. OTG data confirms scarce applications relative to opportunities posted.
 
-See meeting notes: `outputs/meeting-notes/2026-06-16-W25-adhoc-psfg-opportunities.md`
+See meeting notes: `../../../outputs/archive/2026-W25-Jun15-Jun21/meeting-notes/2026-06-16-W25-adhoc-psfg-opportunities.md`

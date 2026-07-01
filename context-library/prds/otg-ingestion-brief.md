@@ -229,10 +229,10 @@ These agencies are the critical path to getting above 350 at launch. DevOps/agen
 | This brief | `context-library/prds/otg-ingestion-brief.md` | Quick onboarding / orientation |
 | Decision log | `context-library/decisions/otg-ingestion-decision-log.md` | Every ratified + open decision |
 | v3 Remediation Report | `context-library/research/OTEP Ingestion Analysis/OTEP_Remediation_Report_v3.xlsx` | Per-record + per-agency remediation data |
-| Post-meeting re-run analysis | `outputs/analyses/2026-06-12-otg-ingestion-rerun-post-meeting.html` | Impact of 12 Jun decisions on catalogue size |
-| Product discovery (Pawel) | `outputs/analyses/2026-06-11-otg-ingestion-pawel-discovery.md` | Opportunity-solution tree, validation experiments |
-| Core discovery doc | `outputs/analyses/2026-06-10-otg-ingestion-product-discovery.md` | Data reality, scenario modelling |
-| Leo handoff | `outputs/meeting-notes/2026-06-12-leo-otg-ingestion-handoff.md` | What Léo can build now vs what's blocked |
+| Post-meeting re-run analysis | `outputs/archive/2026-W25-Jun15-Jun21/analyses/2026-06-12-W25-otg-ingestion-rerun-post-meeting.html` | Impact of 12 Jun decisions on catalogue size |
+| Product discovery (Pawel) | `../../outputs/archive/2026-W24-Jun08-Jun14/analyses/2026-06-11-W24-otg-ingestion-pawel-discovery.md` | Opportunity-solution tree, validation experiments |
+| Core discovery doc | `../../outputs/archive/2026-W24-Jun08-Jun14/analyses/2026-06-10-W24-otg-ingestion-product-discovery.md` | Data reality, scenario modelling |
+| Leo handoff | `../../outputs/archive/2026-W24-Jun08-Jun14/meeting-notes/2026-06-12-W24-leo-otg-ingestion-handoff.md` | What Léo can build now vs what's blocked |
 
 ---
 

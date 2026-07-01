@@ -77,4 +77,4 @@ Provisioning logs (Story 5) + this scope doc showing what Michelle owns vs what 
 
 ---
 
-*Pairs with: [APA KR draft](2026-06-18-W26-apa-draft-krs-cy26.md) · [POCDEX PRD](../../PM-skills-ALL-1/02-prd/prd-pocdex-integration.md) · [POCDEX productionisation plan](../../PM-skills-ALL-1/06-skills-and-decisions/pocdex-api-productionisation-plan.md)*
+*Pairs with: [APA KR draft](2026-06-18-W25-apa-draft-krs-cy26.md) · [POCDEX PRD](../../PM-skills-ALL-1/02-prd/prd-pocdex-integration.md) · [POCDEX productionisation plan](../../PM-skills-ALL-1/06-skills-and-decisions/pocdex-api-productionisation-plan.md)*

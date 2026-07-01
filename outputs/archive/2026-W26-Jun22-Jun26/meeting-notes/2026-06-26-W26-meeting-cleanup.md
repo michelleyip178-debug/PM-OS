@@ -97,4 +97,4 @@
 ---
 
 *Saved: 2026-06-26*
-*Sources: outputs/meeting-notes/2026-06-26-squad-sync-competency-roadmap.md, open-items.md #18/#19/#41, decisions-log 2026-05-21 + 2026-06-16*
+*Sources: outputs/meeting-notes/2026-06-26-W26-squad-sync-competency-roadmap.md, open-items.md #18/#19/#41, decisions-log 2026-05-21 + 2026-06-16*

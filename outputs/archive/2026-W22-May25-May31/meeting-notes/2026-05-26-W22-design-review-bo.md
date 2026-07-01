@@ -145,7 +145,7 @@ These must be resolved before Amber's next design iteration and before engineeri
 ## Post-Meeting Directions — Imelda's Squad
 
 *Source: Adrian Ang, post-meeting correction (2026-05-26)*
-*Full handoff notes: [2026-05-26-post-meeting-notes-imelda.md](./2026-05-26-post-meeting-notes-imelda.md)*
+*Full handoff notes: [2026-05-26-W22-post-meeting-notes-imelda.md](./2026-05-26-W22-post-meeting-notes-imelda.md)*
 
 | Direction | Detail | Owner |
 |-----------|--------|-------|
@@ -184,10 +184,10 @@ These must be resolved before Amber's next design iteration and before engineeri
 ## Links
 
 - [R1 Seamless Application PRD](../../context-library/prds/r1-seamless-application-draft.md)
-- [BO Strategic Review Notes (2026-05-25)](./2026-05-25-bo-strategic-review-notes.md)
-- [OTEP Squad Sync Notes (2026-05-26)](./2026-05-26-otep-squad-sync.md)
-- [Post-Meeting Directions for Imelda (2026-05-26)](./2026-05-26-post-meeting-notes-imelda.md)
-- [Meeting Cleanup (2026-05-26)](./cleanup-2026-05-26.md)
+- [BO Strategic Review Notes (2026-05-25)](./2026-05-25-W22-bo-strategic-review-notes.md)
+- [OTEP Squad Sync Notes (2026-05-26)](./2026-05-26-W22-otep-squad-sync.md)
+- [Post-Meeting Directions for Imelda (2026-05-26)](./2026-05-26-W22-post-meeting-notes-imelda.md)
+- [Meeting Cleanup (2026-05-26)](./2026-05-26-W22-cleanup.md)
 
 ---
 

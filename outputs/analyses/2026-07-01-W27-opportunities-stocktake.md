@@ -178,5 +178,5 @@ The snapshot itself flagged this as high-risk with a dual timeline: "S4 best cas
 
 ---
 
-*Generated: 2026-07-01 | Baseline: mvp-scope-2026-05-21.md (52 stories) | Cross-referenced against: sprint-status.md (S1-S5 live data), open-items.md, grooming-brief-2026-07-01.md*
+*Generated: 2026-07-01 | Baseline: mvp-scope-2026-05-21.md (52 stories) | Cross-referenced against: sprint-status.md (S1-S5 live data), open-items.md, 2026-07-01-W27-grooming-brief.md*
 *Next: Confirm the 5 flagged unknowns (OTEP-130, US-10, OTEP-71, WOG-02/07, instrumentation) with Pow Hwee before Sprint 6 planning.*

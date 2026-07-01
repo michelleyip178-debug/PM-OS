@@ -118,7 +118,7 @@ Access is controlled at two levels. WOG AD is the first gate (authentication). C
 | 5 | Provisioning event logging | P1 | Stories 2 + 4 done; PII review complete |
 | ~~3~~ | ~~Profile pending state~~ | ~~Removed~~ | Access is instant from email domain — this edge case no longer exists |
 
-Full AC for all 5 stories: [`2026-06-18-W25-pocdex-authorisation-stories.md`](../archive/2026-W25-Jun15-Jun21/decisions/2026-06-18-W25-pocdex-authorisation-stories.md)
+Full AC for all 5 stories: [`../archive/2026-W25-Jun15-Jun21/decisions/2026-06-18-W25-pocdex-authorisation-stories.md`](../archive/2026-W25-Jun15-Jun21/decisions/2026-06-18-W25-pocdex-authorisation-stories.md)
 
 ---
 

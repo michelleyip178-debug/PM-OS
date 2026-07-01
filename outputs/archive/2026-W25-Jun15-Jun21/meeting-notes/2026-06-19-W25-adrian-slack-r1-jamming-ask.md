@@ -103,7 +103,7 @@ Window is **Mon 22 – Wed 24 Jun.** Calendar read 19 Jun:
 
 ## Timeline Risks
 
-- **R1 epics stay provisional until Mark signs off.** The R1 feature set (embedded apply, status tracking, saved jobs, smart assistant) is still **PENDING CONFIRMATION — Mark to confirm** ([r1-scope-brief](../archive/2026-W23/2026-06-05-W23-r1-scope-brief.md), #40). Sequence decided 19 Jun: **Adrian jam first, then Mark.** Risk to manage: the jam output is provisional until Mark confirms — don't let Adrian's team start detailed R1 planning or commit capacity on the epics before Mark's sign-off lands. Treat the jam as "shape the proposal," not "lock the scope." Take the epics to Mark promptly after the jam so the provisional window stays short.
+- **R1 epics stay provisional until Mark signs off.** The R1 feature set (embedded apply, status tracking, saved jobs, smart assistant) is still **PENDING CONFIRMATION — Mark to confirm** ([r1-scope-brief](../../2026-W23-Jun01-Jun07/2026-06-05-W23-r1-scope-brief.md), #40). Sequence decided 19 Jun: **Adrian jam first, then Mark.** Risk to manage: the jam output is provisional until Mark confirms — don't let Adrian's team start detailed R1 planning or commit capacity on the epics before Mark's sign-off lands. Treat the jam as "shape the proposal," not "lock the scope." Take the epics to Mark promptly after the jam so the provisional window stays short.
 - **W25 is nearly over.** Adrian said "this week," but it's Friday. Realistically this is a W26 session — set that expectation in the reply rather than over-committing to a slot today.
 
 ---
@@ -111,7 +111,7 @@ Window is **Mon 22 – Wed 24 Jun.** Calendar read 19 Jun:
 ## Context for Future Reference
 
 - This is the explicit trigger for open-item **#47** (was "Adrian wants a session this week, Michelle pushing to W26").
-- R1 feature set source: Mark's SteerCo briefing 5 Jun → [r1-scope-brief](../archive/2026-W23/2026-06-05-W23-r1-scope-brief.md). Four epics: (1) Streamlined Application / embedded pre-filled form, (2) Status Tracking (native, no ATS), (3) Saved Jobs, (4) Smart Assistant (profile-driven pre-fill).
+- R1 feature set source: Mark's SteerCo briefing 5 Jun → [r1-scope-brief](../../2026-W23-Jun01-Jun07/2026-06-05-W23-r1-scope-brief.md). Four epics: (1) Streamlined Application / embedded pre-filled form, (2) Status Tracking (native, no ATS), (3) Saved Jobs, (4) Smart Assistant (profile-driven pre-fill).
 - Scope boundary to hold in the jam: ATS = R2+, CV/CIE inference (OTEP-205) separate, opportunity recommender is a separate R1 track.
 - Ties to the SteerCo demo co-prep (corrected 19 Jun): R1 direction is part of the programme-health story Michelle co-presents.
 

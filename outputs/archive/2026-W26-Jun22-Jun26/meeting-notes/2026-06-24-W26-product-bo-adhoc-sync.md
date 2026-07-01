@@ -158,7 +158,7 @@ Storybook vs design system differences, designer/engineer implementation gaps, a
 
 ## Connections to Existing Docs
 
-- Epic E (Competency Management v1) scope boundary question: [r1-epic-brief-confluence](../decisions/2026-06-23-r1-epic-brief-confluence.md) — Path A vs B must be resolved before Epic E is groomed
+- Epic E (Competency Management v1) scope boundary question: [r1-epic-brief-confluence](../../../decisions/2026-06-23-W26-r1-epic-brief-confluence.md) — Path A vs B must be resolved before Epic E is groomed
 - MVP go-live timeline: November now more realistic than October — update risks.md
 - UAT test case generation (Michelle + Imelda): feeds into sprint planning for Sprint 5+
 - Profiling tool out of MVP: consistent with existing scope discipline (decisions log)

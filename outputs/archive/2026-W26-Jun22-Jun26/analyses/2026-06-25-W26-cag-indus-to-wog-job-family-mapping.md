@@ -14,7 +14,7 @@ related-files:
 
 **Decision 2026-06-25:** C@G's Indus codes are the canonical filter taxonomy. C@G ingestion is a passthrough — store `Indus` directly, no translation needed. The WOG → C@G translation table below is retained as reference only and is NOT used in the ingestion pipeline.
 
-The file that matters for engineering is [outputs/analyses/2026-06-25-otg-to-cag-job-family-mapping.md](2026-06-25-otg-to-cag-job-family-mapping.md) — that's the OTG → C@G Indus translation Leo needs to implement.
+The file that matters for engineering is [outputs/analyses/2026-06-25-otg-to-cag-job-family-mapping.md](2026-06-25-W26-otg-to-cag-job-family-mapping.md) — that's the OTG → C@G Indus translation Leo needs to implement.
 
 ---
 

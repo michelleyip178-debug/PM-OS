@@ -8,7 +8,7 @@ source: live Jira (Sprint-34617) + 2026-06-03-sprint4-trio.md + grooming-brief-2
 
 # Sprint 4 — Anticipated Scope
 
-> **Superseded as scope source (2026-06-04):** the team adopted **Pow Hwee's "Planning draft for sprint 3 and after"** (Confluence) as the S2–S6 plan of record. This doc's **readiness/AC/Pow-Hwee-prep detail still holds** and is the line-level layer under his plan — but his streams are now the scope source of truth. Native apply = R1 (not the S4 spike his draft showed). S4 dates = 14–28 Jun. See [adoption reconciliation](2026-06-04-adopt-powhwee-plan-reconciliation.md).
+> **Superseded as scope source (2026-06-04):** the team adopted **Pow Hwee's "Planning draft for sprint 3 and after"** (Confluence) as the S2–S6 plan of record. This doc's **readiness/AC/Pow-Hwee-prep detail still holds** and is the line-level layer under his plan — but his streams are now the scope source of truth. Native apply = R1 (not the S4 spike his draft showed). S4 dates = 14–28 Jun. See [adoption reconciliation](2026-06-04-W23-adopt-powhwee-plan-reconciliation.md).
 
 **Read this as a forecast, not a commitment.** Sprint 4 is a catch-up sprint, and most of its content is whatever the Sprint 3 spine doesn't finish. At S3 Day 3, ~45 of 49 issues are still open — so the carry-over isn't "a few stragglers," it's the bulk of the sprint goal. The committed S4 backlog can't be locked until S3 closes (14 Jun). What follows is the **anticipated** intake plus the decisions that hold regardless of what lands.
 
@@ -95,4 +95,4 @@ Ties the carry-over spine and the C@G work to one officer outcome. Bring it as t
 
 ---
 
-*Companion: [grooming brief](grooming-brief-2026-06-04.md) (per-story readiness) · [trio analysis](2026-06-03-sprint4-trio.md) (the why) · [grooming agenda](2026-06-03-sprint4-grooming-agenda.md) (session structure).*
+*Companion: [grooming brief](grooming-brief-2026-06-04.md) (per-story readiness) · [trio analysis](2026-06-03-W23-sprint4-trio.md) (the why) · [grooming agenda](2026-06-03-sprint4-grooming-agenda.md) (session structure).*

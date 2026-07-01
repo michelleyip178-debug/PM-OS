@@ -76,7 +76,7 @@ From Adrian:
 **Max — what the team knows:**
 - Mark has already committed CC will have a Max entry point (not negotiable)
 - Michelle shared a research report on Max in this thread (see `CoachPal_Research_Report.docx` — confirm this is the right file, currently untracked in PM-OS root)
-- Michelle has a live interview script for Max → CC integration research (`outputs/research-synthesis/2026-06-18-careercompass-max-interview-script.md`)
+- Michelle has a live interview script for Max → CC integration research (`../../../research-synthesis/2026-06-18-W25-careercompass-max-interview-script.md`)
 - Research assumptions being tested: whether officers who reflect via Max end up on CC, whether direction is unclear before they can act, whether commitment friction is the blocker
 
 **Victor's point (GovTech):**
@@ -119,13 +119,13 @@ CoachPal's performance could improve substantially if it is fed CC's personalise
 
 **After debrief:**
 - If it lands on the roadmap → open item in `00-hub/open-items.md`
-- If parking lot → log decision in `decisions-log.md` with rationale
+- If parking lot → log decision in `../../../decisions/2026-05-29-W22-decisions-log.md` with rationale
 
 ---
 
 ## Related Files
 
-- [Max interview script](../research-synthesis/2026-06-18-careercompass-max-interview-script.md) — research being run in parallel
+- [Max interview script](../../../research-synthesis/2026-06-18-W25-careercompass-max-interview-script.md) — research being run in parallel
 - `CoachPal_Research_Report.docx` — untracked in PM-OS root; move to `outputs/research-synthesis/` or `context-library/research/`
 
 ---

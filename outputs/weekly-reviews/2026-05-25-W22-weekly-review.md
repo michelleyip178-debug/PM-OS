@@ -82,7 +82,7 @@ quarter: Q2 2026
 | OTG one-time port only, no ongoing sync (D-016) | 29 May | Fanxu's scope: no recurring job needed |
 | Demo format: squad-by-squad for working sessions; joint for Mark+GK (D-017) | 29 May | Sprint 3 demo planning |
 
-Full log: [decisions-log.md](../decisions/decisions-log.md)
+Full log: [decisions-log.md](../decisions/2026-05-29-W22-decisions-log.md)
 
 ---
 

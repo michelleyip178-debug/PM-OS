@@ -69,8 +69,8 @@ Sprint 3 is the first sprint where engineers are building visible officer-facing
 - Fanxu: confirm Sprint 3 scope after pilot agency decision lands
 
 **Linked to:**
-- [Sprint 3 Planning notes](../meeting-notes/2026-05-28-sprint-3-planning.md)
-- [Decisions log D-016](../decisions/decisions-log.md)
+- [Sprint 3 Planning notes](../2026-W22-May25-May31/meeting-notes/2026-05-28-W22-sprint-3-planning.md)
+- [Decisions log D-016](../../decisions/2026-05-29-W22-decisions-log.md)
 
 ---
 
@@ -97,8 +97,8 @@ Sprint 3 is the first sprint where engineers are building visible officer-facing
 - Engineers: availability for grooming Wed 3 Jun
 
 **Linked to:**
-- [DoR update proposal](../decisions/2026-05-29-dor-engineer-assessment-update.md)
-- [Tech debt proposal](../decisions/2026-05-29-tech-debt-tracking-proposal.md)
+- [DoR update proposal](../2026-W22-May25-May31/2026-05-29-W22-dor-engineer-assessment-update.md)
+- [Tech debt proposal](../2026-W22-May25-May31/2026-05-29-W22-tech-debt-tracking-proposal.md)
 
 ---
 
@@ -126,7 +126,7 @@ Sprint 3 is the first sprint where engineers are building visible officer-facing
 - Daryll: POCDEX session response (email sent 28 May)
 
 **Linked to:**
-- [Job Family meeting notes + POCDEX implications](../meeting-notes/2026-05-28-job-family-model-operationalisation.md)
+- [Job Family meeting notes + POCDEX implications](../2026-W22-May25-May31/meeting-notes/2026-05-28-W22-job-family-model-operationalisation.md)
 - OTEP-271 (Local POCDEX DB), OTEP-203 (Standalone POCDEX API)
 
 ---

@@ -141,4 +141,4 @@ GK's two strongest signals from this meeting:
 ---
 
 *Created: 2026-06-10 | Source: [Bi-weekly] OTEP Product × BO — Senior Level (51 min)*
-*Related: [Sprint 4 Planning Prep](2026-06-11-sprint4-planning-prep.md) | open-items.md #26, #43*
+*Related: [Sprint 4 Planning Prep](2026-06-11-W24-sprint4-planning-prep.md) | open-items.md #26, #43*

@@ -132,9 +132,9 @@ The Oct 19-23 go-live target in the weekly plan and strategy docs is now directl
 
 ## Related Files
 
-- [W26 Weekly Plan](../weekly-plans/2026-W26-weekly-plan.md) — Oct go-live target
+- [W26 Weekly Plan](../2026-06-22-W26-weekly-plan.md) — Oct go-live target
 - [Sprint Status](../../../PM-skills-ALL-1/00-hub/sprint-status.md) — current S4 state
-- [Cleanup — Mon 22 + Tue 23 Jun](cleanup-2026-06-22-23.md) — covers other meetings this week
+- [Cleanup — Mon 22 + Tue 23 Jun](2026-06-22-W26-cleanup-23.md) — covers other meetings this week
 
 ---
 

@@ -33,7 +33,7 @@ Sprint 3 ends tomorrow (Fri 12 Jun). Live Jira snapshot at planning:
 
 Total: **54 story points** (Must 26 / Should 19 / Could 9)
 
-> Full ACs, tasks, and point breakdowns in [S4 planning doc](../analyses/2026-06-11-s4-planning-moscow-acs-tasks-points.md).
+> Full ACs, tasks, and point breakdowns in [S4 planning doc](../analyses/2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md).
 
 ### Must (26 pts)
 
@@ -177,7 +177,7 @@ These are discovery/PM work — they don't add to the engineering capacity calcu
 ## Context
 
 - Sprint 4 dates: **15–28 Jun 2026** (starts Mon 15 Jun after planning ceremony today)
-- Planning doc: [S4 MoSCoW + ACs + Tasks](../analyses/2026-06-11-s4-planning-moscow-acs-tasks-points.md)
+- Planning doc: [S4 MoSCoW + ACs + Tasks](../analyses/2026-06-11-W24-s4-planning-moscow-acs-tasks-points.md)
 - Jira-sync: 18 live S4 issues pulled; 6 new cache files created; 3 files relocated; all story points corrected from N/A
 - Stale-check: sprint-status.md and tasks-active.md corrected to live Jira counts (46 issues, 19D/13IP/7QA/7BL)
 

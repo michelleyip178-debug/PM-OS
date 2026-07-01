@@ -103,4 +103,4 @@ The SSO exclusion for Secondments and Internal Jobs from the first OTG intake is
 
 ---
 
-*Saved to `outputs/meeting-notes/2026-06-16-W25-adhoc-psfg-opportunities.md`*
+*Saved to `2026-06-16-W25-adhoc-psfg-opportunities.md`*

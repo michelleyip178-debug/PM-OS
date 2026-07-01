@@ -164,7 +164,7 @@ The existing lifecycle rule (decision 2026-05-13) already handles this at query 
 ### PM (Michelle)
 
 1. **Confirm start date and function decisions with Pow Hwee today.** These are the two calls that most affect catalogue size. Both need to be in OTEP-192's ACs before Léo's next commit.
-2. **Update the data dictionary** (`2026-06-09-otg-excel-data-dictionary.md`) once field scope is confirmed — move `GigStart` and `Function` to the right bucket (required or optional).
+2. **Update the data dictionary** (`2026-06-09-W24-otg-excel-data-dictionary.md`) once field scope is confirmed — move `GigStart` and `Function` to the right bucket (required or optional).
 3. **Add explicit test entry exclusion** to OTEP-192 ACs: GigIDs 13733, 14807, 14813 must be excluded from ingestion.
 4. **Flag the minimum viable catalogue question to BO.** 160 gigs at launch is thin. Before setting a go-live date, someone needs to confirm: what's the floor? The BO analysis recommends 300+ passing gigs with at least 3 opportunity types with 20+ each. Get this confirmed.
 5. **OTEP-358 into S4 planning brief.** The nil-date spike is even more critical now — the data shows there may be other evergreen patterns beyond `"00/01/1900"`. It needs a slot in S4.
@@ -230,8 +230,8 @@ The 350–400 range is achievable without any agency remediation, purely through
 
 ## Pre-read
 
-- [Pipeline logic + hard-skip rule](./2026-06-09-otg-ingestion-trio.md) — confirmed decisions and trio actions
-- [Data dictionary](./2026-06-09-otg-excel-data-dictionary.md) — required/optional field contract (draft, pending today's decisions)
+- [Pipeline logic + hard-skip rule](2026-06-09-W24-otg-ingestion-trio.md) — confirmed decisions and trio actions
+- [Data dictionary](2026-06-09-W24-otg-excel-data-dictionary.md) — required/optional field contract (draft, pending today's decisions)
 - `context-library/research/OTEP Ingestion Analysis/` — full dataset analysis, BO briefing, agency breakdown, remediation report
 
 ---

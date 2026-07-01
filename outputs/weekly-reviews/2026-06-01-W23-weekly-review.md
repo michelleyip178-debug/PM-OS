@@ -144,5 +144,5 @@ quarter: Q2 2026
 ---
 
 *Generated: 2026-06-05 | Week 2026-W23*
-*Data sources: Weekly plan, daily plans (Mon–Fri), meeting notes (cleanup-2026-06-05.md, OKR+Roadmap, Design Review BO), sprint-status.md, open-items.md, decisions log*
+*Data sources: Weekly plan, daily plans (Mon–Fri), meeting notes (2026-06-05-W23-cleanup.md, OKR+Roadmap, Design Review BO), sprint-status.md, open-items.md, decisions log*
 *Next: Run `/weekly-plan` for Week 24 + `/stale-check` to sweep hub trackers*

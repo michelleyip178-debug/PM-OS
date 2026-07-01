@@ -70,6 +70,6 @@ Two backend tracks are surfacing as significant risks to the October launch: POC
 
 ---
 
-*Saved: outputs/meeting-notes/2026-05-25-otep-standup-slack.md*
+*Saved: outputs/meeting-notes/2026-05-25-W22-otep-standup-slack.md*
 *Related PRDs: context-library/prds/pocdex.md, context-library/prds/wog-authentication.md*
 *Next: Update POCDEX PRD to reflect Epic elevation. Follow up on CSC SSO feasibility.*

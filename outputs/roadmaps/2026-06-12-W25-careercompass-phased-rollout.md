@@ -58,5 +58,5 @@ status: reference
 ---
 
 *Captured 2026-06-02 from senior-mgmt implementation-details email.*
-*Decisions logged in `06-skills-and-decisions/decisions-log.md` (5 entries dated 2026-06-02).*
+*Decisions logged in `../decisions/2026-05-29-W22-decisions-log.md` (5 entries dated 2026-06-02).*
 *Risks logged in `00-hub/risks.md` (HDB piping, OTG sunset).*

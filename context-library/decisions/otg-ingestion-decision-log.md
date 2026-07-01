@@ -298,7 +298,7 @@ All three conditions are AND-ed. Failing any one dimension = ineligible. When `r
 
 **Status:** ✅ Ratified (confirmed by Pow Hwee)
 
-**Source:** 2026-06-09-otg-ingestion-trio.md; reinforced 12 Jun 2026
+**Source:** 2026-06-09-W24-otg-ingestion-trio.md; reinforced 12 Jun 2026
 
 **Decision:** If any OTEP-mapped field in an OTG Excel row is missing, null, or unresolvable — the entire row is skipped. No partial imports. No UI fallbacks for required-field gaps.
 
@@ -339,7 +339,7 @@ All three conditions are AND-ed. Failing any one dimension = ineligible. When `r
 
 **Status:** ✅ Ratified (updated)
 
-**Source:** 2026-06-09-otg-ingestion-trio.md; updated 2026-06-26
+**Source:** 2026-06-09-W24-otg-ingestion-trio.md; updated 2026-06-26
 
 **Decision:** `formsg_url` is optional at ingestion. A record missing a FormSG URL is still ingested. When missing, the detail page shows Amber's no-apply-link design state rather than hard-skipping the record.
 

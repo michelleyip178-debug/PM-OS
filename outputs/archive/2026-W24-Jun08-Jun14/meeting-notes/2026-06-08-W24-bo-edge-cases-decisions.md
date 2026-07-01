@@ -2,7 +2,7 @@
 date: 2026-06-08
 type: BO Decision Request
 topic: Edge Cases & Error States — ringfencing policy needed before S5 design
-linked-prep: 2026-06-08-edge-cases-amber-prep.md
+linked-prep: 2026-06-08-W24-edge-cases-amber-prep.md
 ---
 
 # BO Decision Request: Ringfencing & Edge Cases
@@ -83,7 +83,7 @@ If yes: proceed to Decision 1 below.
 
 ---
 
-*Linked to: [Edge Cases & Error States meeting prep](2026-06-08-edge-cases-amber-prep.md)*
-*Dependencies, risks & assumptions: [2026-06-08-ringfencing-dependencies-risks-assumptions.md](../decisions/2026-06-08-ringfencing-dependencies-risks-assumptions.md)*
+*Linked to: [Edge Cases & Error States meeting prep](2026-06-08-W24-edge-cases-amber-prep.md)*
+*Dependencies, risks & assumptions: [2026-06-08-ringfencing-dependencies-risks-assumptions.md](../decisions/2026-06-08-W24-ringfencing-dependencies-risks-assumptions.md)*
 *Open item: #43 in [open-items.md](../../../PM-skills-ALL-1/00-hub/open-items.md)*
 *Raise at: next BO Working Level session or async before Thu 26 Jun*

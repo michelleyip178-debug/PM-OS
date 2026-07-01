@@ -5,8 +5,8 @@ last_updated: 2026-06-25
 owner: Michelle Yip
 status: In Review — pending Mark sign-off (#40)
 links:
-  epic-brief: outputs/decisions/2026-06-23-r1-epic-brief-confluence.md
-  r1-jam: outputs/decisions/2026-06-22-r1-jam-draft-v2.md
+  epic-brief: outputs/decisions/2026-06-23-W26-r1-epic-brief-confluence.md
+  r1-jam: outputs/decisions/2026-06-22-W26-r1-jam-draft-v2.md
   okrs: PM-skills-ALL-1/06-skills-and-decisions/otep-roadmap-okrs-2627.md
 ---
 
