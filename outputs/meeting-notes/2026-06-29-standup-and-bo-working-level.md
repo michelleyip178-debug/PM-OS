@@ -113,7 +113,7 @@ The learning UI depends on "Domain" but nobody could define it confidently. If C
 
 - [ ] Which system is the canonical source for job family and job function? — **Michelle → BOs** — before next Design Review
 - [ ] Does Cumulus / HRPS agree to Career Compass as SSOT? Who needs to approve? — **Michelle → Adrian** — before R1 planning
-- [ ] What is "Domain" in the learning context? Same as Functional Area? — **Imelda → CSC** — next session
+- [x] ~~What is "Domain" in the learning context?~~ **RESOLVED via Slack (29 Jun, 11:15am Imelda → Amber, cc Michelle):** "Domain" renamed to "Job Family" using the standardised 29 job family groups. CSC had 44 domains — the extra 15 were agency-specific groupings, now bucketed under "Others". Prog code kept as officers use it to find courses in HRPS. Michelle confirmed: no concerns, aligned.
 - [ ] Are the 538 job family/function numbers accurate? — **Ram** — next session
 
 ---

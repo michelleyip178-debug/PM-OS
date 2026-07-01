@@ -372,6 +372,44 @@ quarter: Q[X] YYYY
 
 ---
 
+### Step 6b: Generate Skills Checklist
+
+After setting the strategic skill, generate a **Skills Checklist** for the week. This is a curated list of skills the PM should run — beyond daily cadence — to prevent delivery gaps and keep the sprint healthy.
+
+**Logic for building the checklist:**
+
+Scan the week's context and map it to skills using this table. Include a skill if its trigger condition is true. Skip it if there's no relevant context this week.
+
+| Trigger condition | Skill | Criticality |
+|---|---|---|
+| Sprint planning ceremony this week | `/sprint-check` (pre-planning brief) | ⚠️ Critical |
+| Grooming session this week | `/grooming-close` (after grooming ends) | ⚠️ Critical |
+| Sprint closes this week | `/stale-check` (end of sprint sweep) | ⚠️ Critical |
+| Sprint closes this week | `/feature-results` (capture outcomes) | High |
+| Any stories going In Progress this week | `/feature-metrics` (confirm metrics defined) | High |
+| New stories being drafted or groomed | `/write-stories` or `/p-write-prd` | Medium |
+| Stakeholder review or BO session this week | `/status-update` or `/slack-message` | High |
+| SteerCo or leadership presentation | `/decision-doc` | High |
+| Discovery work or user research happening | `/user-research-synthesis` or `/p-interview` | Medium |
+| Competitor mentioned in meetings or Slack | `/competitor-analysis` | Medium |
+| Launch or go-live this week | `/launch-checklist` | ⚠️ Critical |
+| Post-launch (feature shipped last sprint) | `/activation-analysis` or `/feature-results` | High |
+| OKR or roadmap review this week | `/define-north-star` or `/metrics-framework` | Medium |
+| Prototype or design review this week | `/prototype-feedback` or `/napkin-sketch` | Medium |
+| Impact of a feature unknown / sizing needed | `/impact-sizing` | Medium |
+| A/B test running or being decided | `/experiment-decision` or `/analyze-test` | Medium |
+| End of week (always) | `/weekly-review` (Friday) | ⚠️ Critical |
+| End of every day (always) | `/stale-check` | High |
+
+**Rules:**
+- Always include `/weekly-review` on Friday and `/stale-check` daily — these are non-negotiable.
+- Cap the list at 8 skills. If more than 8 triggers fire, include only the highest-criticality ones.
+- Group by day or trigger (e.g. "Before Tuesday grooming", "Thursday pre-planning", "Friday EOD").
+- Annotate ⚠️ Critical items clearly — these are the ones where skipping creates a delivery risk.
+- Do not list `/daily-plan` or `/sprint-pulse` — those are daily defaults, not weekly additions.
+
+---
+
 ### Step 7: Output & Next Actions
 
 1. **Save weekly plan file**
@@ -493,6 +531,23 @@ At the end of every weekly plan, add a **This Week's Strategic Skill** block. Pi
 **When to run:** [Specific moment — e.g. "before Thursday grooming", "after Friday retro"]
 
 **What you'll get:** [One sentence on the output]
+
+---
+
+## Skills Checklist — Run This Week
+
+*Generated based on sprint phase, ceremonies, and open risks. Run these to keep delivery smooth and prevent gaps from accumulating.*
+
+| When | Skill | Why |
+|------|-------|-----|
+| [Day / trigger] | `/[skill]` | [One-line reason tied to this week's context] |
+| [Day / trigger] | `/[skill]` | [One-line reason] |
+| [Day / trigger] | `/[skill]` | [One-line reason] |
+
+**How to use this list:**
+- Daily cadence skills (`/daily-plan`, `/sprint-pulse`) run every working day — don't repeat them here unless there's a specific reason to call them out this week.
+- Flag skills as `⚠️ Critical` if skipping them creates a delivery risk (e.g. grooming without `/grooming-close`, sprint end without `/stale-check`).
+- This list is not exhaustive — it's the minimum set to prevent gaps given this week's specific context.
 ```
 
 ---
@@ -507,3 +562,4 @@ Before presenting output to the PM, verify:
 - [ ] **Dependencies and blockers identified:** Each priority lists what it depends on (people, decisions, deliverables) and any known blockers with mitigation plans
 - [ ] **Carry-over items from last week addressed:** If `outputs/weekly-reviews/` or `outputs/weekly-plans/` contain incomplete items from last week, they are explicitly acknowledged as carried over, deferred, or dropped with reasoning
 - [ ] **Strategic skill block included:** One skill suggestion with timing and rationale appended to the plan
+- [ ] **Skills checklist generated:** Checklist of skills to run this week based on sprint phase and ceremonies — includes at least `/weekly-review` (Friday) and `/stale-check` (daily); ⚠️ Critical items clearly flagged
