@@ -459,6 +459,8 @@ Use web search when:
 
 **CRITICAL RULE: All new files created by Claude go in `outputs/` organized by type.**
 
+**Naming convention (locked in 2026-07-01):** Every new file Claude creates uses `YYYY-MM-DD-WX-<filename>.md`, where `WX` is the ISO week number (e.g. `2026-07-01-W27-daily-plan.md`, `2026-07-01-W27-grooming-brief.md`). Compute the week number from the date being used for the file (today's date for most outputs; the relevant meeting/event date for meeting notes). This applies to all new outputs across every skill — daily/weekly plans, meeting notes, analyses, decisions, status updates, etc. Existing files already saved under the old `YYYY-MM-DD-<filename>` pattern are not renamed retroactively.
+
 **Context Library (Reference & History):**
 - **PRDs & Specs:** `context-library/prds/` (all the PM's PRDs, one-pagers, feature briefs)
 - **Strategy:** `context-library/strategy/` (roadmaps, OKRs, vision docs, GTM plans)
