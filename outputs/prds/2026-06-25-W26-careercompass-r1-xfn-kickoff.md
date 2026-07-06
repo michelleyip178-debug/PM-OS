@@ -18,7 +18,7 @@ links:
 
 ---
 
-> **⚠️ Recent Changes (2026-07-03):** Epic C reverted from ATS integration ("World A") back to fully OTEP-native status tracking ("World B") — **ATS confirmed not ready until 2028** (source: not yet documented — verify before this goes to SteerCo). This reverses D-026 and re-confirms D-030. Removes the ATS-integration risk, but creates a new one: a native manager status-update UX that was never designed under World A. See [Decisions Log](#key-decisions-made) for full history. Full candidate-idea prioritization work for R1 (15 ideas, ICE-scored) lives in a separate linked analysis, not in this document — see link below.
+> **⚠️ Recent Changes (2026-07-03, sourcing updated 2026-07-06):** Epic C reverted from ATS integration ("World A") back to fully OTEP-native status tracking ("World B") — **ATS confirmed not ready until 2028** (source: Engineering Team, 2026-07-06 — ATS integration requires an e-tender process; this is now a sourced fact, citable directly at SteerCo). This reverses D-026 and re-confirms D-030. Removes the ATS-integration risk, but creates a new one: a native manager status-update UX that was never designed under World A. See [Decisions Log](#key-decisions-made) for full history. Full candidate-idea prioritization work for R1 (15 ideas, ICE-scored) lives in a separate linked analysis, not in this document — see link below.
 
 ---
 
@@ -219,7 +219,7 @@ Expand to additional agencies based on Phase 1 satisfaction scores and completio
 - [ ] **Native manager status-update UX** — what does the HR/posting manager experience look like for moving applications through Submitted → Under Review → Outcome, now that this lives entirely in OTEP instead of the ATS? Needs its own design pass before Epic C grooming. — Amber + Pow Hwee
 - [ ] **Mark sign-off on shaped epic set** (#40) — Michelle → Mark. Mark's original 2026-06-05 briefing already specified "native status tracking (no ATS)" — the D-030 revert brings Epic C back in line with what Mark originally asked for, which may simplify this sign-off conversation.
 - [ ] **CIE as opportunity-side competency inference layer** — explore using CIE to infer competencies for opportunities created in Compass (Epic A) and C@G-ingested jobs with no competencies attached. Relates to the open tagging-scale problem noted under Epic A. Distinct from the CIE/CV-inference Non-Goal below, which covers officer-side pre-fill only. Not yet sized or discussed with the team — see [open item #54](../../../PM-skills-ALL-1/00-hub/open-items.md). — Michelle
-- [ ] **Source the "ATS not ready until 2028" claim** — this date drove the entire D-030 revert but has no cited source (person, system owner, or document) anywhere in this PRD. Confirm with whoever owns the ATS roadmap before this goes to SteerCo — Michelle
+- [x] ~~**Source the "ATS not ready until 2028" claim**~~ — **Resolved 2026-07-06.** Engineering Team confirmed ATS integration will not be ready for Compass because it requires an e-tender process. This is now a sourced fact, not an unverified date, and can be cited directly at SteerCo. See hub tracker item #40.
 - [ ] **Does Epic B pre-fill risk the same "current-state fit" trap external job boards fall into?** — market research on talent marketplace matching ([brief](../research-synthesis/2026-07-03-W27-talent-marketplace-job-matching-approaches.md)) shows LinkedIn/Indeed match on current profile similarity, which the recommender hypotheses (H2) predict under-delivers for opportunity decisions. Epic B's pre-fill is profile-driven only (by design, per Non-Goals), so this isn't a live R1 risk — but worth flagging before the opportunity recommender (R2+) inherits the same current-state-only signal. Not yet discussed with the team. — Michelle
 
 ---
@@ -290,7 +290,7 @@ Agency HR creates a posting in OTEP native form, publishes, sees applications la
 | D-027 | Smart Assistant → R3 | Post-review 2026-06-24 | Confirmed |
 | D-028 | Saved Jobs → R1 | R1 jam 2026-06-24 | Confirmed |
 | D-029 | C@G native apply → excluded from R1 | Confirmed | Confirmed |
-| D-030 | ATS fork reverts to World B (OTEP-native status tracking, no ATS) | 2026-07-03 | ⚠️ Confirmed by Michelle, but **source of "ATS not ready until 2028" not yet documented** — verify with ATS system owner before treating as final. Reverts D-026 back to original R1 jam recommendation / Mark's 2026-06-05 briefing. |
+| D-030 | ATS fork reverts to World B (OTEP-native status tracking, no ATS) | 2026-07-03 | Confirmed. **Source of "ATS not ready until 2028" documented 2026-07-06** — Engineering Team, e-tender process requirement. Reverts D-026 back to original R1 jam recommendation / Mark's 2026-06-05 briefing. |
 | Open | PSFG in R1 vs R1.5 | — | Pending (Jace 2026-06-25) |
 
 </details>
@@ -299,4 +299,4 @@ Agency HR creates a posting in OTEP native form, publishes, sees applications la
 
 *Stage: XFN Kickoff. Last updated: 2026-07-03.*  
 *Sources: R1 epic brief (2026-06-23), R1 jam draft v3 (2026-06-22), manager briefing (2026-06-23), OTEP OKR roadmap (2026-06-16), live Jira S4 (2026-06-25). ATS timeline update (2026-07-03, source not yet documented — see D-030 and Open Questions). Full candidate-idea brainstorm and ICE prioritization split to a [linked analysis](../archive/2026-W27-Jun29-Jul3/analyses/2026-07-03-W27-r1-candidate-ideas-ice.md) to keep this PRD readable.*  
-*Next: Source the ATS-2028 claim before SteerCo → Mark sign-off (#40) → open R1 story pipeline → Epic A readiness gate (agency-admin auth) + Epic C manager status-update UX design before grooming.*
+*Next: Mark sign-off (#40) at 9 Jul SteerCo → open R1 story pipeline → Epic A readiness gate (agency-admin auth) + Epic C manager status-update UX design before grooming.*
