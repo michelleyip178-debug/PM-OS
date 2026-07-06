@@ -76,12 +76,12 @@ quarter: Q2/Q3 2026
 1. Write up the ATS-2028 sourcing as a decision doc — 2 days of runway left before Thursday
 
 **Needs a decision, not urgent:**
-2. What to do with the 19 orphaned Core Sprint 5 ticket files (archive vs. investigate)
-3. Whether to formally log today's Adrian decision (full-title-matching-only) in the decisions log, so it doesn't get re-litigated later
+2. Core board still has a real gap beyond the orphans: live Jira shows 100 issues vs. 76 in the local cache after cleanup — 24 tickets from today's pull were never synced in. Needs a follow-up `/jira-sync core` run.
 
 **Closed, no action needed:**
-4. ~~Scheduling collision~~ — resolved by skipping Opus (recorded) for standup
-5. ~~Hao Eng backup~~ — confirmed she's clearing her own two tickets before leaving tomorrow, no handoff needed
+3. ~~Scheduling collision~~ — resolved by skipping Opus (recorded) for standup
+4. ~~Hao Eng backup~~ — confirmed she's clearing her own two tickets before leaving tomorrow, no handoff needed
+5. ~~19 orphaned Core Sprint 5 ticket files~~ — archived to `03-stories/jira-sync/Archive/`, `sprint-status.md` updated, Adrian's title-matching decision now formally logged in the decisions log alongside ATS-2028
 
 ---
 
