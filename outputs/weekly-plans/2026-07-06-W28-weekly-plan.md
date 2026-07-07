@@ -51,7 +51,7 @@ Last week closed the #43 BO sign-off loop but left two things exposed for SteerC
 - Blocks: Mark's R1 sign-off, Sprint 6 planning capacity commitments
 
 **Linked to:**
-- PRD: [careercompass-r1-xfn-kickoff.md](../prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md)
+- PRD: [careercompass-r1-prd.md](../prds/2026-07-07-W28-careercompass-r1-prd.md)
 - Analysis: [r1-must-epics-effort-sizing.md](../analyses/2026-07-04-W27-r1-must-epics-effort-sizing.md)
 - Decision: D-030 (Epic C ATS World A→B revert)
 

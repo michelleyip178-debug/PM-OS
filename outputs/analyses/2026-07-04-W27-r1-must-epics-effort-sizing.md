@@ -3,7 +3,7 @@ feature: R1 Must-Have Epics — A, B, C effort sizing
 date: 2026-07-04
 owner: Michelle Yip
 type: resourcing/effort-sizing
-parent-prd: outputs/prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md
+parent-prd: outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
 status: draft — pre-grooming, unvalidated with engineering
 ---
 
@@ -114,4 +114,4 @@ At this team's demonstrated velocity (~13-14 pts/dev/sprint), the estimable port
 ---
 
 *Source: R1 XFN Kickoff PRD, live Jira Sprint 5 velocity data (2026-07-03 pull).*
-*Parent PRD: [2026-06-25-W26-careercompass-r1-xfn-kickoff.md](../prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md)*
+*Parent PRD: [2026-07-07-W28-careercompass-r1-prd.md](../prds/2026-07-07-W28-careercompass-r1-prd.md)*

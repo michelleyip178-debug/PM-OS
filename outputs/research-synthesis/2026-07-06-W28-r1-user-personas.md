@@ -3,7 +3,7 @@ feature: CareerCompass Release 1 (R1)
 date: 2026-07-06
 owner: Michelle Yip
 type: user-personas
-parent-prd: outputs/prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md
+parent-prd: outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
 status: draft — grounded in R1 PRD funnel data, journey lanes, and effort sizing; not yet validated against live user interviews
 ---
 

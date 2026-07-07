@@ -160,7 +160,7 @@ A follow-up meeting between WD and ITC, plus a post-meeting email from the WD/PS
 
 ### Cross-Reference
 
-- **R1 PRD Open Question #1** ([2026-06-25-W26-careercompass-r1-xfn-kickoff.md](../../../prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md)) has been updated to reflect this addendum: WD has verbally positioned PSFG as a standalone category with volume + tagging commitments made, but the category-vs-user-need governance principle is still unresolved, and **formal policy intent still needs to be confirmed by WD** — the standalone-category stance from this meeting/email hasn't yet been formalized as an official sign-off.
+- **R1 PRD Open Question #1** ([2026-07-07-W28-careercompass-r1-prd.md](../../../prds/2026-07-07-W28-careercompass-r1-prd.md)) has been updated to reflect this addendum: WD has verbally positioned PSFG as a standalone category with volume + tagging commitments made, but the category-vs-user-need governance principle is still unresolved, and **formal policy intent still needs to be confirmed by WD** — the standalone-category stance from this meeting/email hasn't yet been formalized as an official sign-off.
 - **Original defensive brief** (referenced in this file's initial "Rationale" for conditional gating) flagged competency tagging, FormSG coverage, and participation tracking as structural gaps. Competency tagging is now resolved per WD's confirmation above; FormSG coverage and participation tracking are not mentioned in this follow-up and should be checked before treating the original gap list as closed.
 
 ---

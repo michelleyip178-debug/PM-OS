@@ -4,7 +4,7 @@ feature: R1 — Epics A, B, C (Must-have floor) + Epic D (Should-have) + Epic E 
 date: 2026-07-06
 owner: Michelle Yip
 type: job-stories
-parent-prd: outputs/prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md
+parent-prd: outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
 personas: outputs/research-synthesis/2026-07-06-W28-r1-user-personas.md
 status: draft — pending Mark sign-off (#40); several stories flagged against unresolved PRD blockers; Epic D flagged as scope-risk (first cut candidate); Epic E added 2026-07-06 to close a gap where it was missing from job stories despite being in the parent PRD's five-epic scope
 ---

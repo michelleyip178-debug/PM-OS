@@ -3,7 +3,7 @@ feature: Epic A — Opportunity Creation
 date: 2026-07-03
 owner: Michelle Yip
 type: opportunity-solution-tree
-parent-prd: outputs/prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md
+parent-prd: outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
 status: discovery — not committed scope
 ---
 
@@ -94,5 +94,5 @@ Ladders up to: OKR 1 (competency growth), OKR 3 (workforce planning), Mission ("
 
 ---
 
-*Parent PRD: [2026-06-25-W26-careercompass-r1-xfn-kickoff.md](../../../prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md)*
+*Parent PRD: [2026-07-07-W28-careercompass-r1-prd.md](../../../prds/2026-07-07-W28-careercompass-r1-prd.md)*
 *Related: [Talent marketplace job matching brief](../research-synthesis/2026-07-03-W27-talent-marketplace-job-matching-approaches.md), [R1 candidate ideas ICE](2026-07-03-W27-r1-candidate-ideas-ice.md)*

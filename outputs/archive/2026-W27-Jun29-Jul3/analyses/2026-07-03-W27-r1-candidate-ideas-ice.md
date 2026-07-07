@@ -2,7 +2,7 @@
 feature: CareerCompass Release 1 — Candidate Ideas & Prioritization
 date: 2026-07-03
 owner: Michelle Yip
-parent-prd: outputs/prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md
+parent-prd: outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
 status: Discovery — none of these are committed R1 scope
 ---
 
@@ -116,4 +116,4 @@ Two existing open threads resurfaced across multiple independent ideas rather th
 ---
 
 *Source: Product trio brainstorm + assumption-risk stress test + ICE prioritization, 2026-07-03.*
-*Parent PRD: [2026-06-25-W26-careercompass-r1-xfn-kickoff.md](../../../prds/2026-06-25-W26-careercompass-r1-xfn-kickoff.md)*
+*Parent PRD: [2026-07-07-W28-careercompass-r1-prd.md](../../../prds/2026-07-07-W28-careercompass-r1-prd.md)*

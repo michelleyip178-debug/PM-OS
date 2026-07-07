@@ -95,4 +95,4 @@ Smart Assistant confirmed out — R3.
 ---
 
 *Source: Reforge Feature Opportunity Validation framework. Updated 24 Jun 2026 to reflect confirmed scope.*
-*Related docs: [r1-epic-brief-confluence](2026-06-23-W26-r1-epic-brief-confluence.md) · [r1-scope-tldr-adrian](../slack-messages/2026-06-24-W26-r1-scope-tldr-adrian.md) · [r1-jam-onepager](2026-06-22-W26-r1-jam-onepager.md)*
+*Related docs: [R1 PRD](../prds/2026-07-07-W28-careercompass-r1-prd.md) (supersedes r1-epic-brief-confluence, now deleted) · [r1-scope-tldr-adrian](../slack-messages/2026-06-24-W26-r1-scope-tldr-adrian.md) · [r1-jam-onepager](2026-06-22-W26-r1-jam-onepager.md)*
