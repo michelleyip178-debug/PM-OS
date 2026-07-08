@@ -11,7 +11,7 @@ attendees: [Xian Zhang Guo (ESG), Jeremy Toh (ESG), Soo Chin Seet (ESG), Adrian 
 
 Framed as an "OTEP clarification" session but functioned as a discovery/alignment meeting with ESG as a candidate pilot agency. The real finding: Career Compass assumes competency data lives in HR systems, but ESG's competencies live outside Cumulus/Workday entirely (FormSG, dashboards, data warehouse, internal career-planning processes). This reframes ESG onboarding from "enable agency access" to "build competency foundations first" — a materially bigger lift than originally assumed. ESG is a genuinely strong pilot candidate (mature internal career-development processes, sophisticated requirements) but MVP value for them specifically may be weak without competency data solved first.
 
-**⚠️ Possible name collision:** "Xian Zhang Guo" (ESG, this meeting) is likely a different person from "Xian Zhang" already in stakeholder-profiles.md (OTEP Business Stakeholder / Decision-maker, seen at Weekly Design Review). Confirm before merging any notes — treat as distinct people until verified.
+**Update 2026-07-08:** Confirmed — "Xian Zhang Guo" (this meeting) and "Xian Zhang" (stakeholder-profiles.md) are the same person, not a naming collision. Stakeholder profile updated accordingly.
 
 ---
 
@@ -122,7 +122,7 @@ Framed as an "OTEP clarification" session but functioned as a discovery/alignmen
 
 - **Open item #50** (CMM scope pressure) — this ESG meeting is the clearest external validation yet that CMM matters to real pilot-agency needs, not just internal governance debates. Recommend using this meeting as supporting evidence when escalating #50, since "an actual pilot agency's onboarding is blocked without it" is a stronger forcing argument than the internal governance framing used so far.
 - **Open item #13** (Go-Live 16 Oct 2026, confirmed) — ESG's October timing reference is consistent with this, not a new date. No conflict, just worth double-checking ESG's understanding matches.
-- **Stakeholder profile "Xian Zhang"** (context-library/stakeholder-profiles.md) — flagged above as a likely different person from "Xian Zhang Guo" in this ESG meeting. Recommend adding a distinct stakeholder profile entry for Xian Zhang Guo (ESG) rather than risking a merge/confusion with the existing OTEP Design Review stakeholder.
+- **Stakeholder profile "Xian Zhang"** (context-library/stakeholder-profiles.md) — confirmed 2026-07-08 to be the same person as "Xian Zhang Guo" in this ESG meeting. Profile updated to reflect the pilot-agency and LDS-liaison context.
 
 ---
 

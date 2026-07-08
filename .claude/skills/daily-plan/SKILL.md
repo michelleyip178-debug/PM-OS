@@ -166,6 +166,11 @@ If no integrations available, I'll:
    - Open with: "Carrying over from yesterday: [deferred items]."
    - If no previous plan exists, skip this step.
 
+   **Protected-item check:** If yesterday's plan had a 🔒 Protected item and it's unchecked today, don't just fold it into today's carry-over silently. Flag it explicitly:
+   > ⚠️ Yesterday's protected item ([item]) didn't happen. If something displaced it, name what — that's the pattern from W22–W28 (see `context-library/pm-os-learning-log.md`): unplanned work is often genuinely valuable, but it should be a conscious trade, not an invisible one.
+   
+   If this is the **second consecutive day** the same item was protected and missed, escalate the language: this needs a same-day resolution (delegate, timebox, or explicitly renegotiate the deadline), not a third day of carry-over.
+
 3. **Check for weekly plan:**
    - Read `outputs/weekly-plans/YYYY-WXX-weekly-plan.md` for current week
    - If exists: Extract this week's Top 3 priorities
@@ -415,6 +420,18 @@ If light meeting day (< 2 hours):
 - Meeting requires prep but no prep time available
 - Stakeholder needs decision but you're missing input
 
+**Protected Priority (pick exactly one):**
+
+From weekly reviews (recurring pattern flagged W22–W28: real, valuable unplanned work repeatedly displaces hard-deadline items — see `context-library/pm-os-learning-log.md`), name one item from Today's Three as the thing that doesn't move today, no matter what comes up. Criteria, in order:
+1. Has a hard external deadline within 2 days (SteerCo, stakeholder commitment, someone else blocked)
+2. Has already carried over once
+3. If neither applies, the highest-P0 item
+
+Add one line directly under Today's Three:
+> 🔒 **Protected today:** [item] — if something new pulls you away, this is the one thing to explicitly decide to defer, not silently lose.
+
+This isn't about refusing new work — it's about making the trade-off a conscious call instead of a day that quietly runs out.
+
 **Standup Lens (sprint days only):**
 On a day with a standup, generate 2-3 bullets on what to actively listen for, derived from the live Jira pull (Step 2D) + open items + risks:
 - Engineers blocked on a PM decision or AC clarification (you own the unblock)
@@ -488,6 +505,8 @@ mcps_used: [Calendar, Gmail, Linear, Analytics]
 1. [ ] **[P0 Task/Meeting Outcome]** - Advances [Initiative/Priority]
 2. [ ] **[P0 Task/Meeting Outcome]** - Unblocks [Team/Person]
 3. [ ] **[Important Decision/Document]** - Aligns [Stakeholders]
+
+🔒 **Protected today:** [item] — if something new pulls you away, decide to defer this out loud rather than losing it silently.
 
 *Why these three:*
 - [Brief rationale for prioritization]
@@ -656,6 +675,7 @@ These tasks from today's list could be handled by someone on your team:
 Before presenting the daily plan, verify:
 
 - [ ] **Carry-over checked:** If yesterday's plan exists, deferred items are surfaced at the top
+- [ ] **Protected item set:** Today's Three includes exactly one 🔒 Protected item; if yesterday's protected item was missed, it's flagged explicitly (not silently re-added)
 - [ ] **Today's Three is realistic:** Account for meeting load (heavy meeting day = Today's Two)
 - [ ] **Every meeting has context:** At minimum, attendee names and one line of context per meeting
 - [ ] **P0 tasks have time blocked:** If a P0 has no free block assigned, flag it in Heads Up

@@ -151,7 +151,7 @@ Status visible in OTEP ◄─────┘
 
 **If R1 has to cut scope:** Epic D (Saved Jobs) goes first. If the competency SSOT contract (#18/#41) slips, Epic E defers to read-only sync only (no write-back). Epics A + B + C remain the non-negotiable floor — but note Epic C's actual constraint is no longer ATS integration risk (that's gone with the World B lock-in), it's the undesigned native manager status-update UX. Don't treat Epic C as de-risked just because the ATS fork resolved; confirm the new UX is actually smaller in scope than the prior integration work before treating the floor as safe.
 
-**Capacity flag:** Thomas remains the single front-end engineer across Epics A and B; the new manager-facing UX in Epic C adds further front-end load. A capacity check against the sprint plan is a blocker before R1 grooming opens, separate from any scope sign-off.
+**Capacity flag (updated 2026-07-08):** Thomas is no longer the sole front-end engineer — Léo is full-stack and can also pick up FE work, so front-end capacity across Epics A, B, and the new manager-facing UX in Epic C is no longer a single-point bottleneck. This eases the risk originally flagged here, but a capacity check against the sprint plan is still worth doing before R1 grooming opens — confirm actual FE/BE split between Thomas and Léo given the combined R1 + ongoing MVP/R1.5 workload, rather than assuming the eased constraint fully resolves the question.
 
 ---
 

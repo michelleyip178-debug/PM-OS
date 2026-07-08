@@ -1,0 +1,21 @@
+### End of Day — 2026-07-08 (Wednesday, W28)
+
+**Done today:**
+- Corrected two Sprint 6 auth-core tickets directly in Jira: OTEP-71 (resolved both open questions — single active session enforced, agency de-onboarding treated like a never-onboarded agency) and OTEP-110 (re-scoped to own invalid-credential error display after an earlier same-day miscall had it going the other way — good catch-and-reverse, not a clean first pass).
+- OTEP-594's three blocking decisions (#7/#8/#9) all resolved and the AC rewritten clean in Jira — routing boundary settled, copy genericized (no hard-coded day count), auto-logging replaced with an officer-initiated "Report issue" CTA. Screen itself still needs to be built; kept as one ticket rather than split.
+- Confirmed OTEP-425 (bookmark spike) is out of Sprint 6 — consistent with the MVP/R1 scope-conflict already flagged.
+- Set (not decided) a scope-cut direction for OTEP-130 (drop webhook/tracking/notifications) — correctly held as Pow Hwee's call at internal sprint planning, tracked as open-items #57 rather than pushed to Jira unilaterally.
+- Built a Sprint 6 external-dependency map and put it through six real correction passes against Pow Hwee's direct feedback — each pass caught a specific inaccuracy (POCDEX API wrongly framed as "not ready," C@G ingestion wrongly tied to POCDEX at all, ring-fencing's Data Office clearance ownership, WOG AD's two-part framing of shared root cause vs. Compass's own timeline confidence). The last correction (Core team's competency data — "we don't have visibility," not "the gap is ours to define") landed just as today's session closed and hasn't been pushed through to the analysis doc yet, only the Slack draft.
+- Ran `/endday` for the PM-skills-ALL-1 workspace — surfaced that OTEP-505 and search AC ownership (#51), this morning's two flagged must-nots, both slipped again today.
+
+**Carries to tomorrow:**
+- **OTEP-505 (Hao Eng's CFT integration) — untouched for a second consecutive day.** Day 4 unconfirmed, no backup, sprint closes 12 Jul. Needs an explicit accept-the-risk-or-escalate decision before SteerCo, not another quiet pass-through.
+- **Search AC ownership (#51) — status unknown**, planned to close at 3:30pm Team 2 Grooming today; no confirmation it happened. Check directly with Rathika/Thomas/Amber first thing.
+- **Push the Core-team-visibility correction through to `2026-07-08-W28-sprint6-external-dependencies.md`** — only the Slack draft got the final fix; the analysis doc still frames it as "the gap is ours to define," which understates that the data itself may genuinely not be ready.
+- **Confirm whether OTEP-613 overlaps with the "no agency logo" story** mentioned in this morning's internal grooming notes — flagged, never resolved today.
+
+**One thing I'd do differently:**
+This is the second day running that OTEP-505 and search AC ownership were named the top priorities in the morning and slipped without a deliberate call to deprioritize them. Yesterday it was CMM governance and Huiting's data thread that pulled focus; today it was Sprint 6 Jira corrections and dependency mapping. Both days the substitute work was genuinely valuable — but the pattern itself is the signal worth acting on: two days running, the thing flagged as "can't slip a third time" got silently deprioritized by whatever felt most engaging in the moment, not by an explicit decision. Worth naming this pattern directly tomorrow morning rather than let it become a third occurrence.
+
+**PM growth & appraisal check:**
+The six-pass correction cycle on the dependency map — catching my own over-corrections in real time (e.g., swinging WOG AD's framing too far toward "shared, not on us" and losing the "our own timeline doesn't inspire confidence" half Pow Hwee also made) — is strong Ownership evidence for the Level 2 appraisal: identifying and fixing my own errors with minimal external prompting, rather than needing each one flagged from scratch. The missed opportunity is naming the OTEP-505/#51 slippage pattern explicitly today instead of just noting it in the sub-workspace endday — that's the actual outcomes-thinking move (state the real state of things, don't let a recurring gap stay implicit) and it's the one thing to correct tomorrow.

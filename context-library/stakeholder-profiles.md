@@ -2,10 +2,32 @@
 
 ---
 
+## Jamie Ang — Deputy Secretary, PSD
+
+**Role:** Deputy Secretary, PSD
+
+**Position in chain:** Above Adrian Ang — preliminary guidance and decisions need her sign-off before escalating further to PS (Permanent Secretary)
+
+**Interaction frequency:** Ad hoc, via leadership concurrence threads/emails ahead of key meetings (e.g. SteerCo)
+
+**Cares about:**
+- Risk reduction in rollout and change-management approach (e.g. phased/deferred agency onboarding)
+- Sensitive data handling and appropriate scoping (e.g. JR 6-8 role-visibility exclusions)
+- Getting a clean, pre-aligned position before items go to PS or SteerCo
+
+**How to work with Jamie Ang:**
+- Bring clear, scoped recommendations for concurrence — not open-ended options; she confirmed the JR 8 call quickly once asked directly (2026-07-08)
+- Treat her sign-off as the checkpoint before anything goes up to PS — don't skip her or escalate past her
+- Written concurrence (email) is the working channel so far — no meeting cadence established yet
+
+---
+
 ## Adrian Ang — Product Owner
 
 **Role:** Product Owner, OTEP
-**Position in chain:** Top — Jace reports to Adrian, Michelle reports to Jace
+
+**Position in chain:** Jace reports to Adrian, Michelle reports to Jace. Adrian reports up to Jamie Ang (Deputy Secretary, PSD) — preliminary decisions get her concurrence before going further to PS.
+
 **Interaction frequency:** Indirect (through Jace)
 
 **Cares about:**
@@ -20,7 +42,9 @@
 ## Jace — Direct Manager
 
 **Role:** Michelle's direct manager
+
 **Reports to:** Adrian Ang
+
 **Interaction frequency:** Regular (direct report relationship)
 
 **Cares about:**
@@ -35,26 +59,33 @@
 
 ---
 
-## Xian Zhang — Business Stakeholder
+## Xian Zhang (Guo) — Business Stakeholder
 
 **Role:** Business Stakeholder / Decision-maker
-**Seen in:** Weekly Design Review (Tuesdays, 14:00)
+
+**Seen in:** Weekly Design Review (Tuesdays, 14:00); also engages directly with pilot agencies (e.g. ESG discovery session, 2026-07-03) and brokers LDS's position on policy questions (e.g. JR role-visibility concurrence, 2026-07-08)
+
+**Also referred to as:** "Xian Zhang Guo" in some meeting notes — confirmed 2026-07-08 to be the same person, not a naming collision
 
 **Cares about:**
 - Whether the product meets business and agency needs
 - Design and flow decisions for OTEP features
 - Practical usability for public officers
+- Pilot-agency readiness and onboarding realities (e.g. surfaced ESG's competency-data gap)
+- Brokering policy positions from other stakeholders (e.g. LDS on role visibility)
 
 **How to work with Xian Zhang:**
 - Come prepared with clear options and tradeoffs — they make decisions, not just give feedback
 - The design review is Michelle's moment to present flow and surface considerations for a decision
 - Written follow-ups after the review are valued (async-first audience)
+- Also a channel into pilot-agency and policy-stakeholder (LDS) perspectives — loop them in early on rollout or sensitive-data questions
 
 ---
 
 ## Jacky — Business Stakeholder
 
 **Role:** Business Stakeholder / Decision-maker
+
 **Seen in:** Weekly Design Review (Tuesdays, 14:00)
 
 **Cares about:** Same as Xian Zhang — business fit, officer UX, scope decisions
@@ -69,6 +100,7 @@
 ## Mark & GK — Senior Demo Audience
 
 **Role:** Senior stakeholders above the working level. The high-stakes demo audience.
+
 **Seen in:** Special consolidated demo sessions (not regular sprint demos).
 
 **How to work with them (demo agreement, 2026-06-02):**
@@ -80,6 +112,7 @@
 ## Imelda — Fellow PM
 
 **Role:** Product Manager, Pathfinder (OTEP)
+
 **What she owns:** Officer Profile, Learning Course Discovery, CV Upload & Inference, Competency Profile, My Development
 
 **Relationship:** Peer — we cover different feature areas on the same programme
@@ -93,6 +126,7 @@
 ## Pow Hwee — Tech Lead
 
 **Role:** Tech Lead, Michelle's pod
+
 **Seen in:** FormSG Integration PRD (listed as owner alongside Michelle)
 
 **Cares about:**
@@ -109,7 +143,9 @@
 ## Rama Moorthy — Delivery / Resource Lead
 
 **Role:** Involved in resource planning and squad dependency management
+
 **Seen in:** OTEP standups
+
 **Relationship to Michelle:** Peer — coordinates on resourcing across the team
 
 **Cares about:**
@@ -132,7 +168,9 @@
 ## Barry Lim — Resource / Capacity Decision-maker
 
 **Role:** Involved in resourcing decisions for OTEP
+
 **Seen in:** Referenced in standup (2026-05-25) as Rama's contact for additional headcount
+
 **Relationship to Michelle:** Indirect — decisions flow through Rama
 
 **Cares about:**
@@ -148,7 +186,9 @@
 ## Michelle Chen — Resource Counterpart (R1)
 
 **Role:** Leads a team that may contribute design/delivery capacity to R1 (exact remit TBC)
+
 **Seen in:** PM Weekly 2026-06-02 — Adrian to discuss R1 resourcing with her
+
 **Relationship to Michelle:** Indirect so far — Adrian is the channel
 
 **Cares about (inferred — confirm):**
