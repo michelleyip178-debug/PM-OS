@@ -22,6 +22,23 @@
 
 ---
 
+## Johnny Lim — GovTech, POCDEX API Engineering Owner
+
+**Role:** GovTech engineer, newly assigned to operationalize the POCDEX API (ETL + infra) for Compass
+
+**Background:** Prior experience in complex environments like MOE — familiar with TS, GCC, bespoke app dev, and procurement processes (per Pow Hwee's introduction, #compass-pocdex, 9 Jul 2026)
+
+**Relationship:** Direct working relationship — per Pow Hwee, Michelle and Johnny should communicate directly on functional clarifications rather than routing through Pow Hwee or Daryll
+
+**Cares about:** Not yet established — new working relationship as of 2026-07-09
+
+**How to work with Johnny:**
+- Go directly to him for POCDEX API functional questions (per Pow Hwee's explicit instruction, to cut coordination overhead)
+- He owns ETL code development (SQL Server source → PostgreSQL API database) and infra physicalisation
+- Relates to open item #31 (POCDEX go-live prep) and #56 (POCDEX sync cadence) — worth looping him into both threads since the ETL design likely depends on the sync-cadence answer
+
+---
+
 ## Adrian Ang — Product Owner
 
 **Role:** Product Owner, OTEP
