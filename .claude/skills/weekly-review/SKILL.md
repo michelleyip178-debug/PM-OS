@@ -595,12 +595,13 @@ quarter: Q[X] YYYY
 
 After saving the weekly review file, archive that week's working files to keep `outputs/` clean.
 
-**Archive folder:** `outputs/archive/YYYY-WXX/` (use the same week identifier as the review)
+**Archive folder:** `outputs/archive/YYYY-WXX-MonDD-MonDD/` (week identifier plus the Mon–Sun date range of that week, e.g. `2026-W27-Jun29-Jul3`). Compute the range from the week's Monday and Sunday (or Friday if the week is capped at 5 working days — match whatever range the weekly plan/review actually covers). Use abbreviated month names (Jan, Feb, Mar, …); if the range spans two months, show both (e.g. `Jun29-Jul3`); if it stays within one month, show it once (e.g. `Jul6-Jul10`).
 
 **Move these files** (match by date — only files dated within that week's Mon–Sun range):
-- `outputs/daily-plans/YYYY-MM-DD-daily-plan.md` → `outputs/archive/YYYY-WXX/daily-plans/`
-- `outputs/meeting-notes/YYYY-MM-DD-*.md` → `outputs/archive/YYYY-WXX/meeting-notes/`
-- `outputs/weekly-plans/YYYY-WXX-weekly-plan.md` → `outputs/archive/YYYY-WXX/`
+- `outputs/daily-plans/YYYY-MM-DD-daily-plan.md` → `outputs/archive/YYYY-WXX-MonDD-MonDD/daily-plans/`
+- `outputs/meeting-notes/YYYY-MM-DD-*.md` → `outputs/archive/YYYY-WXX-MonDD-MonDD/meeting-notes/`
+- `outputs/slack-messages/YYYY-MM-DD-*.md` → `outputs/archive/YYYY-WXX-MonDD-MonDD/slack-messages/`
+- `outputs/weekly-plans/YYYY-WXX-weekly-plan.md` → `outputs/archive/YYYY-WXX-MonDD-MonDD/`
 
 **Leave in place** (reference docs, not ephemeral):
 - `outputs/weekly-reviews/YYYY-WXX-weekly-review.md` — the permanent artifact, stays where it is
@@ -611,7 +612,7 @@ Use Bash: `mv [source] [dest]` — create the archive subfolders first with `mkd
 
 **Print a confirmation after archiving:**
 ```
-Archived W[XX] notes to outputs/archive/YYYY-WXX/
+Archived W[XX] notes to outputs/archive/YYYY-WXX-MonDD-MonDD/
   daily-plans/   [N files]
   meeting-notes/ [N files]
   weekly-plan    [1 file / not found]

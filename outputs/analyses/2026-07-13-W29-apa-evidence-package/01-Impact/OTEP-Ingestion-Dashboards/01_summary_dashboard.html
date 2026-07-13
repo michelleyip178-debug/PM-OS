@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP Ingestion — Summary Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.5; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; }
+  .metric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: .5rem; }
+  .metric-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: .5rem; }
+  .metric { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: .9rem 1.1rem; }
+  .metric .val { font-size: 28px; font-weight: 500; line-height: 1; margin-bottom: 5px; }
+  .metric .lbl { font-size: 12px; color: #5f5e5a; }
+  .metric .sub { font-size: 11px; color: #888780; margin-top: 4px; }
+  .metric.danger .val { color: #a32d2d; }
+  .metric.warn .val { color: #854f0b; }
+  .metric.ok .val { color: #3b6d11; }
+  .chart-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .chart-card h3 { font-size: 13px; font-weight: 500; margin-bottom: 1rem; color: #2c2c2a; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; font-size: 11px; color: #5f5e5a; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .legend-sq { width: 10px; height: 10px; border-radius: 2px; }
+  .issue-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: 12px; }
+  .issue-label { width: 120px; color: #5f5e5a; flex-shrink: 0; }
+  .issue-bar-wrap { flex: 1; height: 8px; background: #f1efe8; border-radius: 4px; overflow: hidden; }
+  .issue-bar-fill { height: 100%; border-radius: 4px; }
+  .issue-count { width: 32px; text-align: right; font-size: 12px; color: #2c2c2a; font-weight: 500; }
+  .type-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 500; margin-right: 4px; }
+  .status-row { display: flex; gap: 10px; margin-top: .5rem; }
+  .status-chip { font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+  .chip-red { background: #fcebeb; color: #a32d2d; }
+  .chip-amber { background: #faeeda; color: #854f0b; }
+  .chip-green { background: #eaf3de; color: #3b6d11; }
+  .chip-gray { background: #f1efe8; color: #5f5e5a; }
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Summary Dashboard</h1>
+    <p>Analysis of OTG opportunity data &nbsp;·&nbsp; 633 open opportunities &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting)</p>
+  </div>
+  <div style="background:#eaf3de;border-left:3px solid #3b6d11;border-radius:0 8px 8px 0;padding:.6rem 1rem;font-size:12px;color:#3b6d11;margin-top:.75rem;">
+    <strong>Updated 15 Jun 2026:</strong> v3 ingestion rules applied. StartDate optional for Jobs/Secondments, Function optional for all types, TC required for Gig/STIP only. 255 records newly unlocked.
+  </div>
+
+  <p class="section-title">Ingestion health</p>
+  <div class="metric-row">
+    <div class="metric">
+      <div class="val">2,023</div>
+      <div class="lbl">Total opportunities in source</div>
+      <div class="sub">All statuses</div>
+    </div>
+    <div class="metric">
+      <div class="val">633</div>
+      <div class="lbl">Open opportunities</div>
+      <div class="sub">Intended to appear on OTEP</div>
+    </div>
+    <div class="metric danger">
+      <div class="val">218</div>
+      <div class="lbl">Blocked — will not ingest</div>
+      <div class="sub">34.4% of open opportunities</div>
+    </div>
+    <div class="metric ok">
+      <div class="val">415</div>
+      <div class="lbl">Passing — ready to ingest</div>
+      <div class="sub">65.6% of open opportunities</div>
+    </div>
+  </div>
+
+  <div class="metric-row-3" style="margin-top:10px;">
+    <div class="metric warn">
+      <div class="val">346</div>
+      <div class="lbl">Stale (end date in the past)</div>
+      <div class="sub">54.7% of open opportunities</div>
+    </div>
+    <div class="metric warn">
+      <div class="val">255</div>
+      <div class="lbl">Stale + zero applicants</div>
+      <div class="sub">Candidate for auto-delist</div>
+    </div>
+    <div class="metric">
+      <div class="val">3</div>
+      <div class="lbl">Test entries (Open status)</div>
+      <div class="sub">Should be excluded from ingestion</div>
+    </div>
+  </div>
+
+  <p class="section-title">Blocked opportunities by missing field</p>
+  <div class="chart-card">
+    <h3>Number of open opportunities missing each required field</h3>
+    <div id="issueRows"></div>
+  </div>
+
+  <p class="section-title">Open opportunities by opportunity type</p>
+  <div class="two-col">
+    <div class="chart-card">
+      <h3>Distribution of all 633 open opportunities</h3>
+      <div style="position:relative;height:260px;">
+        <canvas id="typeChart" role="img" aria-label="Doughnut chart: Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, PSFG (formerly agilePSD) 29, STIP 7">Secondment 259, Job 129, No tag 78, Other TBC 56, SJR 39, Gig 36, PSFG 29, STIP 7</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>Blocked opportunities by type</h3>
+      <div style="position:relative;height:260px;">
+        <canvas id="blockedTypeChart" role="img" aria-label="Bar chart of blocked opportunities by type">Blocked by type</canvas>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">Unrecognised type summary</p>
+  <div class="metric-row-3">
+    <div class="metric danger">
+      <div class="val">78</div>
+      <div class="lbl">No [prefix] tag at all</div>
+      <div class="sub">MSF 37, EnterpriseGov 19</div>
+    </div>
+    <div class="metric warn">
+      <div class="val">56</div>
+      <div class="lbl">Other (TBC) — prefix unrecognised</div>
+      <div class="sub">18 distinct tag variants</div>
+    </div>
+    <div class="metric warn">
+      <div class="val">29</div>
+      <div class="lbl">PSFG (formerly agilePSD) — all from PSD</div>
+      <div class="sub">TC exempt — confirmed I-013 (12 Jun)</div>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <span class="status-chip chip-red">218 blocked</span>
+    <span class="status-chip chip-green">415 passing</span>
+    <span class="status-chip chip-green">255 newly unlocked (v3 rules)</span>
+    <span class="status-chip chip-gray">346 stale</span>
+  </div>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules) &nbsp;·&nbsp; See companion files for agency breakdown and unrecognised type deep-dive.
+  </div>
+
+</div>
+<script>
+const issueCounts = {
+  'Type Tag (unrecognised)': 78, 'End Date (missing)': 51, 'Business Unit (missing)': 47,
+  'Start Date (Gig/STIP only)': 27, 'Agency (unresolvable)': 22, 'Time Commitment (Gig/STIP)': 5
+};
+const sorted = Object.entries(issueCounts).sort((a,b)=>b[1]-a[1]);
+const maxVal = sorted[0][1];
+const colors = ['#e24b4a','#e24b4a','#ba7517','#ba7517','#1d9e75','#1d9e75','#1d9e75'];
+const container = document.getElementById('issueRows');
+sorted.forEach(([label, count], i) => {
+  const pct = (count / maxVal * 100).toFixed(1);
+  container.innerHTML += `
+    <div class="issue-bar-row">
+      <span class="issue-label">${label}</span>
+      <div class="issue-bar-wrap"><div class="issue-bar-fill" style="width:${pct}%;background:${colors[i]};"></div></div>
+      <span class="issue-count">${count}</span>
+    </div>`;
+});
+
+const typeLabels = ['Secondment','Job','No tag','Other (TBC)','SJR','Gig','PSFG (formerly agilePSD)','STIP'];
+const typeData = [259,129,78,56,39,36,29,7];
+const typeColors = ['#5DCAA5','#85B7EB','#7F77DD','#EF9F27','#AFA9EC','#378ADD','#1D9E75','#F09595'];
+
+new Chart(document.getElementById('typeChart'), {
+  type: 'doughnut',
+  data: { labels: typeLabels, datasets: [{ data: typeData, backgroundColor: typeColors, borderWidth: 1, borderColor: '#fff' }] },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '62%',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed}` } }
+    }
+  }
+});
+
+const blockedTypes = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR (excl. MVP)':39,'Gig':0,'STIP':0,'PSFG':0};
+new Chart(document.getElementById('blockedTypeChart'), {
+  type: 'bar',
+  data: {
+    labels: Object.keys(blockedTypes),
+    datasets: [{ data: Object.values(blockedTypes), backgroundColor: typeColors, borderRadius: 3, borderSkipped: false }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
