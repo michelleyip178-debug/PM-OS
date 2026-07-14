@@ -24,23 +24,23 @@ Tracking corrections to the panel-ready APA draft following evidence verificatio
 
 ## Open — Needs Michelle to Produce or Locate
 
-### A. QA/UAT environment separation — ownership framing
+### A. QA/UAT environment separation — ownership framing ✅ RESOLVED 2026-07-14
 **Issue:** Decisions log attributes this to "the Team" at a 9am meeting (2026-06-04), not solely Michelle. Draft currently implies sole ownership ("I proposed...").
 
-**What to produce:** Either (a) find a Slack message, meeting note, or draft doc showing you raised the idea before/at that meeting, or (b) soften the bullet to credit facilitation rather than sole authorship (e.g., "Facilitated team agreement to separate QA and UAT environments").
+**Resolution (2026-07-14):** Michelle confirmed no independent sourcing exists showing she raised it before the 06-04 meeting. Softened to credit facilitation, not sole authorship: **"Facilitated team agreement to separate QA and UAT environments, removing a recurring source of environment-drift bugs."** Use this phrasing in the Craft & Execution section going forward.
 
 **Owner:** Michelle
 
-**Needed by:** Before next APA draft round
+**Needed by:** ✅ Done — before Wed 15 Jul Ownership block
 
-### B. "0 unlogged scope changes across 4 sprints"
+### B. "0 unlogged scope changes across 4 sprints" ✅ RESOLVED 2026-07-14
 **Issue:** No audit trail anywhere counts or verifies this — it's asserted, not sourced.
 
-**What to produce:** Cross-check the decisions log (`outputs/decisions/2026-05-29-W22-decisions-log.md`, D-001 through D-026+) against sprint scope changes across Sprints 1–4 to confirm every scope call was actually logged. If it holds, you have a real, defensible number. If not fully verifiable, reword to something you can stand behind without an audit, e.g. "Maintained a continuous decisions log (D-001–D-026+) capturing every scope call with rationale, owner, and status."
+**Resolution (2026-07-14):** Checked the two available sprint-close snapshot logs (`00-hub/outputs/archive/sprint-1/end-sprint/snapshot-decisions-log.md`, `.../sprint-2/mid-sprint/snapshot-decisions-log.md`) against the canonical decisions log. Both snapshots are earlier point-in-time copies of the *same* canonical log, not an independently maintained record of scope changes — so there is no second source to cross-check against, and "0 unlogged" can't be verified (a log can't prove nothing is missing from itself). **Kept the safe wording:** "Maintained a continuous decisions log for the MVP build, capturing rationale, owner, and status for every scope call from D-001 to D-026+" — this is defensible; the zero-defect count is not.
 
 **Owner:** Michelle
 
-**Needed by:** Before submission — this is a scrutinized/underlined claim
+**Needed by:** ✅ Done — before Wed 15 Jul Ownership block
 
 ### C. AI Learn-Create-Share session (8 May 2026) — 4.25/5 satisfaction, 75% AI clarity
 **Issue:** Not found anywhere in either workspace. No file references this session, date, or these stats.
@@ -89,6 +89,9 @@ Craft & Execution:
 • Established Definition of Ready (DoR) audits across 4 sprints, eliminating sprint capacity
   burn on rework and mid-sprint clarifications
   o Intercepted 2 Acceptance Criteria (AC) conflicts in Sprint 4 before reaching engineering
+
+• Facilitated team agreement to separate QA and UAT environments, removing a recurring
+  source of environment-drift bugs
 ```
 
 (Sprint 3's "2 AC conflicts" bullet elsewhere in the draft is unchanged — both sprints now correctly show 2, matching source.)

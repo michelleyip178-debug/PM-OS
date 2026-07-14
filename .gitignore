@@ -6,5 +6,6 @@ node_modules/
 __pycache__/
 .claude/settings.local.json
 .mcp.json
+*.pdf
 outputs/meeting-notes/Meeting Notes Weekly Design Review with BO.pdf
 context-library/research/OTEP Ingestion Analysis/STIP GIG MASTERLIST 2026 - Copy.xlsx

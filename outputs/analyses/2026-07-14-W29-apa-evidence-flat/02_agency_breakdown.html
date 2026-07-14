@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTEP Ingestion — Agency Breakdown</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f4f0; color: #1a1a18; font-size: 14px; line-height: 1.5; }
+  .page { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0dfd8; }
+  .header h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #5f5e5a; }
+  .section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888780; margin: 1.75rem 0 .75rem; }
+  .chart-card { background: #fff; border: 0.5px solid #e0dfd8; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .chart-card h3 { font-size: 13px; font-weight: 500; margin-bottom: 1rem; color: #2c2c2a; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; font-size: 11px; color: #5f5e5a; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .legend-sq { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .agency-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: .5rem; }
+  .agency-table th { font-size: 11px; font-weight: 500; color: #888780; text-align: left; padding: 6px 10px 6px 0; border-bottom: 1px solid #e0dfd8; white-space: nowrap; }
+  .agency-table th.r { text-align: right; padding-right: 0; }
+  .agency-table td { padding: 7px 10px 7px 0; border-bottom: 0.5px solid #f1efe8; vertical-align: middle; color: #1a1a18; }
+  .agency-table td.r { text-align: right; padding-right: 0; font-weight: 500; }
+  .agency-table tr:last-child td { border-bottom: none; }
+  .agency-table tr:hover td { background: #faf9f6; }
+  .issue-mini { display: flex; gap: 4px; flex-wrap: wrap; }
+  .i-chip { font-size: 10px; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+  .i-red { background: #fcebeb; color: #a32d2d; }
+  .i-amber { background: #faeeda; color: #854f0b; }
+  .rank-num { font-size: 11px; color: #b4b2a9; font-weight: 500; }
+  .blocked-bar { display: flex; align-items: center; gap: 6px; }
+  .blocked-bar-track { width: 80px; height: 6px; background: #f1efe8; border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+  .blocked-bar-fill { height: 100%; border-radius: 3px; background: #e24b4a; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #e0dfd8; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>OTEP Ingestion — Agency Breakdown</h1>
+    <p>Still-blocked opportunities by agency (v3 rules) &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules, post-meeting) &nbsp;·&nbsp; <span style="background:#fcebeb;color:#a32d2d;font-size:11px;padding:2px 8px;border-radius:4px;">218 still blocked (v3 rules)</span></p>
+  </div>
+
+  <p class="section-title">Top agencies — still-blocked opportunity count by type (v3 rules)</p>
+  <div class="chart-card">
+    <div class="legend" id="stackLegend"></div>
+    <div style="position:relative;height:360px;">
+      <canvas id="stackedChart" role="img" aria-label="Stacked bar chart showing blocked opportunities per agency broken down by opportunity type">Blocked opportunities by agency and type</canvas>
+    </div>
+  </div>
+
+  <p class="section-title">Agency detail — top issues in blocked opportunities</p>
+  <div class="chart-card">
+    <table class="agency-table">
+      <thead>
+        <tr>
+          <th style="width:24px;"></th>
+          <th>Agency</th>
+          <th class="r" style="padding-right:12px;">Open</th>
+          <th class="r" style="padding-right:12px;">Blocked</th>
+          <th class="r" style="padding-right:12px;">% blocked</th>
+          <th>Top issues in blocked opportunities</th>
+          <th class="r">Stale</th>
+        </tr>
+      </thead>
+      <tbody id="agencyTableBody"></tbody>
+    </table>
+  </div>
+
+  <p class="section-title">Blocked opportunities by opportunity type — all agencies</p>
+  <div class="two-col">
+    <div class="chart-card">
+      <h3>Count of blocked opportunities per type</h3>
+      <div style="position:relative;height:250px;">
+        <canvas id="typeBlockedChart" role="img" aria-label="Blocked opportunities by type bar chart">Blocked opportunities by type</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3>% of each type that is blocked</h3>
+      <div style="position:relative;height:250px;">
+        <canvas id="typePctChart" role="img" aria-label="Percentage blocked per type">% blocked per type</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: OTG Oppr.xlsx — gigs_v2_report sheet &nbsp;·&nbsp; Updated: 15 Jun 2026 (v3 rules)
+  </div>
+</div>
+
+<script>
+const typeColors = {
+  'No tag': '#7F77DD', 'End date': '#E24B4A', 'Start date (Gig/STIP)': '#EF9F27',
+  'Time commitment': '#F09595', 'Business unit': '#85B7EB', 'Agency missing': '#1D9E75',
+  'Job/Secondment': '#5DCAA5', 'Other (TBC)': '#EF9F27', 'SJR': '#AFA9EC', 'Gig': '#378ADD', 'STIP': '#F09595'
+};
+
+// v3 rules: pivotData now shows STILL-BLOCKED counts only (post-v3 rule application)
+const pivotData = {
+  'Enterprise Singapore':              {'No tag':19,'End date':13,'Start date (Gig/STIP)':16,'Time commitment':5,'Business unit':5,SJR:0,Gig:0,STIP:0},
+  'Ministry of Social and Family Dev': {'No tag':37,'Business unit':1,SJR:0,Gig:0,STIP:0,'End date':0,'Start date (Gig/STIP)':0,'Time commitment':0},
+  '(No agency set)':                   {'No tag':0,'Agency missing':22,'End date':0,'Start date (Gig/STIP)':0,'Business unit':0,SJR:0,Gig:0,STIP:0},
+  'NCSS':                              {'End date':15,'Business unit':2,'No tag':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Ministry of Trade and Industry':    {'No tag':7,'End date':8,'Start date (Gig/STIP)':7,'Business unit':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Ministry of Digital Dev and Info':  {'Business unit':12,'No tag':0,'End date':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Public Service Division':           {'Business unit':3,'No tag':2,'Start date (Gig/STIP)':1,'End date':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'Workforce Singapore':               {'Business unit':7,'Start date (Gig/STIP)':1,'No tag':1,'End date':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+  'National Library Board':            {'Business unit':6,'No tag':1,'End date':0,'Start date (Gig/STIP)':0,SJR:0,Gig:0,STIP:0,'Time commitment':0},
+};
+
+const agencies = Object.keys(pivotData);
+const types = ['No tag','End date','Start date (Gig/STIP)','Time commitment','Business unit','Agency missing'];
+
+const legendEl = document.getElementById('stackLegend');
+types.forEach(t => {
+  legendEl.innerHTML += `<span><span class="legend-sq" style="background:${typeColors[t]}"></span>${t}</span>`;
+});
+
+new Chart(document.getElementById('stackedChart'), {
+  type: 'bar',
+  data: {
+    labels: agencies,
+    datasets: types.map(t => ({
+      label: t,
+      data: agencies.map(a => pivotData[a][t] || 0),
+      backgroundColor: typeColors[t],
+      borderSkipped: false,
+    }))
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#888780', maxRotation: 35 } },
+      y: { stacked: true, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+
+// v3 still-blocked counts; start/fn fields replaced with new v3 blocking fields
+const tableData = [
+  {name:'Enterprise Singapore',      open:197, blocked:44,  startGS:16, fn:0,  bu:5,  tag:19, tc:5,  endDate:13, stale:139},
+  {name:'MSF',                        open:43,  blocked:39,  startGS:0,  fn:0,  bu:1,  tag:37, tc:0,  endDate:0,  stale:6},
+  {name:'(No agency set)',            open:27,  blocked:22,  startGS:0,  fn:0,  bu:0,  tag:0,  tc:0,  endDate:0,  stale:3},
+  {name:'NCSS',                       open:20,  blocked:18,  startGS:0,  fn:0,  bu:2,  tag:0,  tc:0,  endDate:15, stale:0},
+  {name:'Ministry of Trade & Ind.',  open:44,  blocked:16,  startGS:7,  fn:0,  bu:0,  tag:7,  tc:0,  endDate:8,  stale:17},
+  {name:'MDDI',                       open:17,  blocked:12,  startGS:0,  fn:0,  bu:12, tag:0,  tc:0,  endDate:0,  stale:2},
+  {name:'Public Service Division',   open:37,  blocked:10,  startGS:1,  fn:0,  bu:3,  tag:2,  tc:0,  endDate:0,  stale:0},
+  {name:'Workforce Singapore',       open:22,  blocked:9,   startGS:1,  fn:0,  bu:7,  tag:1,  tc:0,  endDate:0,  stale:4},
+  {name:'National Library Board',    open:22,  blocked:8,   startGS:0,  fn:0,  bu:6,  tag:1,  tc:0,  endDate:0,  stale:0},
+];
+
+const tbody = document.getElementById('agencyTableBody');
+tableData.forEach((r, i) => {
+  const pct = Math.round(r.blocked / r.open * 100);
+  const barW = Math.round(r.blocked / 44 * 100);
+  const issues = [];
+  if (r.tag > 0) issues.push(`<span class="i-chip i-red">Type tag: ${r.tag}</span>`);
+  if (r.endDate > 0) issues.push(`<span class="i-chip i-red">End date: ${r.endDate}</span>`);
+  if (r.startGS > 0) issues.push(`<span class="i-chip i-amber">Start date (Gig/STIP): ${r.startGS}</span>`);
+  if (r.bu > 0) issues.push(`<span class="i-chip i-amber">Business unit: ${r.bu}</span>`);
+  if (r.tc > 0) issues.push(`<span class="i-chip i-red">Time commitment: ${r.tc}</span>`);
+  tbody.innerHTML += `
+    <tr>
+      <td><span class="rank-num">${i+1}</span></td>
+      <td>${r.name}</td>
+      <td class="r" style="padding-right:12px;">${r.open}</td>
+      <td class="r" style="padding-right:12px;">
+        <div class="blocked-bar">
+          <div class="blocked-bar-track"><div class="blocked-bar-fill" style="width:${barW}%"></div></div>
+          <span>${r.blocked}</span>
+        </div>
+      </td>
+      <td class="r" style="padding-right:12px;">${pct}%</td>
+      <td><div class="issue-mini">${issues.join('')}</div></td>
+      <td class="r">${r.stale}</td>
+    </tr>`;
+});
+
+// v3 still-blocked by type — Secondments now roll up into Jobs; StartDate/Function no longer block Jobs/Secondments
+const blockedByType = {'No tag':78,'Job/Secondment':87,'Other (TBC)':27,'SJR (excl. MVP)':39,'Gig':0,'STIP':0};
+const totalByType =   {'No tag':78,'Job/Secondment':388,'Other (TBC)':56,'SJR':39,'Gig':36,'STIP':7};
+const tLabels = Object.keys(blockedByType);
+
+new Chart(document.getElementById('typeBlockedChart'), {
+  type: 'bar',
+  data: {
+    labels: tLabels,
+    datasets: [{data: Object.values(blockedByType), backgroundColor: tLabels.map(t => typeColors[t]), borderRadius: 3, borderSkipped: false}]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('typePctChart'), {
+  type: 'bar',
+  data: {
+    labels: tLabels,
+    datasets: [{
+      data: tLabels.map(t => Math.round(blockedByType[t]/totalByType[t]*100)),
+      backgroundColor: tLabels.map(t => typeColors[t]),
+      borderRadius: 3, borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.parsed.x}% blocked` } }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, color: '#888780', callback: v => v + '%' },
+        max: 100
+      },
+      y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888780' } }
+    }
+  }
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

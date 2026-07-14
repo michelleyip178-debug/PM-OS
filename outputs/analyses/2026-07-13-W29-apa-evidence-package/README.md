@@ -14,20 +14,24 @@ Supporting evidence for the APA write-up ([corrected draft](../2026-07-13-W29-ap
 
 ## 01 — Impact
 
-| File | Supports |
+**Upload the `.pdf` version of each file below to SharePoint** (converted 2026-07-14 for readability — SharePoint doesn't render Markdown natively). Source `.md` files are kept alongside for editing/traceability but shouldn't go up as the panel-facing copy.
+
+| File (upload the `.pdf`) | Supports |
 |---|---|
 | `OTEP-Ingestion-Dashboards/01_summary_dashboard.html` | 633 total gigs, 160 passing (75% failure rate) baseline |
 | `OTEP-Ingestion-Dashboards/02_agency_breakdown.html` | Enterprise Singapore agency-level blocked/open counts |
 | `OTEP-Ingestion-Dashboards/04_oqa_risks_assumptions.html` | ESG 178 blocked under old rules → ~150 unlocked, 44 remain blocked (source of the corrected claim) |
 | `OTEP-Ingestion-Dashboards/09_ingestion_rules.html` | v3 ingestion rules detail |
 | `OTEP-Ingestion-Dashboards/OTEP_Remediation_Report_v3.xlsx` | Per-agency remediation plan |
-| `otg-ingestion-logic-v3.md` | v3 rules decision rationale (D-026) |
-| `2026-05-29-W22-decisions-log.md` | D-026 ingestion rules v3 entry |
-| `2026-06-24-W26-opportunity-category-taxonomy-analysis.md` | 3-taxonomy conflict, 210 unmappable listings |
-| `2026-06-24-W26-pow-hwee-taxonomy-assessment.md` | WOG 29→30 Job Families correction (2026-06-25) |
-| `wog-taxonomy-mapping.md` | Canonical WOG 30 Job Families (29 + Healthcare), decision I-019 |
-| `2026-06-11-W24-dependencies-sync.md` | POCDEX 4-story dependency chain resolution meeting |
-| `wog-authentication.md` | WOG Auth pilot scope: 6 agencies, ~5,400 officers |
+| `otg-ingestion-logic-v3.pdf` | v3 rules decision rationale (D-026) |
+| `2026-05-29-W22-decisions-log.pdf` | D-026 ingestion rules v3 entry |
+| `2026-06-24-W26-opportunity-category-taxonomy-analysis.pdf` | 3-taxonomy conflict, 210 unmappable listings |
+| `2026-06-24-W26-pow-hwee-taxonomy-assessment.pdf` | WOG 29→30 Job Families correction (2026-06-25) |
+| `wog-taxonomy-mapping.pdf` | Canonical WOG 30 Job Families (29 + Healthcare), decision I-019 |
+| `2026-06-11-W24-dependencies-sync.pdf` | POCDEX 4-story dependency chain resolution meeting |
+| `wog-authentication.pdf` | WOG Auth pilot scope: 6 agencies, ~5,400 officers |
+
+> HTML dashboards and the .xlsx report stay in their native format — those render fine in SharePoint/Excel Online and don't need conversion.
 
 ## 02 — Craft & Execution
 
