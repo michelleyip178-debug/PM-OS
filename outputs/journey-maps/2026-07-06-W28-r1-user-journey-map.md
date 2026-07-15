@@ -2,20 +2,38 @@
 product: CareerCompass (OTEP)
 feature: R1 — Epics A, B, C, D
 date: 2026-07-06
+updated: 2026-07-15
 owner: Michelle Yip
 type: user-journey-map
 sources:
   - outputs/research-synthesis/2026-07-06-W28-r1-user-personas.md
   - outputs/prds/2026-07-06-W28-r1-job-stories.md
-  - context-library/prds/r1-seamless-application-draft.md
-status: draft — grounded in PRD/personas/job-stories, not yet validated against live interviews
+  - outputs/prds/2026-07-07-W28-careercompass-r1-prd.md
+  - outputs/analyses/2026-07-15-W29-r1-research-plan.md
+status: draft — scope confirmed (Mark signed off 9 Jul SteerCo), still not validated against live interviews. See the R1 research plan for how this gets validated before Aug-Sep design lock.
 ---
 
 # User Journey Map: CareerCompass R1
 
 **Scope:** Three parallel lanes covering R1's Must-have floor (Epics A, B, C) plus the conditional Epic D (Saved Jobs).
 
-**Data gap flag:** Pain points and emotions are derived from the PRD's own named failure points ("the redirect," "the status black hole") and the personas doc, not live user interviews. Treat as hypotheses pending validation.
+**Data gap flag:** Pain points and emotions are derived from the PRD's own named failure points ("the redirect," "the status black hole") and the personas doc, not live user interviews. Treat as hypotheses pending validation. **A research plan now exists** ([2026-07-15-W29-r1-research-plan.md](../analyses/2026-07-15-W29-r1-research-plan.md)) to close this gap before R1 design locks Aug-Sep 2026, prioritizing Lane 3 (Posting Manager) sessions first since Epics A and C carry the least de-risked, unsized work.
+
+**What changed since 2026-07-06:** R1 scope is now finalized and locked, not provisional. The PRD (2026-07-07) confirmed "World B" — fully OTEP-native status tracking, no ATS/HRPS/Cumulus integration anywhere in the chain — as board-level sourced fact (CIO-confirmed 2026-07-07). Mark signed off on the Must-have floor (Epics A, B, C) at the 9 Jul SteerCo (open item #40, resolved 2026-07-09). This map's content is otherwise unchanged: the three blockers named below (agency-admin auth, competency SSOT contract, manager status-update UX) are all still open as of this update, despite draft outreach going out 2026-07-06 — no confirmed responses found in meeting notes since.
+
+---
+
+## Reforge Validation: What Each Lane Is Actually Testing
+
+This map, and the [R1 research plan](../analyses/2026-07-15-W29-r1-research-plan.md) built to validate it, both follow the **Reforge Feature Opportunity Validation** framework (Strategic Fit, User Value, Business Value) — the same lens applied to R1's original scope decision at the 24 Jun jamming session. That session validated whether R1 should exist; this map validates whether its design assumptions, lane by lane, actually hold.
+
+| Lane | Strategic Fit test | User Value test | Business Value test |
+|---|---|---|---|
+| **Lane 1 (Intentional Mover)** | Does removing the redirect + adding pre-fill deliver on "native, no redirects" (Product Strategy), or does a different friction point (e.g., pre-fill trust) turn out to matter more? | Do officers actually feel relief at not retyping, or does stale/wrong pre-fill create a worse experience than today's blank form, per the PRD's own trust-destroyer warning? | Apply completion rate (40%+ target) is the OKR most directly tested by this lane — if Phase 2's pre-fill trust risk is real, the OKR itself is at risk, not just the UX. |
+| **Lane 2 (Passive Watcher)** | Tests whether "CareerCompass becomes the system of record" needs a funnel-widening on-ramp at all, or whether Lane 1 alone captures enough value to justify R1 without Epic D. | Tests whether Persona 2's "safe place to defer" job is real and whether a save mechanism actually converts to Lane 1 entries, or whether it's a bookmark nobody returns to. | Epic D is the named first-cut candidate under scope pressure — this lane is the only place gathering evidence on that trade-off before it gets made by default, not after. |
+| **Lane 3 (Posting Manager)** | Tests the single biggest Strategic Fit risk in this map: World B (OTEP owns the full record) was locked for engineering-feasibility reasons, not because research confirmed posting managers want OTEP to own it. This lane is where that assumption either holds or breaks. | Tests Persona 3's actual job (assess fit, not just receive volume) against a workflow that, per the PRD, "did not exist under the old ATS plan" — genuinely new scope, not a simplification. | Carries the PRD's two least-sized, least-designed pieces (agency-admin auth, manager status-update UX). Per the effort-sizing analysis, this is where R1's real cost is hiding — Business Value here isn't about a metric target, it's about whether the floor Mark signed off on is actually buildable as scoped. |
+
+**The framework's biggest catch in this map:** Lane 3, Phase 4 (Move to Outcome) is flagged Red risk not because of technical difficulty, but because it's undesigned *and* untested against real posting-manager behavior. Strategic Fit and engineering feasibility aligned on World B by circumstance (ATS wasn't ready), this map — and the research plan behind it — exists to check they also align on User and Business Value, not just system architecture.
 
 ---
 
@@ -63,7 +81,7 @@ Lane 2 terminates by feeding Lane 1. Lane 3's final stage drives Lane 1's final 
 | **Opportunities** | 💡 Ship B1 (native apply, no redirect) and B2 (pre-fill) together — B2 without B1 doesn't fix momentum loss, B1 without B2 doesn't fix retyping. 💡 Instrument form-section abandonment from day one (already a PRD "ready to pull into stories now" item) |
 | **Metrics** | Target apply completion rate: 40%+ vs. ~15-20% OTG baseline. Kill-criteria: if completion doesn't hit 25% within four weeks, PRD's own logic says pause and remediate |
 
-**⚠️ Blocker at this stage:** Competency SSOT contract (#18/#41) between Léo and Kingsley — endpoint payload spec still open. Gates whether pre-fill is trustworthy at launch.
+**⚠️ Blocker at this stage:** Competency SSOT contract (#18/#41) between Léo and Kingsley — endpoint payload spec still open. Gates whether pre-fill is trustworthy at launch. **Update 2026-07-15:** sourcing itself is resolved (#18, confirmed 2026-07-05 via Imelda's workstream) — what's still open is only the endpoint payload spec. A direct Slack ask went to Léo and Kingsley 2026-07-06; no confirmed response found since.
 
 ### Phase 3: Wait for a Decision
 
@@ -177,7 +195,7 @@ Lane 2 terminates by feeding Lane 1. Lane 3's final stage drives Lane 1's final 
 | **Opportunities** | 💡 This is a sequencing decision, not a design one — get Pow Hwee/Fabian to commit an owner and date before treating any Epic A story as gradable |
 | **Metrics** | None possible until auth model is defined |
 
-**⚠️ Blocker at this stage:** Agency-admin auth undefined (Pow Hwee/Fabian). Gates all of Epic A.
+**⚠️ Blocker at this stage:** Agency-admin auth undefined (Pow Hwee/Fabian). Gates all of Epic A. **Update 2026-07-15:** still unresolved. A direct Slack ask went to Pow Hwee and Fabian 2026-07-06 asking for an owner and target date; no confirmed response found since. The PRD (2026-07-07) still lists this as "not yet resolved."
 
 ### Phase 2: Create and Publish a Posting
 
@@ -221,7 +239,7 @@ Lane 2 terminates by feeding Lane 1. Lane 3's final stage drives Lane 1's final 
 | **Opportunities** | 💡 Scope the confirm-step design (Epic C, manager side) and the rejection/outcome messaging (Epic C, officer side) together, per the PRD's own note that they're "the same design surface," not two separate reviews |
 | **Metrics** | This action is what starts the 24-hour latency clock for Lane 1 Phase 3 — but that latency target itself still needs Adrian's sign-off |
 
-**⚠️ Blocker at this stage:** Manager status-update UX is undesigned, Red risk — needs its own design and sizing pass before Epic C grooming opens.
+**⚠️ Blocker at this stage:** Manager status-update UX is undesigned, Red risk — needs its own design and sizing pass before Epic C grooming opens. **Update 2026-07-15:** still undesigned. A draft design-commission ask was written 2026-07-06 but the recipient (who owns design resourcing for Epic C) was never confirmed, so it's unclear if it was even sent. The PRD (2026-07-07) still lists this as genuinely new scope with no existing design, and the R1 research plan (2026-07-15) is now the primary vehicle for de-risking this lane's discovery, since there's no design to validate against yet.
 
 ---
 
@@ -259,12 +277,14 @@ Lane 3's Phase 4 action is the literal trigger for Lane 1's Phase 3-4 experience
 ```
 
 ### Next Steps
-- [ ] Confirm agency-admin auth owner and date with Pow Hwee/Fabian before Epic A enters grooming.
-- [ ] Push competency SSOT contract (#18/#41) to resolution between Léo and Kingsley — this gates both Lane 1 pre-fill trust and Lane 3 applicant-review data quality.
-- [ ] Commission the manager status-update UX design pass (Lane 3, Red risk) and scope it jointly with the officer-facing rejection/outcome screen (Lane 1).
+- [ ] **Follow up on the 2026-07-06 outreach that appears to have gone unanswered** — agency-admin auth (Pow Hwee/Fabian), competency SSOT payload spec (Léo/Kingsley), and manager UX design commission (recipient unconfirmed) were all drafted and, for the first two, apparently sent, but none show a confirmed response as of 2026-07-15. Re-send or escalate before Epic A/C grooming opens.
+- [ ] Push competency SSOT contract (#18/#41) to resolution between Léo and Kingsley — sourcing is done, only the endpoint payload spec remains, this gates both Lane 1 pre-fill trust and Lane 3 applicant-review data quality.
+- [ ] Commission the manager status-update UX design pass (Lane 3, Red risk) and scope it jointly with the officer-facing rejection/outcome screen (Lane 1) — confirm who actually owns design resourcing for this before sending the ask again.
 - [ ] Before cutting Epic D under scope pressure, name what happens to Lane 2's funnel-feeding role explicitly in the trade-off conversation, not just as a feature cut.
-- [ ] Get Adrian's sign-off on the 24-hour status latency target now that it measures an in-OTEP manager action instead of an ATS event.
+- [ ] Get Adrian's sign-off on the 24-hour status latency target now that it measures an in-OTEP manager action instead of an ATS event — still open per PRD Section 7.
+- [ ] **Run the R1 research plan** ([2026-07-15-W29-r1-research-plan.md](../analyses/2026-07-15-W29-r1-research-plan.md)) to validate this map's hypotheses against live officers and posting managers before design locks Aug-Sep 2026. Recruit by W30, sessions W31-W32, synthesize by W33.
 
 ---
 
-*Source: [R1 User Personas](../research-synthesis/2026-07-06-W28-r1-user-personas.md), [R1 Job Stories](../prds/2026-07-06-W28-r1-job-stories.md), [R1 Seamless Application PRD](../../context-library/prds/r1-seamless-application-draft.md).*
+*Source: [R1 User Personas](../research-synthesis/2026-07-06-W28-r1-user-personas.md), [R1 Job Stories](../prds/2026-07-06-W28-r1-job-stories.md), [R1 PRD](../prds/2026-07-07-W28-careercompass-r1-prd.md), [R1 Research Plan](../analyses/2026-07-15-W29-r1-research-plan.md).*
+*Last updated: 2026-07-15.*

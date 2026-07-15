@@ -18,7 +18,7 @@ time: 11:00-11:15am
 
 **Source:** Pre-structured executive summary and analysis (not a raw transcript) — decisions, risks, and action items below reflect that analysis directly.
 
-> **Coverage note:** This is the first captured record of this stand-up in 2 consecutive days — no notes existed for 2026-07-13 or the earlier part of 2026-07-14 (see [yesterday's cleanup](cleanup-2026-07-13.md) and [today's cleanup](cleanup-2026-07-14.md)). OTEP-505 (Hao Eng's CFT integration sub-task) does not appear anywhere in this standup — consistent with it having already been resolved separately and directly by Michelle earlier today (see [open-items.md #52](../../PM-skills-ALL-1/00-hub/open-items.md)), not through this venue.
+> **Coverage note:** This is the first captured record of this stand-up in 2 consecutive days — no notes existed for 2026-07-13 or the earlier part of 2026-07-14 (see [yesterday's cleanup](2026-07-13-W29-cleanup.md) and [today's cleanup](2026-07-14-W29-cleanup.md)). OTEP-505 (Hao Eng's CFT integration sub-task) does not appear anywhere in this standup — consistent with it having already been resolved separately and directly by Michelle earlier today (see [open-items.md #52](../../PM-skills-ALL-1/00-hub/open-items.md)), not through this venue.
 
 ---
 
@@ -146,7 +146,7 @@ Sprint 5 closed successfully despite a difficult prior two weeks, with OTG impor
 
 - [2026-07-14-W29-otep-squad-sync.md](2026-07-14-W29-otep-squad-sync.md) — same-day meeting, independently surfaces the identical UAT-readiness gap and a parallel (possibly duplicate) "define UAT process" action item
 - `00-hub/open-items.md` #52 (Hao Eng/OTEP-505 — resolved earlier today, separately from this venue), #58 (QA/UAT infra blockers — this standup's environment-governance risk is a direct continuation of that thread), #39 (UAT/VAPT timeline — 11 Aug fixed start date)
-- [cleanup-2026-07-13.md](cleanup-2026-07-13.md) and [cleanup-2026-07-14.md](cleanup-2026-07-14.md) — both flagged this standup as a 2-day coverage gap; this note closes it
+- [2026-07-13-W29-cleanup.md](2026-07-13-W29-cleanup.md) and [2026-07-14-W29-cleanup.md](2026-07-14-W29-cleanup.md) — both flagged this standup as a 2-day coverage gap; this note closes it
 
 ---
 

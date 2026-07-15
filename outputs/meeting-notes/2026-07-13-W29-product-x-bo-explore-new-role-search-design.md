@@ -123,7 +123,7 @@ Design-review session for CareerCompass's "Explore New Role" search experience, 
 
 - `00-hub/open-items.md` #51 (opportunity listing search — different feature, already resolved to fuzzy-match-only; don't conflate with this meeting's Explore New Role filters) and #55 (Huiting formal data requirements ask — likely shared deadline pressure with this meeting's Huiting-facing action item)
 - [2026-07-13-W29-compass-data-requirements-walkthrough.md](2026-07-13-W29-compass-data-requirements-walkthrough.md) — same-week decision to use ID-based (not name-based) competency matching, consistent with this meeting's competency-ID decision
-- [cleanup-2026-07-13.md](cleanup-2026-07-13.md) — this meeting was flagged there as a coverage gap (no notes existed as of that cleanup); this note closes that gap
+- [2026-07-13-W29-cleanup.md](2026-07-13-W29-cleanup.md) — this meeting was flagged there as a coverage gap (no notes existed as of that cleanup); this note closes that gap
 
 ---
 

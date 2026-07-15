@@ -3,7 +3,7 @@ audience: Mark (+ GK) — 9 Jul SteerCo
 purpose: R1 scope sign-off
 prepared: 2026-07-06
 owner: Michelle Yip
-status: draft — pending ATS source confirmation before send
+status: resolved — Mark signed off at 9 Jul SteerCo (open item #40)
 ---
 
 # R1 Manager Briefing — Scope Sign-Off

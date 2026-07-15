@@ -108,5 +108,5 @@ The retro named "requirements/scope change late," "key decisions postponed too l
 ---
 
 *Generated: 2026-07-03. Updated 2026-07-03 (PM) — folded in cross-meeting findings from same-day `/meeting-cleanup` (Squad Sync, Ways of Working Retro, Daily Standup, OTEP Clarification with ESG): #50 evidence strengthened, new-tab ownership gap and Monday scheduling collision added.*
-*Data sources: W27 weekly plan, daily plans (29 Jun–3 Jul), 14 meeting-notes files, R1 PRD + linked analyses, open-items.md, cleanup-2026-07-03.md*
+*Data sources: W27 weekly plan, daily plans (29 Jun–3 Jul), 14 meeting-notes files, R1 PRD + linked analyses, open-items.md, 2026-07-03-W27-cleanup.md*
 *Next: Run `/stale-check`, then `/weekly-plan` for W28*
