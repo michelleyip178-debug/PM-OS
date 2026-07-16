@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: -apple-system, Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #1a1a1a;
+      max-width: 780px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 20pt;
+      border-bottom: 2px solid #333;
+      padding-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 15pt;
+      margin-top: 28px;
+      color: #1a3a5c;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 12.5pt;
+      margin-top: 18px;
+    }
+
+    code {
+      background: #f2f2f2;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9.5pt;
+    }
+
+    ul {
+      margin: 6px 0 12px 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 20px 0;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    a {
+      color: #1a5cad;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>APA Evidence Summary — By Folder</h1>
+  <p><strong>Purpose:</strong> One-page-per-folder summary of what's in each folder and the specific evidence it proves
+    — for panel prep or a quick refresher before submission.</p>
+  <hr>
+  <h2>01 — Impact</h2>
+  <p><strong>What this folder proves:</strong> Concrete, numbers-backed product outcomes — not activity, actual
+    before/after change.</p>
+  <p><strong>Specific evidence:</strong></p>
+  <ul>
+    <li><strong>OTG ingestion recovery:</strong> 633 open opportunities, only 160 passing validation pre-fix (74.7%
+      blocked). After v3 ingestion rules (ratified 12 Jun, D-026): 415 passing (65.6%), 218 still blocked — a 255-record
+      recovery with zero agency action required. Enterprise Singapore's blocked count alone fell from 178 to ~44.</li>
+    <li><strong>Taxonomy conflict resolved:</strong> Reconciled three incompatible category systems (OTG 21 Job
+      Families, C@G 35 FieldSet codes, CompBank ~400 competency categories), mapped 210 unmappable C@G listings, and
+      produced four options that let the senior technical lead close a canonical architecture decision (WOG 23 Job
+      Families via translation dictionary) the same week.</li>
+    <li><strong>POCDEX dependency chain resolved:</strong> Ran a Dependencies Sync-Up (11 Jun) that surfaced and closed
+      a 4-story cross-squad dependency before it became a Sprint 4 surprise.</li>
+    <li><strong>WOG Auth scope defined:</strong> Pilot scope locked at 6 agencies, ~5,400 officers.</li>
+  </ul>
+  <p><strong>Evidence files:</strong> ingestion dashboards (<code>OTEP_Remediation_Report_v3.xlsx</code>,
+    <code>otg-ingestion-logic-v3.pdf</code>, D-026 in decisions-log.pdf, <code>wog-taxonomy-mapping.pdf</code>,
+    <code>wog-authentication.pdf</code>, <code>dependencies-sync.pdf</code>.
+  </p>
+  <hr>
+  <h2>02 — Craft &amp; Execution</h2>
+  <p><strong>What this folder proves:</strong> Delivery discipline — catching problems before they hit engineering, not
+    cleaning up after.</p>
+  <p><strong>Specific evidence:</strong></p>
+  <ul>
+    <li><strong>Sprint 4 planning (11 Jun):</strong> Intercepted 2 AC conflicts (OTEP-87 FormSG/C@G boundary; C@G
+      payload schema for OTEP-378) before day 1, each with a named owner and date set at planning.</li>
+    <li><strong>Point estimate correction against live Jira:</strong> Caught drift on two tickets (OTEP-405: 6pt
+      planning estimate vs. 3pt live; OTEP-406: 5pt vs. 2pt) — brought sprint total from 57 to a corrected 54 points
+      before commitment, not after the sprint was running hot.</li>
+    <li><strong>Structured readiness gate:</strong> Separated "ready" into 5 blockers + 4 design gates, each with an
+      owner, rather than a single yes/no call. Explicit capacity sense-check flagged Thomas (sole FE) as carrying
+      elevated WIP and blocked further Sprint 4 week-1 scope from landing on him.</li>
+    <li><strong>QA/UAT environment separation (4 Jun):</strong> Proposed and facilitated the team decision splitting QA
+      (engineer AC verification) from UAT (business acceptance) — removed a recurring source of environment-drift bugs.
+    </li>
+    <li><strong>Sprint-close governance (4 Jun):</strong> Proposed the rule that only the Business Owner can move
+      stories from UAT to Done — put the acceptance gate with the person accountable for business value, not engineering
+      self-certifying.</li>
+    <li><strong>Pattern across 94-entry decisions log (Mar–Jul):</strong> Repeated signature of catching AC/scope
+      ambiguity before it reaches engineering (e.g., OTEP-268 partial-load AC removed pre-build; OTEP-276 dropped once
+      already-answered by other work).</li>
+  </ul>
+  <p><strong>Evidence files:</strong> <code>Sprint 4 planning.pdf</code>, <code>decisions-log.pdf</code>,
+    <code>craft-execution-summary.pdf</code>. Sprint 4 also has a dedicated retro whiteboard:
+    https://sgtechstack.atlassian.net/wiki/spaces/OTEP/whiteboard/2406157920?atl_f=PAGETREE (Sprint 2 retro:
+    https://sgtechstack.atlassian.net/wiki/spaces/OTEP/whiteboard/2305329887?atl_f=PAGETREE).
+  </p>
+  <hr>
+  <h2>03 — Ownership</h2>
+  <p><strong>What this folder proves:</strong> Taking on ambiguous, unowned scope and escalating the right things
+    upstream rather than absorbing them silently.</p>
+  <p><strong>Specific evidence:</strong></p>
+  <ul>
+    <li><strong>POCDEX elevated from story to Epic:</strong> Identified a hidden four-story cross-squad dependency chain
+      and formally elevated it to Epic status (documented in the 2 Jun EOD and the formal Epic scope doc, 18 Jun) — gave
+      the programme visibility on a dependency nobody else had surfaced.</li>
+    <li><strong>Upstream escalation over local patching:</strong> OTG/POCDEX batch job mismatches were escalated to
+      source systems (POCDEX, Cumulus, HRPS) rather than patched at the OTEP UI layer — a consistent pattern of fixing
+      root cause over symptom.</li>
+    <li><strong>AppraiseAI input list itself:</strong> A comprehensive, dated self-audit spanning BA operations
+      (Jan-Apr, ~113,000 OTG users) through PM delivery (Apr-Dec) — evidence that ownership extended across a full role
+      transition, not just the current scope.</li>
+  </ul>
+  <p><strong>Evidence files:</strong><code>epic-pocdex-authorisation.pdf</code>.
+  </p>
+  <hr>
+  <h2>04 — Strategic Alignment</h2>
+  <p><strong>What this folder proves:</strong> Delivery stayed mapped to a consistent MVP narrative across 9 sprints,
+    with goals that ladder to outcomes, not just outputs.</p>
+  <p><strong>Specific evidence:</strong></p>
+  <ul>
+    <li><strong>Sprint goal framing as officer outcomes, not delivery lists:</strong> e.g., Sprint 4's goal was
+      "officers can search, filter, and sort opportunities... and trust the data is current," not "ship OTEP-85/86/128."
+      This framing gave the team a basis to defer scope creep (e.g., a Sprint 2 request to add auth) without manager
+      escalation.</li>
+    <li><strong>Full sprint history (S2 through S9) traceable to one MVP thread:</strong> every sprint goal ladders
+      toward the same Nov go-live target, with the fixed downstream chain visible (VAPT 7 Sep-16 Oct, deploy 19-23 Oct,
+      soft launch 26-30 Oct, first release week of 2 Nov).</li>
+    <li><strong>Tracker integrity maintained across 9 sprints:</strong> each close captured an honest final state
+      (Done/QA-carry-in/Backlog-carry-in counts), not just a "sprint closed" label — visible in the Sprint 2 through
+      Sprint 5 entries.</li>
+  </ul>
+  <p><strong>Evidence files:</strong> <code>sprint-status.pdf</code> (full S1-S9 goal and closure history). Verifiable
+    directly against the live OTEP-Pathfinder board:
+    https://sgtechstack.atlassian.net/jira/software/c/projects/OTEP/boards/12541/timeline (board 12541).</p>
+  <hr>
+  <h2>05 — Culture and Organisational Influence</h2>
+  <p><strong>What this folder proves:</strong> Investment in other people's capability, not just individual delivery —
+    the "beyond my own ticket count" dimension.</p>
+  <p><strong>Specific evidence:</strong></p>
+  <ul>
+    <li><strong>Jobelle handover — a designed, not improvised, transition:</strong> 12 sessions across 4 weeks,
+      explicitly sequenced by complexity (OTG ops context first, OTEP delivery second) rather than by recency or
+      convenience. Session 1 ran 8 Jun with all reference materials staged beforehand. ARK access secured proactively
+      through Adrian ahead of the handover deadline, not requested reactively.</li>
+    <li><strong>Explicit success gate, not an open-ended handover:</strong> Week 4 Session 3 is a formal reverse-shadow
+      sign-off — Jobelle leads a live task, Michelle observes only. Structure forces a real independence test rather
+      than a soft "she's probably ready" call.</li>
+    <li><strong>Co-presented at PMP #2 Learn-Create-Share Friday (8 May 2026)</strong> — an AI-empowerment session for
+      product officers ("AI-Empowered Product Officers Work Smarter &amp; Deliver Better"). 4.25/5 satisfaction, 100%
+      would recommend, 75% reported clearer understanding of AI afterward (25% no change). Credited as co-presented, not
+      sole ownership, per the post-event feedback's "both presenters" framing.</li>
+  </ul>
+  <p><strong>Evidence files:</strong> <code>jobelle-handover-plan.pdf</code>. AI session sourced
+    separately to <code>PMP LCS Friday Feedback Results for Sharing_8May2026.pdf</code>.</p>
+</body>
+
+</html>

@@ -39,9 +39,9 @@
 
 ---
 
-## Adrian Ang — Product Owner
+## Adrian Ang — Director of Product Management, Product Lead (CareerCompass)
 
-**Role:** Product Owner, OTEP
+**Role:** Director of Product Management; Product Lead for CareerCompass (the product OTEP delivers)
 
 **Position in chain:** Jace reports to Adrian, Michelle reports to Jace. Adrian reports up to Jamie Ang (Deputy Secretary, PSD) — preliminary decisions get her concurrence before going further to PS.
 
