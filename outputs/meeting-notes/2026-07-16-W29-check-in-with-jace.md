@@ -50,7 +50,7 @@ APA is ready to submit. Jace framed this cycle as a trial run — the first time
 ## Next Steps
 
 **Immediate (This Week):**
-- Submit the APA write-up ([2026-07-13-W29-apa-writeup-corrected.md](../analyses/2026-07-13-W29-apa-writeup-corrected.md)) — no further polishing required per this conversation.
+- [x] Submit the APA write-up ([2026-07-13-W29-apa-writeup-corrected.md](../analyses/2026-07-13-W29-apa-writeup-corrected.md)) — **Submitted 2026-07-16.**
 
 **Follow-up:**
 - Schedule the retro once there's a signal on timing (panel outcome, or a fixed date — see open questions above).

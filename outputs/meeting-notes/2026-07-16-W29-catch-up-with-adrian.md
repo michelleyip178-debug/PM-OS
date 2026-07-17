@@ -44,7 +44,7 @@ Adrian introduced the accelerated PM conversion route, available to legacy appre
 
 ## Open Questions
 
-- [ ] What exactly are "golden path" documents, and where do they live? Not sourced in either workspace — likely something Adrian references from a broader conversion-track resource. — **Owner:** Michelle to locate/request from Adrian — **By:** Before the next catch-up
+- [x] What exactly are "golden path" documents, and where do they live? — **Resolved 2026-07-16:** located in Michelle's local Documents folder (outside both PM-OS and PM-skills-ALL-1).
 - [ ] Does the existing `pm-conversion/one-pager.md` count as a valid starting point for the biweekly submission, or does Adrian expect a different structure/length? — **Owner:** Michelle to confirm with Adrian — **By:** Before next one-pager is due
 - [ ] What's the actual October date/window for the accelerated conversion review? — **Owner:** Michelle to confirm with Adrian
 - [ ] Adrian asked for input on which areas to prioritize in the biweekly conversion-prep sessions — no specific areas were named in this session. — **Owner:** Michelle — **By:** Next catch-up
