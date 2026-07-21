@@ -54,8 +54,8 @@ One test case = one meaningful business outcome. Every case carries 5 fixed elem
 5. **Pass/fail criteria**
 
 **Existing test case inventory (already drafted, reference not duplicate):**
-- [Pathfinder UAT Test Cases](../2026-07-17-W29-pathfinder-uat-test-cases.md) — shipped scope, Sprints 1–5
-- [AC-to-Test-Case Coverage Audit](../2026-07-17-W29-ac-to-test-case-coverage-audit.md) — coverage gap analysis
+- [Pathfinder UAT Test Cases](2026-07-17-W29-pathfinder-uat-test-cases.md) — shipped scope, Sprints 1–5
+- [AC-to-Test-Case Coverage Audit](2026-07-17-W29-ac-to-test-case-coverage-audit.md) — coverage gap analysis
 
 **Action before Phase 0:** re-run the coverage audit against Sprint 6's final Done list (42 stories as of 2026-07-20 live pull) — the existing test case doc was drafted against Sprint 5 shipped scope and needs a pass for anything Sprint 6 added.
 
@@ -78,7 +78,7 @@ Section 3 defines the *format* a test case must follow. This section defines whe
 
 **Process implication:** before any batch of test cases is sent to named BO executors, the PM runs this checklist against each case and marks it 🟢 Ready or 🔴 Needs rework — cases don't go to BOs individually as they're written, they go as a reviewed, gated batch. This is the same "no partial starts" principle as Section 5's environment gate, applied at the test-case level instead of the environment level.
 
-**Current status:** the existing [Pathfinder UAT Test Cases](../2026-07-17-W29-pathfinder-uat-test-cases.md) doc has Actual Result / Pass/Fail / Tested By fields still blank (expected, pre-execution) — but hasn't yet been explicitly checked against this list. Run this checklist against that doc before Phase 0, in the same pass as the Sprint 6 coverage re-audit noted above.
+**Current status:** the existing [Pathfinder UAT Test Cases](2026-07-17-W29-pathfinder-uat-test-cases.md) doc has Actual Result / Pass/Fail / Tested By fields still blank (expected, pre-execution) — but hasn't yet been explicitly checked against this list. Run this checklist against that doc before Phase 0, in the same pass as the Sprint 6 coverage re-audit noted above.
 
 ---
 
@@ -140,5 +140,5 @@ Daily defect triage during UAT execution, per the UAT Coordinator's (Rama) cross
 ---
 
 *Generated: 2026-07-20*
-*Sources: [Pathfinder UAT Test Cases](../2026-07-17-W29-pathfinder-uat-test-cases.md), [opportunities-listing.md PRD](../../context-library/prds/opportunities-listing.md), sprint-status.md (2026-07-20 live pull), open items #33/#57 (00-hub/open-items.md)*
+*Sources: [Pathfinder UAT Test Cases](2026-07-17-W29-pathfinder-uat-test-cases.md), [opportunities-listing.md PRD](../../context-library/prds/opportunities-listing.md), sprint-status.md (2026-07-20 live pull), open items #33/#57 (00-hub/open-items.md)*
 *Next: Close Section 5's readiness gate items, run Section 4's checklist against the existing test case doc, name BO executor(s), then this plan is ready for Rama/Adrian review.*
