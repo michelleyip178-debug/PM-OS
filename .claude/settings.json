@@ -25,7 +25,8 @@
       "Bash(sed -i '' 's/<span class=\"s-num\">06<\\\\/span>/<span class=\"s-num\">05<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
       "Bash(sed -i '' 's/<span class=\"s-num\">07<\\\\/span>/<span class=\"s-num\">06<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
       "Bash(sed -i '' 's/<span class=\"s-num\">08<\\\\/span>/<span class=\"s-num\">07<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
-      "Bash(sed -i '' 's/<span class=\"s-num\">09<\\\\/span>/<span class=\"s-num\">08<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)"
+      "Bash(sed -i '' 's/<span class=\"s-num\">09<\\\\/span>/<span class=\"s-num\">08<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
+      "Bash(python3 md_to_confluence.py /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-07-23-W30-opportunities-requirements-traceability-matrix.md)"
     ]
   },
   "enabledMcpjsonServers": [
