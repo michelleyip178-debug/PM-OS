@@ -62,7 +62,7 @@ Despite the name, this wasn't a data-requirements-gathering session — it turne
 |------|-------|----------|----------|--------|
 | Share extraction criteria and HRPS details | POCDEX / HRPS side | Not stated | 🟡 Medium | 🔴 Not Started |
 | Conduct deeper discovery on future integration model | Career Compass team | Not stated | 🟢 Low (post-MVP) | 🔴 Not Started |
-| Produce detailed UAT test scenarios | Career Compass team (Michelle) | Not stated — see timeline risk | 🔴 High | 🔴 Not Started |
+| Produce detailed UAT test scenarios | Career Compass team | Not stated — see timeline risk | 🔴 High | 🔴 Not Started |
 | Prioritise high-impact business test cases | Career Compass team | Not stated | 🔴 High | 🔴 Not Started |
 | Define required UAT profiles and personas | Career Compass + POCDEX | Not stated | 🟡 Medium | 🔴 Not Started |
 | Enhance Ops Portal capabilities before MVP | Career Compass team | Before MVP | 🔴 High | 🔴 Not Started |
@@ -96,7 +96,7 @@ Despite the name, this wasn't a data-requirements-gathering session — it turne
 
 ## Open Questions
 
-- [ ] Does "produce detailed UAT test scenarios" from this meeting and "consolidated test plan by tomorrow" from this morning's DOs call refer to the same deliverable? — **Owner:** Michelle Yip — **By:** Before starting either
+- [ ] Does "produce detailed UAT test scenarios" from this meeting and "consolidated test plan by tomorrow" from this morning's DOs call refer to the same deliverable? — **Owner:** Not stated (team-level) — **By:** Before starting either
 - [ ] Should "assess magnitude of Job ID mismatch" happen before or in parallel with Rama's bug investigation from the DOs call? — **Owner:** Michelle Yip / Rama Moorthy — **By:** Before Rama starts
 - [ ] What's the retention approach / audit trail design for logging and snapshots discussed but not decided? — **Owner:** Career Compass team — **By:** Not stated — worth a due date given it surfaced as a discussed-but-unresolved risk
 - [ ] Who are the named individual owners for the 10 action items, all currently assigned at team level? — **Owner:** Michelle Yip — **By:** Before next sync with POCDEX

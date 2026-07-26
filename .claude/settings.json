@@ -26,7 +26,12 @@
       "Bash(sed -i '' 's/<span class=\"s-num\">07<\\\\/span>/<span class=\"s-num\">06<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
       "Bash(sed -i '' 's/<span class=\"s-num\">08<\\\\/span>/<span class=\"s-num\">07<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
       "Bash(sed -i '' 's/<span class=\"s-num\">09<\\\\/span>/<span class=\"s-num\">08<\\\\/span>/g' /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-06-22-r1-jam-deck.html)",
-      "Bash(python3 md_to_confluence.py /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-07-23-W30-opportunities-requirements-traceability-matrix.md)"
+      "Bash(python3 md_to_confluence.py /Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-07-23-W30-opportunities-requirements-traceability-matrix.md)",
+      "Bash(grep -o 'Pilot-agency officer, no POCDEX profile.\\\\{100\\\\}' /private/tmp/claude-501/-Users-michelleyip-Documents-PM-OS/a0656282-42d0-47ac-bd6b-e8d28b51108e/scratchpad/pathfinder-live.html)",
+      "Bash(python3)",
+      "Bash(date -j -f \"%Y-%m-%d\" \"2026-07-24\" \"+%V\")",
+      "Bash(curl -s -u michelle_yip@psd.gov.sg:ATATT3xFfGF0SLB_hplL2VoPuBb4H86eJxJVQbxcDU204WZKi58pWrAGu7FREtAh7CZ2mt0DIfabQwPhjp9LhSVy_VvUZop24Wy5AN1k02_8bPQldSDN5IkAQUfnQGWG64AdxommjsCSJtOKAZjnPRUgWON-vPpqCGCFYChr3rGA2A7jXMTNsx0=64AF5A9C https://sgtechstack.atlassian.net/wiki/rest/api/content/2481295622?expand=body.storage -o /private/tmp/claude-501/-Users-michelleyip-Documents-PM-OS/84eb49d8-40f7-42fb-b0b1-1bf45948765c/scratchpad/journey-based.json -w 'HTTP %{http_code}\\\\n')",
+      "Bash(curl -s -u michelle_yip@psd.gov.sg:ATATT3xFfGF0SLB_hplL2VoPuBb4H86eJxJVQbxcDU204WZKi58pWrAGu7FREtAh7CZ2mt0DIfabQwPhjp9LhSVy_VvUZop24Wy5AN1k02_8bPQldSDN5IkAQUfnQGWG64AdxommjsCSJtOKAZjnPRUgWON-vPpqCGCFYChr3rGA2A7jXMTNsx0=64AF5A9C https://sgtechstack.atlassian.net/wiki/rest/api/content/2481753934?expand=body.storage -o /private/tmp/claude-501/-Users-michelleyip-Documents-PM-OS/84eb49d8-40f7-42fb-b0b1-1bf45948765c/scratchpad/consolidated.json -w 'HTTP %{http_code}\\\\n')"
     ]
   },
   "enabledMcpjsonServers": [
