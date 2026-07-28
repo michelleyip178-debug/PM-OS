@@ -16,6 +16,7 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 | # | Decision | Date | Area | Status |
 |---|----------|------|------|--------|
+| D-027 | North Star metric stays combined: Opportunities placement rate tracked inside the shared 15%-by-Dec'28 target with Courses, not disaggregated | 2026-07-28 | Strategy / Metrics | ✅ Final |
 | D-026 | OTG ingestion rules v3: StartDate optional for Jobs, Function optional, TC for Gig/STIP only | 2026-06-12 | Data / Ingestion | ✅ Final — see [otg-ingestion-decision-log.md](../context-library/decisions/otg-ingestion-decision-log.md) |
 | D-025 | 5-category model: STIPs · Gigs · Jobs · SJR · PSFG | 2026-06-12 | Data / Ingestion | 🟡 Pending Xian Zhang validation |
 | D-024 | "Jobs" consolidates Secondments + Internal Jobs; Secondment is a mechanism not a category | 2026-06-12 | Data / Ingestion | 🟡 Pending Xian Zhang validation |
@@ -46,6 +47,22 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ---
 
 ## Decision Detail
+
+---
+
+### D-027 — North Star metric stays combined with Courses (15%-by-Dec'28)
+
+**Date:** 2026-07-28
+
+**Area:** Strategy / Metrics
+
+**Status:** ✅ Final
+
+**Decision:** Opportunities placement rate is tracked as part of the combined 15%-by-Dec'28 target alongside Courses completions. It is not being disaggregated into its own separately-approved North Star number.
+
+**Rationale:** Opportunities and Courses are two paths to the same underlying outcome — an officer moving their career forward. A combined target keeps both teams accountable to that shared outcome rather than incentivizing either side to optimize its own number in isolation. The trade-off: a strong Courses quarter could mask a weak Opportunities quarter (or vice versa) in the headline 15% figure. The Opportunities-specific leading indicators (click-through, application rate, 180-day login rate, HR dashboard usage, officer satisfaction) exist partly to catch that divergence, since they can't be offset by course completions.
+
+**Source:** Confirmed by Michelle, 2026-07-28, during strategy one-pager review. See [Product Strategy One-Pager — CareerCompass Opportunities](../strategy/2026-07-28-W31-careercompass-opportunities-strategy-one-pager.md), Section 2.3.
 
 ---
 
