@@ -56,6 +56,7 @@ If exists, extract:
 - **Learnings** - What worked/didn't work?
 - **Momentum** - Which initiatives are advancing?
 - **Stalled items** - What needs unblocking?
+- **Protected time check:** Did last week's plan name a specific block for thinking/strategy work (not meetings, not firefighting)? If yes, did the review confirm it actually happened, or does the review show it got consumed by reactive work? If last week had no protected block at all, or named one that didn't survive contact with the week, note this explicitly — it feeds a flag in this week's plan (see Step 4).
 
 If doesn't exist:
 - Note: "Last week wasn't reviewed. Proceeding with forward planning only."
@@ -163,6 +164,8 @@ Use this prioritization logic:
 - If I only do these 3 things this week, will it be a successful week?
 - Do these priorities advance our quarter goals?
 - Am I over-committed given meeting load?
+
+**Protected time enforcement:** If Step 2 found last week had no protected thinking/strategy block, or one that didn't survive the week, don't just note it — name a specific day/time block in this week's plan (e.g. "Wednesday 2-4pm, no meetings") and say so explicitly in the plan output, not just in Deep Work Capacity's hour count. A number of hours "available" isn't the same as a block that's actually protected. If this is the second week running without a real protected block, escalate the language — this is a pattern, not a one-off scheduling miss, and it's worth calling that out directly rather than repeating the same soft suggestion.
 
 ---
 
@@ -309,6 +312,7 @@ quarter: Q[X] YYYY
 
 **Meeting load:** [X] hours / ~40 hour week = [Y%]
 **Deep work capacity:** [Z] hours available
+**Protected block this week:** [Specific day/time, e.g. "Wed 2-4pm — no meetings"] — [if last week had no protected block or it got consumed by reactive work, say so explicitly here, don't just list a number]
 
 ---
 

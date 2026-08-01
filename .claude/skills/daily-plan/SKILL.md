@@ -319,6 +319,21 @@ Flag:
 
 ---
 
+**H2. Growth From Yesterday:**
+
+Scan yesterday's outputs for evidence of PM growth — skills applied, judgment calls made, or stakeholder/relationship progress. Check:
+- `outputs/meeting-notes/` — meetings dated yesterday: look for moments where the PM asked a sharp question, surfaced a hidden gap, navigated a hard conversation, or reached alignment with a stakeholder
+- `outputs/decisions/` — retro docs or decision docs dated yesterday: root-cause findings, process improvements identified, judgment calls documented
+- Any explicit feedback captured in yesterday's notes (a stakeholder's reaction, a manager's comment)
+
+Look specifically for:
+- **Skill/lesson applied:** a moment that shows a repeatable pattern worth naming (e.g., "asked for the consolidated source of truth instead of accepting the assumed status" — the CSC alignment intervention pattern)
+- **Stakeholder/relationship progress:** trust built, a disagreement resolved, alignment reached with someone who was previously unclear or resistant
+
+Keep it to ONE finding, stated as a fact plus why it mattered — not a generic compliment ("great job!") and not a task. If nothing concrete surfaces from yesterday's files, say so plainly rather than inventing one: "No clear growth moment surfaced from yesterday's notes — worth reflecting at end of day."
+
+---
+
 **H. Stakeholder Intelligence:**
 
 For each person you're meeting today:
@@ -353,12 +368,13 @@ When the PM runs `/daily-plan` without the `full` flag, generate a compact plan 
 3. **Schedule with Meeting Context** (time, title, attendees, one-line context)
 4. **Standup Lens** (sprint days only — 2-3 bullets on what to actively listen for in standup)
 5. **Heads Up** (flags and risks only)
-6. **Growth Nudge** (one line)
+6. **Growth From Yesterday** (one line)
+7. **Growth Nudge** (one line)
 
 This fits on one screen. No scrolling required.
 
 **One-screen cap rule (locked in 2026-06-02 — Michelle's preference):**
-- The **visible** plan (above any `<details>` appendix) is capped to these sections only: TL;DR, Today's Three, Schedule, Tasks (P0/P1/P2), Standup Lens (sprint days), Heads Up, Growth Nudge.
+- The **visible** plan (above any `<details>` appendix) is capped to these sections only: TL;DR, Today's Three, Schedule, Tasks (P0/P1/P2), Standup Lens (sprint days), Heads Up, Growth From Yesterday, Growth Nudge.
 - **Max one line per item.** No multi-line bullets in the visible plan.
 - **BAU / standing tasks do NOT go in the daily.** Link to the prioritised BAU block in `00-hub/tasks-active.md` (Up Next) with a one-line pointer naming only this week's P1s.
 - Anything else (strategic context, developments, radar, full Jira health check, alignment check) goes in a collapsed `<details>` appendix, never the visible plan.
@@ -386,6 +402,9 @@ table: time | meeting | prep | one-line context
 
 ## Heads Up
 - [flags and risks only]
+
+## Growth From Yesterday
+[one line: skill/lesson applied or stakeholder progress from yesterday, or plainly note none surfaced]
 
 ## Growth Nudge
 [one line tying today to a growth area]
@@ -438,6 +457,14 @@ On a day with a standup, generate 2-3 bullets on what to actively listen for, de
 - WIP overload (one person with multiple In Progress) or late-sprint Backlog items
 - An open item from `00-hub/risks.md` likely to surface as a blocker today
 Lead with PM-owned blockers — items where *Michelle* owns the next move come first.
+
+**Growth From Yesterday:**
+One sentence naming a concrete growth moment from yesterday — pulled from `outputs/meeting-notes/` and `outputs/decisions/` dated yesterday. Look for:
+- **Skill applied:** a repeatable pattern worth naming (e.g., asking for the consolidated source of truth instead of accepting an assumed status — the CSC alignment intervention pattern)
+- **Stakeholder/relationship progress:** trust built, a disagreement resolved, alignment reached with someone previously unclear or resistant
+- Explicit feedback captured in yesterday's notes (a stakeholder reaction, a manager comment)
+
+Tie it to one of the three growth areas (outcomes thinking / stakeholder influence / roadmapping and prioritisation) where it fits naturally — don't force a fit if it doesn't. State it as a fact plus why it mattered, not a compliment. If nothing concrete surfaced in yesterday's files, say so plainly: "No clear growth moment surfaced from yesterday's notes — worth reflecting at end of day." Never fabricate one.
 
 **Growth Nudge:**
 One sentence connecting today's work to one of Michelle's three growth areas: outcomes thinking / stakeholder influence / roadmapping and prioritisation. Keep it specific to today, not generic.

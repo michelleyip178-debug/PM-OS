@@ -170,6 +170,35 @@ For each option, I'll create:
 
 ---
 
+## Step 2.5: Pre-Mortem (For Significant Commitments)
+
+Before locking a recommendation, check whether this decision warrants a pre-mortem: a **timeline commitment, launch date, or resource commitment that stakeholders will hold you to** — not a reversible tactical call. Ask:
+
+```
+Before we lock a recommendation — this looks like the kind of decision worth a
+quick pre-mortem first. It's fast (2-3 minutes) and catches failure modes while
+they're still cheap to address.
+
+**Imagine it's 3 months from now and this decision failed. Why?**
+
+Write 3-5 specific failure stories, not vague risks:
+- Not: "Timeline could slip"
+- Instead: "VAPT vendor slot fell through in September and there was no
+  fallback date, so the whole Nov launch moved to Jan without warning anyone"
+
+For each failure story, ask: is this already a known risk we're tracking,
+or is this new? If new, does it change the recommendation or just need a
+mitigation logged?
+
+Want to run this, or is this decision reversible/low-stakes enough to skip it?
+```
+
+**When to actually prompt this:** decisions matching 2+ of: (a) sets an external-facing date or number, (b) hard to reverse once committed, (c) multiple stakeholders will act on it, (d) failure would surface as a surprise rather than a managed risk. Skip the prompt for reversible or single-owner decisions — don't turn every decision doc into a ritual.
+
+**Output:** fold surviving failure stories into the "Risks & Mitigation" section per option, or into "What If We're Wrong?" in Step 3 if they're specific to the recommended option. Don't create a separate pre-mortem document — this feeds the decision doc, it isn't a parallel artifact.
+
+---
+
 ## Step 3: Make a Recommendation
 
 After laying out options:
@@ -671,31 +700,37 @@ Because this is one-way, we're applying extra rigor:
 ### ❌ Mistake 1: Analysis Without Recommendation
 
 **Bad:** "Here are 3 options, all with pros and cons. Thoughts?"
+
 **Good:** "I recommend Option 2 because [reasoning]. Here's why I'm not choosing the others."
 
 ### ❌ Mistake 2: Hiding the Tradeoffs
 
 **Bad:** Only showing upsides of your preferred option
+
 **Good:** Honest about what you're giving up: "We're trading speed for quality because..."
 
 ### ❌ Mistake 3: Decision by Committee
 
 **Bad:** Trying to get everyone to agree
+
 **Good:** Get input from stakeholders, but make a clear call as the owner
 
 ### ❌ Mistake 4: Vague Success Criteria
 
 **Bad:** "Success means users are happier"
+
 **Good:** "Success means mobile NPS increases from 40 to 55 within 3 months"
 
 ### ❌ Mistake 5: No Failure Plan
 
 **Bad:** Not addressing what happens if you're wrong
+
 **Good:** "If after 2 months we haven't hit 60% adoption, we'll pivot to..."
 
 ### ❌ Mistake 6: Too Much Detail
 
 **Bad:** 20-page document that no one reads
+
 **Good:** TL;DR at top, details in appendix, clear recommendation
 
 ---
