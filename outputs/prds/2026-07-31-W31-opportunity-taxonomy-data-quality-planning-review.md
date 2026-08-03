@@ -6,7 +6,7 @@
 
 **Owner:** Michelle Yip
 
-**Status:** Draft
+**Status:** ⚠️ INVALID (2026-08-03) — No longer needed. The underlying data quality issue was resolved directly through implementation, tracked in Jira, without requiring this PRD to advance. See Jira board for the actual work done. This document is kept for historical reference only — do not use it to plan or size future work.
 
 ---
 

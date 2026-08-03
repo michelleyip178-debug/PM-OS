@@ -171,6 +171,7 @@ All skills now check your workspace context first, reference related analyses, a
 - `/interview-prep` - PM job interview preparation (Product Sense, Execution, Behavioral frameworks and practice)
 - `/interview-guide` - Create JTBD interview guides (checks existing research, deduplicates questions)
 - `/interview-feedback` - Post-PM-interview debrief and continuous improvement for job search
+- `/spine-drill` - Daily 12-week habit to internalize the 7-step PM interview structure (Goal → North Star → Segment → Pain → Solution → Metrics → Risks) until automatic under pressure
 - `/user-research-synthesis` - Turn interviews into insights (shows recurring themes, links to decisions/PRDs)
 
 **Strategic Frameworks:**
