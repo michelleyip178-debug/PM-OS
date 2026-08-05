@@ -90,7 +90,7 @@
 | REQ-X1 — Application completion rate instrumentation (PostHog) | ⚠️ Not verified | Candidate for new TV rows once OTEP-130 (webhook) lands |
 | REQ-X2 — Competency-to-opportunity matching (agency-code resolution) | 🔴 Unresolved | Blocks full verification of the competency-match display feature above |
 | REQ-X3 — FormSG pre-fill via URL params | ✅ Descoped | Dropped from MVP, Squad Sync 26 May 2026 |
-| CSC connectivity (OTEP-679) | 🔴 No AC exists | Not covered anywhere in the test tree or Consolidated Test Plan — needs grooming with Fanxu Wang/Adrian before it's even a testable feature |
+| CSC connectivity (OTEP-679) | 🟡 Owner assigned, no AC yet | Fanxu now supporting Adrian Lo on this as of OTEP Team 2 standup, 5 Aug — resourcing gap closed, but still not covered anywhere in the test tree or Consolidated Test Plan; still needs grooming before it's a testable feature |
 | POCDEX code table ingestion (OTEP-445) | 🔲 Spike only | 2-point investigation into API vs. SFTP ingestion; produces a recommendation, not a shippable feature — not a backlog gap, just not yet resolved into a story |
 | "Already applied" state | ⚠️ Open decision | Being tested but appears in no MVP AC; case fails and is filed as OTEP-667 — decide whether this is MVP scope or a future enhancement |
 | "What do job types mean" explainer / tooltip | — | Referenced in UAT test cases (UAT-OPP-025) but unclear if this maps to a Jira story — confirm scope |
