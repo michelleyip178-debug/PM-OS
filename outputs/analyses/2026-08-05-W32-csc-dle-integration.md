@@ -4,14 +4,14 @@ week: 2026-W32
 purpose: Single consolidated reference for the CSC/DLE integration — governance, per-workstream detail, test cases, and open items. Merges what were 4 separate files (integration plan, SIT/UAT tracker restructure, war room tracker, DLE-only tracker) into one.
 companion: 2026-08-05-W32-csc-pm-tracking-list.md — the daily activity log (dated rows, what happened each day) stays separate; this doc is the reference layer (governance, criteria, test cases), not the day-by-day log
 target: Push into https://sgtechstack.atlassian.net/wiki/spaces/OTEP/pages/2481324487 once Rama confirms the shape
-status: consolidated 2026-08-05 from 4 source files — see "Source files merged" at the bottom
+status: consolidated 2026-08-05 from 4 source files, refreshed 2026-08-06 against the CSC SIT progress review meeting — see "Source files merged" at the bottom
 ---
 
 # CSC/DLE Integration — Consolidated Reference
 
 For daily status and health rollup, see [PM Tracking List](2026-08-05-W32-csc-pm-tracking-list.md) — that file has the current 🔴 Red health snapshot and day-by-day activity log. This doc is the reference layer underneath it: governance, per-workstream detail, criteria, and the full test-case spec.
 
-**SIT window:** 27 Jul – 7 Aug 2026 · **UAT window (CSC track):** 24/25 Aug – 4 Sep 2026, though a 31 Aug slip surfaced at the 5 Aug standup — unconfirmed which date is current, see Open Questions. **Unresolved:** whether this CSC-track UAT window is genuinely separate from the OTEP-wide UAT window (11 Aug–4 Sep, `open-items.md` #39).
+**SIT window:** 27 Jul – 7 Aug 2026 · **UAT window (CSC track):** CSC/Temus reaffirmed **31 Aug** unconditionally at the 6 Aug SIT progress review — treat as a committed programme assumption under active schedule risk (see Section 7), not a confirmed-safe date, since it was reaffirmed without validating closure of several open SIT dependencies (CFT eventing, WS3 infra routing, learner-file validation). **Unresolved:** whether this CSC-track UAT window is genuinely separate from the OTEP-wide UAT window (11 Aug–4 Sep, `open-items.md` #39).
 
 ---
 
@@ -58,6 +58,18 @@ WS2 (DLE)   ──┤
 
 **WS2 is the single point of failure.** A WS2 delay doesn't just block WS2 — it stalls SSO test execution and the end-to-end Course Journey test (GAP-16). Its mapping-file cadence question has been open since before 4 Aug and remains the highest-leverage unblock in the whole programme.
 
+**Per-workstream dependency table:**
+
+| WS | Depends on | Blocks |
+|---|---|---|
+| WS1 — Course Integration | CFT pipeline (shared with WS2) | WS4 (needs course catalogue) |
+| WS2 — Learner File/DLE | CFT pipeline (shared with WS1) | WS3 (test accounts), WS4 (identity mapping) |
+| WS3 — SSO | Intranet routing decision (unresolved — see WS3 detail below), WS2 (test accounts) | GAP-16 (end-to-end test) |
+| WS4 — JumpStart | WS1 (catalogue) + WS2 (identity) for full end-to-end | GAP-16 (end-to-end test) |
+| Cross-workstream (GAP-16) | WS1, WS2, WS3, WS4 all individually passing first | Programme UAT sign-off |
+
+**Note on WS3:** its intranet-DNS blocker is an independent dependency, not downstream of WS2 — it needs to resolve in parallel, not after WS2 clears.
+
 **Completion sequence** — the order that gets all four workstreams through SIT and UAT together:
 
 | Phase | Focus | Gate |
@@ -82,11 +94,13 @@ WS2 (DLE)   ──┤
 
 **Depends on:** CFT pipeline (shared with WS2)
 
-**Status:** 🔴 Blocked — course file push has slipped 4→5→6 Aug, still not landed as of last check
+**Status:** 🔴 Blocked — **root cause now identified (6 Aug).** Two workflow IDs needed (paid + subscription, corrected from earlier "paid + digital learning" wording). Files were triggered via CFT on 5 Aug and confirmed visible on the receiving side, but the **"file ready for download" webhook event never fired** — so the pipeline can't complete end-to-end automatically. This is the actual mechanism behind the 5 Aug non-receipt report, not a simple "push hasn't happened" delay.
 
 Manual file transfer identified as a fallback if CFT routing doesn't resolve in time — not yet tested.
 
 **Workflow IDs (confirmed 3 Aug):** Paid — `01KYK3XCN9HTDWCAE25WE15EMX` · Non-paid — `01KZ30CGSRCCMBQXXJ5STXK1BN`
+
+**CFT eventing investigation (assigned 6 Aug):** owner is **Mindy Wong** + the CFT/CSC team — investigating why the download-ready event isn't received despite files landing and webhooks being correctly configured. This is shared root cause with WS2 below (same failure mode observed on the learner file), so treat as one investigation, not two.
 
 **New downstream milestone (raised via Slack, 5 Aug):** CSC's automated file extraction (Marcus/Sheryl) — replacing SIT's manual extraction — is scheduled for 24 Aug, for UAT. This sits downstream of SIT's 7 Aug close and has less buffer than it looks like if CSC-track UAT genuinely slips to 31 Aug (see timeline-raid-log). Whether to ask CSC to prepone this is raised but has no owner yet.
 
@@ -98,7 +112,7 @@ Manual file transfer identified as a fallback if CFT routing doesn't resolve in 
 
 **Depends on:** CFT pipeline (shared with WS1); feeds WS3 test accounts
 
-**Status:** 🔴 Mapping cadence still unconfirmed — the standing blocker
+**Status:** 🔴 Mapping cadence still unconfirmed — the standing blocker. **Correction, 6 Aug:** the mapping file was previously logged as landed, but it hit the same CFT eventing failure as WS1 (see WS1 above) — triggered, visible on receipt, download-ready event never fired. Not actually usable yet.
 
 **What this proves:** every officer is correctly and safely linked to their CSC Learn (DLE) identity. WS3 (SSO) and WS4 (JumpStart) both depend on this — if the mapping is wrong, sign-in and recommendations break downstream, not here.
 
@@ -106,7 +120,9 @@ Manual file transfer identified as a fallback if CFT routing doesn't resolve in 
 
 **Workflow ID (confirmed 3 Aug):** `01KYK42DHD67057RBER9NRRCXP`
 
-**Named DLE counterpart check:** confirm Kimberly is the sole DLE point of contact for M-1, or get a second name (Imelda to ask).
+**Named DLE counterpart check:** confirm Kimberly Ng is the sole DLE point of contact for M-1, or get a second name (Imelda to ask).
+
+**Unblock via workaround (6 Aug):** Sy En Lee generated the learner file on Kimberly's behalf and Aderick uploaded it live during the 6 Aug SIT review — but this is a manually generated file, not a genuine system-generated one (see new risk in Section 7). Validating the load result is still blocked until the eventing issue is resolved, since success can't be confirmed automatically.
 
 ### WS3 — SSO with CSC
 
@@ -119,6 +135,8 @@ Manual file transfer identified as a fallback if CFT routing doesn't resolve in 
 **Status:** 🟡 Furthest along, but nothing fully closed — see decision below
 
 **Decision (3 Aug):** use intranet routing for CSC-to-OTEP token validation — avoids an internet-facing path that would trigger additional VAPT scope. **Confirmed 5 Aug: this is currently failing.** Aderick tested directly — the domains do not resolve on intranet, but are reachable from internet. If intranet stays unresolvable, this decision reopens and VAPT scope changes. **Someone needs to own the call: keep troubleshooting intranet, or formally escalate to the internet-path/VAPT conversation.**
+
+**Decision (6 Aug): proceed testing over internet routing as a temporary workaround**, in parallel with the still-open intranet ITSM request (Boon Siang Teh following up, no resolution date). Pow Hwee Tan's assessment: outcome shouldn't materially change once routing reverts to intranet — but this is an assumption, not yet proven, and converts an immediate SIT blocker into a deferred production-readiness risk. UAT may start on a connectivity path that isn't the intended production architecture unless intranet resolves first.
 
 **S-4/S-5/S-6 status:** content is written and pushed into the live Confluence doc, but **not yet signed off** — Herman and Pow Hwee still confirming coverage as of the 5 Aug standup. Don't treat as done.
 
@@ -136,11 +154,11 @@ Manual file transfer identified as a fallback if CFT routing doesn't resolve in 
 
 **Depends on:** WS1 (catalogue) + WS2 (identity) for full end-to-end
 
-**Status:** 🔴 — downgraded from earlier Green read once two new risks surfaced 5 Aug
+**Status:** 🟢 **Marked complete 6 Aug** — Rama confirmed with Temus there are no outstanding connectivity issues; course recommendation retrieval is working. This removes WS4 from the critical path for SIT purposes. **Caveat: "complete" here means SIT-level connectivity only — the data-governance question below is still open**, so don't read this as fully done from a data-trust standpoint.
 
-**API key + staging URL confirmed 3 Aug**, IP whitelisted. But two new blockers surfaced at the 5 Aug standup:
+**API key + staging URL confirmed 3 Aug**, IP whitelisted. Two blockers surfaced at the 5 Aug standup, status as of 6 Aug:
 1. **Yu Xuan Tay (owns sharing API details with CC) is on leave until 7 Aug — the same day SIT closes.** No backup owner named. Everything downstream of this (endpoint confirmation, `POST /recommendations/dashboard` testing) may cascade behind it — confirm with Adrian Lo whether whitelisting/mock data can proceed in parallel or are also blocked.
-2. **JumpStart staging data doesn't match CSC's staging environment course data.** Even once connectivity works, recommendations may fail, validation may fail, and false defects may get reported as a result of the mismatch, not real bugs.
+2. **JumpStart staging data doesn't match CSC's staging environment course data — still unresolved as of 6 Aug.** Even though connectivity now works, recommendations may still fail data-alignment checks, and false defects may get reported as a result of the mismatch, not real bugs. **New action item (6 Aug):** Sy En Lee to validate whether JumpStart data originates from the same CSC staging source; CSC team to check if the scheduler still sends data from staging and confirm course catalogue alignment between environments.
 
 ---
 
@@ -240,23 +258,34 @@ Engineering-owned, tracked as SIT exit criteria (not BO-executable — requires 
 |---|---|---|
 | No contingency plan for first-try failure across connectivity/parsing/mapping, against a compressed SIT window | 🔴 Open | Highest risk per the 3 Aug readout |
 | No overall integration readiness owner | 🔴 Open | Section 1 |
-| WS3 intranet DNS resolution confirmed failing | 🔴 Open | May force a VAPT scope change — see WS3 detail above |
+| WS3 intranet DNS resolution confirmed failing | 🔴 Open | Now with a temporary internet-routing workaround (6 Aug) — see WS3 detail above. Intranet ITSM request still open, may force a VAPT scope change if unresolved |
 | Yu Xuan Tay (WS4) on leave until 7 Aug, same day SIT closes | 🔴 Open | No backup owner named |
-| JumpStart/CSC staging data mismatch | 🔴 Open | Risk of false SIT defects |
+| JumpStart/CSC staging data mismatch | 🔴 Open | Risk of false SIT defects; validation now assigned to Sy En Lee (6 Aug) |
 | No agreed golden test dataset / officer population for UAT | 🔴 Open | Needed before UAT starts, ideally before SIT ends |
+| **New, 6 Aug:** CFT "file ready for download" event not firing (WS1 + WS2) | 🔴 Open | Root cause investigation assigned to Mindy Wong + CFT/CSC team. This is why files can be seen but the pipeline can't run end-to-end automatically — every success to date has relied on manual confirmation. See WS1/WS2 detail above. |
+| **New, 6 Aug:** SIT is being validated against manually generated files, not genuine system-generated ones | 🔴 Open | Several participants confirmed this explicitly (6 Aug SIT review). A workflow can pass SIT this way and still fail once real production-generated files are introduced — this argues for a dedicated UAT data-validation phase, not just carrying SIT results forward |
+| **New, 6 Aug:** true end-to-end automation has not been demonstrated | 🔴 Open | The real chain is "file generated → transferred → event emitted → ingestion triggered → data processed successfully." Only the first step (file visible on arrival) has actually been proven repeatedly; the eventing gap above blocks the rest |
+| **New, 6 Aug:** no defined data reconciliation strategy | 🟡 Open | Unanswered: how do we know all records arrived? How are missing records detected, duplicates handled, failed deltas recovered? Flagged as UAT-critical, not yet assigned an owner |
+| **New, 6 Aug:** operational support ownership undefined for BAU | 🟡 Open | Every blocker this week required ad-hoc intervention from Rama, Sy En, or Aderick personally — nobody's been asked who monitors failed transfers or responds to missing events once SIT-era hand-holding stops |
 | Slack-only async coordination may not hold up across the compressed window | 🟡 Reassess | CSC flagged this directly |
-| CSC-track UAT date — 24/25 Aug vs. a 31 Aug slip raised 5 Aug | 🟡 Unconfirmed | See Open Questions |
+| CSC-track UAT date — 31 Aug **reaffirmed unconditionally by CSC/Temus (6 Aug)**, despite CFT eventing, WS3 infra, and learner-file validation all still being open | 🔴 Escalated | No longer just "unconfirmed" — it's now a committed programme assumption made without confirming SIT dependency closure. Track as an active schedule risk, not a pending confirmation. See Open Questions. |
 
 ---
 
 ## 8. Open Questions
 
 - [ ] Who supplies the mapping file, its channel, and refresh cadence (WS2)? — standing question, unanswered since before 4 Aug
-- [ ] Who owns the WS3 intranet-vs-internet decision, and when does it get made?
-- [ ] Is the CSC-track UAT window now 31 Aug, or still 24/25 Aug?
+- [x] ~~Who owns the WS3 intranet-vs-internet decision, and when does it get made?~~ — **Partially resolved 6 Aug:** team agreed to proceed on internet routing as a temporary workaround while intranet stays open; the underlying intranet-vs-internet call itself is still not formally owned or closed
+- [ ] Is the CSC-track UAT window now 31 Aug, or still 24/25 Aug? — **Reaffirmed as 31 Aug by CSC/Temus 6 Aug**, but treat as a committed assumption under active schedule risk (see Section 7), not a resolved date — it was not validated against open SIT dependencies
 - [ ] Is this CSC-track UAT window genuinely separate from the OTEP-wide UAT window (#39, 11 Aug–4 Sep), or a date conflict?
 - [ ] Is invalid-formatted-file (unhappy-path) testing in SIT scope or UAT scope?
 - [ ] Does Yu Xuan Tay's leave block only their own task, or the rest of WS4 behind it too?
+- [ ] **New, 6 Aug:** Why is the CFT "file ready for download" event not firing, despite files landing and webhooks being correctly configured? — **Owner:** Mindy Wong + CFT/CSC team
+- [ ] **New, 6 Aug:** Can SIT be declared complete if CFT event-triggering is still failing?
+- [ ] **New, 6 Aug:** What objective exit criteria must each workstream satisfy before entering UAT? — still no stated bar beyond the per-workstream criteria in Section 2/6
+- [ ] **New, 6 Aug:** Has the team tested with actual system-generated files, or only manually-created SIT files?
+- [ ] **New, 6 Aug:** What's the contingency if intranet routing is still unresolved by the 31 Aug UAT start?
+- [ ] **New, 6 Aug:** Who owns UAT data reconciliation — confirming full-load/delta-load records match across CSC, JumpStart, and Compass?
 
 ---
 
