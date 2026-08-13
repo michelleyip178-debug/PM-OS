@@ -487,13 +487,6 @@ Check `outputs/analyses/` for any strategic skill output dated this week (e.g. `
 
 **Rule:** One nudge per day max. If the weekly plan already has a strategic skill block and it was run today, skip the nudge. Never surface the same skill two days in a row.
 
-**Spine Drill Reminder (daily, unconditional — this is a standing habit, not opportunistic):**
-Check `outputs/spine-drill/log.md` for an entry dated today. If one exists, skip the reminder entirely — already done. If none exists, append one line to Heads Up:
-
-> **Spine drill:** Not done yet today — run `/spine-drill` (60 sec–5 min depending on the week).
-
-Keep it to that one line. Don't restate the 12-week structure or which cycle/week they're on here — `/spine-drill status` already covers that. This reminder's only job is a daily nudge, not a progress report.
-
 ---
 
 ### Step 4: Generate Daily Plan
