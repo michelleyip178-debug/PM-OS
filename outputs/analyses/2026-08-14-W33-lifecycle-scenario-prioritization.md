@@ -1,0 +1,47 @@
+# Lifecycle Scenario Prioritization — Ops Portal / Day-2 Design
+
+**Date:** 2026-08-14
+
+**Why this table exists:** the design doc's gap register (Section 6.2) lists 19 rows by TC number, which is complete but not sorted for a prioritization conversation. This reorders the same underlying data by frequency × impact, and adds a "how might we solve this" column for each, so it can be used directly for the Tier 1-3 sequencing decisions.
+
+**A note on frequency vs. severity:** the source doc's "Priority" tag (TC1, TC2, TC3, TC7, TC8, TC9) marks what POCDEX flagged for UAT scheduling — it isn't the same as risk severity. TC13 wasn't tagged UAT-priority but is rated Critical. This table separates the two on purpose.
+
+---
+
+## Scenario Table
+
+| Scenario | What Happens | Frequency | Impact if it Happens | How Might We Solve This |
+|---|---|---|---|---|
+| **Email reused by new officer** (TC13) | A new officer issued a departed officer's old email sees the departed officer's employment and competency data | Seldom (no sizing yet — depends on email-reissue policy at agencies, not yet measured) | **Blocker** — real data exposure between two individuals. Highest severity of any scenario in this table. | NRIC/FIN token as a durable fallback identity check, independent of email. Already designed (Section 7.2.2, step 2) — blocked only on privacy/security approval. Escalate the approval, not the design. |
+| **Cross-system double-hat** (multi-hat across HRPS + Cumulus simultaneously) | Officer holds active positions in two source systems at once; no rule for which is primary | Seldom at MVP scale (0 pilot cases observed) / Frequent at WoG scale (274 officers confirmed) | **Blocker** if it occurs — no resolution path exists today, not even a manual one | Define a deterministic precedence rule (e.g. extend the same "highest staff allocation %" logic cross-system, or add an explicit tie-break). Needs a POCDEX-side decision, not just a CC one — flag now given WoG scale, before it hits pilot. |
+| **Job function/family/grade change, incl. masked↔non-masked** (TC11) | A classification change — including a security-masking status change — isn't detected because CC doesn't re-poll after first login | Sometimes (folded into the 3.45% 14-day drift rate; no isolated count) | **Blocker** — reads as cosmetic but may be a classification/security change. The one scenario in this table that looks trivial and isn't. | Include job family/function/grade explicitly in the daily-diff scope (already is) and route classification changes through a distinct high-scrutiny reason code rather than the generic `PROFILE-CHANGED` bucket, so it isn't triaged like a title change. |
+| **Email or identity fields don't resolve to one person** (TC2 / TC8 — misattribution) | Wrong email on record, or a person's identity fields point to another officer's record | Seldom (19 of 5,270 pilot officers / 0.36% have no email at all; misattribution itself not separately sized) | **Blocker** — wrong-person data shown, same failure mode as TC13 but via a different entry path | Same fix as TC13: NRIC/FIN fallback token closes this too, since both are "email alone isn't durable identity." One fix, multiple test cases. |
+| **Duplicate POCDEX record** (TC12) | Two active records for the same officer; CC currently unions competencies from "first active entry" with no deterministic rule | Sometimes (71 of 5,270 pilot officers / 1.35%) | **Deprecated experience** — not a safety exposure, but produces an unpredictable/wrong competency view | Deterministic precedence by Employment ID (already proposed, Section 7.2.2 step 3) — replaces "first active entry" with a rule. Straightforward to build once prioritized. |
+| **Position ID / role change** (TC9) | Officer transfers position; CC keeps showing the pre-transfer role and competency mapping | Sometimes (folded into 3.45% 14-day drift; `employmentid`/`primaryposition` are diffed fields) | **Deprecated experience** — wrong competency recommendations, but not a data-exposure risk | Already in daily-diff scope (Section 7.2.2a) — this one is solved by shipping the daily-diff job at all. No separate design needed beyond what's already planned. |
+| **Agency transfer** (TC1, incl. HRPS↔Cumulus) | Officer moves agency; CC shows old agency until manually patched via Ops Portal | Sometimes (folded into 3.45% 14-day drift; flagged Priority for UAT) | **Deprecated experience** — wrong agency context, may also affect MVP 6-agency access eligibility | Same as above — daily-diff job catches this once built (`agencyid`/`agencyname` already in scope). Ops Portal manual patch is the interim mitigation until then. |
+| **Secondment, incl. POCDEX↔non-POCDEX** (TC3) | Same underlying gap as agency transfer — position/agency mismatch not reflected until next login snapshot or manual patch | Sometimes (same 3.45% pool; flagged Priority) | **Deprecated experience** | Same fix as TC1 — no separate design, same daily-diff coverage. |
+| **FIN → NRIC identifier change** (TC4) | Identifier type changes; no reconciliation logic links the old and new identifier to the same person | Seldom (not yet sized — needs discovery per Section 7.2.6) | **Deprecated experience**, trending toward blocker if it silently breaks identity matching rather than just displaying stale data | Needs a discovery spike before design — explicitly flagged as unbuilt and requiring investigation, not yet a "how" that can be pinned down. |
+| **Leave and rejoin service** (TC5) | Officer leaves, later rejoins; no reconciliation against the old record | Seldom (not yet sized) | **Deprecated experience** — could show stale pre-departure data, or fail to link to history at all | Same discovery need as TC4 — group these two as one spike, they share the "no reconciliation across an identity event" root cause. |
+| **Data wrongly entered, then corrected upstream** (TC8, non-misattribution case) | Source system correction doesn't propagate; CC keeps showing the wrong value | Sometimes (folded into 3.45% drift; flagged Priority) | **Deprecated experience** for most fields; escalates to blocker specifically if the wrong field is identity-adjacent (see misattribution row above) | Daily-diff job catches this generically. The identity-specific case is covered by the NRIC/FIN fix, not this one. |
+| **Title change, no Position ID change** (TC10) | Cosmetic title update not reflected until next diff | Sometimes (folded into drift rate) | **Trivial** — display-only, no downstream mapping impact | Already in daily-diff scope. Lowest priority to solve deliberately — it's covered by the general mechanism, doesn't need its own design attention. |
+| **Accidental delete/recreate in POCDEX** (TC6) | Record briefly disappears and reappears; invisible to CC since there's no re-poll after first login | Seldom (unmeasured — transient by nature) | **Trivial at MVP** (masked by design, since MVP doesn't re-poll anyway) — becomes visible and needs handling once per-login calls exist post-MVP | No action needed now. Revisit when per-login POCDEX calls are built — it resolves itself by that design change, don't build a special case for it today. |
+| **NPL/ML officer, and return from NPL** (TC7 / Scenario D) | Officer goes on no-pay leave; access should suspend and later resume correctly | Resolved | — | Already shipped: NPL >90 days excluded before reaching CC (`ON_NPL_MORE_THAN_90_DAYS`); NPL <90 days unaffected. No further action. |
+| **Contingent worker exclusion, incl. reverse transition** (TC14) | Contingent workers shouldn't get a CC profile; reverse case (active officer later reclassified Contingent) untested | Seldom | **Trivial** — access-control correctness, not a data-quality or exposure issue | Forward case already works by design (no profile created at first login if Contingent). Confirm the reverse case behaves the same way — cheap to verify, don't need new design. |
+
+---
+
+## Reading This for Prioritization
+
+**Two scenarios are the real blockers, and they share one fix:** TC13 (email reuse) and the identity-misattribution slice of TC2/TC8 are both symptoms of "email alone isn't durable identity." The NRIC/FIN fallback token closes both. This is why R1/R2 sit at rank 1 on the RAID log — it's not one fix among many, it's the fix that clears the two highest-severity rows in this table at once.
+
+**Cross-system double-hat is the one WoG-scale risk with zero pilot cases today.** Easy to underrate because it hasn't shown up yet, but 274 confirmed officers means it's a "when," not "if," once this scales past the 6 MVP agencies. Worth a resolution rule before WoG rollout even if it stays low-priority for MVP itself.
+
+**Six scenarios (TC1, TC3, TC8-non-identity, TC9, TC10, and the general drift case) are all solved by shipping one thing: the daily-diff job.** No scenario-specific design work needed — this is the single highest-leverage build on the list purely by scenario count, even though R1/R2 outranks it on severity.
+
+**TC4/TC5 need a discovery spike, not a design decision yet** — grouping them saves a second spike later, since both are "no reconciliation across an identity-changing event."
+
+**TC6/TC7/TC14 need no near-term action** — one's already resolved, one resolves itself once per-login polling ships, one just needs a cheap verification pass.
+
+---
+
+*Source: Operational Design doc Section 6.2 (Gap & Risk Register) and Section 6.3-6.4 (Test Case detail), cross-referenced against RAID log R1-R5.*
