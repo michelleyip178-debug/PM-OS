@@ -1,0 +1,52 @@
+# Field / UX Impact Mapping — All 14 Test Cases
+
+Pulled together from two source tables (Gap & Risk Register 6.2, and the Priority/Remaining Test Case tables 6.3/6.4), then run through the same officer-facing check used for the in-scope fields in Section 8: does the officer actually see this field on their profile today (checked against OTEP-74), and what happens if it drifts.
+
+## The 6 Priority Test Cases
+
+These are already in Section 3 of the PRD. Repeating them here so this doc has all 14 in one place.
+
+| TC | Scenario | What's Actually Broken | MVP Handling | Severity / Nature | Field(s) | Shown to Officer? | If It Drifts |
+|---|---|---|---|---|---|---|---|
+| **TC1** | Agency transfer, including HRPS-internal and HRPS↔Cumulus | Reflects the original position only if the old email is retained. Same underlying issue as Scenario B (seconded officer). | Ops Portal patch is the current mitigation; post-MVP, link records across an email change via NRIC, pending discovery | Medium. Silent data drift. | `agencyid`, `agencyname`, `employmentid` | **Yes** — `agencyid`/`agencyname` shown on profile header | Wrong agency shown on the officer's own profile — first thing seen after login |
+| **TC2** | POCDEX↔non-POCDEX transfer | Assumes accurate first-instance email — if officer X's email is wrongly recorded as officer Y's, Career Compass shows X's position when Y logs in. 19 pilot officers (0.36%) have no email on record at all, so identity resolution fails outright for them. | Reflects the latest once corrected; used to patch the affected account. CC uses email as primary identifier — root cause of the misattribution risk. More robust ID resolution planned post-MVP. | **High**. Misattribution/privacy. | `workemailaddress`/`email`, `idnumber` (NRIC/FIN), `officerId` — confirmed real API fields | **Yes** — email is displayed and is the login credential | The wrong person's data can be shown to the officer who logs in, a misattribution risk, not just staleness |
+| **TC3** | Secondment POCDEX↔non-POCDEX | Same as TC1 | Same as TC1. Officer may still log in if email matches first login and WOG AD allows. | Medium. Silent data drift, same as TC1. | `agencyid`, `employmentid` | Yes, same as TC1 | Same as TC1 — wrong agency shown |
+| **TC7** | NPL/ML (no-pay/medical leave) and return | Resolved 14 Aug, alongside a separate NPL/ML scenario. NPL over 90 days is excluded entirely, not returned as INACTIVE. | Already-NPL-at-launch officers are excluded, login blocked. NPL beginning after first login is denied by WOG AD. | Low — resolved. | `status` + reason code (`ON_NPL_MORE_THAN_90_DAYS`) | Yes, via login gate | Resolved — no drift risk remaining for this case |
+| **TC8** | Data wrongly entered upstream, then corrected | Same failure mode as TC2 | Same as TC2. Career Compass will NOT auto-update the profile once corrected upstream. Post-MVP concern if it recurs. | Medium. Silent data drift. | `firstname`, `lastname`, `workemailaddress`, `idnumber`, `officerId` (anchors the same officer while the base field differs) | Yes — name and email are displayed | Officer keeps seeing wrong name/email/NRIC-linked data until manually patched — same misattribution risk as TC2, just triggered by an upstream data-entry error instead of a transfer |
+| **TC9** | Position ID change | Same failure mode as TC2 — stale position drives wrong competency mapping | Same as TC2. Career Compass will not update the profile on a Position ID change post-first-login. Flagged for post-MVP handling. | Medium. Silent data drift. | `employmentid`, `primaryposition` | Yes, via title and competency lookup | Wrong title shown, and old-role competencies stick around since nothing re-triggers the lookup |
+
+## The Other 8 Test Cases
+
+| TC | Scenario | What's Actually Broken | MVP Handling | Severity / Nature | Field(s) | Shown to Officer? | If It Drifts |
+|---|---|---|---|---|---|---|---|
+| **TC4** | Identifier changes from FIN to NRIC (or vice versa) | No reconciliation logic across an identifier change. Confirmed unbuilt, not just untested. | Not handled — requires a discovery spike to determine record linking/reconciliation | High — will fail if it occurs. Unbuilt capability, not a partial gap. | `idnumber`, `idType` (confirmed real); `officerId` stays constant through the conversion | No, backend only | Invisible directly, but a matching field — if the ID type flips and nothing reconciles it, the system risks losing track of who's who behind the scenes |
+| **TC5** | Officer leaves service, then rejoins | Same gap as TC4 — no reconciliation against the old record | Not handled, same discovery need as TC4 | High. Unbuilt capability. | `employmentid`, `officerId`, `status` (confirmed real); daily-batch diffability still an open question (#38) | `status` yes, via login gate; other two no | Officer could be wrongly blocked from logging back in if `status` doesn't correctly flip to active, or the system fails to recognize them as the same person |
+| **TC6** | Record accidentally deleted and recreated inside POCDEX | Invisible to Career Compass since it doesn't re-call POCDEX after first login. Masked by construction, not actually handled. | Masked by the first-login-only design during MVP; resolves by design post-MVP once per-login calls exist | Medium now, but severity rises once per-login calls exist and the masking goes away. Latent/masked gap. | `employmentid`, `officerId`, `status` | Same as TC5, `status` only | Same login-gate risk as TC5 — wrong `status` or confused record identity, not a visible profile bug |
+| **TC10** | Job title changes, Position ID stays the same | Same treatment as TC9 — no update happens for MVP | Not updated, same as TC9 | Low. Silent data drift, explicitly called cosmetic only. | `employmenttitle`/`businesstitle` (`employmentid` unchanged) | **Yes**, shown directly on the profile (OTEP-74) | Wrong job title shown on the officer's own profile — cosmetic, but the second thing an officer sees after their name |
+| **TC11** | Job function/family/grade changes, including masked↔non-masked shift | Same treatment as TC9 for the base change, but a masked-to-non-masked shift could go **completely undetected**, read as "no update happened" | Not updated, same as TC9 | High — looks cosmetic but may not be, flagged as a potential security/classification gap. Corrected from an earlier mislabel as "Priority" — never in the source correspondence that set the priority-6. | `jobfamily`, `jobfunction`, `jobgrade` (`employmentid` unchanged) | Yes, via the competency section | Wrong Core/Functional competencies shown. Severity is specifically the masked case — could look like nothing happened, so nobody knows to check |
+| **TC12** | Same officer has more than one active POCDEX record | No detection exists, no documented POCDEX dedup rule. Current behavior: use first active entry, union competencies. | Workaround stands for MVP; proper fix needs post-MVP discovery | Medium — sized against real data (71 pilot officers, 1.35%), with a proposed fix already drafted (deterministic Employment ID precedence). Data integrity workaround, not an unbuilt capability, since a workaround exists. | `employmentid` (multiple), `officerId` (disambiguation anchor) | No, backend only | Not shown directly — connects to the same double-hatting display decision already descoped elsewhere. Detection matters; nothing to show an officer yet. |
+| **TC13** | New officer issued the same email a departed officer previously used | New officer can inherit and see the departed officer's actual data. NRIC/FIN fallback token is designed to close this, but needed privacy/security approval first, keeping exposure live. (Approval confirmed cleared 14 Aug elsewhere in this PRD — fix itself still not built.) | CC may show the departed officer's profile to the new officer during MVP; enhancement planned shortly post-MVP, nothing built yet | **Critical** — explicitly escalate above standard MVP-limitation framing. Data exposure between two individuals, the only TC with that classification. | `workemailaddress`, `idnumber`, `officerId` (same email, different token/`officerId` — that mismatch is the mechanism) | **Yes**, email is displayed and is the login credential | Highest-severity outcome of all 14 TCs — a real person sees a different real person's actual data. This is the concrete mechanism behind the "stale or reused email" risk already in the PRD's in-scope table. |
+| **TC14** | Officer classified as contingent, or transitions into/out of that status | CC saves a profile only at first login. Contingent at that point means no profile, can't log in. Later reclassification treated as a new first login. Reverse transition (active → later Contingent) isn't addressed, only Contingent→normal is documented. | Handled by the save-at-first-login design described | Medium. Untested, unconfirmed symmetric — forward case documented, reverse case unconfirmed. | `sourcesystem`/`hrSystem`, `status` (`CONTINGENT_WORKER` reason code) | Yes, via login gate | No visible profile bug in the documented direction — intended behavior, not a defect. The undocumented reverse case is the real open question. |
+
+---
+
+## What This Changes in Section 8
+
+TC10 shows that `employmenttitle`/`businesstitle` is a real, displayed field on its own, separate from `employmentid`/`primaryposition`. Right now Section 8's in-scope table only lists the latter two under Role change. Title can drift on its own too. Worth adding as its own row, or at least a note.
+
+TC13 also gives the actual mechanism behind the "stale or reused email" line already sitting in the PRD's Identity/contact row: same email, different `officerId`/token underneath. Worth naming that mechanism directly instead of leaving it vague.
+
+## What Stays the Same
+
+TC4, TC5, TC6, and TC12 are all backend matching-logic fields, same bucket as the `idnumber`/`idType`/`officerId` row already in the in-scope table. They add backend identity-resolution risk, not display risk, so none of them change what's officer-facing.
+
+TC14 is "supported by design" in the source, for the direction that's documented. The reverse transition isn't documented, and that gap belongs on the open-questions list.
+
+## Full Severity Distribution, All 14
+
+| Severity | Test Cases |
+|---|---|
+| Critical | TC13 |
+| High | TC2, TC4, TC5, TC11 |
+| Medium | TC1, TC3, TC8, TC9, TC12, TC14 |
+| Low | TC7 (resolved), TC10 (cosmetic) |
