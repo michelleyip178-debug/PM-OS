@@ -69,7 +69,7 @@ Inspired by personal operating system patterns but tailored specifically for Pro
 7. **Live Jira scripts** (`03-stories/scripts/jira-sprint.sh` + `jira-sync.py`) — primary source for sprint state; run these for current data (see Step 2D)
 8. `00-hub/tasks-active.md` - Current active tasks
 9. `00-hub/sprint-status.md` - Sprint status and open blockers (cache; the scripts above are fresher)
-10. `03-stories/jira-sync/` - Jira tickets by sprint (refreshed by jira-sync.py)
+10. `03-stories/jira-sync/` - Jira tickets by sprint (refreshed by jira-sync.py); `03-stories/jira-sync/CC-UAT/` - PATHFINDER-labeled UAT board tickets (refreshed by jira-sync.py --board cc-uat)
 11. `04-ceremonies/` - Sprint checklists, ceremony prep, weekly stakeholder updates
 12. `06-skills-and-decisions/stakeholders/` - Extended stakeholder files
 
@@ -274,11 +274,15 @@ bash /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint
 
 # Refresh per-issue files + write a .changes.md diff since last sync
 python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sync.py
+
+# Refresh CC-UAT board (Kanban, PATHFINDER-labeled UAT tickets) + its own .changes.md diff
+python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sync.py --board cc-uat
 ```
 
 - `jira-sprint.sh` gives the sprint header (name, dates, goal) and a status breakdown (To Do / In Progress / QA / Done counts) with assignees — use this for the **Sprint Pulse** and to flag WIP overload (one person with multiple In Progress) and late-sprint Backlog items.
 - `jira-sync.py` refreshes `03-stories/jira-sync/Sprint-*/` and writes `.changes.md`. Read `.changes.md` verbatim for **what moved since the last plan**.
-- Board defaults to OTEP-Pathfinder (12541). For OTEP-Core, prefix with `JIRA_BOARD_ID=<id>` (see [reference_jira](../../../projects/-Users-michelleyip-Documents-PM-OS/memory/reference_jira.md) for board IDs).
+- `jira-sync.py --board cc-uat` refreshes `03-stories/jira-sync/CC-UAT/` (Kanban board, no sprint concept — filtered to `labels = uat AND labels = PATHFINDER`) and writes its own `.changes.md`. Use this to flag UAT tickets that moved to Ready For UAT, Failed/Blocked, or Passed since the last plan — this is where E2E/UAT test-case status lives, separate from the Sprint 8 dev board.
+- Board defaults to OTEP-Pathfinder (12541). For OTEP-Core, prefix with `JIRA_BOARD_ID=<id>` (see [reference_jira](../../../projects/-Users-michelleyip-Documents-PM-OS/memory/reference_jira.md) for board IDs). `--board cc-uat` ignores `JIRA_BOARD_ID` since it queries by JQL, not board ID.
 - **Two environmental requirements** (verified 2026-06-03): (1) run with the **sandbox disabled** — `sgtechstack.atlassian.net` is allowlisted but the sandbox proxy still 502s the connection; (2) a **valid token** in `03-stories/.env` (`JIRA_API_TOKEN=`). A 401 means the token expired — rotate at id.atlassian.com/manage-profile/security/api-tokens.
 - If a script fails (network, sandbox, expired token), note it and fall back to the cache below — don't block the plan.
 
