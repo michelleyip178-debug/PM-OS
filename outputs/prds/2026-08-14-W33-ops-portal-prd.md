@@ -206,15 +206,7 @@ Included because it directly gates what the portal shows and how fresh it is.
 - **Non-functional targets:** P95 API response ≤100ms; ~125,000 POCDEX API requests/month expected post-MVP (25,000 MVP monthly active sessions, distinct from pilot-officer record counts tracked elsewhere — sessions and officers are different units); 4-year retention for inactive accounts.
 - **Master data sync risk:** Role Profile and Competency master files are extracted and manually uploaded on a **quarterly cadence**, independent of the POCDEX employment-diff problem this PRD otherwise focuses on. An officer tagged to a newly-created job profile won't have competencies mapped until the next quarterly update — a distinct staleness risk not currently in scope anywhere in this PRD.
 
-### 7.4 CAM Integration (added 14 Aug — not yet scoped)
-
-**Added same day as this PRD, scope not yet written.** Confirmed 14 Aug that CC will receive inactive-officer notifications from CAM and trigger lifecycle actions (inactivate/remove), closing the gap where an officer who never logs in again would otherwise go undetected regardless of anything else in this PRD.
-
-This is currently listed in Release 1 with a circular dependency ("depends on CAM integration scoping/build"). Before Release 1 planning proceeds, this needs its own real scope: the CAM→CC notification contract (push format, frequency), what "trigger lifecycle actions" actually does in the CC data model (hard delete vs. soft-inactivate vs. flag-for-review), how it interacts with the Ops Portal's case categorization (does a CAM-triggered inactivation generate a case, or bypass the portal entirely), and an effort estimate independent of the daily-diff job's.
-
-**Until this section has real content, treat CAM integration as excluded from Release 1 scope**, not silently included.
-
-### 7.5 Assumptions
+### 7.4 Assumptions
 
 Reversed from an earlier version — jobId, officerId, idType, status were previously removed after a real changed-fields extract showed no matching column, then confirmed as real, documented API fields. Field names have been updated to reinstate them. One caveat survives: this describes login-time API behaviour, not confirmed daily-batch-diff behaviour.
 
@@ -256,7 +248,7 @@ Three post-MVP increments plus a further-out phase, sequenced by dependency rath
 
 | Phase | Scope | Depends On |
 |---|---|---|
-| **Release 1** | Categorize-and-route portal: six portal areas, taxonomy, reason codes, audit trail, against manually-triggered comparisons. **CAM integration (confirmed 14 Aug) also ships here** — CC receives inactive-officer notifications from CAM and triggers lifecycle actions (inactivate/remove), closing the gap where a never-again-login officer would otherwise go undetected. | UI design work; CAM integration scoping/build; no other new backend dependency |
+| **Release 1** | Categorize-and-route portal: six portal areas, taxonomy, reason codes, audit trail, against manually-triggered comparisons. | UI design work; no other new backend dependency |
 | **Release 2** | Daily-diff batch job live — case detection becomes proactive; missing-email newly-vs-persisting distinction possible; batch categorization ships alongside, since bulk review only useful once cases arrive in daily batches | Field-mapping confirmed against the real API contract; daily-batch diffability of jobId/officerId/idType/status still needs POCDEX confirmation; re-validated effort estimate (23/day MVP, 781/day whole-of-government); engineering capacity; Base/Identity classification conflict resolved |
 | **Release 3** | Receiving-team workflow formalized — team named, SOP written and approved, remediation tooling built; overlapping tier models reconciled into one | Assumptions above resolved — can't start until a team and SOP exist, and Agency HR's role is placed somewhere |
 | Further out | NRIC/FIN token approved and built as identity fallback; identity-field diff coverage added | Privacy/security sign-off; POCDEX confirmation |

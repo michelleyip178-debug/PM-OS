@@ -1,6 +1,6 @@
 # Product Strategy One-Pager — CareerCompass Opportunities Unified Hub
 
-*Sections below follow the standard problem / strategy / roadmap / open-issues structure.*
+*Sections follow standard problem / strategy / roadmap / open-issues structure.*
 
 | Field | Value |
 |---|---|
@@ -8,206 +8,187 @@
 | Business Owner(s) | Xian Zhang GUO (PSD), Jacky LEE (PSD) |
 | Team Members | Michelle Yip (PM), Tan Pow Hwee (Tech Lead), Amber Tong (Designer), Thomas Huchede (FS), Chua Hao Eng (FS), Leo Milbor (FS), Jace Tan (Lead PM), Adrian Ang (Product Lead) |
 | Product Lifecycle Stage | POV |
-| End Users | Primary: Public Officers · Secondary: Agency HRs · Tertiary: — |
+| End Users | Primary: Public Officers · Secondary: Agency HRs |
 
 ## 1. Change Log
 
 | Date | Change |
 |---|---|
-| 2026-08-03 | **Opportunity Taxonomy PRD closed.** The posting-time categorization/data quality issue it addressed was resolved via implementation, tracked in Jira — no PRD needed. *Open question: is this the same issue as the "poor UAT test-environment data quality" risk in §3.2/§4? Not confirmed — flagging, not merging.* |
-| 2026-08-03 | **"R1" naming collision flagged.** This doc uses "R1" for a metrics-milestone date (Mar '27, when the 30% click-through target comes due). A separate epic one-pager (`2026-08-03-W32-r1-epic-one-pager.md`) uses "R1" for the *next release* (Creation/Apply/Status Tracking epics, Jan/Feb 2027 pilot). Same label, two meanings, two live docs — not yet reconciled. |
-| 2026-08-03 | **North Star target corrected: 15% by Dec '28 is Opportunities alone, not bundled with Courses.** Earlier draft described it as a deliberately combined target — that was wrong. Corrected in §2.3; the two Open Issues premised on it being bundled (North Star ownership, disaggregation-never-argued) are resolved and removed. |
+| 2026-08-19 | **Epic 4 (Opportunities Unified Hub) confirmed 47/47 Done in Jira.** Competency matching, ringfencing, keyword search, and job-category filter — all previously flagged as blocked or in progress — have shipped. See §3.2, §5, §6.1. |
+| 2026-08-03 | "R1" naming collision: this doc uses R1 for a metrics date (Mar '27); a sibling doc (`r1-epic-one-pager.md`) uses R1 for the next release (Creation/Apply/Status epics). Not yet reconciled. |
+| 2026-08-03 | North Star corrected: 15% by Dec '28 is Opportunities alone, not bundled with Courses. |
 
 ## 2. Problem
 
 ### 2.1 Status Quo
 
-**The problem:** Officers have no shared way to discover short-term stints across the public service. Stints are arranged informally, agency by agency, through personal networks — so access depends on who you know, not merit, and agencies can't tap the best-fit officer beyond their own team.
+**The problem:** Officers have no shared way to discover short-term stints across the public service. Arrangements happen informally, agency by agency, through personal networks — access depends on who you know, not merit.
 
-**Why it persists:**
-- Short-term attachments and project stints (weeks to months, cross-agency) let officers build skills without committing to a full role change — but there's no shared place to see what's available service-wide
-- Arrangements happen through personal networks or ad hoc requests
-- Officers without strong networks have no structured way to find a relevant stint
-- Agencies with short-term project needs can't easily tap officers outside their own team
+**Consequences:** Officers lose the lowest-risk form of career development. Agencies staff projects with whoever's available internally, not the best fit service-wide. The access gap between well-networked and poorly-networked officers widens over time.
 
-**Consequences:**
-- Officers lose access to the lowest-risk, most frequent form of career development — a stepping stone toward bigger moves (secondments, promotions) later
-- Agencies keep running projects understaffed, or staffed by whoever's available internally rather than the best-fit officer service-wide
-- Access gap widens over time between officers with strong networks and those without — development becomes network-based, not merit-based
-
-**Market size** *(reach validated by pilot onboarding; demand signal below is 2025 OTG data, not pilot usage)*
+**Market size**
 
 | Layer | Estimate | Basis |
 |---|---|---|
-| TAM | 150,000 | Full Public Service (16 ministries + ~50 stat boards) — everyone faces this problem regardless of agency |
-| SAM | ~5,400 | 6 pilot agencies actually onboarded (2 ministries, 4 stat boards) — current policy mandate |
-| SOM (Year 1 OKR) | ~1,080 | 20% of SAM — committed team OKR |
+| TAM | 150,000 | Full Public Service (16 ministries + ~50 stat boards) |
+| SAM | ~5,400 | 6 pilot agencies onboarded (current policy mandate) |
+| SOM (Year 1 OKR) | ~1,080 | 20% of SAM |
 
-TAM is bounded by who *could* use this (full Public Service); SAM is bounded by who's actually onboarded, not by user interest.
+**Demand evidence** ⚠️ *All figures below are 2025 OTG (legacy system) data or C@G platform data — not CareerCompass pilot usage. Real signal that demand exists; not yet proof it holds on this product.*
 
-**Demand evidence — OTG, 2025 (⚠️ not CareerCompass pilot usage)**
+| Quarter | Vacancies | Sign-ups | Gap |
+|---|---|---|---|
+| Q1 | 635 | 877 | +242 |
+| Q2 | 241 | 457 | +216 |
+| Q3 | 188 | 491 | +303 |
+| Q4 | 1,113 | 1,236 | +123 (gig spike, ~5x prior quarters) |
 
-> **Correction (2026-07-28):** this table was previously mislabeled "pilot, by quarter." It's actually 2025 vacancy/sign-up data from OTG (the legacy system), consolidated by the business owners. It predates CareerCompass and wasn't measured from the 6 pilot agencies' usage of *this* product. Real signal that demand existed in OTG — not evidence about CareerCompass. Every "the pilot proves demand" reference elsewhere in this doc (§3.1, §3.2) points back to this same dataset and carries the same correction.
+Sign-ups outpaced vacancies every quarter. The gap is flat-to-narrowing, not accelerating — supports a discovery-bottleneck thesis, not a runaway-demand one.
 
-| Quarter | Vacancies (this Q) | Sign-ups (this Q) | Gap (this Q) | Note |
-|---|---|---|---|---|
-| Q1 | 635 | 877 | +242 | |
-| Q2 | 241 | 457 | +216 | |
-| Q3 | 188 | 491 | +303 | |
-| Q4 | 1,113 | 1,236 | +123 | Gig spike — 1,113 net-new vacancies, ~5x prior quarters |
+C@G (separate dataset, Apr–Jun 2026): 4,151 jobs, 172,810 applications, 3,500 public officers applying. CareerCompass integrates C@G only as a badge/deep-link — this is demand *on* C@G, not demand *through* CareerCompass.
 
-Sign-ups outpaced vacancies every quarter — a real, consistent OTG signal. The gap is **flat-to-narrowing** (+242 → +216 → +303 → +123), not accelerating. Q4's spike shows agencies *can* surge supply, and demand kept pace. This supports the discovery-bottleneck thesis but not a "demand is running away from supply" narrative. Any claim from this data must say "OTG, 2025," never "the pilot."
+**Policy alignment:** Operationalizes Minister Chan's SPARK 2026 "equip and emplace" commitment — low-stakes role-testing that delivers the "emplace" half.
 
-**Demand evidence — Careers@Gov (C@G), separate dataset**
-
-| Period | Jobs | Total Applications | Applications from Public Officers | Public Officers Applying |
-|---|---|---|---|---|
-| Apr–Jun 2026 (actual, 3 mo) | 4,151 | 172,810 | 27,580 | 3,500 |
-| Annualized (×3) | ~12,000 | — | — | ~10,500 |
-
-Same caveat as above: C@G platform-wide demand, not CareerCompass usage. C@G is integrated into CareerCompass only as a badge/deep-link (§6.1) — this is evidence of demand *on C@G*, not evidence officers engage with C@G opportunities *through* CareerCompass.
-
-**Policy alignment:** Direct operationalization of Minister Chan Chun Sing's SPARK 2026 commitments — to "equip *and* emplace" officers into new roles as AI reshapes jobs, and to give leadership "the responsibility to redesign the jobs for all our people impacted by AI." This Hub is the mechanism: low-stakes, low-commitment role-testing that delivers on "emplace," not just "equip."
-
-**Not solving for:** Full postings, secondments, or promotions (broader Opportunities Unified Hub's scope) · formal courses/certifications (CareerCompass Courses) · performance evaluation or officer selection (agencies retain that) · mandatory or performance-linked assignments (strictly voluntary, officer-initiated).
+**Not solving for:** Full postings/secondments/promotions · formal courses · performance evaluation · mandatory assignments.
 
 ### 2.2 Vision
 
-**Ideal future state:** Every officer opens CareerCompass and sees a career path shaped around them — not a static catalog, but a living view of where they could go next and what stands between them and getting there. Postings, secondments, stints, and courses live in one connected system that knows an officer's competencies well enough to point them toward what's actually relevant, without leaving the platform or repeating information it already has.
+Every officer opens CareerCompass and sees a career path shaped around them — postings, secondments, stints, and courses in one system that knows their competencies well enough to point them toward what's actually relevant.
 
-**How the experience improves:**
-- Officers train toward something specific, not guess at courses — a course only shows up because it closes a real gap to a real opportunity
-- Officers stop missing roles they never heard about — qualified opportunities surface directly
-- The anxious post-apply silence ("did anyone even see this?") is replaced by visible status and honest timelines
-- Rejections come with a clear next step, not a dead end
-
-**Why aspirational yet realistic:** The leap is a genuinely guided career system, not a bigger job board. It's grounded in what's real today: confirmed pilot reach (5,400 officers, 6 agencies), a demand signal from 2025 OTG data (not yet replicated on CareerCompass — see correction above), a national policy mandate in motion (SWDA merger, SPARK 2026), and a phased path to full coverage rather than big-bang launch. It doesn't require inventing new government behavior — just connecting data that already exists but sits apart, and confirming the OTG-era signal holds once CareerCompass has its own usage data.
+**Why realistic:** grounded in confirmed pilot reach (5,400 officers, 6 agencies), a real demand signal (2025 OTG data, not yet replicated on CareerCompass), and a live policy mandate. No new government behavior required — just connecting data that already exists.
 
 ### 2.3 Success Metrics
 
-**North Star: Opportunities Placement rate** — officers who log in and end up placed into a stint, secondment, or posting through CareerCompass.
+**North Star:** Opportunities Placement rate — officers placed into a stint/secondment/posting through CareerCompass. **Target: 15% by Dec '28, Opportunities alone.**
 
-**Target: 15% by Dec '28, Opportunities alone** — not bundled with Courses. This is a disaggregated, Opportunities-specific number, so a strong or weak Courses quarter has no way to mask Opportunities performance in this figure.
-
-**The funnel logic:** click-through → application → 180-day return tells us if officers are finding things, acting on them, then sticking around. HR dashboard usage and officer satisfaction catch the failure mode where placement numbers look fine but the product underneath is broken.
-
-| Outcome metric | Current Baseline | Target | Timeline |
+| Metric | Baseline | Target | Timeline |
 |---|---|---|---|
-| Successful opportunity placement rate | 0% (no product yet) | 15% (Opportunities alone) | Dec '28 |
-| Click-through into listing | No baseline | 30% within 6 months | R1: Mar '27 |
-| Application rate | **OTG: 0.21% of all accounts** (233/109,076) · **2.19% of logged-in users** (233/10,648) | 20% applied | R2: Jun '27 |
-| Login rate (180 days) | No baseline | 20% of onboarded officers | R3: Sep '27¹ |
-| Agency HR dashboard usage | No baseline | 60% of HR officers | R3: Sep '27 |
-| Officer satisfaction (apply process) | ≥3.5/5 (MVP) | ≥3.8/5 | MVP → R3: Sep '27 |
+| Placement rate | 0% | 15% | Dec '28 |
+| Click-through into listing | No baseline | 30% | R1: Mar '27 |
+| Application rate | OTG: 0.21%–2.19% | 20% | R2: Jun '27 |
+| Login rate (180 days) | No baseline | 20% | R3: Sep '27¹ |
+| HR dashboard usage | No baseline | 60% | R3: Sep '27 |
+| Officer satisfaction | ≥3.5/5 (MVP) | ≥3.8/5 | R3: Sep '27 |
 
-*¹ Re-dated from Jun '27 — a 180-day retention read needs a cohort with 180 days of history, not available until ~6 months post-MVP (ships 2 Nov). Sep '27 is the earliest mathematically valid date. (Duplicate "Officer satisfaction" row from an earlier draft consolidated above.)*
+*¹ Re-dated from Jun '27 — 180-day retention needs 180 days of cohort history, unavailable until ~6 months post-launch.*
 
-**Why these metrics:** Placement, not application — an officer who applies and never gets placed hasn't been served (matches Minister Chan's "place, not just train" framing). Click-through/applications/logins triage where the funnel breaks if the North Star stalls. HR dashboard usage and satisfaction catch a good placement number hiding a broken experience underneath.
+**Why placement, not applications:** an officer who applies and never gets placed hasn't been served. The funnel metrics (click-through, applications, logins) triage where things break if the North Star stalls; HR usage and satisfaction catch a good placement number hiding a broken experience.
 
-**Cost effectiveness (VCR):** *Not yet populated* — needs Dev/Ops EOM figures and an impact-unit definition from finance/PMP before the Q4'26–Q3'27 table or the benchmark assessment can be filled in.
+**Cost effectiveness (VCR):** not yet populated — needs Dev/Ops EOM figures and an impact-unit definition from finance/PMP.
 
 ## 3. Strategy
 
 ### 3.1 Proposed Product Strategy
 
-**Hypotheses to validate:**
-1. Discoverable cross-agency stints raise application rates specifically for officers with weak/no prior networks — closing the access gap, not just shuffling existing demand
-2. Competency-matched surfacing (not a raw list) improves click-through *and* application quality — a matched officer is more likely to apply and be a good fit
-3. A structured, low-stakes placement experience (clear status, honest timelines) normalizes stints as part of a career path — driving repeat usage across multiple stints, not just first-time signups
+**Hypotheses:**
+1. Discoverable cross-agency stints raise application rates specifically for weakly-networked officers — closing the access gap, not just shuffling demand
+2. Competency-matched surfacing improves click-through *and* application quality over a raw list
+3. Structured status/timelines normalize stints as a repeatable career step, not a one-off
 
-**Theory of change:** 2025 OTG data shows real, consistent demand — sign-ups outpaced vacancies every quarter. That evidence predates CareerCompass and hasn't been replicated on the pilot, but directionally supports the same read: discovery and matching are informal and network-dependent, making access uneven. The Opportunities Hub makes the informal formal — publishing what's available, matching it to competencies, giving agencies a channel beyond their own team. It doesn't create demand (OTG suggests demand exists) — it removes the network-access bottleneck between demand and placement. *Still needs confirming on CareerCompass's own data.*
+**Theory of change:** 2025 OTG data shows real demand; access is uneven because discovery and matching are informal and network-dependent today. The Hub formalizes it — publish, match, open beyond an agency's own team. It doesn't create demand, it removes the network-access bottleneck. *Still needs confirming on CareerCompass's own data.*
 
-**Guiding principles:**
-- **Placement over activity.** North Star is placement, not applications or logins — every metric in §2.3 reflects this
-- **Match, don't just list.** A raw list fails the merit-based-access goal as surely as no listing at all — matching is core, though currently blocked on an unresolved data dependency (§3.2)
-- **Voluntary, always.** Not solving for mandatory/performance-linked assignments — satisfaction is a guardrail, not just placement volume
-- **Phased reach, not big-bang.** 6 agencies → full public service, matching the SAM/TAM structure in §2.3 — each phase's data quality and matching accuracy must be provable before scaling
-
-**Policy fit:** Directly operationalizes "emplace, not just equip" as AI reshapes roles — low-stakes, reversible role-testing a full posting/secondment can't offer. Also gives agencies a service-wide sourcing channel instead of running projects understaffed — an operational win independent of the individual-development framing.
+**Guiding principles:** Placement over activity · Match, don't just list · Voluntary, always · Phased reach (6 agencies → full public service), each phase proven before scaling.
 
 ### 3.2 Risks and Mitigations
 
-*Strategy-level summary; a fuller risk register is maintained separately.*
+| Category | Risk | Status | Mitigation |
+|---|---|---|---|
+| Market | Demand validation is reach-based, not desire-based — TAM/SAM/SOM sizes who *could* use this, not who *wants* to | Open | Treat R1 click-through/application targets as the real validation experiment |
+| Market | A persistent demand-supply gap erodes trust faster than slow discovery does | Open | Track applications-per-vacancy as a guardrail once CareerCompass has its own data |
+| Market | "Already applied" state has no confirmed MVP scope, currently fails testing | **Still open** | Force a scope decision |
+| Technical | Competency matching (OTEP-336/570) | **RESOLVED 2026-08-19** | Confirmed Done in Jira ⚠️ confirms the build shipped, not that REQ-X2 (agency-code data dependency) independently closed — no RTM doc exists in this workspace to verify directly |
+| Technical | Ringfencing (OTEP-390/408/409) | **RESOLVED 2026-08-19** | Confirmed Done — same caveat, worth confirming the test-account and rule-precedence gaps were actually resolved, not just that the code merged |
+| Technical | UAT test-environment data quality flagged poor | **Still open** | No evidence this closed |
+| Team / resource | Engineering capacity split across profiles, competencies, onboarding, auth, and opportunities — could stall quietly | Open | Watch at sprint checkpoints |
+| Team / resource | No accessibility (screen-reader) testing capability exists | Open | Needs a specialist before pre-launch review |
 
-**Market**
-- **Demand validation is reach-based, not desire-based.** §2.1's TAM/SAM/SOM sizes who *could* use this, not who *wants* to — the OTG gap is real legacy-system evidence, not proof it holds on CareerCompass at any scale. → *Treat the R1 click-through/application targets as the real demand-validation experiment; a miss is the signal to revisit demand assumptions.*
-- **A persistent demand-supply gap is a trust risk, not just a metric.** If the platform generates applications faster than agencies supply vacancies, officer trust erodes ("I apply and nothing happens") faster than slow discovery ever would. → *Track applications-per-vacancy as an explicit guardrail once CareerCompass has its own data; escalate to agency sourcing conversations if it deteriorates.*
-- **"Already applied" state has no confirmed MVP scope.** A real first-impression risk on the exact trust-building experience the strategy depends on. → *Force an explicit scope decision before UAT (11 Aug).*
-
-**Technical**
-- **Competency matching — the core differentiator — is blocked on an unresolved data dependency** (agency codes across source systems). If it ships broken or descoped, the product degrades to an undifferentiated listing. → *Treat as launch-blocking, not backlog; escalate ownership + resolution date before feature freeze (21 Aug).*
-- **Ringfencing is architecturally unverified.** ~2 dozen test cases blocked on test-account provisioning; rule precedence for overlapping include/exclude rules undefined; API-level enforcement untested. A failure here directly contradicts the merit-based-access premise. → *Resolve the test-account blocker and rule-precedence gap before UAT — cheapest fix, highest exposure if skipped.*
-- **UAT test-environment data quality flagged poor.** Threatens credibility of the whole discovery experience for the first UAT wave (11 Aug). → *Tracked with an owner; needs a resolution date tied to UAT start.*
-
-**Team / resource**
-- **Engineering capacity is split** across profiles, competencies, onboarding, auth, and opportunities. Opportunities-specific work could stall quietly if capacity shifts elsewhere. → *Watch at sprint checkpoints; flag to leadership the moment it stalls, not after.*
-- **No accessibility (screen-reader) testing capability exists** — a fixed compliance obligation, not something more sprint time fixes. → *Needs a specialist or testing partner before pre-launch review.*
-
-**Experiments run:** None on CareerCompass itself. The 2025 OTG data is the closest thing to POV-stage evidence — suggestive, not confirmatory. No matching-hypothesis experiment yet run (matching hasn't shipped). Real usage data / officer interviews and the matching experiment are both open validation gaps.
+**Experiments run:** none on CareerCompass itself. OTG data is the closest thing to POV-stage evidence — suggestive, not confirmatory.
 
 ## 4. Roadmap
 
 | Timeline | Initiative | Why it matters |
 |---|---|---|
-| Now → feature freeze (21 Aug) | Resolve competency-matching data dependency; ship match on listing/detail | Without this, MVP ships as an undifferentiated list, not the matched-discovery product the strategy promises |
-| Before 11 Aug UAT (Profile + Opportunities) | Resolve ringfencing test-account access, rule-precedence gap, UAT data-quality issue | De-risks first UAT wave — a ringfencing failure would contradict the merit-based premise in front of reviewers |
-| 7 Sep – 16 Oct: VAPT | Security/pen-test incl. access-control paths | Confirms safe to expose to full pilot population; scope (POCDEX/CSC/Cumulus) still TBC |
-| 19–23 Oct: go-live approval · 26–30 Oct: soft launch | Deploy to prod, staged rollout | First real read on click-through/application targets against actual traffic |
-| Week of 2 Nov: MVP first release | Live for 6 agencies (~5,400 officers) | Starts the clock on R1 targets — 30% click-through, first placement data |
-| R1: Mar '27 | Click-through target (30%) due | First real signal on hypothesis 1 (network-bottleneck removal) |
-| R2: Jun '27 | Application rate target (20%) due | Tests the browse→apply conversion leg |
-| R3: Sep '27 | HR dashboard (60%), satisfaction (3.8/5), 180-day login (20%) due | Confirms it works for agencies, not just officers, and that people return |
-| Ongoing | Phased scale-up beyond 6 agencies toward full TAM (~150,000) | Gated on SAM-level data quality and matching accuracy holding at each phase |
-
-**Dependency:** This roadmap assumes competency matching resolves before feature freeze. If not, Nov MVP either ships without matching (undermining "match, don't just list") or slips — the single largest schedule risk here, tracked in §3.2.
+| ~~Now → feature freeze (21 Aug)~~ | ~~Resolve competency-matching dependency~~ | **RESOLVED 2026-08-19** — see §3.2 |
+| Before UAT | Resolve UAT data-quality issue | Still open — de-risks the first UAT wave |
+| 7 Sep – 16 Oct: VAPT | Security/pen-test, incl. access-control | Confirms safe to expose to full pilot; scope (POCDEX/CSC/Cumulus) still TBC |
+| 19–23 Oct → 26–30 Oct | Go-live approval → soft launch | First real read on click-through/application targets |
+| Week of 2 Nov | MVP first release, 6 agencies (~5,400 officers) | Starts the clock on R1 targets |
+| R1: Mar '27 | Click-through target (30%) due | First signal on hypothesis 1 |
+| R2: Jun '27 | Application rate target (20%) due | Tests browse→apply conversion |
+| R3: Sep '27 | HR dashboard, satisfaction, 180-day login due | Confirms it works for agencies and that people return |
+| Ongoing | Scale beyond 6 agencies toward full TAM (~150,000) | Gated on data quality and matching accuracy holding at each phase |
 
 ## 5. Open Issues
-
-*Known unknowns — carried forward from §2/§3, plus items from this week's reconciliation.*
 
 **Metric & scope soundness**
 
 | Issue | Owner | Needed by |
 |---|---|---|
-| **20% application-rate target vs. OTG baseline (0.21%–2.19%)** implies a 9x–100x jump. No stated reason why (matching? native apply? discovery?) or by how much each should contribute. | Michelle | Before PDO/leadership review |
-| **6-agency SAM is asserted from "policy mandate," never questioned** — yet it gates the SOM target and the entire phased-reach roadmap. The most load-bearing number in the doc, stated as given. | Michelle | Before conversion/strategy review |
-| **Theory of Change's causal claim (network-dependency → the gap) is asserted, not proven.** OTG data shows a gap existed, not that network-dependency caused it. If wrong, the matching strategy solves the wrong problem. | Michelle | Before justifying the matching investment |
-| **Scope boundary (stints-only vs. full postings/secondments) is stated, not argued** — while a sibling release (R1 epic one-pager) actively builds the excluded scope. No stated reason for the line. | Michelle | Before conversion/strategy review |
+| 20% application-rate target vs. OTG baseline (0.21–2.19%) implies a 9x–100x jump, no stated driver | Michelle | Before PDO/leadership review |
+| 6-agency SAM asserted from "policy mandate," never questioned — gates the entire roadmap | Michelle | Before strategy review |
+| Theory of Change's causal claim (network-dependency → the gap) is asserted, not proven | Michelle | Before justifying the matching investment |
+| Scope boundary (stints-only) is stated, not argued, while a sibling doc (R1) builds the excluded scope | Michelle | Before strategy review |
 
 **Delivery blockers**
 
 | Issue | Owner | Needed by |
 |---|---|---|
-| **Competency-matching dependency has no resolution date** — the single largest schedule risk on the roadmap. | Unowned — needs a name | Before feature freeze (21 Aug) |
-| **Ringfencing rule precedence undefined** — real architecture gap, not just a missing test. | Squad decision needed | Before 11 Aug UAT |
-| **"Already applied" state has no confirmed MVP scope**, currently fails testing. | Michelle → squad decision | Before 11 Aug UAT |
-| **A separate connectivity dependency isn't scoped or in the test plan.** | Engineering lead (needs grooming) | Before feature freeze |
-| **Demand-supply gap sustainability unconfirmed on CareerCompass.** OTG's gap is consistent, not worsening, but Q4's spike shows vacancy supply can swing hard quarter to quarter — unaddressed by any current metric beyond the §3.2 guardrail. | Michelle → agency sourcing conversation (owner TBD) | Before scaling past 6 agencies |
+| ~~Competency-matching / ringfencing dependencies~~ | — | **RESOLVED 2026-08-19** — see §3.2 |
+| "Already applied" state has no confirmed MVP scope | Michelle → squad | **Still open** |
+| Connectivity dependency not scoped or in test plan | Engineering lead | **Still open** |
+| Demand-supply gap sustainability unconfirmed on CareerCompass | Michelle → agency sourcing | Before scaling past 6 agencies |
+| OTEP-1185, "[Enhance Search]" story (Title+Agency combined query returns zero results due to score-threshold dilution) — correctly scoped as Post-MVP enhancement, not a defect | Unowned | Confirm severity/officer impact before deciding R1 vs. later Post-MVP sequencing |
 
 **Housekeeping**
 
 | Issue | Owner | Needed by |
 |---|---|---|
-| **VCR table entirely unpopulated** — can't assess cost-effectiveness without Dev/Ops EOM figures and an impact-unit definition. | Michelle → finance/PMP | Before using this doc to justify investment |
+| VCR table entirely unpopulated | Michelle → finance/PMP | Before using this doc to justify investment |
 
 ## 6. Appendix
 
-### 6.1 Delivered
+### 6.1 Delivered — Officer End-to-End Journeys
 
-*Built and functionally complete as of the pilot phase, ahead of Nov MVP. QA sign-off in progress on several — see §3.2 (Technical risk) for what's outstanding.*
+*Epic 4 (OTEP-69) confirmed 47/47 Done, 2026-08-19 — MVP build is functionally complete ahead of the 21 Aug feature freeze. Framed as journeys, not a flat feature list, since that's what actually matters to an officer.*
 
-- **Opportunity listing** — card grid, sorted by posting date, auth-gated, paginated
-- **Empty/error/partial-load states** — no silent failure at the top of the funnel
-- **"Closing soon" badge** + open/closed visibility — nudges application timing
-- **Sort** by posted date / closing date
-- **Filter** by opportunity type, with one-action clear-all
-- **Opportunity detail page** — full fields, fallback copy, Apply CTA above the fold, deep-link auth gate
-- **Closed/expired deep-link handling** — clear "no longer available" messaging, preserves trust
-- **Careers@Gov (C@G) integration** — badge, detail page, apply-via-C@G deep link. C@G itself carries real volume (4,151 jobs, 172,810 applications, 3,500 applying officers in Apr–Jun 2026 alone — §2.1); CareerCompass isn't generating that demand, but the integration determines how much becomes visible through this platform
-- **Apply via FormSG** — basic redirect for Internal Jobs, STIPs, and Gigs
+**✅ Journey 1 — Internal Jobs, STIPs, Gigs (complete, discovery → application submitted)**
 
-**Not yet delivered, scoped for Nov MVP:** competency matching on listing/detail (blocked, §3.2/§5) · runtime ringfencing enforcement · keyword search and job-category filter (in progress).
+Login (auth-gated) → Listing (OTEP-85, sorted, ringfenced items pinned) → Search/Filter (OTEP-405, OTEP-86/437) → Detail page (OTEP-128, full fields + competency match via OTEP-336/570¹) → Apply (OTEP-319, FormSG redirect) → officer completes application on FormSG.
+
+**✅ Journey 2 — Careers@Gov listings (complete, discovery → hand-off to C@G)**
+
+Login → Listing (C@G badge, OTEP-88) → Filter/Search (shared listing infra) → C@G Detail page (OTEP-87) → Deep-link to Careers@Gov (OTEP-89) → officer completes application on the C@G platform.
+
+**🔴 SJR — broken journey, no apply step.** Officer can discover and view an SJR detail page, but the OTG-redirect apply flow (OTEP-132) is deferred to R1 — a dead end, not a complete path, until then.
+
+**⚠️ Systemic gap — no post-apply visibility, either journey.** Once an officer clicks through to FormSG or C@G, CareerCompass has no visibility into what happens next ("as far as CareerCompass is concerned, you vanished"). This is the exact gap R1's Epic C (status tracking) is built to close.
+
+**⚠️ Known crack in both complete journeys — no "already applied" state.** An officer who's already applied and returns to the listing has no confirmed way to see that (§5, open issue) — a real first-impression risk even on the two journeys that are otherwise fully built.
+
+**Supporting infrastructure (not a journey on its own):** empty/error/partial-load states · "closing soon" badge · closed/expired deep-link handling · ringfencing enforcement (OTEP-390/408/409, see §3.2 REQ-X2 caveat).
+
+¹ *Competency match — see §3.2 REQ-X2 caveat: ticket confirmed shipped, underlying data dependency not independently verified.*
+
+**Post-MVP (OTEP-575) — 13 items, all Backlog, no fix version/sprint/label set on any of them (fully untriaged, not roughly-sequenced).**
+
+| Item | Journey impact | R1 recommendation |
+|---|---|---|
+| **OTEP-132** — SJR apply via OTG redirect | Fixes the broken SJR journey → 3rd complete journey | ✅ **Propose for R1** — fixes a *broken* journey, not a new one; matches R1's apply-friction thesis exactly; low build cost (same redirect pattern already proven) |
+| OTEP-578 — OTG ingestion (Secondments, Internal Jobs, Rotations) | Widens the front door, all journeys | ❌ Not R1 — scope-widening, not friction removal |
+| OTEP-577 — description-text search matching | Discovery step, relevance ranking | ❌ Not R1 |
+| OTEP-607, OTEP-614 — competency-based filtering | Discovery step, fit-based narrowing | ❌ Not R1 — discovery-quality work, deprioritized by the R1 rationale doc in favor of apply-friction fixes |
+| OTEP-615 — 3-char autocomplete | Discovery step, faster search entry | ❌ Not R1 |
+| OTEP-576 — new filter categories | Discovery step | ❌ Not R1 |
+| OTEP-612 — personalised recommendations | New: proactive surfacing (officers currently only browse/search) | ❌ Not R1 — same reasoning as competency filtering |
+| OTEP-1185 — search-scoring enhancement (Story, not a bug; combined Title+Agency queries score below threshold) | Discovery step, search quality | ❌ Not R1 — correctly scoped as Post-MVP already; confirm officer-facing severity before sequencing, no reason to fast-track |
+| OTEP-197, OTEP-425 — bookmarking | New: save-for-later, an interaction mode neither current journey supports | ❌ Not R1 |
+| OTEP-986 — ringfencing for officers with multiple employments | Correctness fix, not officer-visible unless previously mis-shown | ❌ Not R1 |
+| OTEP-1190 — upload audit trail | Not officer-facing at all | ❌ Not R1 |
+
+**Net effect if all of OTEP-575 ships:** 2 complete journeys → 3 (SJR fixed). Discovery goes from reactive-only to proactive + higher-fidelity. Officers gain a save-for-later path that doesn't exist today. **Not addressed by any of it:** the two systemic gaps above (post-apply status, "already applied" state) — both are R1 Epic C scope, not Post-MVP-575 scope.
+
+**Caveat on the one recommendation:** even OTEP-132 alone should come with an explicit capacity check before adding to R1 — the R1 discovery matrix already flagged FE capacity as tight (sole developer, 5 opportunity types, 3-month window) *before* any OTEP-575 additions.
 
 ---
 
-*Generated: 2026-07-28. Last readability pass: 2026-08-03.*
+*Generated: 2026-07-28. Last updated: 2026-08-19.*
