@@ -10,11 +10,11 @@ quarter: Q2/Q3 2026
 ## TL;DR
 
 - **PRDs:** Ops Portal PRD active all week (v0.2, multiple sections rewritten); CAM integration split into its own new epic one-pager on Thursday
-- **Decisions:** 1 formal decision doc filed (competency recalculation on profile change); PS/DS accept/reject decision did **not** close — 3rd week now unresolved
+- **Decisions:** 1 formal decision doc filed (competency recalculation on profile change); PS/DS accepted the MVP delay note (Oct→Nov shift) on 18 Aug — **correction (24 Aug): this was resolved the same week, not stalled as originally reported below**
 - **Meetings:** 6 processed this week (Squad Sync, CSC SIT/UAT Readiness, Weekly Slack Update, 2x UAT Daily Review, Post-MVP Prioritisation Planning)
-- **Completion rate:** 2 of 3 weekly priorities resolved (WOG AD, Gate 2) — but neither closed via the planned escalation; both cleared on their own before the trigger fired
-- **Key win:** Sprint 8 feature freeze held; WOG AD and UAT Gate 2 both resolved before Friday's deadline
-- **Key challenge:** The "escalate, don't re-ask" behavior change named 2 weeks running was never actually tested — both blockers cleared independently, and PS/DS (the one item nobody else resolved for you) is now genuinely 3 weeks stalled
+- **Completion rate:** 3 of 3 weekly priorities resolved (WOG AD, Gate 2, PS/DS) — none closed via the planned escalation; all three cleared on their own before any trigger fired
+- **Key win:** Sprint 8 feature freeze held; WOG AD, UAT Gate 2, and PS/DS all resolved by 18 Aug, ahead of their respective deadlines
+- **Key challenge:** The "escalate, don't re-ask" behavior change named 2 weeks running remains completely untested — all three named blockers (WOG AD, Gate 2, PS/DS) cleared independently, with no case yet where the escalation trigger actually fired
 
 ---
 
@@ -40,15 +40,15 @@ quarter: Q2/Q3 2026
 
 ---
 
-### Priority 3: Force PS/DS Accept/Reject Decision to Close ❌ Not resolved
+### Priority 3: Force PS/DS Accept/Reject Decision to Close ✅ Resolved (not via plan)
 
 **Planned:** Either close via `/decision-doc` this week, or explicitly name the 3rd-week-slip risk to Adrian by Thursday.
 
-**Actual:** As of Thursday's plan, still open — no `/decision-doc` filed, no logged Adrian check-in since the weekly plan was written. No Friday daily plan exists to confirm whether the Thursday-named "explicitly flag the 3rd-week slip" fallback actually happened.
+**Actual (corrected 24 Aug):** PS/DS accepted the MVP delay note (Oct→Nov shift) on 2026-08-18 — the same day WOG AD and Gate 2 resolved. This was not caught or logged at the time; it was surfaced later and is being corrected here. No `/decision-doc` was filed and no Adrian escalation fired, same pattern as Priorities 1 and 2.
 
-**Status:** ❌ Not complete. This is now entering its **3rd consecutive week** with content progress but no actual decision. Unlike Priorities 1 and 2, nobody else is going to resolve this one — it has no external dependency clearing it by accident.
+**Status:** ✅ Complete. Contrary to what this review originally reported, PS/DS did not stall into a 3rd week — it resolved the same week as the other two priorities, on its own, before any escalation trigger was used.
 
-**Learning:** Two weeks running, the plan called for "escalate, don't re-ask" as the fix for stalled items. Both times it was named, the blocker dissolved before the escalation was tested — so the behavior itself remains genuinely unverified. PS/DS is the one item this week that isolates whether the escalation muscle works, because nothing else is clearing it. Next week's plan should treat it as the real test case, not a third instance of the same soft carry-over.
+**Learning (revised):** All three named blockers this week (WOG AD, Gate 2, PS/DS) cleared independently, with zero cases of the "escalate, don't re-ask" trigger actually firing. The original framing of PS/DS as "the one item nothing else resolves for you" was itself wrong — it resolved the same way the other two did. The real learning is sharper than first drafted: three weeks running, this workspace has had no confirmed instance of the escalation behavior being tested, because the underlying blockers keep resolving before the trigger date arrives. Next week's plan should not assume any current carry-over item will behave differently.
 
 ---
 
@@ -96,7 +96,7 @@ quarter: Q2/Q3 2026
 
 ## Top 3 Learnings
 
-**1. "Escalate, don't re-ask" remains untested for the third time.** Both named escalation triggers (WOG AD, Gate 2) were preempted by the blockers resolving independently. This is a good outcome but not evidence the intended behavior change works — worth being honest about that rather than crediting the plan. PS/DS is now the cleanest test case, since nothing else is going to clear it by accident.
+**1. "Escalate, don't re-ask" remains completely untested.** All three named escalation triggers this week (WOG AD, Gate 2, PS/DS) were preempted by the blockers resolving independently — including PS/DS, which was originally miscounted as unresolved in this review's first draft (corrected 24 Aug: accepted 18 Aug). This is a good outcome but not evidence the intended behavior change works — worth being honest about that rather than crediting the plan.
 
 **2. Ops Portal PRD quality improved substantially through direct scrutiny, not new information.** The self-review pass this week found real internal contradictions (stale counts, duplicate sentences, mismatched section cross-references) that had been sitting in a "finished-looking" document for days. Scheduling a deliberate scrutiny pass on a document that feels done is worth repeating on other active PRDs, not just Ops Portal.
 
@@ -108,9 +108,11 @@ quarter: Q2/Q3 2026
 
 ### Top 3 Priorities (Draft)
 
-1. **Close PS/DS to an actual accept/reject decision** — 3rd week running, the one item this week that didn't resolve itself. Needs a same-day `/decision-doc` the moment Adrian's sign-off status is known, not a 4th week of "still open."
-2. **Resolve CAM integration's 5 open gaps** — particularly case-linkage with the Ops Portal (does a CAM event generate a portal case or bypass it?) and PDPA ownership for the Staff Exit personal-data-cleanup action, before this epic can be sized for R1.
-3. **Confirm R1 planning artefacts (#59) delivery** — designer output was due 12 Aug, still unconfirmed 2 weeks later, and directly blocks grooming.
+1. **Resolve CAM integration's 5 open gaps** — particularly case-linkage with the Ops Portal (does a CAM event generate a portal case or bypass it?) and PDPA ownership for the Staff Exit personal-data-cleanup action, before this epic can be sized for R1.
+2. **Confirm R1 planning artefacts (#59) delivery** — designer output was due 12 Aug, still unconfirmed 2 weeks later, and directly blocks grooming.
+3. **Resolve Sprint 8's orphaned tickets / Sprint 9 status** — sprint closed 23 Aug with 20 issues open and no successor sprint created.
+
+> Correction (24 Aug): PS/DS was originally listed here as an open priority. It was actually accepted 18 Aug — see Priority 3 above.
 
 > Note: Run `/weekly-plan` to formalize these and add detail.
 
@@ -118,14 +120,16 @@ quarter: Q2/Q3 2026
 
 | Item | Blocked Since | Blocked By | Action Needed |
 |---|---|---|---|
-| PS/DS accept/reject decision | ~3 weeks (week of 3 Aug) | Adrian's SD(WD)/D(ITC) routing sign-off | Direct check-in this week, run `/decision-doc` same day sign-off lands |
 | R1 planning artefacts (#59) | 12 Aug (designer commitment date) | Designer delivery unconfirmed | Direct check before next grooming session |
 | September capacity gap | 18 Aug (surfaced, untracked) | No owner named yet | Needs its own decision doc or escalation — bigger than a single action item |
 | Case-linkage: CAM ↔ Ops Portal | 20 Aug | No design source addresses it | Needs a explicit decision before CAM epic can be sized |
+| Sprint 9 / Sprint 8 orphaned tickets | 23 Aug (Sprint 8 closed) | No sprint plan confirmed | Raise with Rama/Adrian |
 
 **Priority unblocks:**
-1. PS/DS — the one item nothing else is going to resolve for you.
-2. September capacity gap — three converging facts (Amber leaving, new PM delayed, R1 feasibility) with no owner is a bigger risk than its current "flagged in a meeting note" status suggests.
+1. September capacity gap — three converging facts (Amber leaving, new PM delayed, R1 feasibility) with no owner is a bigger risk than its current "flagged in a meeting note" status suggests.
+2. Sprint 9 status — 20 tickets have had no sprint home since 23 Aug.
+
+*(PS/DS removed from this table 24 Aug — confirmed accepted 18 Aug, was never actually blocked past that date.)*
 
 ---
 

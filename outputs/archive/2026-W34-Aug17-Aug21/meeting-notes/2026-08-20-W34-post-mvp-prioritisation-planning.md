@@ -55,7 +55,7 @@ The team locked a five-sprint structure from 7 Sept to 13 Nov, splitting capacit
 | Task | Owner | Due Date | Priority | Status |
 |---|---|---|---|---|
 | Allocate engineering capacity across the 5 sprints (VAPT vs. feature) and confirm who's available each sprint | Rama | No due date mentioned — schedule within 48 hours | High | 🔴 Not Started |
-| Get a firm answer on whether Howing stays on through the sprints | Rama | No due date mentioned — flagged as urgent in-meeting ("I cannot afford to have someone suddenly drop") | High | 🔴 Not Started |
+| Get a firm answer on whether Heo Eng stays on through the sprints | Rama | No due date mentioned — flagged as urgent in-meeting ("I cannot afford to have someone suddenly drop") | High | 🔴 Not Started |
 | Finalize enhancing-search scope to fit ≤1 sprint | Michelle | No due date mentioned | Medium | 🔴 Not Started |
 | Lock R1 MVP scope (application + role-based access + creation form with ring-fencing) against actual headcount; explicitly mark what gets cut | Michelle | No due date mentioned | High | 🔴 Not Started |
 | Initiate Compass's onboarding process with the CAM team | Michelle | No due date mentioned | High | 🔴 Not Started |
@@ -143,6 +143,40 @@ The employment profile change is described as "almost an epic by itself," and CA
 
 **Follow-up Meeting:**
 - **Purpose:** Imelda's written debrief should trigger a confirmation round, not just a broadcast — especially on the double-hatting scope question and the capacity/timeline reconciliation above.
+
+---
+
+## Addendum: Scope Split and Sprint Dates (added 2026-08-24, from original meeting detail)
+
+**Pathfinder scope:**
+- Enhancing search (title + agency name, matches found in description)
+- R1 scope for opportunities (minimally creation, structured application, bookmarking, ingesting other job types — Internal Jobs, SJRs/Secondments, PSFG — and allowing new job types to be added)
+- Opportunities 2-way sync — ensuring opportunities show in both OTG and Career Compass (OTG has no API, and dual-posting may not be the best experience)
+- CAM (includes role-based access, e.g. Agency HR creating opportunities)
+
+**Core scope:**
+- Employment profile changes
+- Go-live preparations (SSP, risk assessment, performance testing, onboarding to ABLR)
+- VAPT fixing
+- Data modelling tech debt
+- [Discovery] Scope the final CMM for R1, including CIE
+- Onboarding ABLR
+
+**Sprint dates (the "five-sprint structure" from Decision 1, itemized):**
+- Sprint 1: 7 Sep – 18 Sep
+- Sprint 2: 21 Sep – 2 Oct
+- Sprint 3: 5 Oct – 16 Oct
+- Sprint 4: 19 Oct – 30 Oct
+- Sprint 5: 2 Nov – 13 Nov
+- Window: 7 Sep (VAPT start) through 15 Nov (MVP full launch)
+
+**Other notes from the original meeting detail:**
+- By Jan 2028, everyone should have been ported to Compass, because the SJR cycle starts then.
+- For the Ops module, Core team will assess residual risks from Employment Profile Changes; those residual risks get handled in the Ops Portal.
+- If POCDEX needs to be involved in any workstream, engage the POCDEX team early — a reminder, not a new decision.
+- CAM onboarding processing time may range 1–3 months; integration work follows onboarding but can only be tested once the Employment Profile Changes epic is ready.
+
+**Cross-reference note:** the Sprint 5 end date (13 Nov) and "MVP full launch" target (15 Nov) here should be checked against the newer POCDEX-driven 24 Nov production rollout date and the "week of 2 Nov" figure tracked in `open-items.md` #39 — three different dates are now in circulation across sources generated at different points. Not reconciled in this pass; flagging for whoever next touches the launch-date question.
 
 ---
 
