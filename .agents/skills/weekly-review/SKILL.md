@@ -261,8 +261,6 @@ Look for:
 
 ### Step 4: Generate Weekly Review
 
-> **Step 5 (archive) is mandatory and gets skipped in practice.** Before you write the review file, note that Step 5 must run after it. Do not end the turn on the review file alone — the run is not complete until the archive has run (or you have confirmed there was nothing to archive).
-
 Create file: `outputs/weekly-reviews/YYYY-WXX-weekly-review.md`
 
 **Output Length Guidance:**
@@ -593,9 +591,7 @@ quarter: Q[X] YYYY
 
 ---
 
-### Step 5: Archive the Week's Notes (MANDATORY — do not skip)
-
-This step is skipped often enough that CLAUDE.md and a saved memory both call it out. Run it every time, immediately after saving the review file. The run is not done until this has executed and printed its confirmation.
+### Step 5: Archive the Week's Notes
 
 After saving the weekly review file, archive that week's working files to keep `outputs/` clean.
 
@@ -627,8 +623,6 @@ If no files matched the week's date range, print: `Nothing to archive for W[XX].
 ---
 
 ### Step 6: Follow-Up Prompts
-
-**First, confirm Step 5 ran.** If the archive confirmation (or the "Nothing to archive" line) is not in your output above, run Step 5 now before anything else.
 
 After generating review, prompt user with contextual suggestions:
 

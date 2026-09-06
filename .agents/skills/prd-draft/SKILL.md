@@ -28,7 +28,7 @@ user-invocable: true
 
 When the PM types `/prd-draft`, guide them through creating a modern, AI-era PRD.
 
-## Context Routing Logic (Internal - for Claude)
+## Context Routing Logic (Internal - for Codex)
 
 **Automatic Context Checks:**
 When this skill is invoked, immediately check:
@@ -282,7 +282,7 @@ What we are explicitly NOT doing in v1:
 
 ## Success Metrics
 
-> **📚 Tip:** For help choosing the right metrics, see `.claude/skills/define-north-star/` (align to North Star) and `.claude/skills/experiment-metrics/` (STEDII framework for trustworthy metrics).
+> **📚 Tip:** For help choosing the right metrics, see `.Codex/skills/define-north-star/` (align to North Star) and `.Codex/skills/experiment-metrics/` (STEDII framework for trustworthy metrics).
 
 **Primary Metric:** [Metric name]
 - Current: [baseline]
@@ -323,23 +323,15 @@ If [scenario], we will [specific action].
 | **Inputs Available** | [fields, context, tools, RAG sources] |
 | **Constraints** | [brand, privacy, compliance] |
 | **Disallowed** | [PII echo, policy violations, jailbreak classes] |
-| **Model + version** | [model family and version] |
 | **Latency Budget** | P50: [X]ms / P95: [Y]ms |
-| **Quality targets** | accuracy > [X]% · hallucination rate < [Y]% |
 
-**Behavior Examples** (write 10-20 covering edge cases):
+**Behavior Examples:**
 
-| Scenario | User Input | Expected Output | Category |
-|----------|------------|-----------------|----------|
-| Happy path | [Example] | [What should happen] | ✅ Good |
-| Edge case | [Example] | [Graceful handling] | ✅ Good |
-| Ambiguous input | [Example] | [AI asks a clarifying question] | ✅ Good |
-| Out of scope | [Example] | [AI explains what it can help with] | ⚠️ Bad-but-handled |
-| Should reject | [Example] | [Error / refusal + why] | 🚫 Reject |
-
-**Graceful degradation** (fallback order): retry with a modified prompt → offer an alternative action → escalate to a human → fail with a clear message.
-
-**AI-specific kill criteria:** accuracy below [X]% after 2 weeks, user satisfaction below [Y]%, or escalation rate above [Z]%.
+| Scenario | User Input | Expected Output | Rejection Criteria |
+|----------|------------|-----------------|-------------------|
+| Happy path | [Example 1] | [What should happen] | N/A |
+| Edge case | [Example 2] | [Graceful handling] | N/A |
+| Should reject | [Example 3] | [Error/refusal] | [Why rejected] |
 
 ---
 
@@ -713,3 +705,237 @@ Before presenting the PRD draft to the PM, verify:
 
 **Remember:** The PRD is a tool for alignment, not a work of art. Ship it, discuss it, iterate on it.
 
+---
+
+# Part 2: Full PRD Workflow
+
+For comprehensive end-to-end PRD creation, follow this 7-step process.
+
+## Step-by-Step Workflow
+
+### Workflow Step 1: Gather Context (10 min)
+
+Before touching AI, collect:
+
+**Research & Data:**
+- User research findings (interviews, surveys)
+- Analytics data (usage patterns, metrics)
+- Support tickets (common issues, requests)
+- Competitive analysis
+
+**Strategic Context:**
+- How this ladders to OKRs
+- Business case (revenue/user impact)
+- Strategic importance (why now?)
+
+**Technical Context:**
+- Existing architecture constraints
+- Integration requirements
+- Known dependencies
+
+### Workflow Step 2: Generate First Draft (5 min)
+
+Use the conversational workflow in Step 1-3 above to generate your first draft.
+
+### Workflow Step 3: Enhance Each Section (30-60 min)
+
+**Problem Statement:**
+- [ ] Add specific customer quotes
+- [ ] Include quantitative data
+- [ ] Connect to company strategy
+
+**Solution:**
+- [ ] Explain WHY this solution
+- [ ] Detail alternatives considered
+- [ ] Call out tradeoffs made
+
+**Success Metrics:**
+- [ ] Define leading AND lagging indicators
+- [ ] Set specific targets
+- [ ] Define success criteria
+
+### Workflow Step 4: Multi-Perspective Review (15 min)
+
+Use the multi-agent review in Step 3 above to get feedback from:
+- Engineering (feasibility)
+- Design (UX)
+- Executive (strategy)
+- Customer voice (user needs)
+
+### Workflow Step 5: Human Review
+
+**Must review with:**
+- Engineering lead
+- Design lead
+- Your manager
+
+**Should review with:**
+- Key stakeholders
+- PM peers
+
+### Workflow Step 6: Refine & Ship (30 min)
+
+**Final checklist:**
+- [ ] Can someone unfamiliar understand it?
+- [ ] All sections complete
+- [ ] Dependencies identified
+- [ ] Success criteria clear
+- [ ] Next steps defined
+
+### Workflow Step 7: Announce
+
+```
+Hi team,
+
+I've published the PRD for [Feature Name]: [link]
+
+TL;DR: [One sentence]
+Why now: [Strategic rationale]
+Timeline: [When we plan to start/ship]
+
+Action needed:
+- Engineering: Review technical approach by [date]
+- Design: Review UX approach by [date]
+
+Questions? Drop them in [Slack channel].
+```
+
+---
+
+# Part 3: AI Feature PRDs
+
+**When to use:** When building any AI-powered feature, LLM integration, or ML product.
+
+## Why AI PRDs Are Different
+
+AI is fundamentally different from traditional features:
+- **Non-deterministic:** Same input → different outputs
+- **Probabilistic:** Can't guarantee 100% accuracy
+- **Context-dependent:** Quality depends on prompt, data, user intent
+- **Edge cases everywhere:** Infinite ways to break it
+
+## AI PRD Additional Sections
+
+### Behavior Specification (Required for AI)
+
+Create a table with three categories:
+
+| User Input | Expected Behavior | Category |
+|------------|-------------------|----------|
+| [Example 1] | [What AI should do] | ✅ Good |
+| [Example 2] | [What AI should do] | ✅ Good |
+| [Example 3] | [Graceful handling] | ❌ Bad |
+| [Example 4] | [Must refuse] | 🚫 Reject |
+
+**Good:** AI performs correctly
+**Bad:** AI should handle gracefully (don't break)
+**Reject:** AI must refuse (safety, policy violations)
+
+**Tip:** Write 10-20 examples covering edge cases.
+
+### AI Constraints
+
+**Model constraints:**
+- Model type: (GPT-5.2, Codex Opus 4.5, etc.)
+- Max tokens: input/output limits
+- Latency requirements: response time SLA
+- Cost constraints: $ per 1M tokens
+
+**Quality constraints:**
+- Accuracy target: % correct responses
+- Hallucination rate: max % of made-up facts
+- Refusal rate: % of "I don't know" responses
+
+**Safety constraints:**
+- Content filtering requirements
+- PII handling policy
+- Bias mitigation requirements
+
+### Edge Case Handling
+
+**Common AI edge cases:**
+
+1. **Ambiguous input**
+   - AI asks clarifying questions
+
+2. **Out-of-scope request**
+   - AI explains what it can help with instead
+
+3. **Harmful/unsafe request**
+   - AI refuses with explanation
+
+4. **Insufficient context**
+   - AI asks for more information
+
+5. **Low confidence**
+   - AI admits uncertainty
+
+### Graceful Degradation
+
+**Fallback hierarchy:**
+1. Retry with modified prompt
+2. Offer alternative action
+3. Escalate to human
+4. Fail gracefully with clear message
+
+### AI Evaluation Plan
+
+**Pre-launch:**
+- Test set: 100-500 hand-labeled examples
+- Human evaluation: Team rates 50 outputs
+- Edge case coverage: Test all known failure modes
+
+**Post-launch:**
+- Thumbs up/down feedback
+- Correction rate (% of edited outputs)
+- Abandonment rate
+- Escalation rate
+
+## 10 Principles for AI Products
+
+1. **Focus on user value** - Users care about outcomes, not technology
+2. **Anticipate mistakes** - Show confidence, allow corrections
+3. **Start simple** - One use case, nail it, expand
+4. **Make AI transparent** - What it can/can't do, when uncertain
+5. **Build for iteration** - Feedback loops from Day 1
+6. **Design for diverse users** - Beginners and experts
+7. **Control context** - System instructions, user history, RAG
+8. **Optimize for latency** - Streaming, perceived performance
+9. **Safety is non-negotiable** - Input/output filtering, rate limiting
+10. **Measure what matters** - Satisfaction, completion, corrections
+
+## AI PRD Template Addition
+
+Add this to the standard PRD for AI features:
+
+```markdown
+## AI Behavior Specification
+
+| User Input | Expected Behavior | Category |
+|------------|-------------------|----------|
+| [Example] | [Response] | ✅ Good |
+| [Example] | [Response] | ❌ Bad |
+| [Example] | [Response] | 🚫 Reject |
+
+## AI Constraints
+- Model: [GPT-5.2 / Codex Opus 4.5 / etc.]
+- Latency: P95 < ___ ms
+- Accuracy target: >___%
+- Hallucination rate: <___%
+
+## Safety & Compliance
+- Content filtering: [policy]
+- PII handling: [policy]
+- Audit logging: [policy]
+
+## Graceful Degradation
+1. [First fallback]
+2. [Second fallback]
+3. [Human escalation]
+4. [Final error state]
+
+## AI-Specific Kill Criteria
+- Accuracy < ___% after 2 weeks
+- User satisfaction < ___%
+- Escalation rate > ___%
+```

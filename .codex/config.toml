@@ -1,0 +1,15 @@
+[mcp_servers.google-calendar]
+command = "npx"
+args = ["@cocal/google-calendar-mcp"]
+
+[mcp_servers.google-calendar.env]
+GOOGLE_OAUTH_CREDENTIALS = "/Users/michelleyip/g.json"
+
+[mcp_servers.mcp-atlassian]
+command = "uvx"
+args = ["mcp-atlassian"]
+
+[mcp_servers.mcp-atlassian.env]
+JIRA_URL = "https://sgtechstack.atlassian.net"
+JIRA_USERNAME = "michelle_yip@psd.gov.sg"
+JIRA_API_TOKEN = "ATATT3xFfGF0SLB_hplL2VoPuBb4H86eJxJVQbxcDU204WZKi58pWrAGu7FREtAh7CZ2mt0DIfabQwPhjp9LhSVy_VvUZop24Wy5AN1k02_8bPQldSDN5IkAQUfnQGWG64AdxommjsCSJtOKAZjnPRUgWON-vPpqCGCFYChr3rGA2A7jXMTNsx0=64AF5A9C"

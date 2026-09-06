@@ -113,7 +113,38 @@ events = service.events().list(
 ).execute().get("items", [])
 ```
 
-**Blocked by enterprise policy:** Gmail, Linear/Jira, and Analytics MCPs. Do not attempt them. Task/sprint data comes from the live Jira scripts (Step 2 F). Everything else falls back to the workspace files named in Context Routing above, plus one focused question to the PM per missing source.
+**Option 2: Other MCPs (not available)**
+- Gmail, Linear/Jira, Analytics MCPs are blocked by enterprise policy — skip these paths.
+- **Gmail API** - Fetch unread/important emails via API calls
+- **Linear API** - Query tasks via GraphQL API
+- **Amplitude REST API** - Pull dashboard data
+- **Setup guide:** I'll walk you through getting API keys and making first calls
+
+**Option 3: Export/Import Workflow (Manual but Works)**
+- **Calendar:** Export today's calendar as .ics → I'll parse it
+- **Email:** Forward important emails → I'll extract context
+- **Tasks:** Export Linear/Jira to CSV → I'll process it
+- **Metrics:** Screenshot dashboard → I'll analyze with vision
+- **Setup guide:** I'll show you how to export from each tool
+
+**Option 4: Browser Automation (Semi-Automated)**
+- **Using Codex in Chrome MCP:** I can navigate to your tools and extract data
+- **Google Calendar:** Open in browser → scrape today's events
+- **Gmail:** Open inbox → extract recent threads
+- **Linear/Jira:** Open your view → pull assigned tasks
+- **Analytics:** Open dashboard → read metrics
+- **Setup guide:** I'll help configure Chrome automation
+
+**Option 5: Manual Input (Always Available)**
+- I ask targeted questions and you provide quick answers
+- Takes 2-3 minutes but works without any setup
+- Useful for first time or when tools are down
+
+**Fallback Strategy:**
+If no integrations available, I'll:
+1. Use file-based data (meeting notes, task lists in PM OS)
+2. Ask focused questions (5-6 quick inputs from you)
+3. Generate plan with placeholders you can fill in
 
 ---
 
@@ -153,8 +184,6 @@ events = service.events().list(
 
 ### Step 2: Context Gathering (Run in Parallel)
 
-Sub-sections are labelled A–H below. "Step 2D" elsewhere in this file refers to **F. Tasks & Sprint State** (the live Jira scripts) — the anchor of reference; the letter is legacy.
-
 **A. Calendar & Meetings (Google Calendar Direct API — always use this):**
 
 Run the Python snippet from the Integration Options section above with `dangerouslyDisableSandbox: true`. Extract:
@@ -175,9 +204,24 @@ If API call fails (e.g. `invalid_grant`):
 
 ---
 
-**B. Email Context:**
+**B. Email Context (Gmail MCP or manual):**
 
-The Gmail MCP is blocked by enterprise policy. Ask the PM once: "Any important emails I should factor in?" Otherwise skip.
+If Gmail MCP available:
+```
+Query: Get unread/important emails from past 24 hours
+Filter:
+- Emails from stakeholders (match against stakeholder profiles)
+- Emails with keywords: "urgent", "decision", "review", "feedback"
+- Thread participants you're meeting with today
+```
+
+Extract:
+- Open questions you need to answer
+- Decisions waiting on you
+- Context for today's meetings
+
+If Gmail MCP not available:
+- Skip this section or ask: "Any important emails I should know about?"
 
 ---
 
@@ -256,9 +300,26 @@ Categorize:
 
 ---
 
-**G. Metrics to Monitor:**
+**G. Metrics to Monitor (Analytics MCP or files):**
 
-Check `context-library/launches/` for features launched in the past 2 weeks. The Analytics MCP is blocked, so read `context-library/metrics/` if a file exists, otherwise note "Manual check needed for [feature] metrics." Flag anything trending down, below target, or beating target.
+Check `context-library/launches/` for features launched in past 2 weeks.
+
+For each recent launch:
+If Analytics MCP available:
+```
+Query: Get key metrics for [feature]
+Time range: Since launch date
+Metrics: Adoption, engagement, conversion (based on PRD success criteria)
+```
+
+If MCP not available:
+- Check if metrics file exists in `context-library/metrics/`
+- Or note: "Manual check needed for [feature] metrics"
+
+Flag:
+- Metrics trending down (regression)
+- Metrics not meeting target (needs intervention)
+- Metrics exceeding expectations (wins to celebrate)
 
 ---
 
@@ -687,14 +748,358 @@ When user runs `/daily-plan tomorrow`:
 
 ---
 
+## Integration Setup Guides
+
+### Setup Path 1: MCP Servers (Recommended)
+
+**Google Calendar MCP:**
+```
+1. Run: /connect-mcps connect to google-calendar
+2. I'll first check for official remote MCP server
+3. If remote server available: Guide you to use `Codex mcp add --transport http`
+4. If not: Walk you through OAuth setup (credentials from Google Cloud Console)
+5. Test: I'll fetch today's events to confirm it works
+6. Done! Future /daily-plan calls will auto-fetch meetings
+```
+
+**Gmail MCP:**
+```
+1. Run: /connect-mcps connect to gmail
+2. Similar priority: Check remote server first, then OAuth flow
+3. Permissions needed: Read email (not send)
+4. I'll fetch unread/important emails for daily context
+```
+
+**Linear/Jira MCP:**
+```
+1. Run: /connect-mcps connect to linear (or jira)
+2. I'll check for remote servers, then fall back to API keys
+3. You'll need: API key from Linear/Jira settings (if no remote server)
+4. I'll query your assigned tasks daily
+```
+
+**Analytics MCP (Amplitude/Mixpanel):**
+```
+1. Run: /connect-mcps connect to amplitude (or mixpanel)
+2. I'll check remote servers first, then manual setup
+3. You'll need: API key + Project ID (if manual)
+4. I'll pull metrics for recently launched features
+```
+
+**Priority order:** Remote servers > Local servers > Manual OAuth/API tokens
+
+---
+
+### Setup Path 2: Direct API Access
+
+If MCPs aren't available, I can call APIs directly using Bash/Python.
+
+**Google Calendar API Setup:**
+
+```bash
+# Step 1: Get API credentials
+# Go to: https://console.cloud.google.com/apis/credentials
+# Create OAuth 2.0 Client ID → Download JSON
+
+# Step 2: I'll help you authenticate
+# Run this (I'll guide you):
+python3 -c "
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+import datetime
+
+# Auth flow
+flow = InstalledAppFlow.from_client_secrets_file(
+    'credentials.json',
+    scopes=['https://www.googleapis.com/auth/calendar.readonly']
+)
+creds = flow.run_local_server(port=0)
+
+# Test: Fetch today's events
+service = build('calendar', 'v3', credentials=creds)
+now = datetime.datetime.utcnow().isoformat() + 'Z'
+events_result = service.events().list(
+    calendarId='primary',
+    timeMin=now,
+    maxResults=10,
+    singleEvents=True,
+    orderBy='startTime'
+).execute()
+
+for event in events_result.get('items', []):
+    print(f\"{event['start'].get('dateTime', event['start'].get('date'))} - {event['summary']}\")
+"
+
+# Step 3: Save credentials
+# I'll store the token for future use
+```
+
+**Once set up:**
+- I run this script each time `/daily-plan` is called
+- Parse the output and integrate into your plan
+- No manual work after initial setup
+
+**Linear API Setup:**
+
+```bash
+# Step 1: Get API key
+# Go to: Linear Settings → API → Personal API Keys → Create
+
+# Step 2: Test query
+curl https://api.linear.app/graphql \
+  -H "Authorization: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "{ viewer { assignedIssues(filter: { state: { type: { nin: [\"completed\", \"canceled\"] } } }) { nodes { title priority state { name } } } } }"
+  }'
+
+# Step 3: I'll parse and format tasks
+```
+
+**I'll help you:**
+1. Get the API key
+2. Test the first call
+3. Set up a script I can run daily
+4. Parse results into your daily plan
+
+---
+
+### Setup Path 3: Export/Import Workflow
+
+**For Google Calendar:**
+
+```
+1. Open Google Calendar
+2. Click today's date
+3. Click ⋮ (three dots) → "Print"
+4. Save as PDF or take screenshot
+5. Share the file/screenshot with me
+6. I'll parse it using vision and extract:
+   - Meeting times
+   - Attendees
+   - Meeting titles
+```
+
+**For Linear/Jira:**
+
+```
+1. Go to your Linear/Jira board
+2. Filter: Assigned to you, Status != Done
+3. Export to CSV (or screenshot the view)
+4. Share CSV/screenshot
+5. I'll extract tasks and priorities
+```
+
+**For Gmail:**
+
+```
+1. Search: is:unread OR is:important (in Gmail)
+2. Screenshot the list
+3. Share with me
+4. I'll identify which emails need attention today
+```
+
+**For Analytics (Amplitude/Mixpanel):**
+
+```
+1. Open your key dashboard
+2. Screenshot the metrics for recently launched features
+3. I'll analyze with vision and extract:
+   - Metric values
+   - Trends (up/down)
+   - Anomalies
+```
+
+**Trade-off:**
+- Manual (1-2 min each morning)
+- But works immediately, no API setup needed
+- Good for testing before committing to automation
+
+---
+
+### Setup Path 4: Browser Automation
+
+If you have Codex in Chrome MCP installed:
+
+```
+1. I can open tabs and navigate to your tools
+2. Extract data directly from the web UI
+3. Parse and integrate into daily plan
+```
+
+**Example flow:**
+```
+When you run /daily-plan:
+1. I open Google Calendar in browser
+2. Navigate to today's view
+3. Scrape meeting list
+4. Open Linear/Jira in new tab
+5. Navigate to your assigned tasks
+6. Scrape task list
+7. Close tabs and generate plan
+```
+
+**Setup required:**
+```
+1. Ensure Codex in Chrome MCP is installed
+2. Stay logged into Google Calendar, Linear, etc. in Chrome
+3. Give me permission to access these tabs
+4. I'll automate the rest
+```
+
+**Trade-off:**
+- Semi-automated (better than manual, simpler than APIs)
+- Requires Chrome MCP
+- Works even if tools don't have APIs
+
+---
+
+### Setup Path 5: Manual Input (Zero Setup)
+
+If no integrations available, I'll ask focused questions:
+
+```
+When you run /daily-plan, I ask:
+
+1. "What meetings do you have today?"
+   → You: "9am product sync, 2pm stakeholder review"
+
+2. "Who's attending each?"
+   → You: "Product sync: Sarah, John. Stakeholder review: VP Eng"
+
+3. "What P0 tasks are on your plate?"
+   → You: "Finish PRD for X, review metrics for Y"
+
+4. "Any metrics you need to check?"
+   → You: "Feature Z launched Monday, check adoption"
+
+5. "Anything urgent from email/Slack?"
+   → You: "Customer escalation from Support team"
+
+Total time: 2 minutes
+```
+
+**I'll then:**
+- Look up Sarah, John, VP Eng in stakeholder profiles (if exists)
+- Check PRD X in `outputs/prds/`
+- Find Feature Z in `context-library/launches/`
+- Generate full daily plan with all context
+
+**Trade-off:**
+- No setup required
+- Takes 2 min of your time each morning
+- Still provides structure and context
+
+---
+
+### Recommended Setup Strategy
+
+**Week 1: Start Manual**
+- Run `/daily-plan` with manual input
+- See the value (what it surfaces, how it helps)
+- Identify which data source is most valuable to you
+
+**Week 2: Add One Integration**
+- Pick the highest-value integration (usually Calendar)
+- Set up via easiest path (export workflow or API)
+- Run `/daily-plan` with partial automation
+
+**Week 3: Expand Integrations**
+- Add Linear/Jira (task management)
+- Add Gmail (email context)
+- Now 80% automated
+
+**Week 4: Full Automation**
+- Add Analytics MCP
+- Add Slack MCP
+- Run `/daily-plan` → full plan in seconds
+
+**Philosophy:**
+- Start simple, layer on automation
+- Don't let perfect setup block initial value
+- Each integration makes the next easier
+
+---
+
 ## MCP Graceful Degradation
 
-Only Google Calendar (direct API) is available. If it fails with `invalid_grant`, the token expired (~7-day TTL) — tell the PM to re-auth; do not silently fall back to asking. For every other source, use the workspace files in Context Routing and ask the PM one focused question per gap. If stakeholder profiles are missing, generate a plain meeting list and note that profiles would add context.
+**If Calendar MCP not connected:**
+- Prompt: "I don't have calendar access. What meetings do you have today?"
+- Or: "I can read from a manual calendar file if you have one."
+- Offer: "Want to connect Google Calendar? Run `/connect-mcps connect to google-calendar`"
+
+**If Gmail MCP not connected:**
+- Skip email section or ask: "Any important emails I should factor into today's plan?"
+- Offer: "Want email context in future? Run `/connect-mcps connect to gmail`"
+
+**If Linear/Jira MCP not connected:**
+- No problem — this workspace doesn't need it. Run the live Jira scripts instead (Step 2D): `jira-sprint.sh` + `jira-sync.py`.
+- If the scripts also fail, read the `00-hub/tasks-active.md` cache and scan `outputs/meeting-notes/` for unchecked action items.
+
+**If Analytics MCP not connected:**
+- Note: "Metrics check needed for [Feature] - I don't have analytics access"
+- Suggest: "Check your dashboard for [Feature] metrics manually"
+
+**If Stakeholder profiles don't exist:**
+- Generate basic meeting list without context
+- Suggest: "Want richer meeting context? Fill out stakeholder profiles in `context-library/`"
+
+---
+
+## Integration with Other Skills
+
+**Before `/daily-plan`:**
+- `/weekly-plan` - Sets weekly priorities that inform today's focus
+
+**After `/daily-plan`:**
+- `/meeting-notes` - Capture outcomes from today's meetings
+- `/create-tickets` - Convert action items to Linear/Jira tasks
+- `/daily-review` - (If created) Reflect on what got done
+
+**Parallel use:**
+- `/prd-draft` - Today's work might include PRD writing
+- `/prototype` - Today might be prototype iteration day
+
+---
+
+## Tips for Best Results
+
+**First time setup:**
+1. Connect Calendar MCP first (most important)
+2. Connect Gmail MCP for communication context
+3. Connect Linear/Jira for task tracking
+4. Fill out stakeholder profiles for top 5 people you work with
+
+**Daily ritual:**
+- Run `/daily-plan` first thing in morning (before email/Slack)
+- Review in < 5 minutes
+- Use as north star for the day
+- Resist adding tasks mid-day (unless true P0)
+
+**Weekly rhythm:**
+- Monday: Run `/weekly-plan` before `/daily-plan`
+- Tuesday-Thursday: Just `/daily-plan`
+- Friday: `/daily-plan` then `/weekly-review` at end of day
+
+**Power user moves:**
+- Evening before: Run `/daily-plan tomorrow` to prep
+- Heavy meeting day: Block 15 min before each meeting for prep
+- Light meeting day: Use free blocks for deep work (PRD writing, strategy)
 
 ---
 
 ## Related Skills
 
-- **Before:** `/weekly-plan` (sets the week's priorities that scope today)
-- **After:** `/meeting-notes` (capture outcomes), `/create-tickets` (track action items), `/weekly-review` (Friday synthesis)
-- **Parallel:** `/prd-draft`, `/impact-sizing` during free blocks
+**Before this:**
+- `/weekly-plan` - Set weekly priorities
+- `/connect-mcps` - Connect to Calendar, Gmail, Linear
+
+**After this:**
+- `/meeting-notes` - Capture meeting outcomes
+- `/create-tickets` - Track action items
+- `/weekly-review` - End-of-week synthesis
+
+**Parallel use:**
+- `/prd-draft` - Write PRDs during free blocks
+- `/impact-sizing` - Analyze features during planning time
