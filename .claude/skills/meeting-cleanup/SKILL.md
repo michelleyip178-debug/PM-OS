@@ -47,6 +47,7 @@ When this skill is invoked, immediately check:
 ## Overview
 
 **Tools:** Otter.ai or Lindy + Claude
+
 **When:** End of day with 3+ meetings
 
 ---
@@ -89,6 +90,10 @@ For each meeting processed, verify:
 4. **Conflicting decisions across meetings are flagged** -- if Meeting 1 decided "launch in March" and Meeting 3 discussed "push to April," flag the conflict explicitly
 5. **Strategic alignment is noted for each decision** -- tie decisions to strategic pillars from `context-library/strategy/` when relevant
 
+### Formatting
+
+Per CLAUDE.md: items with 2+ parallel fields go in a table. Every action-item list -- per-meeting and consolidated -- is a table with columns Action / Owner / Deadline / Priority (add a `#` column on the consolidated list). Do not use single-line bullets with em-dash or hyphen separators packing owner + deadline + priority into one line. "Waiting On Others" is a table (Person / Owes / By / Blocks). Decision lists stay as bullets or a numbered list (single attribute); the Decisions Summary section is a table.
+
 ### Step 3: Update Systems (5 min)
 
 - [ ] Add action items to Jira/Linear
@@ -103,6 +108,7 @@ For each meeting processed, verify:
 **Using Lindy or Relay:**
 
 **Trigger:** End of day (6pm)  
+
 **Actions:**
 1. Pull all meeting transcripts
 2. Process with Claude
@@ -132,8 +138,11 @@ For each meeting processed, verify:
 - [Decision 2]
 
 **Action Items:**
-- [ ] [Action] - Owner: [Name] - Due: [Date]
-- [ ] [Action] - Owner: [Name] - Due: [Date]
+
+| Action | Owner | Deadline | Priority |
+|--------|-------|----------|----------|
+| [Action] | [Name] | [Date, or "no date" + flag] | 🔴/🟡/🟢 |
+| [Action] | [Name] | [Date] | 🔴/🟡/🟢 |
 
 **Follow-up:** [Schedule next meeting? Send docs?]
 
@@ -144,13 +153,18 @@ For each meeting processed, verify:
 ---
 
 ## My Action Items (Consolidated)
-1. [ ] [Action from Meeting 1]
-2. [ ] [Action from Meeting 3]
-3. [ ] [Action from Meeting 5]
+
+| # | Action | From | Deadline | Priority |
+|---|--------|------|----------|----------|
+| 1 | [Action from Meeting 1] | [Meeting] | [Date] | 🔴/🟡/🟢 |
+| 2 | [Action from Meeting 3] | [Meeting] | [Date] | 🔴/🟡/🟢 |
 
 ## Waiting On Others
-1. [Name] to [action] by [date]
-2. [Name] to [action] by [date]
+
+| Person | Owes | By | Blocks |
+|--------|------|-----|--------|
+| [Name] | [action] | [date] | [what it blocks] |
+| [Name] | [action] | [date] | [what it blocks] |
 
 ## Parking Lot (Questions/Ideas)
 - [Question raised but not resolved]
@@ -217,6 +231,7 @@ Always surface conflicts with the format:
 ---
 
 **Action items tracked:** 100%
+
 **Follow-through rate:** +40%
 
 ---
