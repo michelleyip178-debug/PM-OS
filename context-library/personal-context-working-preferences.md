@@ -92,4 +92,16 @@
 
 ---
 
-**Last updated:** 2026-05-29
+## Standing Daily Plan Directives (Active Until User Explicitly Says Stop)
+
+* **R1 Opportunities Reading Sequence & Design Priorities:**
+  * **Mandatory Inclusion:** In every `/daily-plan` generated, include an alert box referencing [2026-09-14-W38-r1-opportunities-reading-sequence-and-design-priorities.md](file:///Users/michelleyip/Documents/PM-OS/outputs/analyses/2026-09-14-W38-r1-opportunities-reading-sequence-and-design-priorities.md).
+  * **Key Reminders to Echo:**
+    1. **Document Sequence:** Layer 1 Executive Anchor ──► Layer 2 Contract (DACI & 5.5-Sprint Roadmap) ──► Layer 3 Stakeholder Playbooks (BO & WD/C@G) ──► Layer 4 Deep Specs.
+    2. **Designer Priorities (Li Ting Kway):** Focus on (1) `F-17` Tabs & Card Taxonomy, (2) Barry's Field Rule & modal flows, (3) `F-09` Seniority advisory banner, (4) `F-28` SJR scope toggle, (5) `F-11` candidate pack download card.
+    3. **Hard Cut-Lines:** Do NOT design candidate review boards (`F-07`), custom form builders, or attendance rosters.
+
+---
+
+**Last updated:** 2026-09-14
+

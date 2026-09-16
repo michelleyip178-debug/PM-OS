@@ -99,6 +99,24 @@
 
 ---
 
+## Christopher Woo — Business Stakeholder / Business Owner (BO)
+
+**Role:** Business Owner / Decision-maker alongside Xian Zhang Guo
+
+**Seen in:** Performance testing SLO alignment, VAPT governance syncs, Weekly Design Reviews
+
+**Cares about:**
+- Business assurance and evidence-backed operational readiness (e.g. pushed back on arbitrary SLO latency thresholds and DAU assumptions without empirical benchmarks)
+- VAPT tracking and security sign-off accountability (expects engineering to commit a dedicated technical triage lead)
+- Operational governance and pilot-agency readiness
+
+**How to work with Christopher:**
+- Treat him as a decision-making Business Owner (peer to Xian Zhang), not technical delivery or engineering
+- Bring empirical evidence, data-backed operational justifications, and concrete ownership proposals
+- Follow up in writing with clear action items and accountable owners
+
+---
+
 ## Jacky — Business Stakeholder
 
 **Role:** Business Stakeholder / Decision-maker

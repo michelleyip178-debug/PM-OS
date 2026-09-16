@@ -9,3 +9,8 @@ __pycache__/
 *.pdf
 outputs/meeting-notes/Meeting Notes Weekly Design Review with BO.pdf
 context-library/research/OTEP Ingestion Analysis/STIP GIG MASTERLIST 2026 - Copy.xlsx
+outputs/analyses/2026-09-11-W37-r1-opportunities-rice-scoring.csv
+outputs/analyses/2026-09-14-W38-r1-opportunities-rice-scoring.csv
+.gitignore
+outputs/analyses/2026-09-14-W38-r1-opportunities-synthesis-rice.xlsx
+.gitignore
