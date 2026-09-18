@@ -23,7 +23,7 @@ related:
 
 **Delivery Envelope:** 5.5 Sprints (4.8 sp committed build + 0.7 sp hardening buffer)
 
-**Kickoff Window:** Mid-November 2026
+**Kickoff Window:** ~1 Dec 2026 (revised 2026-09-16 — see R-11; the same 3 engineers are needed through MVP launch on 24-25 Nov, so a mid-Nov R1 start was never realistic)
 
 > **Merge note:** this combines the programme-level RAID log (15 Sep) with the operational Risk Assessment WBS (14 Sep) — the first section is the compact risk/assumption/issue/dependency view for status reporting, the second is the detailed 24-activity tracking breakdown Jobelle works from day to day. Originals archived 2026-09-16.
 
@@ -31,7 +31,7 @@ related:
 
 ## Executive Summary
 
-- **Scope & Delivery Envelope:** R1 is capped at strictly 5.5 engineering sprints across four opportunity models (Gigs, STIPs, Rotations, Jobs), targeting mid-November 2026 development start.
+- **Scope & Delivery Envelope:** R1 is capped at strictly 5.5 engineering sprints across four opportunity models (Gigs, STIPs, Rotations, Jobs), targeting a development start right after MVP launch (24-25 Nov 2026) — realistically ~1 Dec, not mid-November as earlier tracked (see R-11).
 - **Core Architectural Stance:** CareerCompass is strictly a discovery and routing layer, not an internal ATS. Lightweight STIPs and Gigs route to standardized FormSG links; formal postings (SJR, Secondments, Internal Openings) evaluate external Workable integration.
 - **Critical Executive Shift:** The January 2027 R1 launch date expected by external stakeholders is unachievable given concurrent CMM and Opportunities complexity. Adrian Ang is actively resetting executive expectations to protect delivery quality.
 
@@ -50,7 +50,8 @@ related:
 | R-07 | Integration | Workable tenant/integration roadblocks if a new central tender or multi-tenant partitioning is required | Formal job applications can't integrate into central back-office pipelines | 🟠 Amber | Pure ingestion fallback (`F-23`) — read-only postings with outbound apply links to C@G | Michelle Yip, Barry Lim |
 | R-08 | User Adoption | Hiring manager login blindspot — line managers expect HR to email candidate files, resist logging into a portal | Low portal adoption by hiring managers | 🟠 Amber | 1-click candidate dossier ZIP export (`F-11`) so HR circulates packs offline | Li Ting Kway, Michelle Yip |
 | R-09 | Market & Adoption | Agency defection back to rogue forms if the 5-field flat builder feels too constrained | Fragmented marketplace; officers bounce outside CareerCompass; 90% drop-off persists | 🟠 Amber | Audit 10 FormSG gigs (MDDI, PSD) in Sprint 1 to verify 5 fields cover 90% of use cases; secure executive posting mandate | Michelle Yip, Li Ting Kway |
-| R-10 | Resourcing | Single designer (Li Ting Kway) supports CMM and R1 simultaneously | Design handoff delays mid-November engineering kickoff | 🟢 Green (Mitigated) | Cut candidate review boards and custom form editors entirely from design scope | Li Ting Kway, Michelle Yip |
+| R-10 | Resourcing | Single designer (Li Ting Kway) supports CMM and R1 simultaneously | Design handoff delays engineering kickoff | 🟢 Green (Mitigated) | Cut candidate review boards and custom form editors entirely from design scope | Li Ting Kway, Michelle Yip |
+| R-11 | Timeline | **Kickoff date conflict.** Risk register previously targeted "mid-November" R1 kickoff, but the same 3 engineers (Thomas, Hao Eng, Léo) are needed for MVP hardening/launch support through the 24-25 Nov MVP launch date. A mid-Nov R1 start was never realistic against that constraint. | R1 Sprint 1 realistically starts ~1 Dec 2026, not mid-Nov — ~2 weeks later than previously tracked, compounding R-01's existing January 2027 timeline risk | 🔴 Red | Re-baseline Sprint 1 kickoff to ~1 Dec in all planning docs; readiness gate (5 Day-1 pre-conditions + 2 blockers) must clear by 24 Nov, in parallel with MVP hardening, not after | Michelle Yip, Adrian Ang |
 
 ## 2. Assumptions
 
@@ -61,7 +62,7 @@ related:
 | A-03 | Standardized 5-field FormSG template accepted by Workforce Development | 🟡 Open (due 23 Sep) | Agencies demand custom fields, breaking consistent UI cards |
 | A-04 | Workable pilot can proceed under existing OGP/C@G tenancy, no new central e-tender needed | 🟡 Open (due 18 Sep) | Formal application tracking stays on external link-outs long-term |
 | A-05 | Dual-posting API bridge + dedup ingestion (`F-26`) protects candidate integrity | ✅ Aligned (16 Sep) | Split candidate pools and duplicate cards across systems |
-| A-06 | R1 development starts mid-November, right after MVP code freeze and VAPT sign-off | 🟡 Open (gates Nov) | MVP post-launch bug triage starves R1 engineering capacity |
+| A-06 | R1 development starts ~1 Dec 2026, right after MVP launch (24-25 Nov) and the engineering pool frees up (revised from "mid-November" — see R-11) | 🟡 Open (gates Nov/Dec) | MVP post-launch bug triage starves R1 engineering capacity |
 
 ## 3. Issues / Active Action Items
 
