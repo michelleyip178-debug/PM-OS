@@ -18,7 +18,7 @@ related:
 
 # R1 Confirmed Scope
 
-**This is the current, final state only.** For how we got here — three days, six status changes on STIPs & Gigs alone — see the [R1 Risk Register](2026-09-16-W38-r1-risk-register.md) or the [OTEP Squad Sync meeting notes](../meeting-notes/2026-09-25-W39-otep-squad-sync-r1-rescope.md). This doc doesn't repeat that trail. Every decision here is logged in the [Decisions Log](../decisions/2026-05-29-W22-decisions-log.md), D-042 through D-048.
+**This is the current state only.** For how we got here — three days, six status changes on STIPs & Gigs alone, plus a same-day reversal on how Internal Jobs is ingested — see the [R1 Risk Register](2026-09-16-W38-r1-risk-register.md) or the [OTEP Squad Sync meeting notes](../meeting-notes/2026-09-25-W39-otep-squad-sync-r1-rescope.md). This doc doesn't repeat that trail. Every decision here is logged in the [Decisions Log](../decisions/2026-05-29-W22-decisions-log.md), D-042 through D-048.
 
 **The one-line version:** Compass centralizes discovery across STIPs & Gigs, Internal Jobs, IJR, and Secondment. Posting and applying stay exactly where they live today. R1 is a coexistence model, not a migration.
 
@@ -29,8 +29,8 @@ related:
 | Type | Posting | Discovery | Apply |
 |---|---|---|---|
 | **STIPs & Gigs** | OTG, every agency, no exceptions | Native in Compass, WOG-wide | FormSG link extracted from the OTG posting, shown as the Apply button. No link → Apply disabled, "contact the poster" |
-| **Internal Jobs** | HRPS/Cumulus (Cumulus pushes into HRPS upstream) | Native in Compass, pulled via OTG, WOG-wide catalog, agency-level ringfencing | Redirect to OTG. Whether Compass can deep-link to the specific posting or only the general landing page is open (R-07) |
-| **IJR** | OTG, unchanged | Native in Compass, pulled via OTG, WOG-wide catalog, per-officer eligibility criteria respected | Redirect to OTG. Same open deep-link question as Internal Jobs |
+| **Internal Jobs** | Primarily HRPS/Cumulus (Cumulus pushes into HRPS upstream); some postings remain OTG-only | Native in Compass, **pulled directly from HRPS/Cumulus for the primary path, not via OTG** — WOG-wide catalog, agency-level ringfencing. OTG-only postings still surface, but with the weak, no-deep-link experience (see Apply) | Redirect to whichever system (HRPS or Cumulus) hosts the posting, with a specific deep-link. Direct ingestion means Compass can deep-link postings sourced from HRPS/Cumulus — HRPS API delivery (D-01) is the live dependency (R-07). **OTG-only postings keep the old landing-page-only redirect**, not resolved by this change |
+| **IJR** | OTG, unchanged | Native in Compass, pulled via OTG, WOG-wide catalog, per-officer eligibility criteria respected | Redirect to OTG. Deep-link question still open for this type (R-07) |
 | **Secondment** (non-SJR) | Hosting HR system | Native in Compass | Redirect to OTG or the hosting HR system |
 | **SJR** (PSD's annual programme) | OTG | **Not in Compass** | **Not in Compass** — stays on OTG through the 2027 cycle, migrates ahead of 2028 |
 | **CMM** | N/A | Read/view only — Compass surfaces competency data, doesn't create or manage it | N/A |
@@ -67,7 +67,7 @@ That's it. No native application forms, no applicant review tables, no in-app st
 
 | # | Question | Owner | Why it matters |
 |---|---|---|---|
-| R-07 | Can Compass deep-link to a specific OTG posting, or only the landing page? | Michelle, Rama, Adrian | Determines how good Internal Jobs/IJR discovery actually feels |
+| R-07 | HRPS API delivery date for direct Internal Jobs ingestion (D-01, no date committed); can Compass deep-link a specific IJR/OTG posting, or only the landing page? Separately, how many internal jobs stay OTG-only and keep the weak, no-deep-link experience even after HRPS delivers | Michelle, Rama, Adrian | Internal Jobs' primary path has no ingestion source until HRPS's API lands — a harder blocker than the deep-link question, which still applies to IJR and to whatever share of internal jobs never leaves OTG |
 | R-24 | No cross-HR-system authentication — what happens when an officer can't access the host system? | Michelle, Adrian | More central now that redirect is the primary apply mechanism for nearly everything |
 | R-15 / CAM | Three-way conflict on whether CAM Integration is R1 scope | Michelle, Adrian | Needs resolving before any Mark-facing scope slide goes out again |
 | D-047 | Does a new competency need WD approval? | Adrian (with Mark) | Mark and Xin Zhang disagree; affects whether WD needs a workflow outside Compass |

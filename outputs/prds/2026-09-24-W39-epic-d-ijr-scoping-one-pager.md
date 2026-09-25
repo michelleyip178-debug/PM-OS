@@ -1,3 +1,7 @@
+**⚪ SUPERSEDED, 25 Sep — folded into [Epic B: Internal Jobs (incl. IJR)](2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md).** This document is kept for historical traceability (it has its own four-rewrite history worth preserving) but is no longer the active reference for IJR scope. IJR's shape converged with Internal Jobs' (discovery-only, no native build) after this document's own Sections 11/13 recommended folding its estimate into Epic B's rather than tracking it separately — that recommendation is now acted on. Use the linked Epic B document for current IJR scope, risks, and stories.
+
+---
+
 *Draft, not yet synced to Confluence. Rewritten a fourth time today. Source: [R1 Risk Register](../analyses/2026-09-16-W38-r1-risk-register.md) (R-25, reversed), [R1 Release One-Pager](2026-09-23-W39-r1-release-one-pager.md) (Epic B row, structural model for this epic now), [IJR/SJR CareerCompass Scope Exploration](../analyses/2026-09-22-W39-ijr-sjr-careercompass-scope-exploration.md).*
 
 # CareerCompass | OTEP-Pathfinder — Epic D: IJR
@@ -15,7 +19,7 @@
 
 ## The Short Version
 
-This is Epic D's fourth rewrite in three days — reversed 25 Sep, per Mark & GK's confirmed R1 direction, from the native-Compass shape confirmed 24 Sep to a much thinner discovery-only epic. IJR now follows the same model as Internal Jobs: postings continue in OTG, Compass surfaces them for discovery, officers redirect back to OTG to apply. HR's process is unaffected by R1 under this model, exactly as it runs today.
+This is Epic D's fourth rewrite in three days — reversed 25 Sep, per Mark & GK's confirmed R1 direction, from the native-Compass shape confirmed 24 Sep to a much thinner discovery-only epic. IJR's shape now matches Internal Jobs in one sense only: both are discovery-only, with no native apply, creation, or review in Compass. Their ingestion sources have since diverged (D-049) — IJR postings continue in OTG, Compass surfaces them for discovery, officers redirect back to OTG to apply; Internal Jobs now ingests directly from HRPS/Cumulus instead. HR's process is unaffected by R1 under this model, exactly as it runs today.
 
 None of 24 Sep's confirmed native-Compass work applies going forward: no self-serve creation in Compass, no in-app applicant review for Agency HR, no in-app officer status tracking, no in-app Decision stage. The only mechanic Compass still owns is discovery: pulling IJR postings into the unified catalog and respecting IJR's ringfencing (agency-level plus optional per-officer eligibility criteria, per the 23 Sep BO clarification — this distinction still applies to what the discovery view needs to respect, even with nothing built natively).
 
@@ -29,7 +33,7 @@ None of 24 Sep's confirmed native-Compass work applies going forward: no self-se
 
 **What changed today (25 Sep):** IJR reverses from the STIPs & Gigs native shape confirmed 24 Sep back to a discovery-only, OTG-redirect model, grouped with Internal Jobs and Secondment. This is the fifth distinct status this scope question has carried in three days (R-25 has the full history if it's ever needed) — this document only carries the current, final state forward and won't re-litigate the prior four states here.
 
-**Relationship to other epics:** this epic now mirrors Epic B (Internal Jobs) in the [R1 Release One-Pager](2026-09-23-W39-r1-release-one-pager.md)'s scope table far more closely than it mirrors Epic A (STIPs & Gigs). The distinguishing factor from Internal Jobs is IJR's ringfencing model (per-officer eligibility criteria, not just a flat agency check) and its source system (OTG directly, not HRPS/Cumulus feeding through OTG) — otherwise the shape is the same.
+**Relationship to other epics:** this epic now mirrors Epic B (Internal Jobs) in the [R1 Release One-Pager](2026-09-23-W39-r1-release-one-pager.md)'s scope table in shape (both discovery-only, no native apply/creation/review) but not in ingestion source. The distinguishing factor from Internal Jobs is IJR's ringfencing model (per-officer eligibility criteria, not just a flat agency check) and its source system: IJR ingests from OTG directly. Internal Jobs' primary path no longer feeds through OTG as of D-049 (25 Sep) — it ingests directly from HRPS, with Cumulus pushing into HRPS upstream, though some postings remain OTG-only. That's a bigger divergence than previously stated.
 
 ## 2. Problem Statement
 
@@ -65,7 +69,7 @@ None of 24 Sep's confirmed native-Compass work applies going forward: no self-se
 ### 5.1 Officer Journey (Discover → Redirect → Apply on OTG)
 
 1. **Discover:** logs in, lands on the unified Opportunities catalog, sees ringfenced IJR listings (agency-level plus optional per-officer eligibility criteria).
-2. **Apply:** clicks Apply, redirects to OTG. Whether Compass can deep-link to the specific posting or only the general OTG landing page is the same open question Internal Jobs (R-07) carries — applies here too.
+2. **Apply:** clicks Apply, redirects to OTG. Whether Compass can deep-link to the specific posting or only the general OTG landing page is IJR's open sub-issue under R-07. Internal Jobs' R-07 concern is now a separate question (D-049): whether the HRPS API ships at all, not deep-linking capability.
 3. ~~**Track:** checks status in-app.~~ **Drops, 25 Sep.** No in-app status tracking.
 4. ~~**Outcome:** sees a decision badge in-app.~~ **Drops, 25 Sep.** Outcome communication happens entirely outside Compass, unchanged from today.
 
@@ -85,8 +89,8 @@ None of 24 Sep's confirmed native-Compass work applies going forward: no self-se
 
 | Stage | Story | Success Criteria | Groomable now? |
 |---|---|---|---|
-| Discovery | Pull IJR postings into Compass catalog | IJR listings from OTG appear in the unified Opportunities catalog, ringfenced per agency plus per-officer eligibility criteria | Yes, pending OTG sync mechanism (same open question as Internal Jobs, Epic B) |
-| Discovery | Redirect to OTG to apply | Clicking Apply sends the officer to OTG — specific posting if deep-linking is supported, general landing page otherwise | Yes, pending the OTG deep-link answer (shared with R-07) |
+| Discovery | Pull IJR postings into Compass catalog | IJR listings from OTG appear in the unified Opportunities catalog, ringfenced per agency plus per-officer eligibility criteria | Yes, pending OTG sync mechanism (IJR-specific; Internal Jobs' equivalent open question is now HRPS API delivery, not OTG sync, per D-049) |
+| Discovery | Redirect to OTG to apply | Clicking Apply sends the officer to OTG — specific posting if deep-linking is supported, general landing page otherwise | Yes, pending the OTG deep-link answer (IJR's own sub-issue under R-07, no longer shared with Internal Jobs — see R-07 detail) |
 | ~~Creation~~ | ~~Self-serve posting creation~~ | **Drops, 25 Sep — posting stays in OTG** | N/A |
 | ~~Application~~ | ~~Native structured-form apply~~ | **Drops, 25 Sep — redirect replaces this** | N/A |
 | ~~Review~~ | ~~In-app HR applicant review table~~ | **Drops, 25 Sep — HR review stays offline/OTG-side** | N/A |
@@ -125,7 +129,7 @@ Not done.
 | Risk | Category | Impact | Mitigation |
 |---|---|---|---|
 | **R-25 — Reversed to OTG-hosted, redirect-only (25 Sep)** | Scope | Fifth status change in three days for this scope question. All 24 Sep native-Compass work is out of scope again | Rewrite complete — this document reflects the current, final state. Confirm with Mark/GK this is genuinely final before further downstream work (see parent R1 one-pager, Section 14) |
-| **R-07 — OTG deep-link question, shared with Internal Jobs** | Integration | Whether Compass can deep-link to a specific IJR posting or only the general OTG landing page — same open question Internal Jobs carries | Get a direct answer on OTG deep-linking capability — resolves both epics at once |
+| **R-07 — OTG deep-link question (IJR's sub-issue)** | Integration | Whether Compass can deep-link to a specific IJR posting or only the general OTG landing page. No longer shared with Internal Jobs — Internal Jobs' R-07 concern is now the undelivered HRPS API (D-01, D-049), a separate sub-issue under the same risk ID | Get a direct answer on OTG deep-linking capability for IJR |
 | **R-30 — OTG data migration (MOOT, 25 Sep)** | Data / Technical | IJR data stays on OTG under the reversed model — Compass never ingests it, so there's no migration to plan | No action needed. Reopen fresh if a future release moves IJR data natively into Compass |
 | **R-31 — Architecture whiplash (new, 25 Sep)** | Process | This epic has now been rewritten four times in three days — real risk of team trust erosion and wasted rework if a fifth reversal happens | Confirm alignment across Adrian, Xian, and Mark/GK jointly before treating any future IJR scope change as final |
 
@@ -138,7 +142,7 @@ Shares the same squad as the rest of R1. Now sized similarly to Internal Jobs (E
 | Decision Needed | Who Decides | Needed By | Recommendation |
 |---|---|---|---|
 | **Confirm this reversal is genuinely final** | Michelle Yip, Adrian Ang | Immediately — see parent R1 one-pager Section 14 | Don't commit further design/engineering time until confirmed jointly with Mark/GK |
-| **OTG deep-link capability (shared with Internal Jobs)** | Rama Moorthy, Adrian Ang | Before discovery stories are finalized | Get a direct technical answer — resolves both epics |
+| **OTG deep-link capability for IJR** | Rama Moorthy, Adrian Ang | Before discovery stories are finalized | Get a direct technical answer. No longer resolves Internal Jobs too (D-049) — that epic's open question is HRPS API delivery, tracked separately |
 | ~~**Decision-stage shape: simple Offer/Reject, or pooled matching view?**~~ | Adrian Ang | — | **No longer applies, 25 Sep** — no in-app Decision stage exists |
 | ~~**OTG data migration: migrate at launch, or start clean?**~~ | Adrian Ang, Rama Moorthy | — | **Moot, 25 Sep (R-30)** — IJR data stays on OTG |
 

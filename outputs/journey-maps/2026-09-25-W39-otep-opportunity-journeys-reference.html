@@ -30,6 +30,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15p
 h1,h2,h3{text-wrap:balance;margin:0}
 .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
+/* header */
 header.top{padding-block:40px 20px;display:grid;gap:10px}
 header.top h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em}
 header.top p{margin:0;max-width:68ch;color:var(--muted)}
@@ -40,6 +41,7 @@ nav.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:v
 nav.jump a{font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
 nav.jump a:hover,nav.jump a:focus-visible{border-color:var(--compass);color:var(--compass);outline:none}
 
+/* legend */
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;padding-block:16px 4px;font-size:13px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
@@ -51,6 +53,7 @@ section{padding-block:36px 8px;scroll-margin-top:60px}
 .badge{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid currentColor}
 .badge.agreed{color:var(--ok)} .badge.known{color:var(--muted)} .badge.open{color:var(--open)}
 
+/* ownership matrix */
 .matrix-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
 table.matrix{border-collapse:collapse;width:100%;min-width:720px}
 .matrix th,.matrix td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
@@ -62,9 +65,11 @@ table.matrix{border-collapse:collapse;width:100%;min-width:720px}
 .matrix td.hl{background:color-mix(in srgb,var(--compass) 7%,var(--surface))}
 .note{font-size:12.5px;color:var(--muted);margin-top:6px}
 
+/* tags */
 .tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.02em;padding:2px 7px;border-radius:4px;color:var(--c);background:color-mix(in srgb,var(--c) 13%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 35%,var(--surface));white-space:nowrap}
 .tag.retired{text-decoration:line-through;opacity:.75}
 
+/* journey lanes */
 .lane{display:grid;grid-template-columns:190px 1fr;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px}
 .lane-label h3{font-size:16px;font-weight:800}
 .lane-label p{margin:4px 0 0;font-size:13px;color:var(--muted)}
@@ -90,6 +95,7 @@ table.matrix{border-collapse:collapse;width:100%;min-width:720px}
 .scope .no{color:var(--muted)}
 .absent{margin-top:12px;font-size:13px;color:var(--warn);font-weight:600}
 
+/* future */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .split .lane{grid-template-columns:1fr;margin-bottom:0}
 .split .lane-label h3 small{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
@@ -110,6 +116,30 @@ table.matrix{border-collapse:collapse;width:100%;min-width:720px}
 .q .who{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--open);padding-top:3px}
 .q p{margin:0;font-size:14px}
 .q p.src{grid-column:2;font-size:12.5px;color:var(--muted)}
+
+/* integrations */
+.ip-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ip-h{font-size:16px;font-weight:800;margin-bottom:10px}
+.ip-h small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.ip{display:grid;gap:8px}
+.ip-row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:28px 1fr;gap:4px 10px}
+.ip-row .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted);padding-top:2px}
+.ip-row .top{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.ip-row .top i{font-style:normal;color:var(--muted)}
+.ip-row .what{grid-column:2;font-size:13.5px}
+.ip-row .scope-note{font-size:12.5px;color:var(--muted);margin-left:2px}
+.pill{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:auto}
+.pill.exists{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.pill.new{color:var(--compass);background:color-mix(in srgb,var(--compass) 14%,var(--surface))}
+.pill.easy{color:var(--formsg);background:color-mix(in srgb,var(--formsg) 14%,var(--surface))}
+.pill.weak{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,var(--surface))}
+.ip-row.weakrow{border-style:dashed;border-color:var(--warn)}
+.cross{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.cross div{font-size:13px;padding:10px 12px;border-radius:8px;background:var(--soft)}
+.cross strong{display:block;font-size:13.5px}
+.prio{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.prio ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;max-width:90ch}
+@media (max-width:760px){.ip-cols{grid-template-columns:1fr}}
 
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 
@@ -133,6 +163,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
     <a href="#who-owns">Who owns what</a>
     <a href="#today">1 · Today</a>
     <a href="#r1">2 · R1 Pathfinder</a>
+    <a href="#integrations">R1 integrations</a>
     <a href="#future">3 · Future cutover</a>
     <a href="#gaps">Gaps before OTG retires</a>
   </nav>
@@ -157,6 +188,40 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="sec-head"><h2>2 · R1 Pathfinder</h2><span class="badge agreed">Agreed approach</span><span class="badge known">Target Feb/Mar</span></div>
     <p class="sec-sub">Compass becomes one discovery layer over OTG, HRPS and Cumulus. Every Apply sends the officer back to the source system.</p>
     <div id="r1-lanes"></div>
+  </section>
+
+  <section id="integrations">
+    <div class="sec-head"><h2>R1 integration points</h2><span class="badge open">Draft</span></div>
+    <p class="sec-sub">Compass in R1 works like a flight aggregator: listings come in from each system, and Apply sends the officer back to that system. Only the OTG feed for STIPs &amp; Gigs exists today.</p>
+
+    <div class="ip-cols">
+      <div class="ip-col">
+        <h3 class="ip-h">Feeds in <small>Source → Compass</small></h3>
+        <div class="ip" id="ip-in"></div>
+      </div>
+      <div class="ip-col">
+        <h3 class="ip-h">Handoffs out <small>Compass → where the officer applies</small></h3>
+        <div class="ip" id="ip-out"></div>
+      </div>
+    </div>
+
+    <h3 class="ip-h" style="margin-top:26px">Shared work across all sources</h3>
+    <div class="cross" id="ip-cross"></div>
+
+    <div class="prio">
+      <h3 class="ip-h">Priority order</h3>
+      <ol>
+        <li><strong>HRPS and Cumulus feeds (#3, #4) plus the common job format.</strong> This is R1's whole value. Without it Compass is OTG in a new window.</li>
+        <li><strong>Keeping listings fresh and removing duplicates.</strong> Must be in place before launch.</li>
+        <li><strong>Direct links into HRPS and Cumulus (#6, #7).</strong></li>
+        <li><strong>OTG changes (#1, #2), kept as small as possible.</strong> Ask OTG for a structured FormSG field and internal jobs in the feed. Don't ask OTG to build job-level links. Show the OTG job reference in Compass so officers can paste it into OTG search. This keeps investment in OTG low, which answers Rama's concern.</li>
+      </ol>
+    </div>
+
+    <div class="questions">
+      <div class="q"><div class="who">Open</div><p>Is the existing OTG feed a live API or a scheduled file export?</p><p class="src">Decides whether #1 and #2 are a small change for OTG or a new build request.</p></div>
+      <div class="q"><div class="who">Open</div><p>Does Compass only display ring-fencing rules, or filter jobs by the officer's eligibility?</p><p class="src">Filtering needs officer profile data, which is another integration.</p></div>
+    </div>
   </section>
 
   <section id="future">
@@ -191,6 +256,7 @@ document.getElementById("legend").innerHTML =
   ["compass","otg","hrps","cumulus","formsg","ats","actor"].map(s=>`<span><i style="--c:var(${SYS[s].c})"></i>${SYS[s].label}</span>`).join("")
   + `<span><i style="--c:transparent;border:1.5px dashed var(--warn)"></i>Weak step</span>`;
 
+/* ownership matrix */
 const M = {
   cols:[["Today",""],["R1 Pathfinder","Agreed"],["Future A","If ATS works"],["Future B","If ATS fails"]],
   rows:[
@@ -210,6 +276,7 @@ document.getElementById("matrix").innerHTML =
     return `<td class="${hl?"hl":""}">${inner}</td>`;
   }).join("")}</tr>`).join("")+`</tbody>`;
 
+/* flow renderer: step = [sys, text, opts] ; branch = {branch:[{cond, flow:[...]}]} */
 function renderFlow(items){
   return `<div class="flow">${items.map(it=>{
     if(it.branch) return `<div class="branch">${it.branch.map(a=>`<div class="alt"><div class="cond">${a.cond}</div>${renderFlow(a.flow)}</div>`).join("")}</div>`;
@@ -288,6 +355,33 @@ const GAPS = [
   ["3 · Internal job rotations (IJR)", ["IJR <i>→</i> "+tag("otg")], ["IJR <i>→</i> "+tag("compass")]],
   ["4 · STIPs & Gigs creation", ["Created in "+tag("otg")], ["Created in "+tag("compass")]]
 ];
+
+const IP_IN = [
+  [1,"otg","compass","STIPs & Gigs","exists","Add the FormSG link as its own field. Today it's buried in the description, and it decides whether Apply is on or off."],
+  [2,"otg","compass","Internal jobs","new","Carry OTG vacancies in the same feed as a new listing type."],
+  [3,"hrps","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job."],
+  [4,"cumulus","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job."]
+];
+const IP_OUT = [
+  [5,"compass","formsg","STIPs & Gigs","easy","A simple link, but it only works once #1 gives it a clean field."],
+  [6,"compass","hrps","Internal jobs","new","Link straight to the job. Check whether officers have to log in again."],
+  [7,"compass","cumulus","Internal jobs","new","Link straight to the job. Check whether officers have to log in again."],
+  [8,"compass","otg","Internal jobs","weak","Lands on OTG's home page only. OTG can't link to a specific vacancy. Workaround: show the OTG job reference in Compass."]
+];
+const PILL = {exists:"Exists",new:"New",easy:"Easy",weak:"Weak"};
+const ipRow = ([n,a,b,scope,st,what]) => `<div class="ip-row ${st==="weak"?"weakrow":""}"><span class="n">#${n}</span>
+  <div class="top">${tag(a)}<i>→</i>${tag(b)}<span class="scope-note">${scope}</span><span class="pill ${st}">${PILL[st]}</span></div>
+  <div class="what">${what}</div></div>`;
+document.getElementById("ip-in").innerHTML = IP_IN.map(ipRow).join("");
+document.getElementById("ip-out").innerHTML = IP_OUT.map(ipRow).join("");
+document.getElementById("ip-cross").innerHTML = [
+  ["Common job format","One set of fields across OTG, HRPS and Cumulus: type, agency, grade, closing date, source ID, apply link, ring-fencing."],
+  ["Duplicates","The same job posted in two systems shows once."],
+  ["Keeping listings fresh","Closed or withdrawn jobs drop off quickly. Stale listings hurt trust faster than missing features."],
+  ["Ring-fencing","Display the rules, or filter by the officer's profile? Filtering needs profile data."],
+  ["Tracking","Applying happens outside Compass, so R1 measures click-outs only, not applications or outcomes. Tell SteerCo early."],
+  ["SR / SJR","No integration in R1."]
+].map(([h,p])=>`<div><strong>${h}</strong>${p}</div>`).join("");
 
 document.getElementById("today-lanes").innerHTML = TODAY.map(lane).join("");
 document.getElementById("r1-lanes").innerHTML = R1.map(lane).join("");

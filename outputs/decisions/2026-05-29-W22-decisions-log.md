@@ -16,6 +16,8 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 | # | Decision | Date | Area | Status |
 |---|----------|------|------|--------|
+| D-050 | IJR's epic documentation folds into Epic B (Internal Jobs) — shared shape (discovery-only, no native build) even though ingestion sources differ. IJR's own one-pager (formerly "Epic D") is superseded, not deleted | 2026-09-25 | Process / Scope Tracking | ✅ Final — see [Epic B One-Pager](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md); does not change IJR's own scope, risk (R-25), or groomability |
+| D-049 | Internal Jobs ingestion moves back to direct HRPS/Cumulus integration, not via OTG — IJR and Secondment are unaffected, still OTG-ingested | 2026-09-25 | Scope / Architecture / Integration | ✅ Final — narrows D-044's ingestion framing for Internal Jobs specifically; reopens HRPS API delivery (D-01) as a live dependency |
 | D-048 | R1 confirmed scope consolidated into a single reference doc, superseding the piecemeal register trail | 2026-09-25 | Process / Governance | ✅ Final — see [R1 Confirmed Scope](../analyses/2026-09-25-W39-r1-confirmed-scope.md) |
 | D-047 | Does a new competency require WD approval? | 2026-09-25 | Governance / CMM | 🔴 Open — Mark's position suggests no, Xin Zhang believes governance may require it |
 | D-046 | No confirmed ATS strategy for 2027 — Compass's entire discovery-only architecture assumes a future ATS absorbs transactions | 2026-09-25 | Strategic / Dependency | 🔴 Open — Gek Khiang validating; if ATS isn't viable, Compass needs native posting/workflow/application capability |
@@ -63,6 +65,42 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ---
 
 ## Decision Detail
+
+---
+
+### D-050 — IJR's epic documentation folds into Epic B (Internal Jobs)
+
+**Date:** 2026-09-25
+
+**Area:** Process / Scope Tracking
+
+**Status:** ✅ Final
+
+**Decision:** IJR no longer has its own epic one-pager. Its scope, risks, and stories are now documented as a second discovery source inside [Epic B: Internal Jobs (incl. IJR)](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md). The prior IJR document ("Epic D") is marked superseded, kept for historical traceability, not deleted.
+
+**Rationale:** After IJR's 25 Sep reversal (R-25) to a discovery-only, redirect-to-apply model, IJR and Internal Jobs became the same shape — discovery pull-through, no native creation/apply/review. The Epic D document's own Sections 11 and 13 already recommended folding its estimate into Epic B's rather than sizing it separately. Keeping IJR as a nominally distinct epic when it shares Internal Jobs' shape created duplicate tracking overhead and a standing invitation for a fifth IJR-specific rewrite (it had already been rewritten four times in three days). This decision acts on that recommendation.
+
+**Impact:** No change to IJR's own scope, groomability, or risk tracking — R-25 still tracks IJR's status, and R-07 now explicitly carries two separate sub-issues (Internal Jobs' HRPS-API-delivery blocker, and IJR's own OTG deep-link question), rather than implying they share one open question. IJR's stories remain groomable now, unlike Internal Jobs' half of Epic B, which is blocked on HRPS API delivery (D-01). The [R1 Release One-Pager](../prds/2026-09-23-W39-r1-release-one-pager.md) Section 7 scope table is updated: Epic D is retired (not reassigned) to avoid ambiguity with historical references.
+
+**Source:** [Epic B One-Pager](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md), [Epic D One-Pager](../prds/2026-09-24-W39-epic-d-ijr-scoping-one-pager.md) (superseded).
+
+---
+
+### D-049 — Internal Jobs ingestion reverts to direct HRPS/Cumulus integration
+
+**Date:** 2026-09-25
+
+**Area:** Scope / Architecture / Integration
+
+**Status:** ✅ Final
+
+**Decision:** Compass ingests Internal Jobs postings directly from HRPS (Cumulus pushes into HRPS upstream), not via OTG. This narrows D-044's "OTG/HRPS-dependent, discovery-only" framing — that framing still holds for IJR and Secondment, which remain OTG-ingested, but not for Internal Jobs specifically, which moves back to the direct-HRPS model from the 23 Sep architecture correction.
+
+**Rationale:** Michelle confirmed directly that Internal Jobs' ingestion path is HRPS/Cumulus, not OTG, correcting the 25 Sep architecture reversal (D-044) which had grouped all three types (Internal Jobs, IJR, Secondment) under one OTG-dependent model. Internal Jobs, IJR, and Secondment don't share an ingestion source after all — only IJR and Secondment do.
+
+**Impact:** Reopens R-07 as 🔴 Red — the undelivered-HRPS-API dependency (D-01) that the 25 Sep OTG reversal had made moot is live again, since Compass now needs that API to ingest Internal Jobs at all. Deep-linking to a specific posting becomes achievable once the API lands (an improvement over the OTG-landing-page constraint), but there's currently no committed delivery date. **OTG is not fully eliminated as an Internal Jobs source** — some internal-job postings remain OTG-only, and those keep the old weak, no-deep-link experience permanently, regardless of HRPS API delivery. This residual case isn't sized yet (needs a HRPS/Cumulus-sourced vs. OTG-only split estimate). Every document describing Internal Jobs as OTG-ingested needs correcting: [R1 Risk Register](../analyses/2026-09-16-W38-r1-risk-register.md) (R-07), [R1 Confirmed Scope](../analyses/2026-09-25-W39-r1-confirmed-scope.md), [R1 Release One-Pager](../prds/2026-09-23-W39-r1-release-one-pager.md).
+
+**Source:** Confirmed directly by Michelle Yip, 25 Sep 2026.
 
 ---
 
