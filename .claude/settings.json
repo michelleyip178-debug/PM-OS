@@ -10,7 +10,8 @@
       "Bash(bash /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh)",
       "Bash(python3 /Users/michelleyip/Documents/PM-skills-ALL-1/03-stories/scripts/jira-sprint.sh)",
       "Read(//usr/local/**)",
-      "Edit(/.claude/skills/weekly-review/**)"
+      "Edit(/.claude/skills/weekly-review/**)",
+      "Bash(echo \"=== exit: $? ===\")"
     ]
   },
   "enabledMcpjsonServers": [
