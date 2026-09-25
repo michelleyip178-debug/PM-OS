@@ -1,0 +1,295 @@
+<title>R1 Scope Decision</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --stip:#2f5d8a; --stip-bg:#eaf1f8;
+    --ij:#7a5a9e; --ij-bg:#f1ecf7;
+    --sjr:#6d6423; --sjr-bg:#f6f2df;
+    --sec:#3f6b4f; --sec-bg:#e9f2ec;
+    --ijr:#8a3f6a; --ijr-bg:#f6eaf1;
+    --confirmed:#3f7d5c; --confirmed-bg:#eaf4ef;
+    --carried:#6b6f76; --carried-bg:#eeece7;
+    --risk:#a13d3d; --risk-bg:#f9eded;
+    --pending:#b8722e; --pending-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --stip:#7fb0e0; --stip-bg:#1b2a38;
+      --ij:#bda3dc; --ij-bg:#2a2334;
+      --sjr:#d8cd7a; --sjr-bg:#302c17;
+      --sec:#8fc4a1; --sec-bg:#1c2a20;
+      --ijr:#d998bf; --ijr-bg:#301f29;
+      --confirmed:#8fc4a8; --confirmed-bg:#1e2f26;
+      --carried:#9a9da4; --carried-bg:#26251f;
+      --risk:#e08a8a; --risk-bg:#3a2020;
+      --pending:#e0a869; --pending-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --stip:#7fb0e0; --stip-bg:#1b2a38;
+    --ij:#bda3dc; --ij-bg:#2a2334;
+    --sjr:#d8cd7a; --sjr-bg:#302c17;
+    --sec:#8fc4a1; --sec-bg:#1c2a20;
+    --ijr:#d998bf; --ijr-bg:#301f29;
+    --confirmed:#8fc4a8; --confirmed-bg:#1e2f26;
+    --carried:#9a9da4; --carried-bg:#26251f;
+    --risk:#e08a8a; --risk-bg:#3a2020;
+    --pending:#e0a869; --pending-bg:#332617;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1200px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{display:flex; flex-direction:column; gap:12px; margin-bottom:8px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.3rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:74ch; line-height:1.55;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:4px;}
+  .meta-chip{
+    font-size:0.76rem; font-weight:600; padding:4px 12px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .meta-chip.confirmed{background:var(--confirmed-bg); color:var(--confirmed);}
+  .meta-chip.source{background:var(--carried-bg); color:var(--carried);}
+
+  .resolves-banner{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--confirmed-bg); border:1px solid var(--confirmed);
+    border-radius:10px; padding:14px 18px; margin:22px 0;
+    font-size:0.9rem; line-height:1.55;
+  }
+  .resolves-banner .dot{width:8px; height:8px; border-radius:50%; background:var(--confirmed); margin-top:7px; flex:none;}
+  .resolves-banner strong{color:var(--confirmed);}
+
+  h2.section{font-size:1.15rem; font-weight:700; margin:40px 0 6px;}
+  .section-sub{font-size:0.88rem; color:var(--muted); margin-bottom:18px; max-width:70ch; line-height:1.5;}
+
+  /* Type cards grid */
+  .type-grid{display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;}
+  .type-card{
+    border:1px solid var(--line); border-radius:14px; background:var(--paper-raised);
+    overflow:hidden;
+  }
+  .type-card-head{padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .type-card-head h3{font-size:1.05rem; font-weight:700;}
+  .type-card.stip .type-card-head{background:var(--stip-bg); color:var(--stip);}
+  .type-card.ij .type-card-head{background:var(--ij-bg); color:var(--ij);}
+  .type-card.sjr .type-card-head{background:var(--sjr-bg); color:var(--sjr);}
+  .type-card.sec .type-card-head{background:var(--sec-bg); color:var(--sec);}
+  .type-card.ijr .type-card-head{background:var(--ijr-bg); color:var(--ijr);}
+  .status-tag.pending{background:var(--pending-bg); color:var(--pending);}
+  .type-card-body{padding:18px 20px; display:flex; flex-direction:column; gap:14px;}
+  .field-row{display:flex; flex-direction:column; gap:3px;}
+  .field-label{font-size:0.7rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted);}
+  .field-value{font-size:0.88rem; line-height:1.5;}
+  .status-tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.72rem; font-weight:700; padding:3px 10px; border-radius:999px; width:fit-content;
+  }
+  .status-tag.confirmed{background:var(--confirmed-bg); color:var(--confirmed);}
+  .status-tag.carried{background:var(--carried-bg); color:var(--carried);}
+  .status-tag.risk{background:var(--risk-bg); color:var(--risk);}
+
+  /* Before/after strip */
+  .compare-strip{
+    display:grid; grid-template-columns: 1fr auto 1fr; gap:16px; align-items:stretch;
+    border:1px solid var(--line); border-radius:14px; background:var(--paper-raised);
+    padding:20px; margin-bottom:14px;
+  }
+  .compare-col{display:flex; flex-direction:column; gap:8px;}
+  .compare-col .compare-label{font-size:0.7rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted);}
+  .compare-col.before .compare-label{color:var(--pending);}
+  .compare-col.after .compare-label{color:var(--confirmed);}
+  .compare-col p{font-size:0.9rem; line-height:1.55; margin:0;}
+  .compare-arrow{display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:1.4rem; font-weight:300;}
+
+  /* Risk cards */
+  .risk-grid{display:flex; flex-direction:column; gap:14px;}
+  .risk-card{
+    border:1px solid var(--line); border-left:4px solid var(--risk);
+    border-radius:10px; background:var(--paper-raised); padding:16px 20px;
+  }
+  .risk-card.pending{border-left-color:var(--pending);}
+  .risk-card-head{display:flex; align-items:baseline; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .risk-card-head .risk-id{font-family:'Quicksand',system-ui,sans-serif; font-weight:700; font-size:0.85rem; color:var(--risk);}
+  .risk-card.pending .risk-card-head .risk-id{color:var(--pending);}
+  .risk-card-head h3{font-size:0.98rem; font-weight:700;}
+  .risk-card p{font-size:0.88rem; color:var(--ink); line-height:1.55; margin:0 0 6px;}
+  .risk-card p:last-child{margin-bottom:0;}
+  .risk-card .label{font-weight:700; font-size:0.82rem;}
+
+  .footnotes{margin-top:36px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:760px){
+    .type-grid{grid-template-columns:1fr;}
+    .compare-strip{grid-template-columns:1fr; }
+    .compare-arrow{transform:rotate(90deg); padding:4px 0;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">R1 Scope Decision · Opportunities</div>
+  <h1>R1 scope, confirmed 23 Sep</h1>
+  <p class="dek">Adrian's R1 scope slide ("STIPs &amp; Gigs | Internal Jobs, SJRs &amp; Secondments") answers the question that stalled Tuesday's estimation session: who can discover, create, and apply. Internal Job Rotation (IJR) sat outside that slide; confirmed R1 scope, resolved 24 Sep, same delivery shape as STIPs &amp; Gigs end to end (see IJR card below). This is the full picture, laid out by type, with what's resolved and what isn't.</p>
+  <div class="meta-row">
+    <span class="meta-chip confirmed">● Resolves R-14 / R-23 / R-25</span>
+    <span class="meta-chip source">Source: Adrian Ang's R1 scope slide (IJR not covered — confirmed separately, see R-25)</span>
+  </div>
+</header>
+
+<div class="resolves-banner">
+  <span class="dot"></span>
+  <span><strong>The headline decision:</strong> population is WOG-wide, not pilot-only. STIPs &amp; Gigs open to all WOG officers via POCDEX integration. Compass becomes the sole platform for posting, discovering, and applying to STIPs, Gigs, Internal Jobs, and Secondment. SJR itself is the one exception — it stays on OTG through 2027. IJR is in this too: confirmed R1 scope, same delivery shape as STIPs &amp; Gigs end to end, including in-app HR applicant review. Only the matching/assignment decision itself stays offline (R-25).</span>
+</div>
+
+<h2 class="section">Scope by type</h2>
+<p class="section-sub">Five cards, one per type this decision touches. Each shows the confirmed R1 position and its status — confirmed, carried forward unchanged, or newly at risk as a result of this decision.</p>
+
+<div class="type-grid">
+
+  <div class="type-card stip">
+    <div class="type-card-head"><h3>STIPs &amp; Gigs</h3></div>
+    <div class="type-card-body">
+      <div class="field-row">
+        <span class="field-label">Where it's posted / applied</span>
+        <span class="field-value">Compass, natively, with a simple application form — consistent with the original plan</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Population</span>
+        <span class="field-value">WOG-wide — non-pilot officers get access via POCDEX integration with WOG officer data</span>
+      </div>
+      <span class="status-tag confirmed">Confirmed — resolves R-14/R-23</span>
+    </div>
+  </div>
+
+  <div class="type-card ij">
+    <div class="type-card-head"><h3>Internal Jobs</h3></div>
+    <div class="type-card-body">
+      <div class="field-row">
+        <span class="field-label">Where it's posted / applied</span>
+        <span class="field-value">Posted and maintained entirely on HRPS/Cumulus, not Compass — Compass pulls a periodic read from HRPS only (not live, not two-way, no data ownership). Apply is a confirmed redirect to whichever system, HRPS or Cumulus, hosts the posting. Ringfenced by agency only (flat check, no individual eligibility layer, confirmed by BOs 23 Sep)</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Population</span>
+        <span class="field-value">WOG-wide in principle, gated by agency-level ringfencing once the API exists — a simpler ask than IJR's per-officer eligibility case (see IJR card)</span>
+      </div>
+      <span class="status-tag risk">Confirmed in scope, but blocked on two things: the undelivered HRPS API access itself (R-07), and whether HRPS supplies ringfencing/agency-tagging data directly or Compass has to build that logic itself — corrected 23 Sep, replaces the earlier "gated by ringfencing criteria once the API exists" framing</span>
+    </div>
+  </div>
+
+  <div class="type-card sec">
+    <div class="type-card-head"><h3>Secondment</h3></div>
+    <div class="type-card-body">
+      <div class="field-row">
+        <span class="field-label">Where it's posted / applied</span>
+        <span class="field-value">Posted on Compass, so OTG and Compass officers can discover and apply on the consolidated Opportunities page</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Population</span>
+        <span class="field-value">WOG-wide, consolidated across both systems</span>
+      </div>
+      <span class="status-tag risk">Confirmed, but inherits the cross-HR-system auth gap (R-24, new)</span>
+    </div>
+  </div>
+
+  <div class="type-card sjr">
+    <div class="type-card-head"><h3>SJR (the programme)</h3></div>
+    <div class="type-card-body">
+      <div class="field-row">
+        <span class="field-label">Where it's posted / applied</span>
+        <span class="field-value">Stays on OTG through the 2027 cycle</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Population</span>
+        <span class="field-value">Unchanged — migrates to Compass ahead of the 2028 cycle, not R1</span>
+      </div>
+      <span class="status-tag carried">Carried forward, unchanged since the 21 Sep resolution</span>
+    </div>
+  </div>
+
+  <div class="type-card ijr">
+    <div class="type-card-head"><h3>Internal Job Rotation (IJR)</h3></div>
+    <div class="type-card-body">
+      <div class="field-row">
+        <span class="field-label">Where it's posted / applied</span>
+        <span class="field-value">Native in Compass, end to end: self-serve creation (any officer, no HR gate), native discovery, structured-form apply, and in-app applicant review for Agency HR — new, HR previously had no in-app view. Officer status tracking included. The one thing that stays offline is the matching/assignment decision itself, if IJR still needs to weigh multiple applicants against multiple roles at once rather than a simple per-applicant offer or reject. Decoupled from SJR; SJR alone stays on OTG through 2027, migrating ahead of 2028 on its own timing</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Population</span>
+        <span class="field-value">Confirmed scope and mechanics. WOG-wide catalog visibility vs. agency-scoped eligibility is a live R1 design question for the structured form. The BO-confirmed distinction (IJR's per-officer eligibility criteria vs. Internal Jobs' flat agency check) needs to be built into it, not just tracked for later</span>
+      </div>
+      <span class="status-tag confirmed">Confirmed R1 scope and mechanics — resolves R-25. One open nuance: the Decision-stage shape (see R-25)</span>
+    </div>
+  </div>
+
+</div>
+
+<h2 class="section">Two distinctions worth getting right</h2>
+<p class="section-sub">Both of these are places where "WOG-wide" quietly means something different depending on the type — easy to misread if the slide (or this decision) gets summarized too quickly. The second one is now a live R1 design question, not a 2028-migration one.</p>
+
+<div class="compare-strip">
+  <div class="compare-col before">
+    <span class="compare-label">SJR — the programme</span>
+    <p>PSD's specific, centrally-run, annual secondment exercise (Mar–Sep, MX12-10 grade, nomination-gated). This is what stays on OTG through 2027.</p>
+  </div>
+  <div class="compare-arrow">≠</div>
+  <div class="compare-col after">
+    <span class="compare-label">Secondment — the umbrella</span>
+    <p>Any temporary cross-agency move, including agency-led and officer-initiated paths outside PSD's annual exercise. This is what the slide moves to Compass now, for discovery and application on the consolidated page.</p>
+  </div>
+</div>
+
+<div class="compare-strip">
+  <div class="compare-col before">
+    <span class="compare-label">IJR — WOG-wide catalog</span>
+    <p>Now that IJR is native in Compass for R1, any officer anywhere in government would be able to see that IJR opportunities exist and browse the unified catalog. That's the "WOG-wide" part of IJR's R1 scope.</p>
+  </div>
+  <div class="compare-arrow">≠</div>
+  <div class="compare-col after">
+    <span class="compare-label">IJR — agency-scoped eligibility</span>
+    <p>IJR is a within-agency rotation by definition — it has no cross-agency form. Eligibility and applicant review still resolve to the officer's own agency, now handled in-app by Agency HR; only the final matching/assignment decision stays offline. WOG-wide visibility of the catalog is not the same as WOG-wide eligibility for the rotation itself. This is a live R1 design question for the structured apply form (R-25), not a 2028 one.</p>
+  </div>
+</div>
+
+<h2 class="section">What this resolves</h2>
+<p class="section-sub">Three risks close out on the back of this slide and the same-day IJR confirmation.</p>
+
+<div class="risk-grid">
+  <div class="risk-card" style="border-left-color:var(--confirmed);">
+    <div class="risk-card-head"><span class="risk-id" style="color:var(--confirmed);">R-14</span><h3>Pilot-only vs. WOG-wide discovery</h3></div>
+    <p><span class="label">Resolved.</span> This was the single highest-leverage open question in R1 — nearly every scope, architecture, GTM, and estimation question depended on it. Answer: WOG-wide, via POCDEX.</p>
+  </div>
+  <div class="risk-card" style="border-left-color:var(--confirmed);">
+    <div class="risk-card-head"><span class="risk-id" style="color:var(--confirmed);">R-23</span><h3>No agreed product narrative</h3></div>
+    <p><span class="label">Resolved.</span> Adrian's decisions existed only as informally-referenced Slack threads before this. The slide is now the documented artifact — fold it into the one-pager and reduced-scope brief so it doesn't get re-litigated a third time.</p>
+  </div>
+  <div class="risk-card" style="border-left-color:var(--confirmed);">
+    <div class="risk-card-head"><span class="risk-id" style="color:var(--confirmed);">R-25</span><h3>IJR's delivery shape is confirmed</h3></div>
+    <p><span class="label">Resolved.</span> IJR follows the STIPs &amp; Gigs model end to end: self-serve creation, native discovery, structured-form apply, in-app applicant review for Agency HR (new), and officer status tracking. Decoupled from SJR — SJR alone stays on OTG through 2027, migrating ahead of 2028 on its own timing. Epic D can now be drafted with the same story shapes as Epic A. One nuance to confirm with Adrian: whether the Decision stage stays a simple per-applicant offer/reject or needs to preserve a pooled-matching shape (multiple applicants weighed against multiple roles at once) — that piece stays offline either way for now.</p>
+  </div>
+</div>
+
+<h2 class="section">What this doesn't resolve</h2>
+<p class="section-sub">Two things need attention before this scope goes any further up the chain.</p>
+
+<div class="risk-grid">
+  <div class="risk-card">
+    <div class="risk-card-head"><span class="risk-id">R-24 · new</span><h3>No cross-HR-system authentication</h3></div>
+    <p><span class="label">The gap:</span> if an officer clicks an opportunity hosted on an HR system they don't have access to, they can't proceed. Adrian's slide states this plainly as a known constraint, and punts the fix to "once Workable becomes the WOG ATS" — a 2027+ track, outside R1.</p>
+    <p><span class="label">Why it matters more now:</span> Compass is now positioned as the WOG-wide "consolidated Opportunities page." A consolidated catalog that silently dead-ends on some listings undercuts the exact narrative this decision just confirmed. No R1 mitigation is currently proposed.</p>
+  </div>
+  <div class="risk-card">
+    <div class="risk-card-head"><span class="risk-id">R-07 / D-01 · escalated</span><h3>HRPS API still undelivered</h3></div>
+    <p><span class="label">The gap:</span> Internal Jobs scope depends on HRPS delivering API access for the periodic pull Compass needs. Architecture corrected 23 Sep: Compass pulls from HRPS only, not a live two-way API, and doesn't hold the data itself. The open question sharpened to one specific thing: does HRPS's API response supply ringfencing/agency-tagging data directly, or does Compass need to derive/build that logic itself. The slide names the underlying dependency as "critical" but attaches no delivery date.</p>
+    <p><span class="label">Why it matters more now:</span> this was previously an internal fallback trigger (defer to R2 if it doesn't land). Now that Internal Jobs is committed, communicated scope, an unresolved API is a gap in already-stated scope, not just a quiet contingency.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>Where this leaves the estimate:</strong> the SJR delivery-mechanism decision (D-02) and RBAC sizing groundwork (D-06) are both closed as of 23 Sep — this decision was the thing blocking them. That doesn't mean the estimate itself is unblocked: it still needs to be re-run against this newly-confirmed scope (nothing currently circulating was sized against it, see R-12), CAM (R-15) is a separate, still-open three-way conflict, and R-24/R-07 above are blockers this decision introduces or reopens. IJR (R-25) is fully resolved and in the estimate, ready for Epic D story-drafting.</p>
+  <p><strong>Full detail:</strong> see R1 Risk Register (outputs/analyses/2026-09-16-W38-r1-risk-register.md) (R-13, R-14, R-23, R-24, R-25, R-07, R-12, R-30) for the complete tracking entries this artifact summarizes.</p>
+</div>

@@ -1,0 +1,301 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>OTEP Opportunity Journeys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F6; --surface:#FFFFFF; --ink:#15212B; --muted:#5A6873; --line:#D9DFE3; --soft:#E9EDEF;
+  --compass:#0D6E69; --otg:#A86A12; --hrps:#3556A0; --cumulus:#7446A8; --formsg:#2C7A4B; --ats:#B03C57; --actor:#56636D; --email:#56636D;
+  --warn:#B4531A; --ok:#2C7A4B; --open:#8A5A00;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1519; --surface:#172026; --ink:#E4EAEE; --muted:#97A5AF; --line:#2A363E; --soft:#1E2930;
+    --compass:#3FC1B8; --otg:#E0A547; --hrps:#7C9BE6; --cumulus:#B38CE8; --formsg:#5FC48A; --ats:#EC7F97; --actor:#9AA7B0; --email:#9AA7B0;
+    --warn:#F08A4B; --ok:#5FC48A; --open:#E6B84F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1519; --surface:#172026; --ink:#E4EAEE; --muted:#97A5AF; --line:#2A363E; --soft:#1E2930;
+  --compass:#3FC1B8; --otg:#E0A547; --hrps:#7C9BE6; --cumulus:#B38CE8; --formsg:#5FC48A; --ats:#EC7F97; --actor:#9AA7B0; --email:#9AA7B0;
+  --warn:#F08A4B; --ok:#5FC48A; --open:#E6B84F;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{text-wrap:balance;margin:0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+header.top{padding-block:40px 20px;display:grid;gap:10px}
+header.top h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em}
+header.top p{margin:0;max-width:68ch;color:var(--muted)}
+.thesis{margin-top:6px;font-weight:700;font-size:18px;color:var(--ink)}
+.thesis span{color:var(--compass)}
+
+nav.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap;padding-block:10px}
+nav.jump a{font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+nav.jump a:hover,nav.jump a:focus-visible{border-color:var(--compass);color:var(--compass);outline:none}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;padding-block:16px 4px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+
+section{padding-block:36px 8px;scroll-margin-top:60px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:6px}
+.sec-head h2{font-size:24px;font-weight:800;letter-spacing:-.01em}
+.sec-sub{color:var(--muted);max-width:75ch;margin:0 0 18px}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid currentColor}
+.badge.agreed{color:var(--ok)} .badge.known{color:var(--muted)} .badge.open{color:var(--open)}
+
+.matrix-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table.matrix{border-collapse:collapse;width:100%;min-width:720px}
+.matrix th,.matrix td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.matrix tr:last-child td{border-bottom:0}
+.matrix thead th{font-size:13px;font-weight:700;background:var(--soft)}
+.matrix thead th small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.matrix tbody th{font-size:13px;font-weight:700;width:130px}
+.matrix td .tags{display:flex;flex-wrap:wrap;gap:4px}
+.matrix td.hl{background:color-mix(in srgb,var(--compass) 7%,var(--surface))}
+.note{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+.tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.02em;padding:2px 7px;border-radius:4px;color:var(--c);background:color-mix(in srgb,var(--c) 13%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 35%,var(--surface));white-space:nowrap}
+.tag.retired{text-decoration:line-through;opacity:.75}
+
+.lane{display:grid;grid-template-columns:190px 1fr;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px}
+.lane-label h3{font-size:16px;font-weight:800}
+.lane-label p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 26px}
+.step{position:relative;min-width:118px;max-width:190px;padding:8px 10px 9px;border-radius:7px;background:color-mix(in srgb,var(--c) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 38%,var(--surface))}
+.flow > .step + .step::before,.flow > .step + .branch::before,.flow > .branch + .step::before{content:"→";position:absolute;left:-20px;top:14px;color:var(--muted);font-weight:700;font-size:14px}
+.flow > .branch{position:relative}
+.step b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c);font-weight:600}
+.step span{display:block;font-size:13.5px;font-weight:600;line-height:1.3;margin-top:2px}
+.step.weak{border-style:dashed;border-color:var(--warn);border-width:1.5px}
+.step.end span{color:var(--muted);font-style:italic;font-weight:500}
+.flag{display:inline-block;margin-top:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--warn)}
+.branch{display:grid;gap:10px;padding-left:14px;border-left:2px dashed var(--line)}
+.alt .cond{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:5px}
+.alt .flow{gap:8px 26px}
+
+.pains{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.pain{font-size:13px;padding:8px 10px;border-radius:6px;background:var(--soft)}
+.pain strong{display:block;font-weight:700}
+.pain em{font-style:normal;color:var(--warn);font-weight:600}
+.scope{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+.scope .yes{color:var(--ok);font-weight:600}
+.scope .no{color:var(--muted)}
+.absent{margin-top:12px;font-size:13px;color:var(--warn);font-weight:600}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.split .lane{grid-template-columns:1fr;margin-bottom:0}
+.split .lane-label h3 small{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.meaning{margin-top:12px;font-size:13.5px}
+.meaning li{margin-bottom:3px}
+.meaning ul{margin:0;padding-left:18px}
+
+.gaps{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:14px}
+.gap{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.gap h4{margin:0;font-size:15px;font-weight:800}
+.gap .row{display:grid;grid-template-columns:62px 1fr;gap:6px;font-size:13px;align-items:center}
+.gap .row .k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.gap .row .v{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.gap .row .v i{font-style:normal;color:var(--muted)}
+
+.questions{display:grid;gap:10px;margin-top:22px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.q .who{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--open);padding-top:3px}
+.q p{margin:0;font-size:14px}
+.q p.src{grid-column:2;font-size:12.5px;color:var(--muted)}
+
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+@media (max-width:760px){
+  .lane{grid-template-columns:1fr;gap:12px}
+  .split{grid-template-columns:1fr}
+  .flow{gap:10px 24px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">OTEP · CareerCompass · Opportunities</div>
+    <h1>Opportunity journeys: Today, R1 and beyond</h1>
+    <p>How officers find and apply for STIPs &amp; Gigs, Internal Jobs and SR/SJR across three states, as aligned at OTEP Squad Sync. R1 is a coexistence model, not the first step of migration.</p>
+    <p class="thesis">Centralise <span>discovery</span> now, centralise transactions later.</p>
+  </header>
+
+  <nav class="jump" aria-label="Sections">
+    <a href="#who-owns">Who owns what</a>
+    <a href="#today">1 · Today</a>
+    <a href="#r1">2 · R1 Pathfinder</a>
+    <a href="#future">3 · Future cutover</a>
+    <a href="#gaps">Gaps before OTG retires</a>
+  </nav>
+
+  <div class="legend" id="legend"></div>
+
+  <section id="who-owns">
+    <div class="sec-head"><h2>Who owns each stage</h2></div>
+    <p class="sec-sub">The one-slide version. Compass only takes over discovery in R1; posting and applying stay in the source systems until a future state is chosen.</p>
+    <div class="matrix-wrap">
+      <table class="matrix" id="matrix"></table>
+    </div>
+  </section>
+
+  <section id="today">
+    <div class="sec-head"><h2>1 · Current state</h2><span class="badge known">Today</span></div>
+    <p class="sec-sub">OTG does discovery, posting and apply for STIPs &amp; Gigs. Internal jobs are split across three systems, each with its own rules and application process.</p>
+    <div id="today-lanes"></div>
+  </section>
+
+  <section id="r1">
+    <div class="sec-head"><h2>2 · R1 Pathfinder</h2><span class="badge agreed">Agreed approach</span><span class="badge known">Target Feb/Mar</span></div>
+    <p class="sec-sub">Compass becomes one discovery layer over OTG, HRPS and Cumulus. Every Apply sends the officer back to the source system.</p>
+    <div id="r1-lanes"></div>
+  </section>
+
+  <section id="future">
+    <div class="sec-head"><h2>3 · Future cutover</h2><span class="badge open">Unresolved</span><span class="badge known">Post-OTG · R2/R3</span></div>
+    <p class="sec-sub">Two paths depending on whether an ATS is available. OTG is retired in both. Which path we take decides how much Compass has to become.</p>
+    <div class="split" id="future-lanes"></div>
+
+    <div id="gaps" style="scroll-margin-top:60px;margin-top:30px">
+      <div class="sec-head"><h2>Gaps before OTG can be retired</h2><span class="badge open">None solved</span></div>
+      <p class="sec-sub">Each of these is a capability OTG provides today that has no owner in R1. Under Future A the ATS covers most of them. Under Future B Compass has to build all four.</p>
+      <div class="gaps" id="gap-cards"></div>
+    </div>
+
+    <div class="questions">
+      <div class="q"><div class="who">Rama</div><p>If OTG is eventually going away, why are we investing so much energy integrating with OTG?</p><p class="src">Raised repeatedly. No definitive answer in the meeting.</p></div>
+      <div class="q"><div class="who">Adrian</div><p>R1 reduces delivery risk, but may push the harder OTG replacement work into R2/R3. Worry grows if ATS is not available.</p><p class="src">Drives the case for keeping Future B visible now.</p></div>
+    </div>
+  </section>
+
+  <footer>Source: OTEP Squad Sync discussion. Owner: Opportunities pillar. Update after each sync as future-state decisions land.</footer>
+</div>
+
+<script>
+const SYS = {
+  compass:{label:"Compass",c:"--compass"}, otg:{label:"OTG",c:"--otg"}, hrps:{label:"HRPS",c:"--hrps"},
+  cumulus:{label:"Cumulus",c:"--cumulus"}, formsg:{label:"FormSG",c:"--formsg"}, ats:{label:"ATS",c:"--ats"},
+  actor:{label:"Person",c:"--actor"}, email:{label:"Email",c:"--email"}
+};
+const tag = (s, extra="") => `<span class="tag ${extra}" style="--c:var(${SYS[s].c})">${SYS[s].label}</span>`;
+
+document.getElementById("legend").innerHTML =
+  ["compass","otg","hrps","cumulus","formsg","ats","actor"].map(s=>`<span><i style="--c:var(${SYS[s].c})"></i>${SYS[s].label}</span>`).join("")
+  + `<span><i style="--c:transparent;border:1.5px dashed var(--warn)"></i>Weak step</span>`;
+
+const M = {
+  cols:[["Today",""],["R1 Pathfinder","Agreed"],["Future A","If ATS works"],["Future B","If ATS fails"]],
+  rows:[
+    ["Posting",[["otg","hrps","cumulus"],["otg","hrps","cumulus"],["ats"],["compass"]]],
+    ["Discovery",[["otg","hrps","cumulus"],["compass"],["compass"],["compass"]]],
+    ["Application",[["otg","formsg","email","hrps","cumulus"],["formsg","hrps","cumulus","otg"],["ats"],["compass"]]],
+    ["OTG",[["otg"],["otg"],["otg:x"],["otg:x"]]]
+  ]
+};
+document.getElementById("matrix").innerHTML =
+  `<thead><tr><th>Stage</th>${M.cols.map(([a,b])=>`<th>${a}${b?`<small>${b}</small>`:""}</th>`).join("")}</tr></thead><tbody>`+
+  M.rows.map(([name,cells])=>`<tr><th>${name}</th>${cells.map(list=>{
+    const hl = list.length===1 && list[0]==="compass";
+    const inner = name==="OTG"
+      ? (list[0]==="otg:x" ? `${tag("otg","retired")} <span class="note">Retired</span>` : `${tag("otg")} <span class="note">Live</span>`)
+      : `<div class="tags">${list.map(s=>tag(s)).join("")}</div>`;
+    return `<td class="${hl?"hl":""}">${inner}</td>`;
+  }).join("")}</tr>`).join("")+`</tbody>`;
+
+function renderFlow(items){
+  return `<div class="flow">${items.map(it=>{
+    if(it.branch) return `<div class="branch">${it.branch.map(a=>`<div class="alt"><div class="cond">${a.cond}</div>${renderFlow(a.flow)}</div>`).join("")}</div>`;
+    const [s,text,o={}] = it;
+    return `<div class="step ${o.weak?"weak":""} ${o.end?"end":""}" style="--c:var(${SYS[s].c})"><b>${SYS[s].label}</b><span>${text}</span>${o.flag?`<em class="flag">${o.flag}</em>`:""}</div>`;
+  }).join("")}</div>`;
+}
+function lane(j){
+  return `<div class="lane"><div class="lane-label"><h3>${j.name}</h3>${j.desc?`<p>${j.desc}</p>`:""}</div><div>
+    ${renderFlow(j.flow)}
+    ${j.scope?`<div class="scope">${j.scope}</div>`:""}
+    ${j.absent?`<div class="absent">${j.absent}</div>`:""}
+    ${j.pains?`<div class="pains">${j.pains.map(([p,i])=>`<div class="pain"><strong>${p}</strong><em>${i}</em></div>`).join("")}</div>`:""}
+  </div></div>`;
+}
+
+const TODAY = [
+  { name:"STIPs & Gigs", desc:"The MVP model everyone knows.",
+    flow:[ ["actor","Poster creates listing"], ["otg","Posted on OTG"], ["otg","Officer discovers on OTG"],
+      {branch:[
+        {cond:"Apply via FormSG", flow:[["formsg","FormSG link inside the description",{weak:true,flag:"Buried"}]]},
+        {cond:"Apply via email", flow:[["email","Email the poster"]]},
+        {cond:"Apply via OTG", flow:[["otg","Follow OTG instructions"]]}
+      ]}],
+    pains:[["OTG-only discovery","Limited visibility"],["FormSG buried in description","Poor UX"],["No central marketplace","Fragmented discovery"]]
+  },
+  { name:"Internal Jobs", desc:"Agency HR picks one of three systems.",
+    flow:[ ["actor","Agency HR posts vacancy"],
+      {branch:[
+        {cond:"Posted on OTG", flow:[["otg","Officer discovers on OTG"],["otg","Applies on OTG"]]},
+        {cond:"Posted on HRPS", flow:[["hrps","Officer discovers on HRPS"],["hrps","Applies on HRPS"]]},
+        {cond:"Posted on Cumulus", flow:[["cumulus","Officer discovers on Cumulus"],["cumulus","Applies on Cumulus"]]}
+      ]}],
+    pains:[["Multiple systems","No single marketplace"],["Ring-fencing rules scattered","Hard to understand eligibility"],["Duplicate opportunities","Possible across systems"],["Different application processes","Inconsistent UX"]]
+  }
+];
+
+const R1 = [
+  { name:"STIPs & Gigs", desc:"OTG stays the source of truth. Posting unchanged.",
+    flow:[ ["actor","Poster creates listing"], ["otg","Posted on OTG (no change)"], ["compass","Feed pulled into Compass"], ["compass","Officer discovers in Compass"],
+      {branch:[
+        {cond:"FormSG link exists", flow:[["compass","Apply button"],["formsg","Opens FormSG"],["formsg","Officer submits"]]},
+        {cond:"No FormSG link", flow:[["compass","Apply button disabled"],["compass","“Please contact poster”",{end:true}]]}
+      ]}],
+    scope:`<span class="yes">Compass: discovery</span><span class="no">No posting</span><span class="no">No workflow</span><span class="no">No application processing</span>`
+  },
+  { name:"Internal Jobs", desc:"Unified search is the main R1 value proposition.",
+    flow:[ ["actor","Posted in HRPS, Cumulus or OTG"], ["compass","Aggregated into Compass"], ["compass","Officer searches all internal jobs"],
+      {branch:[
+        {cond:"Source: HRPS", flow:[["compass","Apply"],["hrps","Lands on the job in HRPS"]]},
+        {cond:"Source: Cumulus", flow:[["compass","Apply"],["cumulus","Lands on the job in Cumulus"]]},
+        {cond:"Source: OTG (weakest)", flow:[["compass","Apply"],["otg","OTG landing page",{weak:true,flag:"No deep link"}],["otg","Search again",{weak:true}],["otg","Find the job"],["otg","Apply"]]}
+      ]}],
+    pains:[["OTG can’t deep-link to a vacancy","Officer repeats the search they already did in Compass"]]
+  },
+  { name:"SR / SJR", desc:"Unchanged. Entirely on OTG.",
+    flow:[ ["actor","Officer receives nomination"], ["otg","OTG communication"], ["otg","OTG training"], ["otg","OTG search"], ["otg","OTG application"] ],
+    absent:"Compass absent: no discovery, application, posting or integration."
+  }
+];
+
+const FUTURE = [
+  { name:`Future A <small>If ATS works</small>`,
+    flow:[ ["actor","Poster"], ["ats","Posts in ATS"], ["compass","Shown in Compass"], ["actor","Officer discovers"], ["ats","Applies via ATS workflow"] ],
+    scope:`<div class="meaning"><ul><li>Internal jobs become ATS-driven</li><li>Application workflow becomes ATS-driven</li><li>Compass stays the front-end marketplace</li></ul></div>`
+  },
+  { name:`Future B <small>If ATS fails</small>`,
+    flow:[ ["actor","Poster"], ["compass","Posts in Compass"], ["compass","Posting workflow"], ["compass","Applications"], ["compass","Selection"] ],
+    scope:`<div class="meaning"><ul><li>Compass must become a transaction platform, not just discovery</li><li>All four gaps below land on the Compass roadmap</li></ul></div>`
+  }
+];
+
+const GAPS = [
+  ["1 · Posting", [tag("otg")+" posts, "+tag("compass")+" reads"], [tag("compass")+" posts"]],
+  ["2 · Application processing", [tag("compass")+" <i>redirects</i>"], [tag("compass")+" <i>takes the application</i>"]],
+  ["3 · Internal job rotations (IJR)", ["IJR <i>→</i> "+tag("otg")], ["IJR <i>→</i> "+tag("compass")]],
+  ["4 · STIPs & Gigs creation", ["Created in "+tag("otg")], ["Created in "+tag("compass")]]
+];
+
+document.getElementById("today-lanes").innerHTML = TODAY.map(lane).join("");
+document.getElementById("r1-lanes").innerHTML = R1.map(lane).join("");
+document.getElementById("future-lanes").innerHTML = FUTURE.map(lane).join("");
+document.getElementById("gap-cards").innerHTML = GAPS.map(([t,now,fut])=>`<div class="gap"><h4>${t}</h4>
+  <div class="row"><span class="k">Today</span><span class="v">${now.join("")}</span></div>
+  <div class="row"><span class="k">Future</span><span class="v">${fut.join("")}</span></div>
+  <span class="badge open" style="justify-self:start">Not solved</span></div>`).join("");
+</script>
+
+</body></html>

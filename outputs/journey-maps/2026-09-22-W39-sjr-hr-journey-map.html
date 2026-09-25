@@ -1,0 +1,207 @@
+<title>SJR HR Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --agencyhr:#2f5d8a; --agencyhr-bg:#eaf1f8;
+    --psd:#6d6423; --psd-bg:#f6f2df;
+    --gate:#a13d3d; --gate-bg:#f9eded;
+    --good:#3f7d5c; --good-bg:#eaf4ef;
+    --load:#8a3f6a; --load-bg:#f6eaf1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --agencyhr:#7fb0e0; --agencyhr-bg:#1b2a38;
+      --psd:#d8cd7a; --psd-bg:#302c17;
+      --gate:#e08a8a; --gate-bg:#3a2020;
+      --good:#8fc4a8; --good-bg:#1e2f26;
+      --load:#d998bf; --load-bg:#301f29;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --agencyhr:#7fb0e0; --agencyhr-bg:#1b2a38;
+    --psd:#d8cd7a; --psd-bg:#302c17;
+    --gate:#e08a8a; --gate-bg:#3a2020;
+    --good:#8fc4a8; --good-bg:#1e2f26;
+    --load:#d998bf; --load-bg:#301f29;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1280px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:36px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+  .legend{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:0.82rem;}
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .calendar{display:grid; grid-template-columns:148px repeat(6, minmax(160px,1fr)); border:1px solid var(--line); border-radius:12px 12px 0 0; border-bottom:none; overflow-x:auto; background:var(--agencyhr-bg);}
+  .cal-label{position:sticky; left:0; z-index:2; background:var(--agencyhr-bg); display:flex; align-items:center; padding:10px 16px; font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--agencyhr); border-right:1px solid var(--line);}
+  .cal-month{padding:10px 14px; border-right:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:0.76rem; font-weight:600; color:var(--agencyhr); font-variant-numeric:tabular-nums;}
+  .cal-month:last-child{border-right:none;}
+  .journey{display:grid; grid-template-columns:148px repeat(6, minmax(160px,1fr)); border:1px solid var(--line); border-radius:0 0 12px 12px; overflow-x:auto; background:var(--paper-raised);}
+  .row-label{position:sticky; left:0; z-index:2; background:var(--paper-raised); display:flex; align-items:center; padding:14px 16px; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); border-right:1px solid var(--line);}
+  .phase-head{padding:16px 14px 14px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); display:flex; flex-direction:column; gap:4px;}
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:0.96rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+  .cell{padding:14px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-size:0.84rem; line-height:1.45; display:flex; flex-direction:column; gap:8px;}
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+7){border-bottom:none;}
+  .cell.agencyhr{background:var(--agencyhr-bg);}
+  .cell.psd{background:var(--psd-bg);}
+  .action-text{font-weight:500;}
+  .tag{display:inline-flex; align-items:center; gap:5px; font-size:0.68rem; font-weight:600; padding:3px 8px; border-radius:999px; width:fit-content;}
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.load{background:var(--load-bg); color:var(--load);}
+  .sub{font-size:0.76rem; color:var(--muted);}
+  .touchpoint{font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:5px; padding-top:6px; margin-top:auto; border-top:1px dashed var(--line);}
+  .outcomes{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .outcome-card{border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--paper-raised);}
+  .outcome-card.matched{border-left:4px solid var(--good);}
+  .outcome-card.load{border-left:4px solid var(--load);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p, .outcome-card ul{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .outcome-card ul{padding-left:1.1em;}
+  .outcome-card li{margin-bottom:3px;}
+  .footnotes{margin-top:28px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+  .note{font-size:0.86rem; color:var(--muted); max-width:68ch; line-height:1.55; background:var(--load-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .note strong{color:var(--ink);}
+  @media (max-width:860px){
+    .calendar, .journey{display:flex; flex-direction:column; overflow-x:visible;}
+    .row-label, .cal-label{display:none;}
+    .cal-month{border:none; justify-content:flex-start; padding:4px 0;}
+    .calendar{border-radius:12px; border-bottom:1px solid var(--line); padding:8px 12px; margin-bottom:12px;}
+    .journey{border-radius:12px;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{content:attr(data-lane); display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;}
+    .cell.agencyhr, .cell.psd{border-radius:10px; padding:10px 12px; margin-bottom:8px;}
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">HR journey · Structured Job Rotation (SJR / secondment)</div>
+  <h1>What it takes to run a secondment cycle</h1>
+  <p class="dek">Two HR functions work side by side on PSD's fixed calendar. Agency HR handles their own officers and roles; PSD and Functional Leaders broker the cross-agency match. Source: Rotation Guidebook (Feb 2026), Section 4.2–4.3, Table 4 &amp; Annex F.</p>
+  <p class="note"><strong>R1 scope boundary:</strong> SJR-the-programme stays on OTG through the 2027 cycle — this HR workflow doesn't move to Compass in R1, it migrates ahead of the 2028 cycle (risk register R-13, resolved). Compass's R1 scope covers the broader Secondment umbrella's agency-led and officer-initiated paths, a separate journey from PSD's annual SJR exercise shown here.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--agencyhr)"></span>Agency HR (parent and borrowing)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--psd)"></span>PSD / Functional Leaders</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--load)"></span>Ongoing work</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--good)"></span>HR's call</span>
+  </div>
+</header>
+
+<div class="calendar" role="table" aria-label="SJR HR annual calendar">
+  <div class="cal-label">Calendar</div>
+  <div class="cal-month">Mar</div>
+  <div class="cal-month">Mid-Mar – Mid-May</div>
+  <div class="cal-month">Mid-May – End-Jun</div>
+  <div class="cal-month">Jul – End-Aug</div>
+  <div class="cal-month">Jul – End-Aug</div>
+  <div class="cal-month">Sep onward, 2–3 yrs</div>
+</div>
+
+<div class="journey" role="table" aria-label="SJR HR journey by phase and function">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;"><span class="phase-num">01</span><span class="phase-title">Publicity</span></div>
+  <div class="phase-head" style="grid-column:3;"><span class="phase-num">02</span><span class="phase-title">Nomination</span></div>
+  <div class="phase-head" style="grid-column:4;"><span class="phase-num">03</span><span class="phase-title">Getting ready</span></div>
+  <div class="phase-head" style="grid-column:5;"><span class="phase-num">04</span><span class="phase-title">Applications</span></div>
+  <div class="phase-head" style="grid-column:6;"><span class="phase-num">05</span><span class="phase-title">Matching</span></div>
+  <div class="phase-head" style="grid-column:7;"><span class="phase-num">06</span><span class="phase-title">Secondment, then re-integration</span></div>
+
+  <div class="row-label" style="grid-row:2;">Agency HR</div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Notifies officers who are due for a posting, starts getting roles ready to surface</span>
+    <div class="touchpoint">↳ Getting things in order internally</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Shortlists nominees against eligibility (MX12-10, 3+ years, min 'C' over 2 years), consolidates and submits nominations. Encouraged to put forward 2 roles per nominee</span>
+    <span class="tag load">Sourcing roles falls on HR too, not just people</span>
+    <div class="touchpoint">↳ Nomination and role-sourcing happen in the same window</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Gets officers ready for the Open House, checks the role is pegged at the same or adjacent grade as the nominee</span>
+    <div class="touchpoint">↳ Checking role and grade line up</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Borrowing agency HR looks at the list of interested applicants in OTG for whatever roles they posted</span>
+    <div class="touchpoint">↳ Reviewing applicants</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:6;">
+    <span class="action-text">Weighs in on officer suitability, role requirements, and fit, and stays in regular touch with PSD and the FLs</span>
+    <span class="tag load">An active role, not just a sign-off</span>
+    <div class="touchpoint">↳ Sorting out the releasing and receiving arrangements</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:7;">
+    <span class="action-text">Runs the pre-secondment briefing (payroll, reporting lines, how ranking and promotion work), checks in every 6 months, and starts planning re-integration 6 months before the end: reviewing what the officer's learned, confirming what they want next, finding them a role back home</span>
+    <span class="tag load">The longest-running obligation of any of the three</span>
+    <div class="touchpoint">↳ Annex F checklist covers both parent and borrowing sides</div>
+  </div>
+
+  <div class="row-label" style="grid-row:3;">PSD /<br>Functional Leaders</div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:2;">
+    <span class="action-text">Runs the brownbag; FLs talk through the benefits across all 7 functional areas</span>
+    <div class="touchpoint">↳ Publicity at the WOG level</div>
+  </div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Takes officer interest directly, passes names on to agency HR for the nomination window</span>
+    <div class="touchpoint">↳ Central intake</div>
+  </div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Onboards FLs, HR contacts, and officers to OTG, runs the Open House so officers can see what's available this cycle</span>
+    <div class="touchpoint">↳ Getting the whole system onboarded</div>
+  </div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:5;">
+    <span class="action-text">Keeps the platform open for applications across the whole pool</span>
+    <div class="touchpoint">↳ OTG stays open</div>
+  </div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:6;">
+    <span class="action-text">FLs try to broker matches between agencies. If there's no fit, agencies are told to look elsewhere rather than wait it out</span>
+    <span class="tag gate">FLs try their best, but can't promise a match</span>
+    <div class="touchpoint">↳ Facilitating across agencies</div>
+  </div>
+
+  <div class="cell psd" data-lane="PSD / Functional Leaders" style="grid-row:3; grid-column:7;">
+    <span class="action-text">PSD's part ends once the secondment starts, everything after that is on the parent and borrowing agencies</span>
+    <div class="touchpoint">↳ PSD hands off after placement</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card matched">
+    <h3>A liability that sits quietly with borrowing agency HR</h3>
+    <p>If an officer is injured or dies while performing borrowing agency duties, the borrowing agency covers compensation (IM2F 6.3.7C), no less favourable than what the lending agency would have provided. There's no requirement to buy insurance for it, but the borrowing agency is expected to carry the liability one way or another, insured or not.</p>
+  </div>
+  <div class="outcome-card load">
+    <h3>Where the load actually sits</h3>
+    <p>Unlike IJR, where one agency does the matching alone, SJR splits the effort across three parties: parent HR, borrowing HR, and PSD/FLs, and none of them owns the whole pipeline. Re-integration planning alone takes 6 months and falls entirely on parent agency HR, long after PSD has stepped back.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>Where it gets heaviest:</strong> nomination (Phase 02) is also role-sourcing. Agencies aren't just picking people, they're expected to find and submit roles too, ideally 2 per nominee. Re-integration (Phase 06) is the longest tail of all: it starts 6 months before the end and belongs entirely to the parent agency.</p>
+  <p><strong>What PSD doesn't own:</strong> PSD and the FLs facilitate matching but can't guarantee it. If the SJR pool doesn't produce a fit, agencies are told to sort it out themselves (Annex B, Q11).</p>
+  <p><strong>The constraint that's Guidebook policy, not an R1 platform feature:</strong> officers are only meant to be in one development programme at a time (Annex A, Q12), same as IJR, but harder for Agency HR to track manually here since it spans two workflows (agency-internal and WOG-central) instead of one. Compass doesn't check or enforce this in R1 (confirmed 23 Sep, R-28).</p>
+</div>

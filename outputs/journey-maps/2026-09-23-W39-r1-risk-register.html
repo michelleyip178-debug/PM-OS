@@ -1,0 +1,799 @@
+<title>R1 Risk Register</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --red:#a13d3d; --red-bg:#f9eded;
+    --amber:#b8722e; --amber-bg:#faf1e5;
+    --green:#3f7d5c; --green-bg:#eaf4ef;
+    --grey:#6b6f76; --grey-bg:#eeece7;
+    --accent:#2f5d8a; --accent-bg:#eaf1f8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --red:#e08a8a; --red-bg:#3a2020;
+      --amber:#e0a869; --amber-bg:#332617;
+      --green:#8fc4a8; --green-bg:#1e2f26;
+      --grey:#9a9da4; --grey-bg:#26251f;
+      --accent:#7fb0e0; --accent-bg:#1b2a38;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --red:#e08a8a; --red-bg:#3a2020;
+    --amber:#e0a869; --amber-bg:#332617;
+    --green:#8fc4a8; --green-bg:#1e2f26;
+    --grey:#9a9da4; --grey-bg:#26251f;
+    --accent:#7fb0e0; --accent-bg:#1b2a38;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1240px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.5rem,3.6vw,2.1rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.92rem; color:var(--muted); max-width:76ch; line-height:1.5;}
+  .meta-line{font-size:0.8rem; color:var(--muted); margin-top:4px;}
+  .meta-line b{color:var(--ink); font-weight:600;}
+
+  /* Banner */
+  .banner{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--green-bg); border:1px solid var(--green);
+    border-radius:10px; padding:14px 18px; margin:18px 0;
+    font-size:0.86rem; line-height:1.55;
+  }
+  .banner .dot{width:8px; height:8px; border-radius:50%; background:var(--green); margin-top:7px; flex:none;}
+  .banner strong{color:var(--green);}
+  .banner a{color:var(--ink);}
+
+  /* Summary counts */
+  .counts{display:flex; flex-wrap:wrap; gap:10px; margin:20px 0;}
+  .count-tile{
+    flex:1; min-width:100px;
+    border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+    background:var(--paper-raised); cursor:pointer; transition:border-color .12s ease;
+  }
+  .count-tile:hover{border-color:var(--ink);}
+  .count-tile.active{border-color:var(--ink); border-width:2px; padding:11px 13px;}
+  .count-num{font-family:'Quicksand',system-ui,sans-serif; font-size:1.5rem; font-weight:700; font-variant-numeric:tabular-nums;}
+  .count-label{font-size:0.72rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em;}
+  .count-tile.red .count-num{color:var(--red);}
+  .count-tile.amber .count-num{color:var(--amber);}
+  .count-tile.green .count-num{color:var(--green);}
+  .count-tile.grey .count-num{color:var(--grey);}
+
+  /* Category chips */
+  .cat-filter{display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 18px;}
+  .cat-chip{
+    font-family:'Nunito',sans-serif; font-size:0.76rem; font-weight:600;
+    padding:6px 13px; border-radius:999px; border:1px solid var(--line);
+    background:var(--paper-raised); color:var(--muted); cursor:pointer;
+    transition:all .12s ease;
+  }
+  .cat-chip:hover{border-color:var(--ink);}
+  .cat-chip.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .risk-cat-tag{
+    font-size:0.68rem; font-weight:600; color:var(--muted);
+    background:var(--grey-bg); padding:2px 9px; border-radius:999px; flex:none;
+  }
+
+  /* Search */
+  .toolbar{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:center;}
+  #search{
+    flex:1; min-width:200px; font-family:'Nunito',sans-serif; font-size:0.86rem;
+    padding:9px 14px; border:1px solid var(--line); border-radius:8px;
+    background:var(--paper-raised); color:var(--ink);
+  }
+  #search::placeholder{color:var(--muted);}
+  .result-count{font-size:0.8rem; color:var(--muted); white-space:nowrap;}
+
+  /* Risk rows */
+  .risk-list{display:flex; flex-direction:column; gap:8px;}
+  .risk-row{
+    border:1px solid var(--line); border-radius:10px; background:var(--paper-raised);
+    overflow:hidden;
+  }
+  .risk-row[hidden]{display:none;}
+  .risk-summary{
+    display:flex; align-items:center; gap:12px; padding:12px 16px;
+    cursor:pointer; user-select:none;
+  }
+  .risk-id{font-family:'Quicksand',system-ui,sans-serif; font-weight:700; font-size:0.82rem; color:var(--muted); flex:none; width:44px;}
+  .risk-dot{width:9px; height:9px; border-radius:50%; flex:none;}
+  .risk-dot.red{background:var(--red);}
+  .risk-dot.amber{background:var(--amber);}
+  .risk-dot.green{background:var(--green);}
+  .risk-dot.grey{background:var(--grey);}
+  .risk-title{flex:1; font-size:0.9rem; font-weight:600; line-height:1.4;}
+  .risk-badges{display:flex; gap:6px; flex:none;}
+  .badge{font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:999px;}
+  .badge.new{background:var(--accent-bg); color:var(--accent);}
+  .badge.today{background:var(--red-bg); color:var(--red);}
+  .chevron{color:var(--muted); font-size:0.8rem; flex:none; transition:transform .15s ease;}
+  .risk-row.open .chevron{transform:rotate(90deg);}
+  .risk-detail{display:none; padding:0 16px 16px; font-size:0.86rem; line-height:1.6;}
+  .risk-row.open .risk-detail{display:block;}
+  .risk-detail .field{margin-bottom:10px;}
+  .risk-detail .field:last-child{margin-bottom:0;}
+  .risk-detail .field-label{font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted); margin-bottom:3px;}
+  .risk-detail .field-value{color:var(--ink);}
+  .risk-detail .field-value del{color:var(--muted); text-decoration:line-through;}
+  .risk-meta-row{display:flex; gap:16px; flex-wrap:wrap; font-size:0.78rem; color:var(--muted); padding-top:8px; border-top:1px dashed var(--line); margin-top:4px;}
+  .risk-meta-row b{color:var(--ink); font-weight:600;}
+
+  h2.section{font-size:1.1rem; font-weight:700; margin:36px 0 4px;}
+  .section-sub{font-size:0.84rem; color:var(--muted); margin-bottom:14px; max-width:70ch; line-height:1.5;}
+
+  /* Simple tables for assumptions/issues/dependencies */
+  table.simple{width:100%; border-collapse:collapse; font-size:0.84rem;}
+  table.simple th, table.simple td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top; line-height:1.5;}
+  table.simple th{background:var(--paper-raised); font-family:'Quicksand',system-ui,sans-serif; font-weight:700; font-size:0.78rem;}
+  table.simple td.status{white-space:nowrap;}
+  .table-wrap{overflow-x:auto; border-radius:10px;}
+
+  .footnotes{margin-top:36px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:640px){
+    .counts{gap:6px;}
+    .count-tile{min-width:80px; padding:9px 10px;}
+    .risk-title{font-size:0.86rem;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">CareerCompass R1 · Opportunities Marketplace</div>
+  <h1>R1 Risk Register</h1>
+  <p class="dek">29 risks, 7 assumptions, 10 issues, 9 dependencies. Click any risk to expand it. Filter by status, by category, or search across everything.</p>
+  <p class="meta-line"><b>Lead PM:</b> Michelle Yip · <b>Programme Leadership:</b> Adrian Ang (Product), Rama Moorthy / Barry Lim (Engineering), Li Ting Kway (Design) · <b>Tracking:</b> Jobelle</p>
+</header>
+
+<div class="banner">
+  <span class="dot"></span>
+  <span><strong>Scope confirmed, 23 Sep:</strong> Adrian's R1 scope slide resolved R-14 and R-23, the crux question that stalled Tuesday's estimation session — population is WOG-wide, not pilot-only. Adrian's slide didn't cover IJR at all; IJR's scope is tracked separately below (R-25). See the <a href="2026-09-23-W39-r1-scope-decision-opportunities.html">R1 Scope Decision artifact</a> for the full breakdown.</span>
+</div>
+
+<div class="banner">
+  <span class="dot"></span>
+  <span><strong>IJR creation model confirmed, 24 Sep, resolving R-25.</strong> IJR follows the STIPs &amp; Gigs model end to end: self-serve creation, in-app applicant review for Agency HR, and officer status tracking, not just the apply step. The only remaining thing that stays offline is the actual matching/assignment decision logic. R-25 is now fully resolved; Epic D can be drafted with the same story shapes as Epic A. OTG data migration remains a separate open question (R-30).</span>
+</div>
+
+<div class="banner" style="background:var(--amber-bg); border-color:var(--amber);">
+  <span class="dot" style="background:var(--amber);"></span>
+  <span><strong>New, 24 Sep: data migration is unaddressed, two separate risks.</strong> Neither FormSG (MVP-era STIPs &amp; Gigs applications) nor OTG (current system of record for IJR/SJR) data migration has been scoped anywhere in R1 planning. Tracked as R-29 (FormSG, still open) and R-30 (OTG, R1-relevant again now that IJR is confirmed R1 scope). Neither blocks Epic A grooming, but both need an explicit in/out-of-scope answer before launch.</span>
+</div>
+
+<div class="banner">
+  <span class="dot"></span>
+  <span><strong>VAPT scope decided, 23 Sep:</strong> VAPT will run in R1, with findings for both R1 and R2 going through risk acceptance rather than a hard pre-launch remediation gate. This closes I-06/D-07 (Barry's outstanding VAPT answer, 3 weeks unresolved) and removes VAPT's "could add 6 weeks" uncertainty from R-12's timeline picture. It opens a new governance item instead: the risk-acceptance process itself needs a named owner and defined severity thresholds (R-26, new). I-09 (naming a VAPT triage engineer) is now unblocked and should close faster.</span>
+</div>
+
+<div class="banner">
+  <span class="dot"></span>
+  <span><strong>IJR/Internal Jobs distinction clarified, 23 Sep, from BO update:</strong> the BOs confirmed exactly where IJR and Internal Jobs differ, narrower than previously assumed. Duration, entry paths, browsing model, process time, and HR ownership are the same shape across both. The real difference is ringfencing type: Internal Jobs ringfences at agency level only (any officer in the agency can see/apply — the simpler technical ask); IJR can ringfence to specific officers based on agency-defined eligibility criteria (e.g. minimum tenure in a role, as AgilePSD requires — a materially harder ask). This narrows R-07 (Internal Jobs ringfencing is now confirmed simpler than IJR's) and sharpens R-25 (IJR's eligibility engine needs to support arbitrary agency-defined criteria, not just an agency-tag check).</span>
+</div>
+
+<div class="counts" id="counts">
+  <div class="count-tile red" data-filter="red"><div class="count-num">11</div><div class="count-label">Red</div></div>
+  <div class="count-tile amber" data-filter="amber"><div class="count-num">11</div><div class="count-label">Amber</div></div>
+  <div class="count-tile green" data-filter="green"><div class="count-num">6</div><div class="count-label">Green</div></div>
+  <div class="count-tile grey" data-filter="grey"><div class="count-num">1</div><div class="count-label">Superseded</div></div>
+  <div class="count-tile" data-filter="all" style="border-color:var(--ink);"><div class="count-num">29</div><div class="count-label">All risks</div></div>
+</div>
+
+<div class="cat-filter" id="cat-filter">
+  <button class="cat-chip active" data-cat="all">All categories</button>
+  <button class="cat-chip" data-cat="scope">Scope (8)</button>
+  <button class="cat-chip" data-cat="technical">Technical / Integration (3)</button>
+  <button class="cat-chip" data-cat="resourcing">Resourcing (3)</button>
+  <button class="cat-chip" data-cat="market">Market &amp; Adoption (3)</button>
+  <button class="cat-chip" data-cat="operational">Operational Readiness (3)</button>
+  <button class="cat-chip" data-cat="governance">Governance (4)</button>
+  <button class="cat-chip" data-cat="timeline">Timeline (2)</button>
+  <button class="cat-chip" data-cat="data">Data / Technical (3)</button>
+</div>
+
+<div class="toolbar">
+  <input type="text" id="search" placeholder="Search risks — try &quot;HRPS&quot;, &quot;VAPT&quot;, &quot;Adrian&quot;…">
+  <span class="result-count" id="result-count">29 shown</span>
+</div>
+
+<div class="risk-list" id="risk-list">
+
+  <div class="risk-row" data-status="red" data-cat="scope" data-text="atsscope creep — stakeholders agencies requesting candidate review boards form builders live seat counters compass-native sjr ats scope delivery">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-02</span><span class="risk-dot red"></span>
+      <span class="risk-title">ATS scope creep — form builders, review boards, live seat counters keep getting requested</span>
+      <span class="risk-cat-tag">Scope</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope / Delivery</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Stakeholders/agencies requesting candidate review boards, form builders, live seat counters, or a Compass-native SJR ATS.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Delivery slips past the committed man-week ceiling; engineering capacity collapses.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Enforce non-ATS boundary for STIPs/Gigs (locked); SJR's Compass-vs-HR-system build question (R-13) is the current live version of this risk.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="data" data-text="cv retention purge policy undefined sensitive resumes stored no agreed data lifecycle stips gigs sjr apply flow data governance">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-03</span><span class="risk-dot red"></span>
+      <span class="risk-title">CV retention &amp; purge policy undefined</span>
+      <span class="risk-cat-tag">Data Governance</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Data Governance</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Sensitive resumes/CVs stored with no agreed data lifecycle rules across STIPs/Gigs and any future SJR apply flow.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Breaches GovTech data governance; candidate privacy audit failure.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Server-side AES-256 encryption + automated 90-day post-cycle deletion cron (per reduced-scope brief).</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy / Barry Lim, GovTech Security</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="technical" data-text="synchronous zip export gateway timeouts high-volume roles 80 applicants agency hr unable retrieve applicant dossiers technical architecture">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-04</span><span class="risk-dot red"></span>
+      <span class="risk-title">Synchronous ZIP export gateway timeouts on high-volume roles</span>
+      <span class="risk-cat-tag">Technical Architecture</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Technical Architecture</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Synchronous ZIP export gateway timeouts on high-volume roles (80+ applicants).</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Agency HR unable to retrieve applicant dossiers during selection.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Redesign as async background job with pre-signed S3 links via streaming buffers.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Tech Lead, Backend Eng</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="resourcing" data-text="developer funding cliff march 2027 inability retain engineering team resourcing">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-05</span><span class="risk-dot amber"></span>
+      <span class="risk-title">Developer funding cliff at March 2027</span>
+      <span class="risk-cat-tag">Resourcing</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Resourcing</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Developer funding cliff at March 2027.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Inability to retain engineering team through R1 delivery and post-launch maintenance.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Accelerate short-term contract hiring; escalate post-March funding early.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Barry Lim</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="market" data-text="zero-applicant postings historical gigs pattern 0-1 applicants hiring manager frustration poster churn market adoption">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-06</span><span class="risk-dot amber"></span>
+      <span class="risk-title">Zero-applicant postings — historical gigs pattern</span>
+      <span class="risk-cat-tag">Market &amp; Adoption</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Market &amp; Adoption</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Historical gigs pattern shows a meaningful share receive 0-1 applicants.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Hiring manager frustration and poster churn.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Dedicated browsing tabs + Priority Spotlight-style surfacing after a set window.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Li Ting Kway, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="technical" data-text="mainstream internal jobs discovery hrps api access adrian slide critical dependency ringfencing lee koon ncs 23 sep escalated integration agency-level bo-confirmed narrowing agilepsd architecture corrected cumulus pulls redirect apply">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-07</span><span class="risk-dot red"></span>
+      <span class="risk-title">HRPS API access for Internal Jobs — architecture corrected 23 Sep, still no delivery date</span>
+      <span class="risk-cat-tag">Integration</span>
+      <span class="badge today">Corrected 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Integration — escalated 23 Sep as a named critical dependency in Adrian's R1 scope slide; architecture corrected 23 Sep, same day, by Michelle — the source diagram used to build the Internal Jobs journey maps was misread</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Mainstream/Internal Jobs discovery depends on confirmed HRPS API access. 21 Sep findings: HRPS has no obvious API currently identified but the team believes one could be built; internal-job flagging exists and is confirmed identifiable. 23 Sep architecture correction — supersedes the "Compass reads from both HRPS and Cumulus" framing used in the journey maps and comparison artifacts: Cumulus pushes postings into HRPS's Internal Job Portal (one-way, system-to-system — Compass has no direct relationship with Cumulus at all). Compass pulls from HRPS only, at regular sync intervals, not via a live two-way API — maintenance of postings stays entirely in the HR systems, Compass does not "hold" or maintain the data itself, it's a periodic read. Apply is confirmed as a redirect, not TBC — officers link out to whichever system actually hosts the posting (HRPS or Cumulus), since HRPS's record to Compass carries the original hosting system's link even though Compass itself never talks to Cumulus directly. Still open, newly sharpened: whether HRPS supplies ringfencing criteria directly, or Compass has to build ringfencing logic itself — this is now the single open technical question, replacing the previous "does the API exist at all" framing now that the pull-based, HRPS-only, redirect-apply architecture is confirmed. POCDEX's retirement in the target state is unaffected by this correction.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Internal Job Market support depends on this ringfencing-source question resolving — if HRPS doesn't supply it, Compass has to build agency-ringfencing logic from scratch, which is a different and larger engineering ask than consuming a ready-made field.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Get a direct answer from HRPS: does the API response include ringfencing/agency-tagging data, or does Compass need to derive/build it. Pure ingestion fallback via C@G (F-23, confirmed locked) remains the fallback if HRPS access doesn't resolve at all.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Rama Moorthy, Adrian Ang</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="market" data-text="hiring manager poster login friction line managers expect hr email candidate files resist portal user adoption">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-08</span><span class="risk-dot amber"></span>
+      <span class="risk-title">Hiring manager / poster login friction</span>
+      <span class="risk-cat-tag">User Adoption</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">User Adoption</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Line managers expect HR to email candidate files, resist logging into a portal.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Low portal adoption by hiring managers.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">1-click candidate dossier ZIP export so HR circulates packs offline.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Li Ting Kway, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="market" data-text="agency defection rogue forms fixed standard form too constrained fragmented marketplace officers bounce market adoption">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-09</span><span class="risk-dot amber"></span>
+      <span class="risk-title">Agency defection back to rogue forms</span>
+      <span class="risk-cat-tag">Market &amp; Adoption</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Market &amp; Adoption</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Agency defection back to rogue forms if the fixed standard form feels too constrained.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Fragmented marketplace; officers bounce outside CareerCompass.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Audit active FormSG gigs to verify fixed-field schema covers most use cases; secure executive posting mandate; FormSG-link fallback in description field.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Li Ting Kway</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="resourcing" data-text="single designer li ting kway concurrent workstreams cmm r1 design handoff delays wireframe freeze mitigated resourcing">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-10</span><span class="risk-dot green"></span>
+      <span class="risk-title">Single designer supports concurrent workstreams — mitigated</span>
+      <span class="risk-cat-tag">Resourcing</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Resourcing</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Single designer (Li Ting Kway) supports concurrent workstreams (CMM, R1) simultaneously.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Design handoff delays engineering kickoff; wireframe freeze (30 Oct) at risk.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Design scope frozen to standard form, applicant table, bookmark toggle only.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Li Ting Kway, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="timeline" data-text="multiple kickoff date figures circulation unreconciled still open 23 sep tuesday sync came went without resolving retro timeline r-12">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-11</span><span class="risk-dot red"></span>
+      <span class="risk-title">Multiple kickoff-date figures in circulation — still open 23 Sep, see R-12</span>
+      <span class="risk-cat-tag">Timeline</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Timeline — still open 23 Sep, Tuesday's sync came and went without resolving this</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Multiple kickoff-date figures in circulation, unreconciled — R-12 is the current live version of this risk.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Repeats the same "decision made in a meeting, doesn't carry forward" pattern flagged in last week's retro.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">See R-12.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="timeline" data-text="kickoff date effort estimate sprint count unreconciled reduced-scope brief one-pager 18 23.5 man-weeks mid-nov december october timeline still open 23 sep scope resolved numbers not re-estimated">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-12</span><span class="risk-dot red"></span>
+      <span class="risk-title">Kickoff date, effort estimate, and sprint count remain unreconciled — still open 23 Sep</span>
+      <span class="risk-cat-tag">Timeline</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Timeline — still open 23 Sep, scope got resolved this week, the numbers built on top of it didn't</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Kickoff date, effort estimate, and sprint count remain unreconciled across documents. Reduced-scope brief: 18.0–23.5 mw / ~5 sprints. One-pager: 18.5–24.0 mw / ~5.5 sprints. Kickoff date has been mid-Nov, ~1 Dec, and October across different documents this month, never reconciled into one number. Adrian's 23 Sep scope slide (R-14/R-23/R-13) settled <i>what's</i> in R1, but none of these documents have been re-estimated against that now-confirmed scope, so the mw/sprint/date figures are stale against the wrong scope, not just internally inconsistent. The Feb-Mar 2027 launch figure in the Executive Summary is a target window from the 21 Sep Product x BO meeting, not a reconciled kickoff date — treat those as two different things until explicitly tied together.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Repeats the exact failure mode named twice in last week's retro and repeated anyway — decisions made in meetings that don't carry forward into a single source of truth. Now compounding: estimating against stale scope risks a second round of rework once someone notices the mw figures predate the 23 Sep confirmation.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Re-run the estimate against the confirmed 23 Sep scope (STIPs & Gigs, Internal Jobs, SJR/Secondment, IJR) — this supersedes "pick one number from what's already circulating," since none of the circulating numbers were sized against current scope; then update the risk register, one-pager, and reduced-scope brief the same day.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="scope" data-text="sjr delivery mechanism secondment compass otg 2027 2028 workable workflow orchestration governance scope resolved independent ijr">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-13</span><span class="risk-dot green"></span>
+      <span class="risk-title">SJR delivery mechanism — resolved, in two parts</span>
+      <span class="risk-cat-tag">Scope</span>
+      <span class="badge today">Resolved 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope — resolved 23 Sep per Adrian's R1 scope slide, for Secondment; SJR itself unchanged</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value"><del>SJR delivery mechanism undecided.</del> <del>Re-opened 22 Sep, reframed as workflow orchestration not ATS.</del> Resolved, in two parts. (1) SJR specifically: unchanged from the 21 Sep resolution — stays OTG-hosted through the 2027 cycle, migrates to Compass ahead of 2028, on PSD's own annual-cycle calendar. This timing is independent of IJR — IJR is now confirmed R1 scope, building natively in Compass, decoupled from SJR (R-25). (2) Secondment more broadly (the umbrella category SJR sits inside): Adrian's slide commits it to be posted on Compass, so OTG and Compass officers can discover/apply on the consolidated Opportunities page — this is new scope beyond what was previously agreed for SJR alone. SJR-the-programme stays put; Secondment-the-listing-type moves to Compass now.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Secondment-on-Compass inherits the cross-HR-system auth gap (R-24, new). Longer-horizon ATS question (Workable/open-tender) remains separate and unresolved, timeline TBC (~October per HI's tender specs). SJR's 2028 timing stands on its own now — no combined-module dependency on IJR to track.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Confirm the SJR-vs-Secondment distinction is understood org-wide, not just in this register; separately, prepare ATS requirements for HI's tender specs covering SJR cycle/ringfencing/assignment needs.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="scope" data-text="pilot-only wog-wide discovery crux scope disagreement pocdex adrian slide resolved estimation discussion population">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-14</span><span class="risk-dot green"></span>
+      <span class="risk-title">Pilot-only vs. WOG-wide discovery — resolved</span>
+      <span class="risk-cat-tag">Scope / Governance</span>
+      <span class="badge today">Resolved 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope / Governance — resolved 23 Sep per Adrian's R1 scope slide</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value"><del>Resolved to a named Tier 2 item.</del> <del>Re-opened 22 Sep — the crux of the whole scope disagreement.</del> Resolved. Adrian's R1 scope slide confirms WOG-wide, not pilot-only: STIPs & Gigs discovery/creation/application opens to all WOG officers via POCDEX integration with WOG officer data. Compass becomes the sole platform for STIPs, Gigs, Internal Jobs, and Secondment posting/discovery/application. This directly answers the pilot-only-vs-WOG-wide fault line the Estimation Discussion surfaced.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">RBAC sizing, the estimate, and every downstream scope/architecture/GTM question this was blocking can now proceed — but see R-24 (cross-HR-system auth) and the HRPS API dependency (R-07/D-01), both of which this slide depends on without a committed delivery date.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Fold this confirmation into the one-pager, reduced-scope brief, and any Mark-facing scope slide so it's not re-litigated a third time; re-run RBAC sizing (D-06) against WOG-wide population now that the population question is settled.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="governance" data-text="cmm cam scope slide conflict mark deferred r2 core pillar three-way unresolved governance">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-15</span><span class="risk-dot amber"></span>
+      <span class="risk-title">CMM resolved, CAM still a three-way conflict</span>
+      <span class="risk-cat-tag">Governance</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Governance — partially resolved 21 Sep, CAM half still open</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">CMM half resolved: CMM is confirmed real R1 scope (consolidated competency bank, manual WD approval workflows), with HRPS/Cumulus API automation deferred to R2 — reconfirmed 22 Sep. One-pager and reduced-scope brief still don't mention CMM at all — need updating. CAM Integration half still open: the scope slide for Mark says "Deferred to R2," the one-pager/reduced-scope brief have it as an R1 core pillar, and the 22 Sep confirmed scope doc doesn't mention CAM at all — three-way conflict, still unresolved.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">CMM: resolved, but source docs are stale. CAM: still creates a third version of "what's in R1" if presented to Mark unresolved.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">CMM: update one-pager and reduced-scope brief. CAM: still needs Adrian's direct confirmation before the slide goes to Mark.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="grey" data-cat="scope" data-text="r1 scope materially expanded superseded estimation meeting outcome no confirmed scope size against">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-22</span><span class="risk-dot grey"></span>
+      <span class="risk-title">R1 scope expansion sizing — superseded</span>
+      <span class="risk-cat-tag">Scope / Delivery</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope / Delivery — superseded by the estimation-meeting outcome, same day</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value"><del>R1 scope materially expanded versus what's currently sized.</del> Superseded — there is no confirmed scope to size against yet. The 11:30am Estimation Discussion confirmed no meaningful estimate could be produced that day; the "expanded scope" this risk was tracking is itself one of the things that was pending the Adrian scope alignment workshop. Folded into R-23.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">N/A — superseded, see R-23.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">See R-23.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="scope" data-text="r1 not translated single agreed product narrative org doesn't know root cause adrian slide resolved discover opportunities">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-23</span><span class="risk-dot green"></span>
+      <span class="risk-title">No agreed product narrative — resolved</span>
+      <span class="risk-cat-tag">Scope / Delivery</span>
+      <span class="badge today">Resolved 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope / Delivery — resolved 23 Sep per Adrian's R1 scope slide</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value"><del>R1 has not been translated into a single agreed product narrative, and the org doesn't yet know it.</del> Resolved. Adrian's R1 scope slide is the documented product narrative this risk was tracking the absence of — it names the population (WOG-wide), the platform (Compass as sole platform for STIPs/Gigs/Internal Jobs/Secondment), and the one deferred exception (SJR-the-programme stays OTG through 2027). The "informally-referenced, never documented" problem is fixed for this specific decision.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Residual risk: this slide covers population and platform, but doesn't resolve CAM (R-15, still open), the cross-HR-system auth gap (R-24, new), or the HRPS API delivery date (R-07/D-01, still open) — don't treat this as "all scope questions resolved."</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Fold into one-pager, reduced-scope brief, and Mark-facing materials same-day; keep R-15/R-24/R-07 open and separately tracked rather than assuming this slide closes them too.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="technical" data-text="no cross-hr-system authentication officer clicks opportunity not hosted access workable wog ats 2027 compass consolidated new">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-24</span><span class="risk-dot red"></span>
+      <span class="risk-title">No cross-HR-system authentication — officers can hit a dead end</span>
+      <span class="risk-cat-tag">Technical Architecture / UX</span>
+      <span class="badge new">New 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Technical Architecture / UX — new 23 Sep, from Adrian's R1 scope slide</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">No cross-HR-system authentication exists today. Adrian's slide states plainly: if an officer clicks an opportunity not hosted on the HR system they have access to, they cannot proceed with application. With Compass now positioned as the "consolidated Opportunities page" surfacing listings from multiple HR systems (OTG, HRPS, Cumulus, Compass-native), this is a structural gap, not an edge case. The slide punts the fix to "later, once Workable becomes the WOG ATS," a 2027+ track, well outside R1.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Directly undermines the "Compass as sole platform, WOG-wide" narrative R-14/R-23 just confirmed — a consolidated catalog that silently fails to let officers apply is arguably worse for trust than a narrower, honest one. No mitigation currently proposed for R1.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Needs an R1-scoped answer, not a 2027+ deferral: disclose HR-system access requirements on the listing card before the officer clicks through, or restrict the "consolidated" framing to listings the officer's own HR-system access actually covers. Raise directly with Adrian — this wasn't addressed in the slide's known-constraints section.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="scope" data-text="internal job rotation ijr confirmed r1 scope stips gigs delivery shape self-serve creation discovery structured form apply in-app hr review officer status tracking decision matching offline resolved secondment agency-level agilepsd eligibility criteria structured officer-initiated bo-confirmed clarification subset of internal jobs epic d one-pager creation model resolved">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-25</span><span class="risk-dot green"></span>
+      <span class="risk-title">IJR follows the STIPs &amp; Gigs model end to end — resolved, ready for Epic D</span>
+      <span class="risk-cat-tag">Scope</span>
+      <span class="badge today">Resolved 24 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope — resolved 24 Sep, closing the creation-model question that blocked Epic D</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">IJR is confirmed R1 scope, fully mirroring STIPs &amp; Gigs' shape. Self-serve creation (any officer posts, no HR gate), native discovery, structured-form apply, in-app applicant review for Agency HR, and officer status tracking, all inside Compass, same as Epic A. The one remaining difference from STIPs &amp; Gigs: what happens after a decision is made stays offline — Agency HR's actual matching/assignment logic (if IJR still involves pooling multiple applicants against multiple roles) is not being rebuilt as a Compass feature; Compass provides the review/decide interface, not an algorithmic matching engine. This decouples IJR from SJR's shared-OTG-module reasoning; SJR itself is unaffected and stays on OTG through 2027, migrating ahead of 2028 on its own timing (R-13). Ringfencing for IJR follows the BO-confirmed distinction from 23 Sep: agency-level plus optional agency-defined per-officer eligibility criteria (e.g. minimum tenure), a harder case than Internal Jobs' flat agency check. The "IJR is a subset of Internal Jobs" question from a BO (24 Sep) remains separately open, unaffected by this resolution.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Epic D can now be drafted as real, groomable stories, directly adapting Epic A's story shapes (Creation, Publish &amp; Lifecycle, Application, Notification &amp; Review, Decision) rather than waiting on a creation-model answer. One nuance to watch: if IJR's traditional "matching exercise" assumed multiple applicants get compared against multiple roles simultaneously (not a 1:1 Offer/Reject like STIPs &amp; Gigs), the Decision-stage story may need to diverge from Epic A's shape even though Creation/Application/Review can copy directly.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Draft Epic D's stories directly off Epic A's structure (US-A1 through US-A13 equivalents). Confirm one remaining nuance with Adrian: does IJR's "Decision" stage stay a simple per-applicant Offer/Reject like STIPs &amp; Gigs, or does it need to preserve the traditional pooled-matching shape (multiple applicants weighed against multiple roles at once) — this is the one place "same as STIPs &amp; Gigs" might not fully apply.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="governance" data-text="leadership expectation gap ps ds approved timelines delivery certainty lower r2 dumping ground technical debt governance">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-16</span><span class="risk-dot red"></span>
+      <span class="risk-title">Leadership expectation gap — R2 becoming a "dumping ground"</span>
+      <span class="risk-cat-tag">Governance</span>
+      <span class="badge new">21 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Governance — new 21 Sep, Product x BO Working-Level meeting</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">PS/DS approved R1/R2 timelines based on high-level scope; delivery certainty is now lower than leadership believes, given what discovery is surfacing. Compounded by an R2 "dumping ground" effect — technical debt and manual workflows keep deferring to R2 (HR integrations, API automation, now CMM automation) without re-estimating total R2 capacity against everything stacking up there.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Major threat to programme credibility if schedules or features shift without leadership having seen it coming; R2 may be quietly overcommitted.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Frame programme-level discovery risk for senior leadership; quantify R2 capacity impact from newly deferred scope (both unowned by name — need a specific individual).</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Adrian Ang, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="operational" data-text="24x7 incident support operating model sev1 engineering hours outage compass governance obligations operational readiness">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-17</span><span class="risk-dot red"></span>
+      <span class="risk-title">No clear 24x7 incident support operating model</span>
+      <span class="risk-cat-tag">Operational Readiness</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Operational Readiness — new 22 Sep, OTEP Squad Sync (Day2Ops review)</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Alerts can occur anytime; Sev1 requires immediate action; engineering support may not be available outside proposed 8:30am-6:00pm hours; support hours alone don't solve outage response.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">A production outage outside office hours could leave Compass unable to meet governance response obligations — flagged as arguably the highest operational risk for R1, higher priority than anything else in this register.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Clarify incident support arrangements with Barry (after-hours coverage, engineering standby).</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy, Barry Lim</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="operational" data-text="vendor support obligations incident restoration unclear engineers standby after hours contractually obligated operational readiness">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-18</span><span class="risk-dot red"></span>
+      <span class="risk-title">Vendor support obligations for incident restoration unclear</span>
+      <span class="risk-cat-tag">Operational Readiness</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Operational Readiness — new 22 Sep, OTEP Squad Sync</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Developers built the platform, but it's unconfirmed whether engineers are on standby after hours, or whether any vendor is contractually obligated to restore service during an outage.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Incident commander may have accountability without the resources to actually resolve incidents.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Review existing maintenance plans/SLAs as a benchmark; confirm vendor contractual coverage.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="red" data-cat="governance" data-text="sev1 governance obligations not integrated day2 operational design psd wog mandatory escalation reporting requirements">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-19</span><span class="risk-dot red"></span>
+      <span class="risk-title">Sev1 governance obligations not built into Day2 operational design</span>
+      <span class="risk-cat-tag">Governance</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Governance — new 22 Sep, OTEP Squad Sync</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">PSD/WOG mandatory escalation and reporting requirements for Sev1 incidents exist, but the proposed Day2 support model wasn't built around them.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Operations model risks being designed without mandatory governance procedures baked in, discovered only when a real Sev1 hits.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Review PSD incident management policy for alignment.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="operational" data-text="user support ownership ambiguous pilot agencies bos psd govtech ncs channel teams email ticketing cam deferral">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-20</span><span class="risk-dot amber"></span>
+      <span class="risk-title">User support ownership is ambiguous</span>
+      <span class="risk-cat-tag">Operational Readiness</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Operational Readiness — new 22 Sep, OTEP Squad Sync</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Unclear whether pilot agencies contact BOs, PSD, or GovTech/NCS directly, or which channel (Teams/email/ticketing) is authoritative. The current Day2Ops draft also assumes requests originate from Business Owners only, with no defined path for pilot-agency end users.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Risk of duplicated reports across channels and missed escalations; also undercuts the CAM-integration R2-deferral rationale, which assumed Day2 Ops would absorb account/access-related risk — but the current draft explicitly excludes account provisioning from scope.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Revise Day2 support workflow to include agency user reporting paths; reconcile against the CAM-deferral rationale with Adrian.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="resourcing" data-text="single point failure operational incident leadership rama no named deputy leave coverage after-hours commander resourcing">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-21</span><span class="risk-dot amber"></span>
+      <span class="risk-title">Single point of failure in incident leadership</span>
+      <span class="risk-cat-tag">Resourcing</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Resourcing — new 22 Sep, OTEP Squad Sync</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Incident command currently sits effectively with Rama, with another lead moving off Compass work. No named deputy, no defined leave coverage, no after-hours incident commander, no plan for multiple concurrent incidents.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">If Rama is unavailable, incident management continuity is compromised — same key-person pattern as the separately-tracked CIE PM vacancy and VAPT triage ownership gaps.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Name a deputy incident commander; document continuity plan for key-person unavailability.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Rama Moorthy, Barry Lim</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="governance" data-text="vapt risk acceptance process needs named owner severity thresholds r1 r2 findings governance security new 23 sep">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-26</span><span class="risk-dot amber"></span>
+      <span class="risk-title">VAPT risk-acceptance process needs a named owner and thresholds</span>
+      <span class="risk-cat-tag">Governance / Security</span>
+      <span class="badge new">New 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Governance / Security — new 23 Sep, VAPT scope decision</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">VAPT (vulnerability assessment and penetration testing) will run in R1, but findings for both R1 and R2 will go through risk acceptance rather than a hard pre-launch remediation gate. This resolves the timeline question (VAPT no longer threatens to add 6 weeks, I-06/D-07 closed) but opens a governance question: risk acceptance means known vulnerabilities can ship to production if formally accepted, which needs a named risk-acceptance owner/process, not just a testing schedule.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Without a defined risk-acceptance process (who signs off, what severity threshold requires escalation vs. auto-accept, how accepted risks get tracked and revisited), this could either become a rubber stamp that undermines GovTech security posture, or stall at the same point VAPT scoping did — just moved one step later.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Document the risk-acceptance process explicitly: named approver (likely GovTech Security Lead + Barry Lim), severity thresholds, and a tracked register of accepted risks with revisit dates; fold into I-09 (VAPT triage engineer) since that owner will likely feed this process.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Barry Lim, GovTech Security Lead, Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="scope" data-text="stips gigs zero hr role rbac audit log orphan posting fallback unowned new 23 sep confirmed michelle central admin agency admin operational readiness">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-27</span><span class="risk-dot amber"></span>
+      <span class="risk-title">STIPs &amp; Gigs has zero HR role — RBAC/audit log/orphan-posting fallback now unowned</span>
+      <span class="risk-cat-tag">Scope / Operational Readiness</span>
+      <span class="badge new">New 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope / Operational Readiness — new 23 Sep, confirmed by Michelle</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">STIPs &amp; Gigs has zero HR role, confirmed 23 Sep — no Central Admin HR, no Agency Admin HR, in any capacity. This is a stronger statement than the prior "HR is a guardrail only" framing (RBAC design, audit log, orphan-posting fallback) used across the journey maps and comparison artifacts, which implied a passive-but-real HR function. That framing is now superseded. Open question this creates: RBAC/access-control design, the audit log, and the orphan-posting fallback (when a poster leaves or changes agency before closing their posting) still need to happen — they just don't have an owner anymore. This isn't resolved as "system automates it," it's genuinely unassigned.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">If nobody owns the orphan-posting fallback specifically, postings from departed officers could sit live indefinitely with no one accountable for closing them — a real operational gap, not just a documentation cleanup. Every artifact that currently frames HR as the (passive) owner of these functions is now inaccurate and needs correcting, not just softening.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Name an owner for RBAC/access design, audit log review, and orphan-posting fallback — Engineering/Platform is the likely candidate given HR is fully out, but this hasn't been confirmed, don't assume it by default; update all journey maps and comparison artifacts that currently say "HR is a guardrail."</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Rama Moorthy, Barry Lim</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="green" data-cat="scope" data-text="one development programme at a time rule not r1 scope rotation guidebook annex a q12 ijr sjr stips gigs concurrent journey maps correcting new 23 sep confirmed michelle">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-28</span><span class="risk-dot green"></span>
+      <span class="risk-title">"One programme at a time" rule is NOT R1 scope — five artifacts overstate it</span>
+      <span class="risk-cat-tag">Scope</span>
+      <span class="badge new">New 23 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Scope — new 23 Sep, confirmed by Michelle: out of R1 scope entirely, not just unenforced</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">The "one development programme at a time" rule (Rotation Guidebook, Annex A, Q12 — officers can't be in two of IJR/SJR/STIPs/Gigs concurrently) is NOT R1 scope. This isn't "the rule exists but Compass doesn't enforce it yet" — it's that R1 doesn't implement this constraint at all, full stop. Five artifacts currently cite this rule as an active cross-cutting constraint that "runs through everything": the IJR officer/HR journey maps, the SJR officer/HR journey maps, and the mobility-programmes comparison artifact (both its cross-cutting table row and a footnote). All five overstate what R1 actually does and need correcting.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">Any reader of these journey maps would reasonably assume Compass checks or at least flags concurrent enrollment across programme types — it doesn't, and R1 has no plan to build that check. If this surfaces later as a real officer behavior (someone genuinely enrolled in two programmes at once because nothing stopped them), that's a policy/product gap this correction should have flagged, not a surprise.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Correct all five artifacts to state this rule is Guidebook policy, not an R1 platform feature; if cross-programme enrollment checking becomes a real need later, it would be new scope, not something R1 already covers.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="data" data-text="formsg mvp data migration stips gigs applications unaddressed new 24 sep applicant history status tracking consent retention">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-29</span><span class="risk-dot amber"></span>
+      <span class="risk-title">FormSG MVP data migration for STIPs &amp; Gigs is unaddressed</span>
+      <span class="risk-cat-tag">Data / Technical</span>
+      <span class="badge new">New 24 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Data / Technical — new 24 Sep</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Data migration from FormSG for MVP-era STIPs &amp; Gigs applications is not addressed anywhere in R1 planning. Before native in-app apply existed, STIPs &amp; Gigs applications during MVP were collected via FormSG. If R1 is meant to give officers and posters continuous visibility into applications (status tracking, applicant review tables), that history either needs to migrate into Compass or officers/posters lose access to their own MVP-era application record once the native flow launches. Not yet scoped: whether this migration is even wanted, and if so, its size, format compatibility, and consent/data-retention implications for records originally collected under FormSG's terms.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">If unaddressed, posters with MVP-era postings could see an artificial gap in their applicant history the moment R1 launches, and officers could lose visibility into applications they already submitted — a discontinuity that looks like data loss even if nothing was actually lost.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Confirm with Adrian/BOs whether FormSG MVP data migration is in scope for R1 or explicitly deferred; if in scope, get a volume estimate and confirm FormSG export access before sizing.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+  <div class="risk-row" data-status="amber" data-cat="data" data-text="otg data migration r1-relevant again ijr confirmed scope live postings in-flight cycles pilot agencies unresolved">
+    <div class="risk-summary" onclick="toggleRow(this)">
+      <span class="risk-id">R-30</span><span class="risk-dot amber"></span>
+      <span class="risk-title">OTG data migration — R1-relevant again now that IJR is confirmed scope</span>
+      <span class="risk-cat-tag">Data / Technical</span>
+      <span class="badge today">Reopened 24 Sep</span>
+      <span class="chevron">▸</span>
+    </div>
+    <div class="risk-detail">
+      <div class="field"><div class="field-label">Category</div><div class="field-value">Data / Technical — new 24 Sep; reopened as R1-relevant later the same day, after R-25's reversal</div></div>
+      <div class="field"><div class="field-label">Risk</div><div class="field-value">Data migration from OTG is now an R1 question, not a 2028 one. IJR is confirmed R1 scope, building fresh natively in Compass. The 6 pilot agencies already have live IJR postings and in-flight cycles running on OTG today. Whether those need to migrate into Compass at R1 launch, or R1 simply starts a clean slate going forward while OTG's existing IJR data stays on OTG until it naturally closes out, is unresolved.</div></div>
+      <div class="field"><div class="field-label">Impact</div><div class="field-value">If unaddressed, R1 launch could either strand in-flight IJR cycles on OTG with no path into the new system, or force a rushed migration of live data under R1's timeline pressure — neither is a good default, and nobody's picked one yet.</div></div>
+      <div class="field"><div class="field-label">Mitigation</div><div class="field-value">Get an explicit answer from Adrian: does R1's IJR launch include migrating existing OTG IJR data, or does it start clean with OTG's existing cycles left to finish out on OTG naturally? Decide alongside Epic D's rewrite, not after.</div></div>
+      <div class="risk-meta-row"><span><b>Owner:</b> Michelle Yip, Adrian Ang, Rama Moorthy</span></div>
+    </div>
+  </div>
+
+</div>
+
+<h2 class="section">Assumptions</h2>
+<p class="section-sub">7 tracked assumptions this register's risks depend on holding true.</p>
+<div class="table-wrap">
+<table class="simple">
+  <thead><tr><th style="width:60px;">#</th><th>Assumption</th><th style="width:180px;">Status</th><th>Impact if false</th></tr></thead>
+  <tbody>
+    <tr><td>A-01</td><td>Zero custom ATS build is the binding architecture for STIPs/Gigs — discovery stays in Compass, selection happens externally for mainstream jobs</td><td class="status">✅ Locked</td><td>Scope expands significantly</td></tr>
+    <tr><td>A-02</td><td>C@G ingestion (F-23) protects the delivery runway for Mainstream Jobs discovery</td><td class="status">✅ Confirmed locked, 21 Sep</td><td>N/A, resolved</td></tr>
+    <tr><td>A-03</td><td>Standardized fixed-field FormSG/native template accepted by Workforce Development and pilot agencies</td><td class="status">🟡 Open</td><td>Agencies demand custom fields, breaking consistent UI cards</td></tr>
+    <tr><td>A-04</td><td>HRPS (Compass's sole source, corrected 23 Sep — not HRPS/Cumulus jointly) can supply the API access needed for Internal Job Market discovery and ringfencing</td><td class="status">🔴 Open, now load-bearing — see R-07. Narrowed 23 Sep: the open question is specifically whether HRPS supplies ringfencing data or Compass must build it, not whether an API exists at all</td><td>Internal Job Market discovery may not be viable for R1; defer to R2 — but this now means walking back committed, communicated scope, not just an internal fallback</td></tr>
+    <tr><td>A-05</td><td>Dual-posting exclusion / de-duplication between OTG and Compass protects candidate integrity during the interim period</td><td class="status">🟡 Open</td><td>Split candidate pools and duplicate cards across systems</td></tr>
+    <tr><td>A-06</td><td>R1 kickoff date is settled</td><td class="status">🔴 Open — see R-12</td><td>Sprint 1 planning and readiness gates can't be scheduled with confidence</td></tr>
+    <tr><td>A-07</td><td>SJR discovery-in-Compass is achievable without a Compass-native ATS build</td><td class="status">🟡 Open — see R-13</td><td>If Compass-native is required, contradicts A-01 and expands scope materially</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="section">Issues / Active Action Items</h2>
+<p class="section-sub">10 tracked action items — 3 closed 23 Sep, 1 partially closed, 6 still open.</p>
+<div class="table-wrap">
+<table class="simple">
+  <thead><tr><th style="width:60px;">#</th><th>Action Item</th><th>Owner</th><th style="width:140px;">Deadline</th><th style="width:170px;">Status</th></tr></thead>
+  <tbody>
+    <tr><td>I-01</td><td>Confirm HRPS/Cumulus API scope, ringfencing, and eligibility-determination feasibility with Lee Koon TEU and NCS</td><td>Michelle Yip</td><td>23-24 Sep 2026</td><td>Open, still live and now higher-stakes — named critical dependency for committed Internal Jobs scope</td></tr>
+    <tr><td>I-02</td><td><del>Resolve SJR delivery mechanism with Adrian/Rama</del></td><td>Michelle, Adrian, Rama</td><td><del>Before Tuesday's (22 Sep) sync</del></td><td>Closed 23 Sep — resolved per R-13. Still need to push into one-pager/reduced-scope brief</td></tr>
+    <tr><td>I-03</td><td><del>Get Rama's technical read on Opportunities-Module-scoped RBAC (R-14)</del></td><td>Rama Moorthy</td><td><del>Before Tuesday's (22 Sep) sync</del></td><td>Closed 23 Sep — resolved per R-14. D-06 (re-run RBAC sizing) is the follow-on</td></tr>
+    <tr><td>I-04</td><td>Reconcile kickoff date and effort estimate into one number across all documents (R-12)</td><td>Michelle, Adrian, Rama</td><td><del>Tuesday 22 Sep, same day</del> → now blocked on re-estimating against 23 Sep confirmed scope</td><td>Still open — deadline missed, now sequenced behind scope confirmation</td></tr>
+    <tr><td>I-05</td><td>Confirm CMM/CAM scope conflict with Adrian before the scope-overview slide goes to Mark (R-15)</td><td>Michelle, Adrian</td><td>Before Adrian presents</td><td>Partially closed — CMM resolved 22 Sep; CAM half still open, three-way conflict</td></tr>
+    <tr><td>I-06</td><td><del>Get Barry Lim's VAPT scoping/timeline answer</del></td><td>Barry Lim</td><td><del>Before Tuesday's (22 Sep) sync</del></td><td>Closed 23 Sep — VAPT confirmed to run in R1, covers R1+R2 via risk acceptance</td></tr>
+    <tr><td>I-07</td><td>Draft CV retention, AES-256 encryption, 90-day auto-deletion policy for security sign-off</td><td>Engineering, GovTech Sec</td><td>TBD</td><td>Open, no change</td></tr>
+    <tr><td>I-08</td><td>Secure pilot agency exclusive posting commitments from 6 HR Directors</td><td>Michelle, Adrian</td><td>TBD</td><td>Open, no movement — worth re-examining given the WOG-wide pivot (R-14)</td></tr>
+    <tr><td>I-09</td><td>Name a VAPT triage engineer, now under a confirmed R1+R2 risk-acceptance model</td><td>Adrian, Barry</td><td>This week</td><td>Open, escalated — 3rd consecutive week unresolved; now unblocked by I-06 resolving</td></tr>
+    <tr><td>I-10</td><td>Document the VAPT risk-acceptance process — named approver, severity thresholds, tracked register of accepted risks with revisit dates (R-26)</td><td>Barry Lim, GovTech Security Lead</td><td>TBD</td><td>Open, new</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="section">Dependencies</h2>
+<p class="section-sub">9 external dependencies this register's timeline and scope decisions rely on — 3 closed (23 Sep), 6 still open.</p>
+<div class="table-wrap">
+<table class="simple">
+  <thead><tr><th style="width:60px;">#</th><th>Dependency</th><th>Needed From</th><th style="width:180px;">Needed By</th><th>Impact if Delayed</th></tr></thead>
+  <tbody>
+    <tr><td>D-01</td><td>HRPS/Cumulus API specs, ringfencing/eligibility data access</td><td>Lee Koon TEU, NCS</td><td>23-24 Sep 2026</td><td>Still open, now critical — Adrian's 23 Sep slide names this a committed dependency for already-scoped Internal Jobs, no delivery date attached; R-07 stays Red</td></tr>
+    <tr><td>D-02</td><td><del>SJR delivery mechanism decision</del></td><td>Adrian, Rama</td><td><del>Before 22 Sep sync</del></td><td>Closed 23 Sep — resolved per R-13/Adrian's scope slide</td></tr>
+    <tr><td>D-03</td><td>GovTech Security CV purge sign-off</td><td>GovTech Security, Eng</td><td>TBD</td><td>Candidate pack download engineering blocked. No change</td></tr>
+    <tr><td>D-04</td><td>MVP launch gate clearance</td><td>NCS, Rama Moorthy</td><td>Per MVP timeline</td><td>If MVP slips, R1 kickoff timing is affected — feeds R-12. No change</td></tr>
+    <tr><td>D-05</td><td>Post-March 2027 engineering funding</td><td>Barry Lim, PSD Leadership</td><td>TBD</td><td>Headcount loss at end of Q1 2027 threatens R1 completion. No change</td></tr>
+    <tr><td>D-06</td><td><del>Rama's technical read on Opportunities-Module RBAC separability</del></td><td>Rama Moorthy</td><td><del>Before 22 Sep sync</del></td><td>Closed 23 Sep — resolved per R-14/Adrian's scope slide. Follow-on: RBAC sizing still needs re-running against WOG-wide population</td></tr>
+    <tr><td>D-07</td><td><del>Barry's VAPT scope/timeline answer</del></td><td>Barry Lim</td><td><del>Before 22 Sep sync</del></td><td>Closed 23 Sep — VAPT confirmed in R1, covering R1+R2 via risk acceptance. Remaining follow-on: naming the triage owner (I-09)</td></tr>
+    <tr><td>D-08</td><td>Cross-HR-system authentication fix or documented interim workaround</td><td>Adrian Ang, Engineering</td><td>R1-scoped answer needed before "consolidated Opportunities page" ships</td><td>Officers can browse listings they can't act on; undermines the WOG-wide/single-platform narrative R-14/R-23 just confirmed (R-24, Red)</td></tr>
+    <tr><td>D-09</td><td>Adrian's written confirmation of the specific IJR delivery shape described in R-25 — structured-form native apply matching STIPs &amp; Gigs, HR matching/assignment staying offline — and an answer on the OTG data migration question in R-30</td><td>Adrian Ang</td><td>Before Epic D's stories are drafted</td><td>Reopened 24 Sep — IJR is back in R1, new confirmation needed, not the same question as before. If Adrian's actual intent differs in any detail from what's captured in R-25 (e.g. creation should be HR-curated rather than self-serve, or OTG data does need migrating at launch), Epic D gets built against the wrong shape a second time</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footnotes">
+  <p><strong>Delivery envelope:</strong> 18.0–23.5 man-weeks (reduced-scope brief) / 18.5–24.0 man-weeks (one-pager) — unreconciled, see R-12. 3 dedicated build engineers (Thomas Huchedé, Hao Eng Chua, Léo Milbor).</p>
+  <p><strong>Tracking protocol (Jobelle):</strong> status audits twice weekly (Tuesdays pre-standup, Fridays EOD). An activity slipping past its Estimated Date of Completion by more than 3 business days gets flagged to Michelle Yip for sprint triage. Nothing gets marked "Done" until its verification deliverable is produced and linked.</p>
+  <p><strong>Full source:</strong> this artifact summarizes <a href="../analyses/2026-09-16-W38-r1-risk-register.md" style="color:var(--ink);">the markdown risk register</a>, which remains the tracked, versioned source of truth. Update the markdown first; treat this artifact as a read view that gets republished after.</p>
+</div>
+
+<script>
+(function(){
+  try{
+    window.toggleRow = function(el){
+      el.parentElement.classList.toggle('open');
+    };
+
+    var tiles = document.querySelectorAll('.count-tile');
+    var catChips = document.querySelectorAll('.cat-chip');
+    var rows = document.querySelectorAll('.risk-row');
+    var search = document.getElementById('search');
+    var resultCount = document.getElementById('result-count');
+    var activeStatus = 'all';
+    var activeCat = 'all';
+
+    function applyFilters(){
+      var q = (search.value || '').toLowerCase().trim();
+      var shown = 0;
+      rows.forEach(function(row){
+        var statusMatch = activeStatus === 'all' || row.dataset.status === activeStatus;
+        var catMatch = activeCat === 'all' || row.dataset.cat === activeCat;
+        var textMatch = !q || row.dataset.text.indexOf(q) !== -1 || row.textContent.toLowerCase().indexOf(q) !== -1;
+        var visible = statusMatch && catMatch && textMatch;
+        row.hidden = !visible;
+        if(visible) shown++;
+      });
+      resultCount.textContent = shown + ' shown';
+    }
+
+    tiles.forEach(function(tile){
+      tile.addEventListener('click', function(){
+        tiles.forEach(function(t){ t.classList.remove('active'); });
+        tile.classList.add('active');
+        activeStatus = tile.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    catChips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        catChips.forEach(function(c){ c.classList.remove('active'); });
+        chip.classList.add('active');
+        activeCat = chip.dataset.cat;
+        applyFilters();
+      });
+    });
+
+    search.addEventListener('input', applyFilters);
+
+    var allTile = document.querySelector('.count-tile[data-filter="all"]');
+    if(allTile) allTile.classList.add('active');
+  }catch(e){}
+})();
+</script>

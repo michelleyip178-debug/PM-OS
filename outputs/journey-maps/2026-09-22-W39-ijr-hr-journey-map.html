@@ -1,0 +1,191 @@
+<title>IJR HR Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --agencyhr:#2f5d8a; --agencyhr-bg:#eaf1f8;
+    --division:#6d6423; --division-bg:#f6f2df;
+    --gate:#a13d3d; --gate-bg:#f9eded;
+    --good:#3f7d5c; --good-bg:#eaf4ef;
+    --load:#8a3f6a; --load-bg:#f6eaf1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --agencyhr:#7fb0e0; --agencyhr-bg:#1b2a38;
+      --division:#d8cd7a; --division-bg:#302c17;
+      --gate:#e08a8a; --gate-bg:#3a2020;
+      --good:#8fc4a8; --good-bg:#1e2f26;
+      --load:#d998bf; --load-bg:#301f29;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --agencyhr:#7fb0e0; --agencyhr-bg:#1b2a38;
+    --division:#d8cd7a; --division-bg:#302c17;
+    --gate:#e08a8a; --gate-bg:#3a2020;
+    --good:#8fc4a8; --good-bg:#1e2f26;
+    --load:#d998bf; --load-bg:#301f29;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1280px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:36px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+  .note{font-size:0.86rem; color:var(--muted); max-width:68ch; line-height:1.55; background:var(--load-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .note strong{color:var(--ink);}
+  .legend{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:0.82rem;}
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .journey{display:grid; grid-template-columns:148px repeat(6, minmax(200px,1fr)); border:1px solid var(--line); border-radius:12px; overflow-x:auto; background:var(--paper-raised);}
+  .row-label{position:sticky; left:0; z-index:2; background:var(--paper-raised); display:flex; align-items:center; padding:14px 16px; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); border-right:1px solid var(--line);}
+  .phase-head{padding:16px 14px 14px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); display:flex; flex-direction:column; gap:4px;}
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:0.98rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+  .cell{padding:14px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-size:0.85rem; line-height:1.45; display:flex; flex-direction:column; gap:8px;}
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+7){border-bottom:none;}
+  .cell.agencyhr{background:var(--agencyhr-bg);}
+  .cell.division{background:var(--division-bg);}
+  .action-text{font-weight:500;}
+  .tag{display:inline-flex; align-items:center; gap:5px; font-size:0.7rem; font-weight:600; padding:3px 8px; border-radius:999px; width:fit-content;}
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.load{background:var(--load-bg); color:var(--load);}
+  .sub{font-size:0.77rem; color:var(--muted);}
+  .touchpoint{font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:5px; padding-top:6px; margin-top:auto; border-top:1px dashed var(--line);}
+  .outcomes{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .outcome-card{border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--paper-raised);}
+  .outcome-card.matched{border-left:4px solid var(--good);}
+  .outcome-card.load{border-left:4px solid var(--load);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p, .outcome-card ul{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .outcome-card ul{padding-left:1.1em;}
+  .outcome-card li{margin-bottom:3px;}
+  .footnotes{margin-top:28px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+  @media (max-width:860px){
+    .journey{display:flex; flex-direction:column; overflow-x:visible;}
+    .row-label{display:none;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{content:attr(data-lane); display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;}
+    .cell.agencyhr, .cell.division{border-radius:10px; padding:10px 12px; margin-bottom:8px;}
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">HR journey · Internal Job Rotation (IJR)</div>
+  <h1>What it takes to run an IJR cycle</h1>
+  <p class="dek">Agency HR carries the whole thing: eligibility, pooling, matching, and every officer left unmatched at the end. Receiving divisions carry a lighter load alongside them. Source: Rotation Guidebook (Feb 2026), Section 3.2 &amp; Table 2.</p>
+  <p class="note"><strong>R1 scope boundary:</strong> reversed 25 Sep, Mark &amp; GK's confirmed direction. IJR is discovery-only in Compass, grouped with Internal Jobs: postings continue in OTG, Compass surfaces them for discovery, and officers redirect back to OTG to apply. None of the native-Compass work confirmed 24 Sep applies — no self-serve creation, no in-app applicant review, no in-app decision/matching interface. R1 doesn't touch HR's process at all: eligibility checks, pooling, and matching stay exactly as they run today, entirely on OTG-adjacent tooling. What's below is HR's real, current process, unaffected by R1. Full detail: risk register R-25 (PM-OS workspace).</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--agencyhr)"></span>Agency HR</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--division)"></span>Releasing / receiving division</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--load)"></span>Ongoing work</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--good)"></span>HR's call</span>
+  </div>
+</header>
+
+<div class="journey" role="table" aria-label="IJR HR journey by phase and function">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;"><span class="phase-num">01</span><span class="phase-title">Setting up the cycle</span><span class="phase-dur">Before nomination opens</span></div>
+  <div class="phase-head" style="grid-column:3;"><span class="phase-num">02</span><span class="phase-title">Nomination</span><span class="phase-dur">8 weeks</span></div>
+  <div class="phase-head" style="grid-column:4;"><span class="phase-num">03</span><span class="phase-title">Pooling and publicity</span><span class="phase-dur">4 + 8 weeks</span></div>
+  <div class="phase-head" style="grid-column:5;"><span class="phase-num">04</span><span class="phase-title">Matching</span><span class="phase-dur">8 weeks · review step needs redesign for Compass</span></div>
+  <div class="phase-head" style="grid-column:6;"><span class="phase-num">05</span><span class="phase-title">Placement</span><span class="phase-dur">4 weeks</span></div>
+  <div class="phase-head" style="grid-column:7;"><span class="phase-num">06</span><span class="phase-title">Transition and review</span><span class="phase-dur">4–16 weeks, plus ongoing</span></div>
+
+  <div class="row-label" style="grid-row:2;">Agency HR</div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Sets the eligibility bar (grade, years in role/agency/grade, usually around 3), decides how selection will work, sets up positions in OTG</span>
+    <span class="tag good">HR's call</span>
+    <div class="touchpoint">↳ Designing the programme, setting up OTG</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Runs the brownbag, checks officers against the criteria, notifies the officer, their supervisor, and the division director</span>
+    <div class="touchpoint">↳ Eligibility checks, done at scale</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Pulls together the available roles across divisions, finalizes who's in the pool, publishes the role list on OTG</span>
+    <span class="tag load">Chasing divisions across the org</span>
+    <div class="touchpoint">↳ Getting role data out of every division</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Runs the matching exercise, weighing officer preference against what the organisation needs</span>
+    <span class="tag load">Where the work really piles up</span>
+    <div class="touchpoint">↳ Manual matching, no automation</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:6;">
+    <span class="action-text">Gets sign-off from both divisions, tells every applicant the outcome, matched or not</span>
+    <div class="touchpoint">↳ Delivers the bad news too</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="Agency HR" style="grid-row:2; grid-column:7;">
+    <span class="action-text">Coordinates handover, aligns start dates to a common window. For anyone unmatched, keeps working through the options: waitlist, next cycle, SJR, another agency</span>
+    <span class="tag load">Unmatched officers stay HR's problem</span>
+    <div class="touchpoint">↳ After the cycle: feedback, metrics, adjusting the design</div>
+  </div>
+
+  <div class="row-label" style="grid-row:3;">Releasing /<br>receiving division</div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:2;">
+    <span class="action-text">Gets briefed by HR on what the programme's for and when things happen</span>
+    <div class="touchpoint">↳ Senior leadership briefing</div>
+  </div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Supervisors get ready for career conversations with their officers</span>
+    <div class="touchpoint">↳ Getting supervisors ready</div>
+  </div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Receiving divisions prep their roles, job descriptions need to spell out what the role actually involves</span>
+    <div class="touchpoint">↳ Prepping the receiving side</div>
+  </div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:5;">
+    <span class="action-text">Clusters and divisions talk fit directly with interested officers before the ranked submissions come in</span>
+    <div class="touchpoint">↳ Informal conversations about fit</div>
+  </div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:6;">
+    <span class="action-text">The releasing supervisor has to approve the release; the receiving division confirms the placement</span>
+    <span class="tag gate">The releasing supervisor is a real gate</span>
+    <div class="touchpoint">↳ Sign-off needed from both sides</div>
+  </div>
+
+  <div class="cell division" data-lane="Releasing / Receiving Division" style="grid-row:3; grid-column:7;">
+    <span class="action-text">If the officer spends 6+ months of the assessment year there, the receiving division assesses performance, with input from the releasing one</span>
+    <div class="touchpoint">↳ Shared accountability for performance</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card matched">
+    <h3>What HR is on the hook for, beyond one cycle</h3>
+    <p>Agencies are expected to keep participation balanced across divisions, keep completion rates high, and make sure no single division dominates placements while others get left out. That's HR's job to watch, not just each cycle's individual outcome.</p>
+  </div>
+  <div class="outcome-card load">
+    <h3>Where the load actually sits</h3>
+    <p>Eligibility checks, pulling roles together, matching, approvals, following up on unmatched officers, reviewing metrics: all of it sits with Agency HR. Divisions show up at specific moments; HR carries it end to end, cycle after cycle, with nothing beyond posting to OTG to help.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>Where it gets heaviest:</strong> matching (Phase 04) is the highest-load phase. It's a manual balancing act between what officers want and what the organisation needs, not something rules can assign automatically.</p>
+  <p><strong>It doesn't end at placement:</strong> unmatched officers stay an open relationship with HR: waitlist, retry next cycle, or a redirect toward SJR. After two years without a match, HR is expected to step up support (Table 2 / Annex C, unsuccessful outcome branch).</p>
+  <p><strong>One constraint that's Guidebook policy, not an R1 platform feature:</strong> officers are only meant to be in one development programme at a time (Annex A, Q12), so HR is expected to help people choose between IJR, SJR, Gigs, and STIPs. Compass doesn't check or enforce this in R1 (confirmed 23 Sep, R-28) — it's on HR to manage manually, same as today.</p>
+</div>

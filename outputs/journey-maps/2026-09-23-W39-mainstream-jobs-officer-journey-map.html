@@ -1,0 +1,311 @@
+<title>Mainstream Jobs Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26;
+    --paper:#faf8f5;
+    --paper-raised:#ffffff;
+    --line:#e4ddd3;
+    --muted:#6b6f76;
+    --applicant:#8a3f6a;
+    --applicant-bg:#f6eaf1;
+    --external:#556070;
+    --external-bg:#eceef1;
+    --gate:#a13d3d;
+    --gate-bg:#f9eded;
+    --good:#3f7d5c;
+    --good-bg:#eaf4ef;
+    --open:#b8722e;
+    --open-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0;
+      --paper:#17191d;
+      --paper-raised:#1f2227;
+      --line:#33363c;
+      --muted:#9a9da4;
+      --applicant:#d998bf;
+      --applicant-bg:#301f29;
+      --external:#a7b0bd;
+      --external-bg:#252a31;
+      --gate:#e08a8a;
+      --gate-bg:#3a2020;
+      --good:#8fc4a8;
+      --good-bg:#1e2f26;
+      --open:#e0a869;
+      --open-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0;
+    --paper:#17191d;
+    --paper-raised:#1f2227;
+    --line:#33363c;
+    --muted:#9a9da4;
+    --applicant:#d998bf;
+    --applicant-bg:#301f29;
+    --external:#a7b0bd;
+    --external-bg:#252a31;
+    --gate:#e08a8a;
+    --gate-bg:#3a2020;
+    --good:#8fc4a8;
+    --good-bg:#1e2f26;
+    --open:#e0a869;
+    --open-bg:#332617;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',system-ui,sans-serif;
+    padding-inline:20px;
+    padding-block:32px 56px;
+    max-width:1280px;
+    margin-inline:auto;
+  }
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{
+    display:flex; flex-direction:column; gap:10px;
+    margin-bottom:36px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px;
+    margin-top:6px;
+    font-size:0.82rem;
+  }
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+
+  .pending-banner{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--open-bg);
+    border:1px solid var(--open);
+    border-radius:10px;
+    padding:12px 16px;
+    margin-bottom:24px;
+    font-size:0.85rem;
+    color:var(--ink);
+  }
+  .pending-banner .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--open);
+    margin-top:6px; flex:none;
+  }
+  .pending-banner strong{color:var(--open);}
+
+  /* ===== Journey grid — only 2 phases live in CareerCompass, everything after is external ===== */
+  .journey{
+    display:grid;
+    grid-template-columns: 148px repeat(2, minmax(220px,1fr));
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow-x:auto;
+    background:var(--paper-raised);
+  }
+  .row-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--paper-raised);
+    display:flex; align-items:center;
+    padding:14px 16px;
+    font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .phase-head{
+    padding:16px 14px 14px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:1rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+
+  .cell{
+    padding:14px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.86rem;
+    line-height:1.45;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+2){border-bottom:none;}
+
+  .cell.applicant{background:var(--applicant-bg);}
+
+  .action-text{font-weight:500;}
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.72rem; font-weight:600;
+    padding:3px 8px; border-radius:999px;
+    width:fit-content;
+  }
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.open{background:var(--open-bg); color:var(--open);}
+  .sub{font-size:0.78rem; color:var(--muted);}
+
+  .touchpoint{
+    font-size:0.72rem; color:var(--muted);
+    display:flex; align-items:center; gap:5px;
+    padding-top:6px; margin-top:auto;
+    border-top:1px dashed var(--line);
+  }
+
+  /* ===== Handoff block — replaces the rest of the journey grid ===== */
+  .handoff{
+    display:flex; align-items:stretch; gap:0;
+    margin-top:4px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    background:var(--paper-raised);
+  }
+  .handoff-arrow{
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 64px;
+    background:var(--paper);
+    border-right:1px dashed var(--line);
+    border-left:1px dashed var(--line);
+    font-family:'Quicksand',system-ui,sans-serif;
+    font-size:1.3rem; font-weight:700;
+    color:var(--muted);
+  }
+  .handoff-panel{
+    flex:1;
+    padding:20px 22px;
+  }
+  .handoff-panel.leaving{background:var(--applicant-bg);}
+  .handoff-panel.external{background:var(--external-bg);}
+  .handoff-panel h3{font-size:0.95rem; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .handoff-panel h3 .dotmark{width:8px;height:8px;border-radius:50%;background:var(--external);flex:none;}
+  .handoff-panel ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:0.85rem; line-height:1.5;}
+  .handoff-panel p{font-size:0.85rem; line-height:1.55; margin:0; color:var(--muted);}
+
+  .outcomes{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+  .outcome-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    background:var(--paper-raised);
+  }
+  .outcome-card.offered{border-left:4px solid var(--good);}
+  .outcome-card.notselected{border-left:4px solid var(--gate);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+
+  .footnotes{
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:8px;
+    font-size:0.82rem; color:var(--muted); line-height:1.6;
+  }
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:860px){
+    .journey{
+      display:flex; flex-direction:column;
+      overflow-x:visible;
+    }
+    .row-label{display:none;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{
+      content:attr(data-lane);
+      display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:4px;
+    }
+    .cell.applicant{
+      border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    }
+    .handoff{flex-direction:column;}
+    .handoff-arrow{flex:none; padding:8px; border-left:none; border-right:none; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); transform:rotate(90deg); width:32px; margin:0 auto;}
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">Officer journey · Mainstream Jobs (Careers@Gov)</div>
+  <h1>Finding a mainstream posting, then leaving CareerCompass entirely</h1>
+  <p class="dek">Mainstream Jobs are full, public-facing postings, open beyond the public service, not ringfenced to officers. CareerCompass never authors or decides them. Its only job is to show the listing and point the officer to Careers@Gov, where the entire rest of the journey happens with zero visibility back into CareerCompass.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--applicant)"></span>Officer, inside CareerCompass</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--external)"></span>Officer, on Careers@Gov (outside CareerCompass)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>No CareerCompass visibility</span>
+  </div>
+</header>
+
+<div class="pending-banner">
+  <span class="dot"></span>
+  <span><strong>This is the whole journey.</strong> Two phases live in CareerCompass. Everything else, apply, review, interview, decision, happens entirely on Careers@Gov. There's no third phase to add here, that's the correct shape for a redirect type, not a gap in this map.</span>
+</div>
+
+<div class="journey" role="table" aria-label="Mainstream Jobs officer journey inside CareerCompass">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;">
+    <span class="phase-num">01</span>
+    <span class="phase-title">Finding it</span>
+    <span class="phase-dur">In the CareerCompass catalog</span>
+  </div>
+  <div class="phase-head" style="grid-column:3;">
+    <span class="phase-num">02</span>
+    <span class="phase-title">Clicking through</span>
+    <span class="phase-dur">Instant, leaves the app</span>
+  </div>
+
+  <div class="row-label" style="grid-row:2;">Applicant<br>officer</div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Sees a Mainstream Jobs listing label in the unified Opportunities catalog, alongside STIPs, Gigs, and other types</span>
+    <span class="sub">Title and basic listing metadata only, not the full posting</span>
+    <span class="tag gate">Listing label only, no native detail view</span>
+    <div class="touchpoint">↳ Same catalog surface as every other opportunity type</div>
+  </div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Clicks the deep-link and is taken straight to Careers@Gov to view the full posting</span>
+    <span class="tag gate">CareerCompass's involvement ends here</span>
+    <div class="touchpoint">↳ Deep-link out, no in-app apply, no status tracking</div>
+  </div>
+
+</div>
+
+<div class="handoff">
+  <div class="handoff-panel leaving">
+    <h3><span class="dotmark"></span>What CareerCompass does</h3>
+    <ul>
+      <li>Shows the listing in the catalog</li>
+      <li>Deep-links out to Careers@Gov</li>
+    </ul>
+  </div>
+  <div class="handoff-arrow">&#8594;</div>
+  <div class="handoff-panel external">
+    <h3><span class="dotmark"></span>What happens on Careers@Gov, invisible to CareerCompass</h3>
+    <p>Viewing the full posting, applying, HR review, interviews, and the hire/no-hire decision all happen on Careers@Gov. It's a full public-facing posting, open beyond the public service, so it was never CareerCompass's process to run. CareerCompass has no apply flow, no status badge, and no record of the outcome for this type.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>Why this journey is this short:</strong> Mainstream Jobs are authored and decided entirely in Careers@Gov. CareerCompass's role is a listing label plus a deep-link, nothing more. There's no native apply, no status tracking, and no HR role in CareerCompass for this type at all.</p>
+  <p><strong>Contrast with STIPs &amp; Gigs, IJR, and SJR:</strong> those types all have some native footprint in CareerCompass, discovery at minimum, apply and track for STIPs/Gigs. Mainstream Jobs has none of that. It's a pure redirect, the "Listing label only" / "No — deep-link" delivery mode confirmed in the R1 opportunity-type scope decision.</p>
+</div>

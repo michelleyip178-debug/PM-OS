@@ -1,0 +1,343 @@
+<title>STIPs & Gigs Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26;
+    --paper:#faf8f5;
+    --paper-raised:#ffffff;
+    --line:#e4ddd3;
+    --muted:#6b6f76;
+    --applicant:#3f6b4f;
+    --applicant-bg:#e9f2ec;
+    --poster:#7a5a9e;
+    --poster-bg:#f1ecf7;
+    --gate:#a13d3d;
+    --gate-bg:#f9eded;
+    --good:#3f7d5c;
+    --good-bg:#eaf4ef;
+    --open:#b8722e;
+    --open-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0;
+      --paper:#17191d;
+      --paper-raised:#1f2227;
+      --line:#33363c;
+      --muted:#9a9da4;
+      --applicant:#8fc4a1;
+      --applicant-bg:#1c2a20;
+      --poster:#bda3dc;
+      --poster-bg:#2a2334;
+      --gate:#e08a8a;
+      --gate-bg:#3a2020;
+      --good:#8fc4a8;
+      --good-bg:#1e2f26;
+      --open:#e0a869;
+      --open-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0;
+    --paper:#17191d;
+    --paper-raised:#1f2227;
+    --line:#33363c;
+    --muted:#9a9da4;
+    --applicant:#8fc4a1;
+    --applicant-bg:#1c2a20;
+    --poster:#bda3dc;
+    --poster-bg:#2a2334;
+    --gate:#e08a8a;
+    --gate-bg:#3a2020;
+    --good:#8fc4a8;
+    --good-bg:#1e2f26;
+    --open:#e0a869;
+    --open-bg:#332617;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',system-ui,sans-serif;
+    padding-inline:20px;
+    padding-block:32px 56px;
+    max-width:1280px;
+    margin-inline:auto;
+  }
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{
+    display:flex; flex-direction:column; gap:10px;
+    margin-bottom:36px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px;
+    margin-top:6px;
+    font-size:0.82rem;
+  }
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+
+  .pending-banner{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--open-bg);
+    border:1px solid var(--open);
+    border-radius:10px;
+    padding:12px 16px;
+    margin-bottom:24px;
+    font-size:0.85rem;
+    color:var(--ink);
+  }
+  .pending-banner .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--open);
+    margin-top:6px; flex:none;
+  }
+  .pending-banner strong{color:var(--open);}
+
+  /* ===== Journey grid ===== */
+  .journey{
+    display:grid;
+    grid-template-columns: 148px repeat(5, minmax(190px,1fr));
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow-x:auto;
+    background:var(--paper-raised);
+  }
+  .row-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--paper-raised);
+    display:flex; align-items:center;
+    padding:14px 16px;
+    font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .phase-head{
+    padding:16px 14px 14px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:1rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+
+  .cell{
+    padding:14px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.86rem;
+    line-height:1.45;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+6){border-bottom:none;}
+
+  .cell.applicant{background:var(--applicant-bg);}
+  .cell.poster{background:var(--poster-bg);}
+
+  .action-text{font-weight:500;}
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.72rem; font-weight:600;
+    padding:3px 8px; border-radius:999px;
+    width:fit-content;
+  }
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.open{background:var(--open-bg); color:var(--open);}
+  .sub{font-size:0.78rem; color:var(--muted);}
+
+  .touchpoint{
+    font-size:0.72rem; color:var(--muted);
+    display:flex; align-items:center; gap:5px;
+    padding-top:6px; margin-top:auto;
+    border-top:1px dashed var(--line);
+  }
+
+  .outcomes{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+  .outcome-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    background:var(--paper-raised);
+  }
+  .outcome-card.offered{border-left:4px solid var(--good);}
+  .outcome-card.notselected{border-left:4px solid var(--gate);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+
+  .footnotes{
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:8px;
+    font-size:0.82rem; color:var(--muted); line-height:1.6;
+  }
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:860px){
+    .journey{
+      display:flex; flex-direction:column;
+      overflow-x:visible;
+    }
+    .row-label{display:none;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{
+      content:attr(data-lane);
+      display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:4px;
+    }
+    .cell.applicant, .cell.poster{
+      border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    }
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">Officer journey · STIPs &amp; Gigs</div>
+  <h1>Finding and applying for a gig</h1>
+  <p class="dek">Self-serve on both sides: any officer can post, any officer can apply, HR has zero role anywhere in this flow (confirmed 23 Sep, R-27). It's the fastest of the mobility paths by design, under 2 minutes to apply. Source: STIPs &amp; Gigs scope map, 22 Sep 2026.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--applicant)"></span>Applicant officer</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--poster)"></span>Poster / evaluator (mirror lane)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>Not locked in yet</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--good)"></span>Officer's call</span>
+  </div>
+</header>
+
+<div class="pending-banner">
+  <span class="dot"></span>
+  <span><strong>Still open:</strong> who gets to discover, create, and apply — pilot-only (6 agencies), WOG-wide, or a discover-WOG/apply-pilot mix — hasn't been decided. Everything below assumes that resolves before build starts. The mechanics don't change, only who they apply to.</span>
+</div>
+
+<div class="journey" role="table" aria-label="STIPs and Gigs officer journey by phase">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;">
+    <span class="phase-num">01</span>
+    <span class="phase-title">Finding it</span>
+    <span class="phase-dur">WOG AD login</span>
+  </div>
+  <div class="phase-head" style="grid-column:3;">
+    <span class="phase-num">02</span>
+    <span class="phase-title">Applying</span>
+    <span class="phase-dur">Under 2 minutes, target</span>
+  </div>
+  <div class="phase-head" style="grid-column:4;">
+    <span class="phase-num">03</span>
+    <span class="phase-title">Waiting</span>
+    <span class="phase-dur">No fixed window</span>
+  </div>
+  <div class="phase-head" style="grid-column:5;">
+    <span class="phase-num">04</span>
+    <span class="phase-title">Decision</span>
+    <span class="phase-dur">Instant once the poster acts</span>
+  </div>
+  <div class="phase-head" style="grid-column:6;">
+    <span class="phase-num">05</span>
+    <span class="phase-title">After the offer</span>
+    <span class="phase-dur">Out of scope today</span>
+  </div>
+
+  <!-- APPLICANT ROW -->
+  <div class="row-label" style="grid-row:2;">Applicant<br>officer</div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Logs in through WOG AD, lands on the Opportunities catalog, listings ringfenced to what they're eligible for</span>
+    <span class="tag good">Officer's call</span>
+    <div class="touchpoint">↳ Can bookmark into a "Saved Jobs" tab</div>
+  </div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Opens the in-app modal, already filled in from their profile: name, email, agency, grade, competencies</span>
+    <span class="sub">2–3 free-text fields, no file upload, one declaration checkbox</span>
+    <span class="tag gate">The 2-minute target isn't locked in yet</span>
+    <div class="touchpoint">↳ In-app modal, no redirect elsewhere</div>
+  </div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Sees <code>Submitted</code> on their application. There's no notification center to check on it beyond that</span>
+    <div class="touchpoint">↳ Badge on the application record</div>
+  </div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Badge updates the moment the poster acts: <code>Offered</code> or <code>Not Selected</code></span>
+    <span class="tag gate">Out of the officer's hands</span>
+    <div class="touchpoint">↳ No automated regret email (out of scope)</div>
+  </div>
+
+  <div class="cell applicant" data-lane="Applicant Officer" style="grid-row:2; grid-column:6;">
+    <span class="action-text">Connects with the poster directly, by email or Teams, to sort out onboarding</span>
+    <span class="sub">Deliberately outside the app, no in-app messaging or contract generation</span>
+    <div class="touchpoint">↳ Manual, off-platform</div>
+  </div>
+
+  <!-- POSTER ROW -->
+  <div class="row-label" style="grid-row:3;">Poster /<br>evaluator</div>
+
+  <div class="cell poster" data-lane="Poster / Evaluator" style="grid-row:3; grid-column:2;">
+    <span class="action-text">Any officer creates a posting directly. HR has no role anywhere in this flow, not sign-off, not a passive one either</span>
+    <span class="sub">Title, description, agency, competencies, closing date, up to 2 co-evaluators</span>
+    <div class="touchpoint">↳ Creator becomes the Posting Owner automatically</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster / Evaluator" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Posting goes live right away, once the RO-awareness checkbox is ticked</span>
+    <span class="tag gate">The RO-awareness checkbox isn't locked in yet</span>
+    <div class="touchpoint">↳ Auto-expiry after 30 days (also not locked in)</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster / Evaluator" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Gets alerted when an application comes in, then reviews name, agency, competency match, date applied</span>
+    <span class="tag gate">The instant alert isn't locked in yet</span>
+    <div class="touchpoint">↳ "My Posted Gigs" review table</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster / Evaluator" style="grid-row:3; grid-column:5;">
+    <span class="action-text">Clicks Offer or Reject right in the review table, co-evaluators see the same view</span>
+    <span class="tag good">Poster's call</span>
+    <div class="touchpoint">↳ In-table action buttons</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster / Evaluator" style="grid-row:3; grid-column:6;">
+    <span class="action-text">Closes the vacancy manually, which starts a 90-day countdown before candidate data is purged</span>
+    <div class="touchpoint">↳ "Close Vacancy" button</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card offered">
+    <h3>If they're offered the role</h3>
+    <p>The badge switches to <code>Offered</code> right away. Everything after that is manual: poster and applicant sort out onboarding off-platform. No contract generation, no formal HR placement workflow.</p>
+  </div>
+  <div class="outcome-card notselected">
+    <h3>If they're not</h3>
+    <p>The badge switches to <code>Not Selected</code>. There's no automated regret email or feedback loop in scope, so the badge is the only signal the applicant gets.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>What's different from IJR and SJR:</strong> no eligibility screening before discovery, no HR-run matching exercise, no ranked preferences. One application, reviewed by one poster (plus up to 2 co-evaluators), decided with a single click.</p>
+  <p><strong>Four things not locked in:</strong> the Reporting Officer awareness checkbox, 30-day auto-expiry, the under-2-minute apply target, and the instant poster alert email. The mechanics are set, it's these specifics that are still pending.</p>
+  <p><strong>Post-offer is out of scope</strong> and treated as an explicit, manual, off-platform step, not a gap to close later by default.</p>
+</div>

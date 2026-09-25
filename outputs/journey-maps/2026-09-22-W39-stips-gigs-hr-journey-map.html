@@ -1,0 +1,189 @@
+<title>STIPs & Gigs HR Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --poster:#7a5a9e; --poster-bg:#f1ecf7;
+    --admin:#2f5d8a; --admin-bg:#eaf1f8;
+    --gate:#a13d3d; --gate-bg:#f9eded;
+    --good:#3f7d5c; --good-bg:#eaf4ef;
+    --open:#b8722e; --open-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --poster:#bda3dc; --poster-bg:#2a2334;
+      --admin:#7fb0e0; --admin-bg:#1b2a38;
+      --gate:#e08a8a; --gate-bg:#3a2020;
+      --good:#8fc4a8; --good-bg:#1e2f26;
+      --open:#e0a869; --open-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --poster:#bda3dc; --poster-bg:#2a2334;
+    --admin:#7fb0e0; --admin-bg:#1b2a38;
+    --gate:#e08a8a; --gate-bg:#3a2020;
+    --good:#8fc4a8; --good-bg:#1e2f26;
+    --open:#e0a869; --open-bg:#332617;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1280px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:36px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+  .legend{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:0.82rem;}
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .pending-banner{display:flex; gap:12px; align-items:flex-start; background:var(--open-bg); border:1px solid var(--open); border-radius:10px; padding:12px 16px; margin-bottom:24px; font-size:0.85rem; color:var(--ink);}
+  .pending-banner .dot{width:8px; height:8px; border-radius:50%; background:var(--open); margin-top:6px; flex:none;}
+  .pending-banner strong{color:var(--open);}
+  .note{font-size:0.86rem; color:var(--muted); max-width:72ch; line-height:1.55; background:var(--gate-bg); border:1px solid var(--gate); border-radius:10px; padding:10px 14px; margin-bottom:16px;}
+  .note strong{color:var(--gate);}
+  .journey{display:grid; grid-template-columns:148px repeat(5, minmax(190px,1fr)); border:1px solid var(--line); border-radius:12px; overflow-x:auto; background:var(--paper-raised);}
+  .row-label{position:sticky; left:0; z-index:2; background:var(--paper-raised); display:flex; align-items:center; padding:14px 16px; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); border-right:1px solid var(--line);}
+  .phase-head{padding:16px 14px 14px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); display:flex; flex-direction:column; gap:4px;}
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:1rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+  .cell{padding:14px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-size:0.86rem; line-height:1.45; display:flex; flex-direction:column; gap:8px;}
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+6){border-bottom:none;}
+  .cell.poster{background:var(--poster-bg);}
+  .cell.admin{background:var(--admin-bg);}
+  .action-text{font-weight:500;}
+  .tag{display:inline-flex; align-items:center; gap:5px; font-size:0.72rem; font-weight:600; padding:3px 8px; border-radius:999px; width:fit-content;}
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .sub{font-size:0.78rem; color:var(--muted);}
+  .touchpoint{font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:5px; padding-top:6px; margin-top:auto; border-top:1px dashed var(--line);}
+  .outcomes{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .outcome-card{border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--paper-raised);}
+  .outcome-card.good{border-left:4px solid var(--good);}
+  .outcome-card.gap{border-left:4px solid var(--gate);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .footnotes{margin-top:28px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+  @media (max-width:860px){
+    .journey{display:flex; flex-direction:column; overflow-x:visible;}
+    .row-label{display:none;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{content:attr(data-lane); display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;}
+    .cell.poster, .cell.admin{border-radius:10px; padding:10px 12px; margin-bottom:8px;}
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">HR journey · STIPs &amp; Gigs</div>
+  <h1>HR has no role in STIPs &amp; Gigs</h1>
+  <p class="dek">Not a light-touch guardrail role, not a passive one. Zero, full stop: no Central Admin HR, no Agency Admin HR, in any capacity, at any step. RBAC/access-control design, audit log review, and the orphan-posting fallback still need to happen, but as of 23 Sep none of them have an owner. That's an open gap, not a resolved HR function. Source: STIPs &amp; Gigs scope map, 22 Sep 2026; corrected 23 Sep per R-27.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--poster)"></span>Poster (any officer, HR or not)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--admin)"></span>Nobody yet (open, R-27)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>A real governance gap</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--good)"></span>Built this way on purpose</span>
+  </div>
+</header>
+
+<p class="note"><strong>Corrected 23 Sep:</strong> HR has zero role in STIPs &amp; Gigs, not even the passive guardrail role this map previously showed. RBAC, audit log, and orphan-posting fallback ownership is now an open question (R-27), not resolved. See the <a href="../analyses/2026-09-16-W38-r1-risk-register.md">R1 risk register</a>, R-27.</p>
+
+<div class="pending-banner">
+  <span class="dot"></span>
+  <span><strong>Still open:</strong> who gets to discover, create, and apply hasn't been decided. It changes how much volume lands on whoever eventually owns RBAC, the audit log, and orphan postings: a WOG-wide population means more of all three than a 6-agency pilot would, and there's currently no owner for any of it (R-27).</span>
+</div>
+
+<div class="journey" role="table" aria-label="STIPs and Gigs HR journey by phase and function">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;"><span class="phase-num">01</span><span class="phase-title">Posting created</span></div>
+  <div class="phase-head" style="grid-column:3;"><span class="phase-num">02</span><span class="phase-title">Live and visible</span></div>
+  <div class="phase-head" style="grid-column:4;"><span class="phase-num">03</span><span class="phase-title">Applications arrive</span></div>
+  <div class="phase-head" style="grid-column:5;"><span class="phase-num">04</span><span class="phase-title">Decision</span></div>
+  <div class="phase-head" style="grid-column:6;"><span class="phase-num">05</span><span class="phase-title">Closing and retention</span></div>
+
+  <div class="row-label" style="grid-row:2;">Poster</div>
+
+  <div class="cell poster" data-lane="Poster" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Creates the posting directly, no HR admin reviews or approves it before it goes live</span>
+    <span class="tag good">Built this way on purpose, no approval chain</span>
+    <div class="touchpoint">↳ The RO-awareness checkbox is self-certified, nobody checks it</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Can add up to 2 co-evaluators by .gov.sg email, same permissions, no separate approval needed</span>
+    <div class="touchpoint">↳ Self-service, sets up their own collaborators</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Reviews applicants directly in "My Posted Gigs", there's no HR screening step between applicant and poster</span>
+    <div class="touchpoint">↳ Poster is the only first-pass reviewer</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Makes the Offer or Reject call on their own, or with co-evaluators, no HR sign-off needed</span>
+    <span class="tag good">Built this way on purpose, no approval chain</span>
+    <div class="touchpoint">↳ In-table action, entirely self-directed</div>
+  </div>
+
+  <div class="cell poster" data-lane="Poster" style="grid-row:2; grid-column:6;">
+    <span class="action-text">Closes the vacancy manually, which starts a 90-day countdown before candidate data gets purged</span>
+    <div class="touchpoint">↳ Poster has to do this, it doesn't happen on its own</div>
+  </div>
+
+  <div class="row-label" style="grid-row:3;">Nobody yet<br>(open, R-27)</div>
+
+  <div class="cell admin" data-lane="Nobody yet (open, R-27)" style="grid-row:3; grid-column:2;">
+    <span class="action-text">RBAC/access-control design exists as a 3-tier model (officer, poster-collaborator, central admin), but who designs and maintains it is unassigned. Not HR, confirmed 23 Sep</span>
+    <span class="tag gate">Unowned — R-27</span>
+    <div class="touchpoint">↳ HR has no role here, at creation or otherwise</div>
+  </div>
+
+  <div class="cell admin" data-lane="Nobody yet (open, R-27)" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Every applicant drawer or profile view and download gets logged. The log exists, but nobody is assigned to review it</span>
+    <span class="tag gate">Unowned — R-27</span>
+    <div class="touchpoint">↳ An audit trail with no reviewer</div>
+  </div>
+
+  <div class="cell admin" data-lane="Nobody yet (open, R-27)" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Drawer access is enforced at the application layer, only poster or collaborator can see it. If there's a dispute, there's currently nobody designated to handle it</span>
+    <div class="touchpoint">↳ No admin tier involved, by design</div>
+  </div>
+
+  <div class="cell admin" data-lane="Nobody yet (open, R-27)" style="grid-row:3; grid-column:5;">
+    <span class="action-text">There's no compliance dashboard or anomaly alerting, and no one assigned to go looking even if there were</span>
+    <span class="tag gate">Explicitly out of scope today</span>
+    <div class="touchpoint">↳ Nothing surfaces, and nobody's watching</div>
+  </div>
+
+  <div class="cell admin" data-lane="Nobody yet (open, R-27)" style="grid-row:3; grid-column:6;">
+    <span class="action-text">If a poster leaves or moves agencies before closing their posting, there's no named fallback contact. This used to route to Agency HR; that's now confirmed wrong</span>
+    <span class="tag gate">Unowned — R-27, open question</span>
+    <div class="touchpoint">↳ Orphaned postings currently have no one accountable for closing them</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card good">
+    <h3>What HR isn't doing here</h3>
+    <p>Everything. No approval chains, no role-based posting permissions, no supervisor pre-clearance, no departmental approval queues, and (corrected 23 Sep) no RBAC design, no audit log review, no orphan-posting fallback either. HR has zero role in STIPs &amp; Gigs, not a smaller one. This is the real contrast with IJR and SJR, which make HR the engine (screening, pooling, matching, approving, re-integrating): STIPs &amp; Gigs makes HR nothing.</p>
+  </div>
+  <div class="outcome-card gap">
+    <h3>The gap this leaves open</h3>
+    <p>RBAC/access-control design, audit log review, and the orphan-posting fallback still need to happen, they just don't have an owner. That's R-27: a genuinely open question, not a "system handles it automatically" resolution. If nobody's named, postings from departed officers could sit live indefinitely with no one accountable for closing them.</p>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>The real contrast with IJR and SJR:</strong> those programmes make HR the engine, screening, pooling, matching, approving, re-integrating. STIPs and Gigs makes HR nothing: no engine, no guardrail, no role of any kind. RBAC, an audit log, and a fallback for orphaned postings still need an owner, they just don't have one right now.</p>
+  <p><strong>Where HR won't see a problem until it's already happened:</strong> this used to describe HR's blind spots. It's now moot: there's no HR function here to have a blind spot in. The blind spot belongs to whoever eventually gets named to RBAC, the audit log, and orphan postings, and until then it belongs to no one.</p>
+  <p><strong>Ownership gap flagged 23 Sep, R-27:</strong> RBAC/access-control design, audit log review, and the orphan-posting fallback (when a poster leaves or changes agency before closing their posting) are unassigned. This is a real operational gap, not a documentation cleanup, and it isn't resolved just by removing HR from the picture.</p>
+  <p><strong>Governance load rises with the population decision that's still pending:</strong> a WOG-wide population means more postings, more applications, and more edge cases (orphaned postings, access disputes) than a 6-agency pilot would, and right now there's no owner to catch any of it.</p>
+  <p><strong>Four things still not locked in:</strong> Reporting Officer awareness, auto-expiry, the target apply time, poster alerts. All of these sit with the poster or applicant, HR was never part of that loop.</p>
+</div>

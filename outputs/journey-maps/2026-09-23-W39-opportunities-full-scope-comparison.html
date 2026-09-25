@@ -1,0 +1,290 @@
+<title>Opportunities Module Scope</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --stip:#2f5d8a; --stip-bg:#eaf1f8;
+    --gig:#3f6b4f; --gig-bg:#e9f2ec;
+    --ij:#7a5a9e; --ij-bg:#f1ecf7;
+    --mj:#8a3f6a; --mj-bg:#f6eaf1;
+    --ijr:#6d6423; --ijr-bg:#f6f2df;
+    --sjr:#b8722e; --sjr-bg:#faf1e5;
+    --gate:#a13d3d; --gate-bg:#f9eded;
+    --good:#3f7d5c; --good-bg:#eaf4ef;
+    --pending:#8a3f6a; --pending-bg:#f6eaf1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --stip:#7fb0e0; --stip-bg:#1b2a38;
+      --gig:#8fc4a1; --gig-bg:#1c2a20;
+      --ij:#bda3dc; --ij-bg:#2a2334;
+      --mj:#d998bf; --mj-bg:#301f29;
+      --ijr:#d8cd7a; --ijr-bg:#302c17;
+      --sjr:#e0a869; --sjr-bg:#332617;
+      --gate:#e08a8a; --gate-bg:#3a2020;
+      --good:#8fc4a8; --good-bg:#1e2f26;
+      --pending:#d998bf; --pending-bg:#301f29;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --stip:#7fb0e0; --stip-bg:#1b2a38;
+    --gig:#8fc4a1; --gig-bg:#1c2a20;
+    --ij:#bda3dc; --ij-bg:#2a2334;
+    --mj:#d998bf; --mj-bg:#301f29;
+    --ijr:#d8cd7a; --ijr-bg:#302c17;
+    --sjr:#e0a869; --sjr-bg:#332617;
+    --gate:#e08a8a; --gate-bg:#3a2020;
+    --good:#8fc4a8; --good-bg:#1e2f26;
+    --pending:#d998bf; --pending-bg:#301f29;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1560px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:28px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.3rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.96rem; color:var(--muted); max-width:76ch; line-height:1.55;}
+
+  .prog-legend{display:flex; flex-wrap:wrap; gap:16px; margin:18px 0 6px; font-size:0.78rem;}
+  .legend-item{display:flex; align-items:center; gap:6px; color:var(--muted); font-weight:500;}
+  .swatch{width:10px; height:10px; border-radius:3px; flex:none;}
+
+  /* Big table */
+  .compare{
+    display:grid;
+    grid-template-columns: 160px repeat(6, minmax(175px,1fr));
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow-x:auto;
+    background:var(--paper-raised);
+    margin-top:16px;
+  }
+  .corner{
+    position:sticky; left:0; z-index:3;
+    background:var(--paper-raised);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .prog-head{
+    padding:12px 12px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .prog-head:last-child{border-right:none;}
+  .prog-head.stip{background:var(--stip-bg);}
+  .prog-head.gig{background:var(--gig-bg);}
+  .prog-head.ij{background:var(--ij-bg);}
+  .prog-head.mj{background:var(--mj-bg);}
+  .prog-head.ijr{background:var(--ijr-bg);}
+  .prog-head.sjr{background:var(--sjr-bg);}
+  .prog-name{font-family:'Quicksand',system-ui,sans-serif; font-size:0.9rem; font-weight:700;}
+  .prog-name.stip{color:var(--stip);}
+  .prog-name.gig{color:var(--gig);}
+  .prog-name.ij{color:var(--ij);}
+  .prog-name.mj{color:var(--mj);}
+  .prog-name.ijr{color:var(--ijr);}
+  .prog-name.sjr{color:var(--sjr);}
+  .prog-sub{font-size:0.66rem; color:var(--muted);}
+
+  .section-row{
+    grid-column: 1 / -1;
+    background:var(--paper);
+    padding:14px 12px 6px;
+    font-family:'Quicksand',system-ui,sans-serif;
+    font-size:0.8rem; font-weight:700;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+
+  .dim-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--paper-raised);
+    display:flex; align-items:center;
+    padding:12px 12px;
+    font-size:0.72rem; font-weight:600;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    line-height:1.3;
+  }
+  .cell{
+    padding:12px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.78rem;
+    line-height:1.42;
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .cell:last-child{border-right:none;}
+  .cell.stip{background:var(--stip-bg);}
+  .cell.gig{background:var(--gig-bg);}
+  .cell.ij{background:var(--ij-bg);}
+  .cell.mj{background:var(--mj-bg);}
+  .cell.ijr{background:var(--ijr-bg);}
+  .cell.sjr{background:var(--sjr-bg);}
+  .cell strong{font-weight:700;}
+  .cell.full-span{grid-column: span 6;}
+  .tag{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:0.63rem; font-weight:700;
+    padding:2px 6px; border-radius:999px; width:fit-content;
+  }
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.pending{background:var(--pending-bg); color:var(--pending);}
+
+  .footnotes{margin-top:28px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:1100px){
+    .compare{display:flex; flex-direction:column; overflow-x:visible;}
+    .corner{display:none;}
+    .section-row{padding:14px 4px 4px; border:none;}
+    .prog-head{border:none; border-radius:10px; margin-bottom:2px;}
+    .dim-label{border:none; padding:12px 4px 2px; background:transparent; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted);}
+    .cell{border:none; border-radius:10px; margin-bottom:6px; padding:10px 12px;}
+    .cell.full-span{grid-column:auto;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">Full scope, no release boundary</div>
+  <h1>The whole Opportunities module</h1>
+  <p class="dek">What "done" looks like across every opportunity type an officer can move through: STIPs, Gigs, Internal Jobs, Mainstream Jobs (Careers@Gov), Internal Job Rotation, and Secondment (SJR). Not tied to R1 or R2 — this is the full end-state shape, including the architectural facts (OTG contract, HRPS API limits, no write-back sync) that hold regardless of which release delivers which part.</p>
+  <div class="prog-legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--stip)"></span>STIP</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gig)"></span>Gig</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--ij)"></span>Internal Job</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--mj)"></span>Mainstream Job (C@G)</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--ijr)"></span>IJR</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--sjr)"></span>SJR / Secondment</span>
+  </div>
+</header>
+
+<div class="compare" role="table" aria-label="Full Opportunities module scope by type">
+
+  <div class="corner"></div>
+  <div class="prog-head stip"><span class="prog-name stip">STIP</span><span class="prog-sub">Short-term immersion</span></div>
+  <div class="prog-head gig"><span class="prog-name gig">Gig</span><span class="prog-sub">Short-term, on the side</span></div>
+  <div class="prog-head ij"><span class="prog-name ij">Internal Job</span><span class="prog-sub">Full posting, own agency+</span></div>
+  <div class="prog-head mj"><span class="prog-name mj">Mainstream Job</span><span class="prog-sub">Careers@Gov, public-facing</span></div>
+  <div class="prog-head ijr"><span class="prog-name ijr">IJR</span><span class="prog-sub">Internal rotation</span></div>
+  <div class="prog-head sjr"><span class="prog-name sjr">SJR / Secondment</span><span class="prog-sub">Cross-agency, temporary</span></div>
+
+  <div class="section-row">Nature</div>
+  <div class="dim-label">What it is</div>
+  <div class="cell stip">Half-day to 2-week experiential placement, purely exploratory</div>
+  <div class="cell gig">Short-term task, up to 1.5 days/week over 6 months, additive to home role</div>
+  <div class="cell ij">Full posting change, publicly listed to public servants across participating agencies. Target state: Compass pulls a periodic read from HRPS only to power discovery, it doesn't hold or maintain the underlying data itself</div>
+  <div class="cell mj">Full posting, public-facing, open beyond the public service</div>
+  <div class="cell ijr">Full posting change, same agency</div>
+  <div class="cell sjr">Full but temporary move to another agency (2–3 yrs), stays employed by home agency</div>
+
+  <div class="dim-label">Keeps home role?</div>
+  <div class="cell stip"><span class="tag good">Yes</span></div>
+  <div class="cell gig"><span class="tag good">Yes</span></div>
+  <div class="cell ij"><span class="tag gate">No</span></div>
+  <div class="cell mj"><span class="tag gate">No</span></div>
+  <div class="cell ijr"><span class="tag gate">No</span></div>
+  <div class="cell sjr"><span class="tag gate">No, moves out — but stays employed by home agency</span></div>
+
+  <div class="section-row">Discovery</div>
+  <div class="dim-label">Where officers see it</div>
+  <div class="cell stip">Unified Opportunities catalog</div>
+  <div class="cell gig">Unified Opportunities catalog</div>
+  <div class="cell ij">Target state: unified Opportunities catalog in CareerCompass, populated by a periodic pull from HRPS only — Compass has no direct relationship with Cumulus at all</div>
+  <div class="cell mj">Listing label only in the catalog, links out to Careers@Gov</div>
+  <div class="cell ijr">Within-agency list, eligibility-filtered</div>
+  <div class="cell sjr"><span class="tag gate">Nomination required before roles are even visible</span></div>
+
+  <div class="dim-label">Can you browse before you're "in"?</div>
+  <div class="cell stip">Yes, open catalog</div>
+  <div class="cell gig">Yes, open catalog</div>
+  <div class="cell ij">Yes, open browsing — CareerCompass surfaces the catalog via a periodic HRPS pull, HRPS stays the sole source for competencies, Job ID, and proficiency levels</div>
+  <div class="cell mj">Yes, but it's a public listing, not ringfenced</div>
+  <div class="cell ijr">Yes, open browsing within own agency — same model as Internal Jobs; additional eligibility criteria (if the agency sets any) gate applying, not browsing</div>
+  <div class="cell sjr"><span class="tag gate">No</span></div>
+
+  <div class="section-row">Creation</div>
+  <div class="dim-label">Who authors it</div>
+  <div class="cell stip">Any officer, self-serve, template form</div>
+  <div class="cell gig">Any officer, self-serve, template form</div>
+  <div class="cell ij">New Job ID still created in Cumulus/HRPS; Cumulus pushes it into HRPS's Internal Job Portal one-way, then Compass pulls from HRPS on a periodic sync — authoring stays entirely in the HR systems</div>
+  <div class="cell mj">Authored in Careers@Gov, not created in CareerCompass</div>
+  <div class="cell ijr">HR consolidates vacant/vacating roles into a pool</div>
+  <div class="cell sjr">Agencies surface roles into a central pool, ideally 2 per nominee</div>
+
+  <div class="dim-label">Where it's actually built/edited</div>
+  <div class="cell stip"><span class="tag good">Native in CareerCompass</span></div>
+  <div class="cell gig"><span class="tag good">Native in CareerCompass</span></div>
+  <div class="cell ij"><span class="tag pending">Entirely in Cumulus/HRPS — Compass pulls a periodic read, it doesn't build or edit anything</span></div>
+  <div class="cell mj"><span class="tag pending">Redirect — no CareerCompass authoring</span></div>
+  <div class="cell ijr">OTG today</div>
+  <div class="cell sjr">OTG today</div>
+
+  <div class="section-row">Application</div>
+  <div class="dim-label">How officers apply</div>
+  <div class="cell stip">Native in-app modal, pre-filled, under 2 min, no file upload</div>
+  <div class="cell gig">Native in-app modal, pre-filled, under 2 min, no file upload</div>
+  <div class="cell ij"><span class="tag gate">Confirmed redirect</span> — officer clicks Apply and links out to whichever system hosts the posting, HRPS or Cumulus, via the link HRPS's record carries</div>
+  <div class="cell mj"><span class="tag gate">Apply on Careers@Gov — deep-link only</span></div>
+  <div class="cell ijr">Discuss with clusters, submit ranked preferences</div>
+  <div class="cell sjr">"Raise hand" on OTG, then an interview, then placement</div>
+
+  <div class="dim-label">Status tracking in CareerCompass</div>
+  <div class="cell stip"><span class="tag good">Yes</span></div>
+  <div class="cell gig"><span class="tag good">Yes</span></div>
+  <div class="cell ij"><span class="tag gate">No — tracked on whichever system the officer applied through</span></div>
+  <div class="cell mj"><span class="tag gate">No — tracked on Careers@Gov</span></div>
+  <div class="cell ijr">No — HR-run process, not a status badge</div>
+  <div class="cell sjr">No — HR-run process, not a status badge</div>
+
+  <div class="section-row">Decision &amp; review</div>
+  <div class="dim-label">Who decides</div>
+  <div class="cell stip">Poster, one click Offer/Reject, plus up to 2 co-evaluators</div>
+  <div class="cell gig">Poster, one click Offer/Reject, plus up to 2 co-evaluators</div>
+  <div class="cell ij">Receiving agency's own hiring process</div>
+  <div class="cell mj">Receiving agency's own hiring process</div>
+  <div class="cell ijr">HR-run matching exercise, weighs preference against org need</div>
+  <div class="cell sjr">Interview with borrowing agency, FL/PSD-facilitated</div>
+
+  <div class="section-row">Who runs the programme</div>
+  <div class="dim-label">Ownership</div>
+  <div class="cell stip">No one — fully self-serve, zero HR role (confirmed 23 Sep, R-27). RBAC/audit log/orphan-posting fallback ownership is an open question, not resolved</div>
+  <div class="cell gig">No one — fully self-serve, zero HR role (confirmed 23 Sep, R-27). RBAC/audit log/orphan-posting fallback ownership is an open question, not resolved</div>
+  <div class="cell ij">Cumulus/HRPS own all of it — Job ID, competencies, proficiency levels. CareerCompass doesn't own or maintain any of the underlying data, it's a periodic reader</div>
+  <div class="cell mj">Careers@Gov owns it entirely</div>
+  <div class="cell ijr">Agency HR, single owner, eligibility through placement</div>
+  <div class="cell sjr">Split three ways: parent HR, borrowing HR, PSD/Functional Leaders</div>
+
+  <div class="dim-label">System of record today</div>
+  <div class="cell stip">Being built fresh in CareerCompass</div>
+  <div class="cell gig">Being built fresh in CareerCompass</div>
+  <div class="cell ij">AS-IS: split across Cumulus and HRPS, synced via POCDEX. Target state: still Cumulus/HRPS — Compass pulls a periodic read from HRPS only for discovery, POCDEX drops out of the picture entirely (its retirement is unaffected by this correction)</div>
+  <div class="cell mj">Careers@Gov</div>
+  <div class="cell ijr">OTG</div>
+  <div class="cell sjr">OTG</div>
+
+  <div class="dim-label">Ringfencing type</div>
+  <div class="cell stip"><span class="tag good">None</span> — open to all</div>
+  <div class="cell gig"><span class="tag good">None</span> — open to all</div>
+  <div class="cell ij">By agency only — any officer within the agency can see and apply, flat agency-level check, no individual eligibility layer</div>
+  <div class="cell mj"><span class="tag good">None</span> — public listing</div>
+  <div class="cell ijr">By agency, <strong>plus optional per-officer eligibility criteria the agency sets</strong> (e.g. minimum years in a role, as AgilePSD requires) — a harder ringfencing case than Internal Jobs' flat agency check</div>
+  <div class="cell sjr">By agency, job family, or officer — nomination-gated</div>
+
+  <div class="section-row">Cross-cutting</div>
+  <div class="cell full-span"><span class="tag gate">Officers can only be in one development programme at a time — applies to STIPs, Gigs, IJR, and SJR alike (Rotation Guidebook, Annex A, Q12). Internal Jobs and Mainstream Jobs are full moves, not development-programme slots, so this rule doesn't constrain them the same way.</span></div>
+
+</div>
+
+<div class="footnotes">
+  <p><strong>Internal Jobs is shown here as a target-state architecture, not today's process — worth reading differently from the other five rows. Corrected 23 Sep after a misread of the source diagram.</strong> AS-IS, Job IDs and competency data are split across Cumulus and HRPS, synced through POCDEX, with CareerCompass only a downstream consumer. In the target state, Cumulus pushes postings into HRPS's Internal Job Portal one-way (Compass has no direct relationship with Cumulus at all), and Compass pulls from HRPS only, at regular sync intervals, not a live two-way API. Compass never holds or maintains the data itself, maintenance stays entirely in Cumulus/HRPS. POCDEX is still retired in the target state, that part is unaffected. Apply is a confirmed redirect: the officer links out to whichever system, HRPS or Cumulus, actually hosts the posting. The open question is no longer whether officers can apply in Compass, it's whether HRPS supplies ringfencing/agency-tagging data directly or Compass has to build that logic itself.</p>
+  <p><strong>Why STIPs and Gigs still look different from the rest:</strong> they're the only types where the actual adoption blocker (agencies can't customise forms on existing systems, so they double-post across FormSG, Careers@Gov, and OTG) is something native creation in CareerCompass directly solves. Mainstream Jobs, IJR, and SJR don't have that same problem — their friction is elsewhere (eligibility data, coordinated matching, cross-agency governance), so pulling their authoring into CareerCompass wouldn't fix anything. Internal Jobs is the exception: its target-state move to CareerCompass is a data-architecture decision, not an adoption fix.</p>
+  <p><strong>None of Mainstream Jobs, SJR, or Internal Jobs have CareerCompass write-back, by architecture, not by release choice.</strong> Mainstream Jobs and SJR remain a one-time port with no ongoing sync. Internal Jobs is a periodic read-only pull from HRPS, corrected 23 Sep from an earlier framing that implied Compass would push data back — it doesn't, and there's no plan for it to.</p>
+  <p><strong>"Native creation" for STIPs/Gigs means template-based, not full free-form authoring.</strong> Full native creation for every agency and every type is a further-out ambition, not part of this end-state picture as scoped today.</p>
+  <p><strong>IJR and Internal Jobs are more alike than the two rows above might suggest, per BO confirmation (23 Sep):</strong> duration, entry paths, browsing model, process time, and HR ownership are the same shape across both. The one real difference is ringfencing type — Internal Jobs is a flat agency-level check, IJR can add agency-defined per-officer eligibility criteria on top (tenure-in-role being one example, not necessarily the only one). Don't read the other rows as implying a bigger structural gap between the two than that.</p>
+</div>

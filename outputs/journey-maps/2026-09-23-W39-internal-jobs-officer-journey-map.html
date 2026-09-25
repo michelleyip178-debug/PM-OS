@@ -1,0 +1,356 @@
+<title>Internal Jobs Officer Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26;
+    --paper:#faf8f5;
+    --paper-raised:#ffffff;
+    --line:#e4ddd3;
+    --muted:#6b6f76;
+    --structured:#8a3f6a;
+    --structured-bg:#f6eaf1;
+    --initiated:#2f6b5e;
+    --initiated-bg:#e8f2ee;
+    --gate:#a13d3d;
+    --gate-bg:#f9eded;
+    --good:#3f7d5c;
+    --good-bg:#eaf4ef;
+    --open:#b8722e;
+    --open-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0;
+      --paper:#17191d;
+      --paper-raised:#1f2227;
+      --line:#33363c;
+      --muted:#9a9da4;
+      --structured:#d998bf;
+      --structured-bg:#301f29;
+      --initiated:#7fc4ac;
+      --initiated-bg:#17291f;
+      --gate:#e08a8a;
+      --gate-bg:#3a2020;
+      --good:#8fc4a8;
+      --good-bg:#1e2f26;
+      --open:#e0a869;
+      --open-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0;
+    --paper:#17191d;
+    --paper-raised:#1f2227;
+    --line:#33363c;
+    --muted:#9a9da4;
+    --structured:#d998bf;
+    --structured-bg:#301f29;
+    --initiated:#7fc4ac;
+    --initiated-bg:#17291f;
+    --gate:#e08a8a;
+    --gate-bg:#3a2020;
+    --good:#8fc4a8;
+    --good-bg:#1e2f26;
+    --open:#e0a869;
+    --open-bg:#332617;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',system-ui,sans-serif;
+    padding-inline:20px;
+    padding-block:32px 56px;
+    max-width:1280px;
+    margin-inline:auto;
+  }
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{
+    display:flex; flex-direction:column; gap:10px;
+    margin-bottom:36px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:68ch; line-height:1.55;}
+  .note{font-size:0.86rem; color:var(--muted); max-width:68ch; line-height:1.55; background:var(--open-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .note strong{color:var(--ink);}
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px;
+    margin-top:6px;
+    font-size:0.82rem;
+  }
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+
+  /* ===== State strip (replaces calendar) ===== */
+  .calendar{
+    display:grid;
+    grid-template-columns: 148px repeat(4, minmax(190px,1fr));
+    border:1px solid var(--line);
+    border-radius:12px 12px 0 0;
+    border-bottom:none;
+    overflow-x:auto;
+    background:var(--structured-bg);
+  }
+  .cal-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--structured-bg);
+    display:flex; align-items:center;
+    padding:10px 16px;
+    font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase;
+    color:var(--structured);
+    border-right:1px solid var(--line);
+  }
+  .cal-month{
+    padding:10px 14px;
+    border-right:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.76rem; font-weight:600; color:var(--structured);
+    font-variant-numeric:tabular-nums;
+    text-align:center;
+  }
+  .cal-month:last-child{border-right:none;}
+
+  /* ===== Journey grid ===== */
+  .journey{
+    display:grid;
+    grid-template-columns: 148px repeat(4, minmax(190px,1fr));
+    border:1px solid var(--line);
+    border-radius:0 0 12px 12px;
+    overflow-x:auto;
+    background:var(--paper-raised);
+  }
+  .row-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--paper-raised);
+    display:flex; align-items:center;
+    padding:14px 16px;
+    font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .phase-head{
+    padding:16px 14px 14px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:0.98rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+
+  .cell{
+    padding:14px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.85rem;
+    line-height:1.45;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+5){border-bottom:none;}
+
+  .cell.structured{background:var(--structured-bg);}
+  .cell.initiated{background:var(--initiated-bg);}
+
+  .action-text{font-weight:500;}
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.7rem; font-weight:600;
+    padding:3px 8px; border-radius:999px;
+    width:fit-content;
+  }
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.open{background:var(--open-bg); color:var(--open);}
+  .sub{font-size:0.77rem; color:var(--muted);}
+
+  .touchpoint{
+    font-size:0.72rem; color:var(--muted);
+    display:flex; align-items:center; gap:5px;
+    padding-top:6px; margin-top:auto;
+    border-top:1px dashed var(--line);
+  }
+
+  /* ===== Outcome strip ===== */
+  .outcomes{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+  .outcome-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    background:var(--paper-raised);
+  }
+  .outcome-card.matched{border-left:4px solid var(--good);}
+  .outcome-card.unmatched{border-left:4px solid var(--open);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p, .outcome-card ul{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .outcome-card ul{padding-left:1.1em;}
+  .outcome-card li{margin-bottom:3px;}
+
+  /* ===== Footnotes ===== */
+  .footnotes{
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:8px;
+    font-size:0.82rem; color:var(--muted); line-height:1.6;
+  }
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:860px){
+    .calendar, .journey{
+      display:flex; flex-direction:column;
+      overflow-x:visible;
+    }
+    .row-label, .cal-label{display:none;}
+    .cal-month{border:none; justify-content:flex-start; padding:4px 0; text-align:left;}
+    .calendar{border-radius:12px; border-bottom:1px solid var(--line); padding:8px 12px; margin-bottom:12px;}
+    .journey{border-radius:12px;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{
+      content:attr(data-lane);
+      display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:4px;
+    }
+    .cell.structured, .cell.initiated{
+      border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    }
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">Officer journey · Internal Jobs (AS-IS vs. TO-BE)</div>
+  <h1>Finding an internal job, before and after</h1>
+  <p class="dek">Internal Jobs isn't a development programme with a nomination cycle, it's a full posting change, and today it lives entirely outside CareerCompass, split across two legacy portals. This maps how discovery changes once Compass becomes the front door. Source: Internal Jobs architecture diagram (shared Sep 2026) and the Mobility Programmes comparison artifact.</p>
+  <p class="note"><strong>Read this differently from the IJR/SJR maps:</strong> those two lanes are two live paths an officer can be on at the same time this year (structured vs. officer-initiated). Here, the two lanes are sequential states of the same system: AS-IS is what's true today, TO-BE is the target architecture. An officer doesn't choose between them, the system moves from one to the other.</p>
+  <p class="note"><strong>R1 scope boundary:</strong> only Phase 01 (Discovery) is committed R1 scope, and it depends on an undelivered HRPS API with no date yet (R-07, 🔴 Red). Phases 02–04 are target-state architecture, not R1 deliverables. Apply-as-redirect is decided, not open, but it's still gated on that same API access landing. Ringfencing for Discovery is agency-level only, simpler than IJR's — the open question now is whether HRPS supplies that ringfencing data or Compass has to build it.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--structured)"></span>AS-IS — today, split across Cumulus &amp; HRPS</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--initiated)"></span>TO-BE — target state, Compass pulling from HRPS</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>Where officers get stuck</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--open)"></span>Still open: ringfencing-data source</span>
+  </div>
+</header>
+
+<div class="calendar" role="table" aria-label="Internal Jobs state strip">
+  <div class="cal-label">State</div>
+  <div class="cal-month">Discovery</div>
+  <div class="cal-month">Deciding where to look / apply</div>
+  <div class="cal-month">Applying</div>
+  <div class="cal-month">After you apply</div>
+</div>
+
+<div class="journey" role="table" aria-label="Internal Jobs officer journey, AS-IS vs TO-BE">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;">
+    <span class="phase-num">01</span>
+    <span class="phase-title">Finding out a job exists</span>
+    <span class="phase-dur">Where does the officer even look</span>
+  </div>
+  <div class="phase-head" style="grid-column:3;">
+    <span class="phase-num">02</span>
+    <span class="phase-title">Working out which system to use</span>
+    <span class="phase-dur">Login, access, which portal is "the" portal</span>
+  </div>
+  <div class="phase-head" style="grid-column:4;">
+    <span class="phase-num">03</span>
+    <span class="phase-title">Applying</span>
+    <span class="phase-dur">Submitting interest in the role</span>
+  </div>
+  <div class="phase-head" style="grid-column:5;">
+    <span class="phase-num">04</span>
+    <span class="phase-title">After applying</span>
+    <span class="phase-dur">What happens to the application</span>
+  </div>
+
+  <!-- AS-IS ROW -->
+  <div class="row-label" style="grid-row:2;">AS-IS<br>(today)</div>
+
+  <div class="cell structured" data-lane="AS-IS (today)" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Has to already know Internal Jobs exist in two separate places: Cumulus's Internal Job Portal and HRPS's Internal Job Portal. There's no single catalog to browse</span>
+    <span class="tag gate">Fragmented discovery, no unified view</span>
+    <div class="touchpoint">↳ No CareerCompass presence at all today</div>
+  </div>
+
+  <div class="cell structured" data-lane="AS-IS (today)" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Picks a portal and logs in separately: Cumulus needs a Workday login, HRPS needs WOG AD or SingPass. A role posted in one may not show in the other, since sync only runs one-way (HRPS to Cumulus)</span>
+    <span class="sub">Officer has to check both to be sure they've seen everything</span>
+    <div class="touchpoint">↳ Two credentials, two logins, two searches</div>
+  </div>
+
+  <div class="cell structured" data-lane="AS-IS (today)" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Applies directly inside whichever portal had the listing, following that system's own process</span>
+    <div class="touchpoint">↳ Cumulus or HRPS, whichever surfaced the role</div>
+  </div>
+
+  <div class="cell structured" data-lane="AS-IS (today)" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Application and Job ID data lives in whichever system took it, and later shows up in POCDEX, which both systems feed. Compass only sees this data downstream, read-only, it can't be where the officer follows up</span>
+    <div class="touchpoint">↳ POCDEX aggregates, Compass just reads</div>
+  </div>
+
+  <!-- TO-BE ROW -->
+  <div class="row-label" style="grid-row:3;">TO-BE<br>(target)</div>
+
+  <div class="cell initiated" data-lane="TO-BE (target)" style="grid-row:3; grid-column:2;">
+    <span class="action-text">Sees Internal Jobs in CareerCompass's unified catalog, alongside IJR, SJR, and Gigs — no need to know Cumulus or HRPS exist. Compass builds this catalog with a periodic pull from HRPS, not a live connection</span>
+    <span class="tag good">One place to look</span>
+    <div class="touchpoint">↳ Compass becomes the front door for discovery</div>
+  </div>
+
+  <div class="cell initiated" data-lane="TO-BE (target)" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Doesn't need to pick a system or manage two logins. HRPS stays the source of record; Compass just reads from it on a schedule</span>
+    <div class="touchpoint">↳ Single login, single place to look</div>
+  </div>
+
+  <div class="cell initiated" data-lane="TO-BE (target)" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Apply is a <strong>confirmed redirect</strong>, not native in-app. Clicking Apply links out to whichever system actually hosts the posting — HRPS or Cumulus — using the link HRPS's record carries</span>
+    <span class="tag good">Confirmed: redirect to hosting system</span>
+    <div class="touchpoint">↳ Decided, still gated on HRPS API access landing</div>
+  </div>
+
+  <div class="cell initiated" data-lane="TO-BE (target)" style="grid-row:3; grid-column:5;">
+    <span class="action-text">Officer lands on whichever system hosts the posting and finishes applying there. Compass's role ends at the redirect</span>
+    <span class="tag open">Open: does HRPS supply ringfencing data, or does Compass build it</span>
+    <div class="touchpoint">↳ New Job IDs still get created in Cumulus/HRPS</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card matched">
+    <h3>What actually gets better</h3>
+    <p>Discovery. An officer no longer has to know two systems exist, remember two logins, or check both to be sure they've seen every posting. Apply routes cleanly to whichever system hosts the posting, so nobody's stuck guessing where to go.</p>
+  </div>
+  <div class="outcome-card unmatched">
+    <h3>What's still open</h3>
+    <ul>
+      <li>Whether HRPS supplies ringfencing/agency-tagging data directly, or Compass has to build that logic itself</li>
+      <li>Delivery date for the HRPS API access this whole discovery flow depends on (R-07)</li>
+      <li>Timeline — can't firm up until the API dependency clears</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>This isn't a development programme with a cycle.</strong> Unlike IJR or SJR, there's no nomination window, and the ringfencing is simpler: agency-level only, any officer within the agency can see and apply, no individual eligibility layer on top (confirmed by BOs, 23 Sep — this is the one real structural difference from IJR, which can add agency-defined per-officer criteria like minimum tenure). Internal Jobs is a full, permanent posting change, and today it's entirely a data-architecture problem, not a CareerCompass feature.</p>
+  <p><strong>Don't read TO-BE as "Compass takes over."</strong> Compass pulls from HRPS on a periodic sync and never holds or maintains the data — that stays entirely in the HR systems. Apply redirects out to whichever system hosts the posting; it's not a native in-app application.</p>
+  <p><strong>Where this sits next to the other paths:</strong> see the Mobility Programmes comparison artifact for how Internal Jobs stacks up against IJR, SJR, and STIPs &amp; Gigs on the same set of questions.</p>
+</div>
+</content>

@@ -1,0 +1,382 @@
+<title>SJR Officer Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26;
+    --paper:#faf8f5;
+    --paper-raised:#ffffff;
+    --line:#e4ddd3;
+    --muted:#6b6f76;
+    --structured:#2f5d8a;
+    --structured-bg:#eaf1f8;
+    --initiated:#b8722e;
+    --initiated-bg:#faf1e5;
+    --gate:#a13d3d;
+    --gate-bg:#f9eded;
+    --good:#3f7d5c;
+    --good-bg:#eaf4ef;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0;
+      --paper:#17191d;
+      --paper-raised:#1f2227;
+      --line:#33363c;
+      --muted:#9a9da4;
+      --structured:#7fb0e0;
+      --structured-bg:#1b2a38;
+      --initiated:#e0a869;
+      --initiated-bg:#332617;
+      --gate:#e08a8a;
+      --gate-bg:#3a2020;
+      --good:#8fc4a8;
+      --good-bg:#1e2f26;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0;
+    --paper:#17191d;
+    --paper-raised:#1f2227;
+    --line:#33363c;
+    --muted:#9a9da4;
+    --structured:#7fb0e0;
+    --structured-bg:#1b2a38;
+    --initiated:#e0a869;
+    --initiated-bg:#332617;
+    --gate:#e08a8a;
+    --gate-bg:#3a2020;
+    --good:#8fc4a8;
+    --good-bg:#1e2f26;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Nunito',system-ui,sans-serif;
+    padding-inline:20px;
+    padding-block:32px 56px;
+    max-width:1280px;
+    margin-inline:auto;
+  }
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+
+  header.page{
+    display:flex; flex-direction:column; gap:10px;
+    margin-bottom:36px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:64ch; line-height:1.55;}
+  .note{font-size:0.86rem; color:var(--muted); max-width:68ch; line-height:1.55; background:var(--initiated-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .note strong{color:var(--ink);}
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px;
+    margin-top:6px;
+    font-size:0.82rem;
+  }
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+
+  /* ===== Calendar strip ===== */
+  .calendar{
+    display:grid;
+    grid-template-columns: 148px repeat(6, minmax(160px,1fr));
+    border:1px solid var(--line);
+    border-radius:12px 12px 0 0;
+    border-bottom:none;
+    overflow-x:auto;
+    background:var(--structured-bg);
+  }
+  .cal-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--structured-bg);
+    display:flex; align-items:center;
+    padding:10px 16px;
+    font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase;
+    color:var(--structured);
+    border-right:1px solid var(--line);
+  }
+  .cal-month{
+    padding:10px 14px;
+    border-right:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.76rem; font-weight:600; color:var(--structured);
+    font-variant-numeric:tabular-nums;
+  }
+  .cal-month:last-child{border-right:none;}
+
+  /* ===== Journey grid ===== */
+  .journey{
+    display:grid;
+    grid-template-columns: 148px repeat(6, minmax(160px,1fr));
+    border:1px solid var(--line);
+    border-radius:0 0 12px 12px;
+    overflow-x:auto;
+    background:var(--paper-raised);
+  }
+  .row-label{
+    position:sticky; left:0; z-index:2;
+    background:var(--paper-raised);
+    display:flex; align-items:center;
+    padding:14px 16px;
+    font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .phase-head{
+    padding:16px 14px 14px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:0.98rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+
+  .cell{
+    padding:14px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.85rem;
+    line-height:1.45;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+7){border-bottom:none;}
+
+  .cell.structured{background:var(--structured-bg);}
+  .cell.initiated{background:var(--initiated-bg);}
+
+  .action-text{font-weight:500;}
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.7rem; font-weight:600;
+    padding:3px 8px; border-radius:999px;
+    width:fit-content;
+  }
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .sub{font-size:0.77rem; color:var(--muted);}
+
+  .touchpoint{
+    font-size:0.72rem; color:var(--muted);
+    display:flex; align-items:center; gap:5px;
+    padding-top:6px; margin-top:auto;
+    border-top:1px dashed var(--line);
+  }
+
+  /* ===== Outcome strip ===== */
+  .outcomes{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:20px;
+  }
+  .outcome-card{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    background:var(--paper-raised);
+  }
+  .outcome-card.matched{border-left:4px solid var(--good);}
+  .outcome-card.unmatched{border-left:4px solid var(--gate);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p, .outcome-card ul{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .outcome-card ul{padding-left:1.1em;}
+  .outcome-card li{margin-bottom:3px;}
+
+  /* ===== Footnotes ===== */
+  .footnotes{
+    margin-top:28px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:8px;
+    font-size:0.82rem; color:var(--muted); line-height:1.6;
+  }
+  .footnotes strong{color:var(--ink);}
+
+  @media (max-width:860px){
+    .calendar, .journey{
+      display:flex; flex-direction:column;
+      overflow-x:visible;
+    }
+    .row-label, .cal-label{display:none;}
+    .cal-month{border:none; justify-content:flex-start; padding:4px 0;}
+    .calendar{border-radius:12px; border-bottom:1px solid var(--line); padding:8px 12px; margin-bottom:12px;}
+    .journey{border-radius:12px;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{
+      content:attr(data-lane);
+      display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:4px;
+    }
+    .cell.structured, .cell.initiated{
+      border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    }
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">Officer journey · Structured Job Rotation (SJR / secondment)</div>
+  <h1>How officers get seconded</h1>
+  <p class="dek">A cross-agency move that runs once a year on PSD's calendar. Nomination comes before visibility, so officers can't browse roles until they're already in the cycle. Source: Rotation Guidebook (Feb 2026), Section 4 &amp; Table 4.</p>
+  <p class="note"><strong>R1 scope boundary:</strong> SJR-the-programme stays on OTG through the 2027 cycle and doesn't move to Compass in R1 — this journey isn't part of what R1 delivers. It migrates to Compass ahead of the 2028 cycle (risk register R-13, resolved). What does move to Compass in R1 is the broader Secondment umbrella's agency-led and officer-initiated paths, which is a different, separate journey.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--structured)"></span>PSD's annual SJR exercise</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--initiated)"></span>Agency-led / officer-initiated</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>Where officers get stuck</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--good)"></span>Officer's call</span>
+  </div>
+</header>
+
+<div class="calendar" role="table" aria-label="SJR annual calendar">
+  <div class="cal-label">Calendar</div>
+  <div class="cal-month">Mar</div>
+  <div class="cal-month">Mid-Mar – Mid-May</div>
+  <div class="cal-month">Mid-May – End-Jun</div>
+  <div class="cal-month">Jul – End-Aug</div>
+  <div class="cal-month">Jul – End-Aug</div>
+  <div class="cal-month">Sep onward</div>
+</div>
+
+<div class="journey" role="table" aria-label="SJR officer journey by phase and path">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;">
+    <span class="phase-num">01</span>
+    <span class="phase-title">Publicity and brownbag</span>
+    <span class="phase-dur">Run by PSD and Functional Leaders</span>
+  </div>
+  <div class="phase-head" style="grid-column:3;">
+    <span class="phase-num">02</span>
+    <span class="phase-title">Nomination window</span>
+    <span class="phase-dur">The real gate</span>
+  </div>
+  <div class="phase-head" style="grid-column:4;">
+    <span class="phase-num">03</span>
+    <span class="phase-title">Getting ready</span>
+    <span class="phase-dur">Onboarded to OTG</span>
+  </div>
+  <div class="phase-head" style="grid-column:5;">
+    <span class="phase-num">04</span>
+    <span class="phase-title">Applying</span>
+    <span class="phase-dur">"Raise hand" on OTG</span>
+  </div>
+  <div class="phase-head" style="grid-column:6;">
+    <span class="phase-num">05</span>
+    <span class="phase-title">Matching</span>
+    <span class="phase-dur">Interviews, then placement</span>
+  </div>
+  <div class="phase-head" style="grid-column:7;">
+    <span class="phase-num">06</span>
+    <span class="phase-title">Secondment</span>
+    <span class="phase-dur">2–3 years, starts in September</span>
+  </div>
+
+  <!-- PSD ANNUAL ROW -->
+  <div class="row-label" style="grid-row:2;">PSD's annual<br>SJR exercise</div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Goes to the brownbag session, where Functional Leaders talk through the programme's benefits</span>
+    <span class="tag good">Officer's call</span>
+    <div class="touchpoint">↳ Info session</div>
+  </div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Tells PSD or agency HR they're interested, but has to clear eligibility first: MX12–10 grade, 3+ years in role, min 'C' for 2 years</span>
+    <span class="tag gate">Gate: eligibility, then agency nomination</span>
+    <div class="touchpoint">↳ Agency HR pulls together and submits nominations</div>
+  </div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Gets onboarded to OTG by PSD, attends an Open House to look at roles for this cycle</span>
+    <span class="sub">This is the first point where roles are actually visible</span>
+    <div class="touchpoint">↳ OTG onboarding, plus Open House</div>
+  </div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:5;">
+    <span class="action-text">Browses roles on OTG, applies with the "raise hand" feature</span>
+    <span class="tag good">Officer's call</span>
+    <div class="touchpoint">↳ OTG "raise hand"</div>
+  </div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:6;">
+    <span class="action-text">Interviews with the borrowing agency, then waits on a placement decision</span>
+    <span class="tag gate">Out of the officer's hands</span>
+    <div class="touchpoint">↳ Interview, plus FL/PSD facilitation</div>
+  </div>
+
+  <div class="cell structured" data-lane="PSD Annual SJR" style="grid-row:2; grid-column:7;">
+    <span class="action-text">Posting starts once the parent and borrowing agencies agree; a pre-secondment briefing covers payroll, reporting lines, and how ranking and promotion work during the move</span>
+    <div class="touchpoint">↳ See outcome branch below</div>
+  </div>
+
+  <!-- AGENCY-LED / OFFICER-INITIATED ROW -->
+  <div class="row-label" style="grid-row:3;">Agency-led /<br>officer-initiated</div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:2;">
+    <span class="action-text">Some Ministry families run their own publicity — MDDI's PC SJR, for example, runs twice a year, in April and September</span>
+    <div class="touchpoint">↳ Sector or agency-specific</div>
+  </div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:3;">
+    <span class="action-text">Or applies directly for an out-of-agency role, without waiting for the annual cycle</span>
+    <span class="tag good">Officer's call</span>
+    <div class="touchpoint">↳ Officer-initiated application</div>
+  </div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Cadence and process vary by agency and Ministry family, there's no single standard timeline</span>
+    <span class="sub">Finance cluster (MOF, IRAS, CPFB), MND family, and others each run it their own way</span>
+    <div class="touchpoint">↳ Agency-specific process</div>
+  </div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:5;">
+    <span class="action-text">Applies through whatever process that agency runs</span>
+    <div class="touchpoint">↳ Varies</div>
+  </div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:6;">
+    <span class="action-text">Interviews and matching, agency-run</span>
+    <span class="tag gate">Out of the officer's hands</span>
+    <div class="touchpoint">↳ Agency-run matching</div>
+  </div>
+
+  <div class="cell initiated" data-lane="Agency-Led / Officer-Initiated" style="grid-row:3; grid-column:7;">
+    <span class="action-text">Same onboarding and briefing expectations as the PSD path</span>
+    <div class="touchpoint">↳ Joins up with the PSD outcome</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card matched">
+    <h3>During the secondment</h3>
+    <p>The parent agency checks in regularly for the first 6 months. The borrowing agency handles onboarding and well-being check-ins. Once the officer has been there 6 months or more, the borrowing agency assesses their performance. Pay, benefits, and employment status stay with the parent agency the whole time.</p>
+  </div>
+  <div class="outcome-card unmatched">
+    <h3>Coming back, starting 6 months before the end</h3>
+    <ul>
+      <li>Parent agency HR schedules check-ins and reviews what the officer's picked up</li>
+      <li>Confirms what the officer wants next and shares which roles are open</li>
+      <li>Officer can ask to stay with the borrowing agency (decided case by case) or extend</li>
+      <li>If no role turns up despite a real effort, No Pay Leave is the fallback, by mutual agreement</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>The big difference from IJR:</strong> discovery here is nomination-gated, not open browsing. An officer can't see SJR roles on OTG until they've cleared eligibility and their agency HR has nominated them into that year's cycle (Annex B, Q7).</p>
+  <p><strong>Promotion concession, from AY26/PY27:</strong> officers who rotate out and score 'C+' or better in their first year with the borrowing agency may be considered for promotion, at the agency's discretion. This doesn't apply to Internal Job Rotations.</p>
+  <p><strong>One rule not shown above, and not something Compass checks:</strong> officers are only meant to be in one development programme at a time (Annex A, Q12), so this journey assumes they're not also in an IJR, Gig, or STIP track. This is Guidebook policy, not an R1 platform feature — Compass doesn't enforce or flag concurrent enrollment (confirmed 23 Sep, R-28).</p>
+</div>

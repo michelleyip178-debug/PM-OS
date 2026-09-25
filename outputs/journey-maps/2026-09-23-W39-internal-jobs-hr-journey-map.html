@@ -1,0 +1,213 @@
+<title>Internal Jobs HR Journey</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#1c1f26; --paper:#faf8f5; --paper-raised:#ffffff; --line:#e4ddd3; --muted:#6b6f76;
+    --agencyhr:#8a3f6a; --agencyhr-bg:#f6eaf1;
+    --psd:#2f6b5e; --psd-bg:#e8f2ee;
+    --gate:#a13d3d; --gate-bg:#f9eded;
+    --good:#3f7d5c; --good-bg:#eaf4ef;
+    --load:#2f5d8a; --load-bg:#eaf1f8;
+    --open:#b8722e; --open-bg:#faf1e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+      --agencyhr:#d998bf; --agencyhr-bg:#301f29;
+      --psd:#7fc4ac; --psd-bg:#17291f;
+      --gate:#e08a8a; --gate-bg:#3a2020;
+      --good:#8fc4a8; --good-bg:#1e2f26;
+      --load:#7fb0e0; --load-bg:#1b2a38;
+      --open:#e0a869; --open-bg:#332617;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eee9e0; --paper:#17191d; --paper-raised:#1f2227; --line:#33363c; --muted:#9a9da4;
+    --agencyhr:#d998bf; --agencyhr-bg:#301f29;
+    --psd:#7fc4ac; --psd-bg:#17291f;
+    --gate:#e08a8a; --gate-bg:#3a2020;
+    --good:#8fc4a8; --good-bg:#1e2f26;
+    --load:#7fb0e0; --load-bg:#1b2a38;
+    --open:#e0a869; --open-bg:#332617;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:'Nunito',system-ui,sans-serif; padding-inline:20px; padding-block:32px 56px; max-width:1280px; margin-inline:auto;}
+  h1,h2,h3{font-family:'Quicksand',system-ui,sans-serif; text-wrap:balance; margin:0;}
+  header.page{display:flex; flex-direction:column; gap:10px; margin-bottom:36px; padding-bottom:24px; border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:0.72rem; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--muted);}
+  h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:600; line-height:1.15;}
+  .dek{font-size:0.98rem; color:var(--muted); max-width:68ch; line-height:1.55;}
+  .note{font-size:0.86rem; color:var(--muted); max-width:68ch; line-height:1.55; background:var(--open-bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px;}
+  .note strong{color:var(--ink);}
+  .legend{display:flex; flex-wrap:wrap; gap:18px; margin-top:6px; font-size:0.82rem;}
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--muted);}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .calendar{display:grid; grid-template-columns:148px repeat(4, minmax(190px,1fr)); border:1px solid var(--line); border-radius:12px 12px 0 0; border-bottom:none; overflow-x:auto; background:var(--agencyhr-bg);}
+  .cal-label{position:sticky; left:0; z-index:2; background:var(--agencyhr-bg); display:flex; align-items:center; padding:10px 16px; font-size:0.68rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--agencyhr); border-right:1px solid var(--line);}
+  .cal-month{padding:10px 14px; border-right:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:0.76rem; font-weight:600; color:var(--agencyhr); font-variant-numeric:tabular-nums; text-align:center;}
+  .cal-month:last-child{border-right:none;}
+  .journey{display:grid; grid-template-columns:148px repeat(4, minmax(190px,1fr)); border:1px solid var(--line); border-radius:0 0 12px 12px; overflow-x:auto; background:var(--paper-raised);}
+  .row-label{position:sticky; left:0; z-index:2; background:var(--paper-raised); display:flex; align-items:center; padding:14px 16px; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); border-right:1px solid var(--line);}
+  .phase-head{padding:16px 14px 14px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); display:flex; flex-direction:column; gap:4px;}
+  .phase-head:last-child{border-right:none;}
+  .phase-num{font-size:0.7rem; font-weight:700; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .phase-title{font-family:'Quicksand',system-ui,sans-serif; font-size:0.96rem; font-weight:700; line-height:1.25;}
+  .phase-dur{font-size:0.74rem; color:var(--muted);}
+  .cell{padding:14px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-size:0.84rem; line-height:1.45; display:flex; flex-direction:column; gap:8px;}
+  .cell:last-child{border-right:none;}
+  .journey > .cell:nth-last-child(-n+5){border-bottom:none;}
+  .cell.agencyhr{background:var(--agencyhr-bg);}
+  .cell.psd{background:var(--psd-bg);}
+  .action-text{font-weight:500;}
+  .tag{display:inline-flex; align-items:center; gap:5px; font-size:0.68rem; font-weight:600; padding:3px 8px; border-radius:999px; width:fit-content;}
+  .tag.gate{background:var(--gate-bg); color:var(--gate);}
+  .tag.good{background:var(--good-bg); color:var(--good);}
+  .tag.load{background:var(--load-bg); color:var(--load);}
+  .tag.open{background:var(--open-bg); color:var(--open);}
+  .sub{font-size:0.76rem; color:var(--muted);}
+  .touchpoint{font-size:0.72rem; color:var(--muted); display:flex; align-items:center; gap:5px; padding-top:6px; margin-top:auto; border-top:1px dashed var(--line);}
+  .outcomes{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .outcome-card{border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--paper-raised);}
+  .outcome-card.matched{border-left:4px solid var(--good);}
+  .outcome-card.load{border-left:4px solid var(--gate);}
+  .outcome-card h3{font-size:1rem; margin-bottom:8px;}
+  .outcome-card p, .outcome-card ul{font-size:0.86rem; color:var(--muted); line-height:1.55; margin:0;}
+  .outcome-card ul{padding-left:1.1em;}
+  .outcome-card li{margin-bottom:3px;}
+  .footnotes{margin-top:28px; padding-top:18px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:8px; font-size:0.82rem; color:var(--muted); line-height:1.6;}
+  .footnotes strong{color:var(--ink);}
+  @media (max-width:860px){
+    .calendar, .journey{display:flex; flex-direction:column; overflow-x:visible;}
+    .row-label, .cal-label{display:none;}
+    .cal-month{border:none; justify-content:flex-start; padding:4px 0; text-align:left;}
+    .calendar{border-radius:12px; border-bottom:1px solid var(--line); padding:8px 12px; margin-bottom:12px;}
+    .journey{border-radius:12px;}
+    .phase-head{border:none; padding:0 0 10px;}
+    .cell{border:none; padding:10px 0 0;}
+    .cell::before{content:attr(data-lane); display:block; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;}
+    .cell.agencyhr, .cell.psd{border-radius:10px; padding:10px 12px; margin-bottom:8px;}
+    .outcomes{grid-template-columns:1fr;}
+  }
+</style>
+
+<header class="page">
+  <div class="eyebrow">HR journey · Internal Jobs (AS-IS vs. TO-BE)</div>
+  <h1>Maintaining Internal Jobs data, before and after</h1>
+  <p class="dek">This is a data-architecture story more than a process story. HR still creates and maintains Job IDs and competency data the same way in both states, in Cumulus and HRPS — what changes is that Compass starts pulling a periodic read from HRPS to power discovery. Source: Internal Jobs architecture diagram and the Mobility Programmes comparison artifact.</p>
+  <p class="note"><strong>Read this differently from the IJR/SJR maps:</strong> those two lanes are two live paths running at the same time (structured vs. officer-initiated). Here, the two lanes are sequential states of the same system: AS-IS is what's true today, TO-BE is the target architecture. HR doesn't choose a lane, the system moves from one to the other, on a timeline that isn't set yet.</p>
+  <p class="note"><strong>R1 scope boundary:</strong> R1 commits to Internal Jobs discovery surfacing in Compass, gated on an undelivered HRPS API with no date yet (R-07, 🔴 Red). Job ID creation and maintenance stay in Cumulus/HRPS in both states — HR's process doesn't change. The open question is whether HRPS's API response supplies ringfencing data directly, or whether Compass has to build that logic itself.</p>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background:var(--agencyhr)"></span>AS-IS — split across Cumulus &amp; HRPS, synced via POCDEX</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--psd)"></span>TO-BE — Compass pulls a periodic read from HRPS only</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--gate)"></span>Where the risk sits</span>
+    <span class="legend-item"><span class="swatch" style="background:var(--open)"></span>Still open: ringfencing-data source</span>
+  </div>
+</header>
+
+<div class="calendar" role="table" aria-label="Internal Jobs HR state strip">
+  <div class="cal-label">State</div>
+  <div class="cal-month">Where data is created</div>
+  <div class="cal-month">Where data is maintained</div>
+  <div class="cal-month">How systems sync</div>
+  <div class="cal-month">The fallback if sync breaks</div>
+</div>
+
+<div class="journey" role="table" aria-label="Internal Jobs HR journey, AS-IS vs TO-BE">
+
+  <div class="row-label" style="grid-row:1;">Phase</div>
+  <div class="phase-head" style="grid-column:2;">
+    <span class="phase-num">01</span>
+    <span class="phase-title">Creating a Job ID</span>
+    <span class="phase-dur">This step doesn't move</span>
+  </div>
+  <div class="phase-head" style="grid-column:3;">
+    <span class="phase-num">02</span>
+    <span class="phase-title">Maintaining competencies &amp; proficiency</span>
+    <span class="phase-dur">OCC, FC, Agency FC, PL1–PL5</span>
+  </div>
+  <div class="phase-head" style="grid-column:4;">
+    <span class="phase-num">03</span>
+    <span class="phase-title">Keeping systems in sync</span>
+    <span class="phase-dur">One-way today, periodic HRPS-only pull in TO-BE</span>
+  </div>
+  <div class="phase-head" style="grid-column:5;">
+    <span class="phase-num">04</span>
+    <span class="phase-title">If something breaks</span>
+    <span class="phase-dur">The safety net question</span>
+  </div>
+
+  <!-- AS-IS ROW -->
+  <div class="row-label" style="grid-row:2;">AS-IS<br>(today)</div>
+
+  <div class="cell agencyhr" data-lane="AS-IS (today)" style="grid-row:2; grid-column:2;">
+    <span class="action-text">Job IDs get created and maintained separately in two systems: Cumulus (Workday) and HRPS (S/4HANA), each running its own Internal Job Portal</span>
+    <div class="touchpoint">↳ No single system of record</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="AS-IS (today)" style="grid-row:2; grid-column:3;">
+    <span class="action-text">Both systems independently hold the same categories of data: OCC (WOG), Agency FC, competencies, job profiles, and proficiency levels PL1–PL5. HRPS additionally holds FC (WOG)</span>
+    <span class="tag gate">Duplicated, not shared</span>
+    <div class="touchpoint">↳ Maintained twice, by two different teams</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="AS-IS (today)" style="grid-row:2; grid-column:4;">
+    <span class="action-text">Only a limited, one-way sync exists: WOG FC flows from HRPS to Cumulus. Everything else stays wherever it was entered. Both systems feed POCDEX, which aggregates Job ID data at the officer level</span>
+    <div class="touchpoint">↳ One-way sync plus manual upkeep in each system</div>
+  </div>
+
+  <div class="cell agencyhr" data-lane="AS-IS (today)" style="grid-row:2; grid-column:5;">
+    <span class="action-text">POCDEX is the aggregation point today. Compass sits downstream of it as a read-only consumer, it doesn't maintain anything itself</span>
+    <div class="touchpoint">↳ Compass (current): downstream, read-only</div>
+  </div>
+
+  <!-- TO-BE ROW -->
+  <div class="row-label" style="grid-row:3;">TO-BE<br>(target)</div>
+
+  <div class="cell psd" data-lane="TO-BE (target)" style="grid-row:3; grid-column:2;">
+    <span class="action-text">HR still creates new Job IDs in Cumulus and HRPS. <strong>That part doesn't move.</strong> Cumulus pushes its postings into HRPS's Internal Job Portal, one-way — Compass has no direct relationship with Cumulus</span>
+    <span class="tag good">Job ID creation stays as-is</span>
+    <div class="touchpoint">↳ Both legacy Internal Job Portals stay live</div>
+  </div>
+
+  <div class="cell psd" data-lane="TO-BE (target)" style="grid-row:3; grid-column:3;">
+    <span class="action-text">HRPS stays the sole source for competencies, Job ID, and proficiency levels (PL1–PL5). Compass just reads from it on a schedule</span>
+    <span class="tag good">HRPS remains the maintained source; Compass reads, doesn't own</span>
+    <div class="touchpoint">↳ Periodic pull, not a data hub</div>
+  </div>
+
+  <div class="cell psd" data-lane="TO-BE (target)" style="grid-row:3; grid-column:4;">
+    <span class="action-text">Sync stays one-directional and periodic, not a live two-way API. Apply is a confirmed redirect — the officer links out to whichever system, HRPS or Cumulus, actually hosts the posting</span>
+    <span class="tag open">Open: does HRPS supply ringfencing data, or does Compass build it</span>
+    <div class="touchpoint">↳ Periodic HRPS→Compass pull only</div>
+  </div>
+
+  <div class="cell psd" data-lane="TO-BE (target)" style="grid-row:3; grid-column:5;">
+    <span class="action-text">POCDEX retires as planned. If the periodic HRPS pull breaks, there's no fallback left — today's safety net goes away</span>
+    <span class="tag gate">A fallback gets removed, not simplified</span>
+    <div class="touchpoint">↳ No POCDEX in the TO-BE data flow</div>
+  </div>
+
+</div>
+
+<div class="outcomes">
+  <div class="outcome-card matched">
+    <h3>What actually gets better</h3>
+    <p>Officers get one place to discover Internal Jobs instead of two. HR's own maintenance work in Cumulus and HRPS doesn't change, and apply routes cleanly to whichever system hosts the posting.</p>
+  </div>
+  <div class="outcome-card load">
+    <h3>What HR should not assume is solved</h3>
+    <ul>
+      <li>Job ID creation and data maintenance still happen entirely in Cumulus/HRPS — Compass doesn't take that over</li>
+      <li>POCDEX is gone, so there's no fallback if the HRPS pull breaks</li>
+      <li>Whether HRPS supplies ringfencing data directly, or Compass has to build it, is unresolved</li>
+      <li>No delivery date yet for the HRPS API access this discovery flow depends on (R-07)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footnotes">
+  <p><strong>Compass doesn't become a data hub here.</strong> Cumulus pushes postings into HRPS one-way, Compass pulls from HRPS only on a periodic sync, and never maintains or holds the data itself. Job ID creation and maintenance stay exactly where they are today, entirely in Cumulus and HRPS.</p>
+  <p><strong>POCDEX going away is a real risk, not just cleanup.</strong> Today, if the one-way HRPS-to-Cumulus sync fails, POCDEX still aggregates both systems' Job ID data, so Compass has a fallback path to read from. In TO-BE, POCDEX is retired. If the periodic HRPS→Compass pull breaks, there's no fallback left — that's the exact risk named in the Mobility Programmes comparison artifact's footnotes.</p>
+  <p><strong>Don't oversell TO-BE as resolved.</strong> Apply as a redirect to the hosting system is a confirmed architecture decision, not TBC. What's still open is narrower: whether HRPS's API response supplies ringfencing data directly, or whether Compass has to build that logic itself (R-07).</p>
+</div>
+</content>
