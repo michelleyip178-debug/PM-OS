@@ -1,11 +1,18 @@
 # R1 Opportunities: Reduced Scope & Feasibility Brief
 
 **Date:** 2026-09-18  
+
 **Author:** Michelle Yip  
+
 **Audience:** Adrian Ang, Barry Lim, Rama Moorthy  
+
 **Purpose:** Document the agreed reduced scope for CareerCompass R1 Opportunities, including platform dependencies (RBAC and CAM), to establish a grounded man-weeks estimate and holiday-adjusted capacity model.
 
+> **🟠 STALE, 23 Sep — read with caution, several claims here are superseded.** This brief predates the 23 Sep scope confirmation (WOG-wide population, not pilot-only — [R1 Risk Register](2026-09-16-W38-r1-risk-register.md) R-14) and the same-day discovery that STIPs & Gigs has zero HR role (R-27) — every "Agency HR POC" reference below for the orphaned-posting fallback is now inaccurate; that ownership is currently unassigned, not HR's. The man-week estimate in this brief also predates the confirmed scope and a squad composition change (Thomas Huchedé now Tech Lead, +1 engineer joining) — treat every effort figure here as pending re-estimate (R-12), not current. See the [R1 Release One-Pager](../prds/2026-09-23-W39-r1-release-one-pager.md) for the current state.
+
 ---
+
+> **🔴 SUPERSEDED, 22 Sep — this brief's scope and man-week estimate are out of date.** See **[R1 Scope Confirmed (22 Sep)](../decisions/2026-09-22-W39-r1-scope-confirmed-transition-plan.md) — now authoritative.** Internal jobs now commit to native in-platform apply (Pillar 2 below still describes discovery-only/external-redirect). End-to-end application status tracking is now in scope beyond STIPs/Gigs. **CV builder is NOT in scope** — Pillar 1's existing "no file upload" stance holds (corrected 22 Sep). **The 18.0–23.5 mw total in Section 6 has not been re-sized against the internal-job apply / status-tracking expansion** — do not quote it as current.
 
 ## 1. Executive Summary
 
@@ -24,6 +31,8 @@ To deliver a feasible R1 without compromising the 24-25 Nov MVP launch or overex
 
 ### Pillar 1: STIPs & Gigs (Open Posting, Lightweight Apply & Review)
 
+> **⚠️ Pending Adrian/Rama confirmation (as of 21 Sep):** Adrian raised an open question on how STIPs/Gigs should work during the interim period where some agencies are on Compass and others remain on OTG — see [OTG/Compass Interim State thread](../meeting-notes/2026-09-21-W39-otg-compass-interim-state-adrian-thread.md). One option under discussion (removing the POCDEX 6-pilot-agency login dependency, or adding a public/read-only view for non-POCDEX agencies via WOG AD) would change the "6 pilot agencies" boundary this entire pillar is scoped against below. **Do not treat Pillar 1's scope or estimate as final for Tuesday's delivery until this is resolved.**
+
 | Area | In Scope (R1) | Out of Scope (Deferred to R2) | Technical Questions for Rama / Barry |
 |---|---|---|---|
 | **Posting Creation & Permissions** | Open to **any authenticated officer** across the 6 pilot agencies. Simple creation form (title, description, agency, competencies, closing date). Mandatory RO awareness checkbox: *"I confirm my Reporting Officer is aware of this gig posting."* Creator automatically becomes Posting Owner. | Complex HR approval chains, role-based posting permissions, supervisor pre-clearance workflows, departmental approval queues. | Can any authenticated officer write to the opportunities table via standard session token, or does our backend currently require an explicit Keycloak role/group membership to authorize creation endpoints? |
@@ -40,11 +49,17 @@ To deliver a feasible R1 without compromising the 24-25 Nov MVP launch or overex
 
 ### Pillar 2: Mainstream Jobs (Discovery Only via C@G & Curated Opportunities)
 
+> **⚠️ Pending Adrian's confirmation (as of 21 Sep):** SJR is proposed to split out of this pillar into its own epic, given the effort involved. The rows below still show SJR folded into Pillar 2 as originally scoped — if Adrian confirms the split, this table and the Pillar 2 man-week estimate need to be revised before Tuesday's number goes out, and a separate SJR epic line item added to the overall estimate. See [SJR Scope Reply to Adrian](../slack-messages/2026-09-21-W39-sjr-scope-reply-to-adrian.md).
+>
+> **✅ Partially resolved (21 Sep, later):** confirmed there will be no further changes to the existing C@G ingestion pipeline (F-23). Whatever SJR turns out to be, it uses a separate pipeline if it needs one, not a change to C@G's. This settles the ingestion-mechanism question.
+>
+> **Concept vs. solution (clarified 21 Sep, later still):** the *concept* is fixed — SJR is in scope for R1, discoverable via Compass. The *solution* is not — whether Compass builds SJR's Creation/Apply natively or the HR systems do (see [SJR Whiteboard notes](../meeting-notes/2026-09-21-W39-r1-sjr-whiteboard-adrian-rama.md)) is still open, and that's what determines the sizing. The epic-split confirmation is also still open ahead of Tuesday's delivery.
+
 | Area | In Scope (R1) | Out of Scope (Deferred to R2) | Technical Questions for Rama / Barry |
 |---|---|---|---|
-| **Posting Ingestion** | Ingest public civil service postings via existing Careers@Gov (C@G) ingestion feed (F-23) and/or migrate existing OTG curated secondments/SJRs. Automated daily ingestion sync with automated purge of expired roles based on `closing_date`. | Live API integration with HRPS (Civil Service SAP) and Cumulus (Stat Board Workday); native posting creation in Compass. | Since C@G holds only public vacancies, can Léo repurpose spike OTEP-578 to establish baseline C@G ingestion while framing technical requirements for future HRPS/Cumulus interfaces? |
+| **Posting Ingestion** | Ingest public civil service postings via existing Careers@Gov (C@G) ingestion feed (F-23) and/or migrate existing OTG curated secondments/SJRs. Automated daily ingestion sync with automated purge of expired roles based on `closing_date`. **SJR note:** SJRs sit solely in OTG today (HRPS/Cumulus can't handle the exercise cycle or login friction) — pulling SJRs from OTG is planned for the 2027 cycle, but may move to its own epic pending Adrian's call. **Confirmed 21 Sep: no further changes to C@G ingestion** — SJR uses a separate pipeline if needed, not a modification to F-23. | Live API integration with HRPS (Civil Service SAP) and Cumulus (Stat Board Workday); native posting creation in Compass. | C@G ingestion (F-23) is now locked as-scoped — no further changes. Remaining open question: does SJR need its own new pipeline, and does Compass or the HR systems own SJR's Creation/Apply build (pending Adrian/Rama on the whiteboard sketch)? |
 | **Ringfencing & Whitelisting** | Compass-enforced visibility rules: whitelist opportunities by email domain (e.g., `@moe.gov.sg`) or specific officer emails based on metadata tags. Evaluated via Option A: check each role independently for double-hatting officers. | Automated multi-tier agency organizational chart traversal, complex cross-agency secondment entitlement matrices, Option B attribute blending. | Can ringfencing under Option A be implemented as an indexed SQL query filtering on `target_agency_code = ANY(officer.agency_codes)` without introducing a secondary rule engine? |
-| **Application Flow** | Redirect link out to the originating HR/C@G portal ("Apply on Careers@Gov" / external HR portal). Lightweight external-link disclaimer modal setting expectation that application tracking occurs on source systems. | Native in-app apply for mainstream jobs, application tracking for civil-service-wide postings, status sync back to Compass. | Can Thomas implement the outbound C@G handoff as a simple disclaimer modal and external redirect link with standard UTM/referrer parameters, requiring zero backend state tracking? |
+| **Application Flow** | Redirect link out to the originating HR/C@G portal ("Apply on Careers@Gov" / external HR portal). Lightweight external-link disclaimer modal setting expectation that application tracking occurs on source systems. **SJR note:** proposal is to push BOs/DevOps toward a FormSG-with-CV-upload apply flow for SJR specifically, removing re-login friction — this is a new ask outside the standard C@G redirect pattern and outside Compass's own build if BOs/DevOps own the FormSG change. | Native in-app apply for mainstream jobs, application tracking for civil-service-wide postings, status sync back to Compass. | Can Thomas implement the outbound C@G handoff as a simple disclaimer modal and external redirect link with standard UTM/referrer parameters, requiring zero backend state tracking? |
 
 ---
 
@@ -60,8 +75,11 @@ To deliver a feasible R1 without compromising the 24-25 Nov MVP launch or overex
 
 ### Pillar 4: Role-Based Access Control (RBAC) & Candidate Privacy (F-27)
 
+> **⚠️ Pending Rama's technical read (as of 21 Sep):** Adrian proposed a new access layer on top of what's below — RBAC scoped to the **Opportunities Module itself** (creation through application), open to any WOG-authenticated officer, independent of the platform-wide POCDEX 6-pilot-agency gate. This resolves the earlier OTG/Compass interim-state question (see [OTG/Compass Interim State thread](../meeting-notes/2026-09-21-W39-otg-compass-interim-state-adrian-thread.md)) by keeping the POCDEX gate intact for the rest of Compass while opening just this module. **Not yet sized.** Needs Rama's confirmation that module-level RBAC is technically separable from the platform-wide gate before Tuesday's estimate treats Pillar 4 as final.
+
 | Area | In Scope (R1) | Out of Scope (Deferred to R2) | Technical Questions for Rama / Barry |
 |---|---|---|---|
+| **Module Entry (WOG-Wide)** | *(New, pending sizing)* Any WOG-authenticated officer, regardless of POCDEX pilot-agency membership, can access the Opportunities Module specifically (creation through application) under its own RBAC scope. | Extending this WOG-wide access to other Compass modules beyond Opportunities. | Can the Opportunities Module enforce its own access boundary independent of the platform's POCDEX-gated session, or does WOG AD authentication need to be layered in as a second identity path alongside POCDEX? |
 | **Access Boundaries** | Minimum Viable RBAC: 3 tiers (Public Officer, Opportunity Poster / Collaborator, Central Admin). Public officers see public catalog; posters and co-evaluators see applicant drawer only for their own opportunities. | Multi-tier agency hierarchy delegation, departmental viewing trees, central agency HR ministry-wide applicant viewing portals. | Can we confirm that Keycloak handles authentication only (`is_authenticated_officer`), while candidate drawer authorization (`poster_id == current_user OR current_user IN collaborators`) is enforced purely at the NestJS application layer? |
 | **Audit & Governance** | PathFinder audit log entry recorded whenever a candidate application drawer or profile snapshot is viewed or downloaded. | Automated compliance reporting dashboards, real-time alerting on anomalous drawer downloads. | Does the existing PathFinder audit logging service support logging read events (`GET /opportunities/:id/applications`) without adding noticeable latency to drawer loading? |
 | **Orphaned Posting Fallback** | If a gig creator departs or transfers agency, posting ownership falls back to designated Agency HR POC to prevent orphaned applicant pools. | Multi-level automated line-manager succession routing. | Can we implement posting re-assignment via a lightweight admin script or Keycloak group mapping, allowing an Agency HR POC to inherit postings if a creator leaves? |
@@ -69,6 +87,8 @@ To deliver a feasible R1 without compromising the 24-25 Nov MVP launch or overex
 ---
 
 ### Pillar 5: Central Account Management (CAM) Integration & Data Governance
+
+> **⚠️ Pending confirmation with Adrian (as of 21 Sep):** a scope-overview slide prepared for Mark lists CAM Integration as "Deferred to R2," which conflicts with this pillar being one of R1's five core pillars below (2.0–2.5 mw). Also unconfirmed: whether CMM (Competency Bank, JobID-to-Competency Mapping) is actually part of R1 scope — it doesn't appear anywhere else in this brief or the one-pager, and is tracked elsewhere only as a *concurrent* workstream competing for the same engineering/design capacity, not as R1 scope itself. **Do not treat either as settled until Adrian confirms.** See [Scope Slide Staleness Check](../decisions/2026-09-21-W39-r1-scope-slide-staleness-check.md).
 
 | Area | In Scope (R1) | Out of Scope (Deferred to R2) | Technical Questions for Rama / Barry |
 |---|---|---|---|
@@ -151,18 +171,24 @@ Before committing to build custom form fields and application storage in Compass
 
 ## 6. Estimated Engineering Requirements
 
-### A. Effort Breakdown by Pillar (Estimated Man-Weeks)
+### A. Effort Breakdown by Pillar (Estimated Man-Weeks & Sprints)
 
-| Pillar | Focus Areas | Primary Owner / Skillset | Estimated Man-Weeks |
-|---|---|---|---|
-| **1. STIPs & Gigs** | Standard application form, email alert trigger, poster applicant review table, markdown URL support | Fullstack (Thomas) + Backend (Hao Eng) | **5.0 – 7.0 mw** |
-| **2. Mainstream Jobs** | Baseline C@G public vacancy feed ingestion, curated OTG secondment migration, external redirect links | Backend (Léo) + Fullstack (Thomas) | **2.0 – 2.5 mw** *(down from 4.0 mw; HRPS/Cumulus APIs deferred)* |
-| **3. Saved Jobs** | Bookmark toggle DB table & endpoint, UI card/details toggle, saved-jobs filter (OTEP-425) | Fullstack (Thomas) + Backend (Léo) | **2.0 mw** |
-| **4. RBAC & Privacy** | 3-tier access checks, poster/collaborator drawer boundary, audit logging for application views | Platform / Auth (Hao Eng) | **3.5 – 4.5 mw** |
-| **5. CAM Integration** | Keycloak SCIM connector configuration, privileged group role propagation, deprovisioning sync | Platform / Auth (Hao Eng) | **2.0 – 2.5 mw** *(if SCIM holds; 5.0+ mw if custom APIs required)* |
-| **6. Discovery Telemetry** | Instrumentation for opportunity detail views (North Star), search-to-click, recommendation CTR, redirect tracking | Fullstack (Thomas) + Backend (Léo) | **0.5 – 1.0 mw** |
-| **Hardening & QA** | E2E integration testing, security scans, regression suite, defect buffer | Entire Squad | **3.0 – 4.0 mw** |
-| **Total Estimated Effort** | | | **18.0 – 23.5 man-weeks** |
+*Sprint-equivalents derived from ~6 man-weeks of capacity per sprint (3 engineers × ~2-week sprint, per the ~5 sprints / ~10-11 calendar weeks target below). These are a conversion for reference, not an independent estimate — treat man-weeks as the primary figure until Tuesday's sync confirms sprint count directly.*
+
+| Pillar | Focus Areas | Primary Owner / Skillset | Estimated Man-Weeks | Estimated Sprints |
+|---|---|---|---|---|
+| **1. STIPs & Gigs** | Standard application form, email alert trigger, poster applicant review table, markdown URL support | Fullstack (Thomas) + Backend (Hao Eng) | **5.0 – 7.0 mw** | **~0.8 – 1.2 sprints** |
+| **2. Mainstream Jobs** | Baseline C@G public vacancy feed ingestion, curated OTG secondment migration, external redirect links | Backend (Léo) + Fullstack (Thomas) | **2.0 – 2.5 mw** *(down from 4.0 mw; HRPS/Cumulus APIs deferred; includes SJR-from-OTG discovery, pending possible carve-out — see note below)* | **~0.3 – 0.4 sprints** |
+| **3. Saved Jobs** | Bookmark toggle DB table & endpoint, UI card/details toggle, saved-jobs filter (OTEP-425) | Fullstack (Thomas) + Backend (Léo) | **2.0 mw** | **~0.3 sprints** |
+| **4. RBAC & Privacy** | 3-tier access checks, poster/collaborator drawer boundary, audit logging for application views | Platform / Auth (Hao Eng) | **3.5 – 4.5 mw** *(does not yet include Opportunities-Module WOG-wide entry, pending Rama's read — see Pillar 4 note above)* | **~0.6 – 0.75 sprints** |
+| **5. CAM Integration** | Keycloak SCIM connector configuration, privileged group role propagation, deprovisioning sync | Platform / Auth (Hao Eng) | **2.0 – 2.5 mw** *(if SCIM holds; 5.0+ mw if custom APIs required)* | **~0.3 – 0.4 sprints** *(~0.85 sprints if custom APIs required)* |
+| **6. Discovery Telemetry** | Instrumentation for opportunity detail views (North Star), search-to-click, recommendation CTR, redirect tracking | Fullstack (Thomas) + Backend (Léo) | **0.5 – 1.0 mw** | **~0.1 – 0.15 sprints** |
+| **Hardening & QA** | E2E integration testing, security scans, regression suite, defect buffer | Entire Squad | **3.0 – 4.0 mw** | **~0.5 – 0.65 sprints** |
+| **Total Estimated Effort** | | | **18.0 – 23.5 man-weeks** *(pending SJR-epic carve-out decision — see note below)* | **~3.0 – 3.9 sprints** *(before holiday de-rating — see below)* |
+
+**Holiday de-rating not yet applied:** sprints crossing 21 Dec 2026 – 3 Jan 2027 run at ~50% net capacity. The ~3.0–3.9 sprint range above is a straight conversion and doesn't account for this yet — actual calendar-time sprint count will be higher once the holiday period and kickoff date (still unreconciled, see risk register R-12) are factored in. This is also why the one-pager's ~5.5 sprints and this brief's own ~5 sprints target (Section 5 above) run higher than the raw ~3.0–3.9 conversion.
+
+> **⚠️ Pending Adrian's confirmation (21 Sep):** Michelle has proposed splitting full SJR support into its own epic rather than keeping it inside Pillar 2, given the effort involved (this includes pushing BOs/DevOps toward a FormSG-with-CV-upload apply flow for SJR — a new ask not in the original Pillar 2 scope). SJR-from-OTG discovery was never separately costed within Pillar 2's 2.0–2.5 mw, so the net effect on this total is not yet known. **Do not treat 18.0–23.5 mw / ~3.0–3.9 sprints as final for Tuesday's delivery until this is resolved with Adrian** — either confirm SJR stays folded in as originally scoped, or carve it out and size it as its own line before the number goes out.
 
 ---
 

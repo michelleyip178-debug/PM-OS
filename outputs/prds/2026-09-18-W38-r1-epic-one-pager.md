@@ -18,6 +18,12 @@
 
 Right now, officers leave CareerCompass to apply anywhere, and once they leave, we lose visibility. For posting creators (any officer with a project, task, or gig), finding internal talent and fielding applications happens through disparate emails and spreadsheets. 
 
+> **🔴 SUPERSEDED, 22 Sep, then again 23 Sep — this document's scope is out of date.** The 22 Sep transition plan this banner originally pointed to has itself been superseded by Adrian's 23 Sep scope slide. See **[R1 Release One-Pager (23 Sep)](2026-09-23-W39-r1-release-one-pager.md) — the current version, now authoritative over this document.**
+>
+> **What changed, most importantly:** Item #2 below ("Mainstream Jobs... discovery-only... external redirect for apply") is **no longer accurate for internal jobs** — the confirmed scope commits to native in-platform apply for internal jobs, not just STIPs/Gigs. End-to-end application status tracking is also now in scope (previously limited to STIPs/Gigs). **A CV builder is NOT in scope** — R1's existing "no file upload, profile data only" position holds (corrected 22 Sep, same day as the transition-plan draft). The Total Effort Estimate below has **not** been re-sized against the internal-job apply / status-tracking expansion — treat it as stale, not just pending.
+>
+> This document (journeys, epics, decision tracker, risks below) has not yet been rewritten to match the confirmed scope. Read it for structure and process detail, but check every scope claim against the linked decision doc first. Prior pending-flags in this document (SJR mechanism, RBAC module access) are now resolved — see the linked doc — but the rest of this document's content is still the old, narrower scope.
+
 Under our **reduced scope baseline**, R1 focuses on three functional features and two platform foundations:
 1. **STIPs & Gigs (Open Posting by Anybody):** Any officer in the 6 pilot agencies can post a STIP or Gig in minutes. Lightweight native apply using a fixed standard template (pre-filled from profile) + email alert to poster + in-app applicant review table (Offer/Reject). Job descriptions support outbound hyperlinks for posters needing custom FormSG forms.
 2. **Mainstream Jobs (Internal Jobs, SJRs, Secondments):** Discovery-only via existing Careers@Gov (C@G) ingestion, with ringfencing whitelisted by email domain or officer email. External redirect to C@G for apply.
@@ -36,6 +42,8 @@ Three moments in this release need core design work:
 3. **The saved jobs bookmark toggle.** Bookmark icon on opportunity cards/detail views and the "Saved Jobs" filter tab on the Opportunities catalog.
 
 *Note on Mainstream Jobs:* Internal Jobs, Secondments, and SJRs are discovery-only and redirect externally to Careers@Gov. No native application or creation flow is designed for mainstream jobs in R1.
+
+*⚠️ Liting: SJR framing above is pending (item 2, top of page) — don't lock design scope on it yet. Will confirm before your 30 Oct freeze.*
 
 ---
 
@@ -74,6 +82,8 @@ Not done. No market or benchmark scan exists in either source document.
 ## 5. Target User
 
 **Pilot cohort:** ~5,400 officers across 6 agencies (PSD, ESG, MDDI, URA, MCCY, CAAS), onboarded in staggered pairs.
+
+*⚠️ Pending (item 1, top of page) — this may end up describing onboarding sequencing rather than full Opportunities Module access.*
 
 - **Lane 1 — Intentional Mover:** Senior, targeted, time-pressured officer who knows what they want. Primary beneficiary of Epics B (pre-fill) and C (status tracking).
 - **Lane 2 — Passive Watcher:** Early-career officer, open but not actively searching. Primary beneficiary of Epic D (Saved Jobs, P1).
@@ -141,14 +151,14 @@ Not done. No market or benchmark scan exists in either source document.
 
 | Epic | Story | Success Criteria | Notes to designers/devs |
 |---|---|---|---|
-| **A — STIPs & Gigs Creation** | Open posting creation by any authenticated officer | Any logged-in officer in the 6 pilot agencies can author and publish a STIP or Gig; no HR admin role gating required | Creator automatically becomes Posting Owner with applicant review access; can invite up to 2 co-evaluators |
+| **A — STIPs & Gigs Creation** | Open posting creation by any authenticated officer | Any logged-in officer in the 6 pilot agencies can author and publish a STIP or Gig; no HR admin role gating required *(⚠️ pending, item 1 top of page)* | Creator automatically becomes Posting Owner with applicant review access; can invite up to 2 co-evaluators |
 | **A — STIPs & Gigs Apply** | Fixed standard application form in CareerCompass | Pre-filled with Name, Email, Agency, Grade, and competencies; 2-3 standard text fields; no dynamic form builder | FormSG flex: posters needing custom questions paste FormSG URL in description |
 | **A — STIPs & Gigs Review** | Poster applicant review table + email alert | Instant transactional email alert to poster on submission; basic applicant review table in Compass with Offer/Reject actions | No complex multi-stage ATS pipeline in R1; rejection updates in-app status badge without automated regret emails |
 | **B — Mainstream Jobs (Discovery)** | Discovery of C@G Public Vacancies & Curated Roles | Ingestion from C@G public feed (F-23) and OTG secondment migration; external redirect CTA with disclaimer | Mainstream jobs stay on source systems; live API integration with HRPS (SAP) and Cumulus (Workday) deferred to R2 |
 | **B — Ringfencing & Whitelist** | Opportunities page visibility control | Filter mainstream jobs by email domain (e.g. `@moe.gov.sg`) or specific officer email list | Feeds OTEP-578 parameter spike; checks Option A (evaluate each job independently) |
 | **C — Saved Jobs (P1)** | Officer bookmarks opportunities | Bookmark toggle on cards/details; filter tab on Opportunities page showing saved listings | OTEP-425 in backlog; low complexity (1 DB table + toggle endpoint + 30-day closed retention) |
 | **D — RBAC & Privacy (P0)** | Minimum viable role-based access control | 3-tier model (Public Officer, Poster/Collaborator, Admin); only poster + up to 2 collaborators access applicant review table | F-27; gates gig applicant review table access; audit logged on view |
-| **E — CAM Integration (P0)** | Central Account Management integration | Keycloak SCIM connector adoption for user lifecycle events; Keycloak Privileged Group integration | OTEP-1571 Done; avoids building 7 custom app-side APIs if SCIM accepted (OTEP-1553); automated 90-day data purge |
+| **E — CAM Integration (P0)** | Central Account Management integration | Keycloak SCIM connector adoption for user lifecycle events; Keycloak Privileged Group integration | OTEP-1571 Done; avoids building 7 custom app-side APIs if SCIM accepted (OTEP-1553); automated 90-day data purge *(⚠️ pending — a scope slide for Mark lists this as "Deferred to R2," conflicting with its status as an R1 pillar here; confirm with Adrian)* |
 | **F — Discovery Telemetry (P1)** | Analytics event instrumentation in `otep-web` | Event tracking on opportunity detail views, search queries, recommendation CTR, and outbound redirect clicks | Instrument Mixpanel/backend pings for North Star ("Opportunities Discovered per Officer") |
 
 **Explicitly Deferred to R2 (Out of Scope):**
@@ -186,7 +196,7 @@ Not done. No market or benchmark scan exists in either source document.
 
 ## 12. Engineering Requirements Summary
 
-- **Total Effort Estimate:** **18.5 – 24.0 man-weeks** across 5 pillars (STIPs/Gigs, C@G Discovery, Saved Jobs, RBAC, CAM).
+- **Total Effort Estimate:** **18.5 – 24.0 man-weeks** across 5 pillars (STIPs/Gigs, C@G Discovery, Saved Jobs, RBAC, CAM). *(⚠️ Pending, item 3 top of page — also not yet reconciled with the [reduced-scope brief's](../analyses/2026-09-18-W38-r1-reduced-scope-feasibility.md) 18.0–23.5 mw figure. Don't quote either as final before Tuesday.)*
 - **Dedicated Squad:**
   - **Fullstack / Frontend (1.0 FTE):** Thomas Huchedé
   - **Platform & Auth (1.0 FTE):** Hao Eng Chua
