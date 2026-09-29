@@ -4,11 +4,14 @@ week: 2026-W39
 type: decision-brief
 topic: STIPs & Gigs (R1) — full scope, discovery through application
 purpose: input for the R1 Scope Alignment Workshop with Adrian Ang
+status: SUPERSEDED, 29 Sep — the open discovery-access question this doc raises resolved to the 6 pilot agencies. Apply also resolved to FormSG-extraction, not native, and has already shipped in MVP. See the [Epic A One-Pager](../prds/2026-09-24-W39-epic-a-stips-gigs-one-pager.md) for current state.
 ---
 
 # STIPs & Gigs — Full Scope, Discovery to Application (R1)
 
-**Purpose:** one complete picture of STIPs & Gigs end-to-end, for the scope alignment workshop. Most of this is already locked. One question — who can discover and apply — is open, unestimated, and blocks everything downstream of it (risk register R-14/R-23).
+> ⚠️ **SUPERSEDED, 29 Sep.** The open question this brief raises (pilot-only vs. WOG-wide discovery) resolved to the 6 pilot agencies (PSD, ESG, MDDI, URA, MCCY, CAAS). Apply also resolved to FormSG-link extraction, not the native flow this brief describes further down, and it's already live in MVP. Kept as a historical record of the open question at the time, not current scope.
+
+**Purpose (historical, 22 Sep):** one complete picture of STIPs & Gigs end-to-end, for the scope alignment workshop. Most of this is already locked. One question — who can discover and apply — is open, unestimated, and blocks everything downstream of it (risk register R-14/R-23).
 
 ---
 

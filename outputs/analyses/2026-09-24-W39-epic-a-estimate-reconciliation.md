@@ -3,10 +3,12 @@ date: 2026-09-24
 week: 2026-W39
 type: analysis
 topic: R1 Epic A — reconciling engineering estimate (Confluence) against sequencing and scope docs
-status: draft — findings for Michelle to confirm with Rama/Thomas before this resolves R-12
+status: SUPERSEDED, 29 Sep — Epic A confirmed already shipped in MVP, not build scope. This entire estimate is moot; do not use it for planning. See the [Epic A One-Pager](../prds/2026-09-24-W39-epic-a-stips-gigs-one-pager.md)'s corrected Status field and Section 11.
 ---
 
 # Epic A — Estimate Reconciliation
+
+> ⚠️ **SUPERSEDED, 29 Sep.** Epic A (STIPs & Gigs discovery + FormSG-extraction apply) is confirmed already live in MVP — there's no engineering estimate to reconcile, because there's no remaining build. Everything below is historical: it reflects a 24 Sep sizing exercise for work that turned out to already exist. Also note: this document's estimate assumed a WOG-wide population; R1's actual population is the 6 pilot agencies (PSD, ESG, MDDI, URA, MCCY, CAAS), a further reason any sizing here is stale. Kept for the record, not for planning.
 
 **Source:** [Opportunities Estimation](https://sgtechstack.atlassian.net/wiki/spaces/OTEP/pages/2691465430/Opportunities+Estimation) (Confluence, PSD-OTEP space, v24, pulled 24 Sep 2026) — a mid-level engineer's sizing. Compared against the [Epic A User Stories](../prds/2026-09-24-W39-r1-epic-a-stips-gigs-stories.md) and [Sprint Sequencing](2026-09-24-W39-epic-a-sprint-sequencing.md) docs.
 

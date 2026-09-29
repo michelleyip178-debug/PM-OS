@@ -34,7 +34,7 @@ related:
 | **Secondment** (non-SJR) | Hosting HR system | Native in Compass | Redirect to OTG or the hosting HR system |
 | **SJR** (PSD's annual programme) | OTG | **Not in Compass** | **Not in Compass** — stays on OTG through the 2027 cycle, migrates ahead of 2028 |
 | **CMM** | N/A | Read/view only — Compass surfaces competency data, doesn't create or manage it | N/A |
-| **CAM** | Still unresolved — three-way conflict between the Mark-facing slide, one-pager, and confirmed-scope doc (R-15) | | |
+| **CAM** | **Deferred to R2** — confirmed by Adrian, 29 Sep (D-052). Not an R1 epic. | | |
 
 **Population:** WOG-wide for every type where Compass does discovery, via POCDEX integration with WOG officer data. Not pilot-only. This has held since 23 Sep and is unaffected by any of the architecture changes above.
 

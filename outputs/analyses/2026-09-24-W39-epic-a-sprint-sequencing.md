@@ -3,10 +3,12 @@ date: 2026-09-24
 week: 2026-W39
 type: prioritization
 topic: R1 Epic A — STIPs & Gigs build/sprint sequencing
-status: draft — recommendation, not yet run past Rama/Barry
+status: SUPERSEDED, 29 Sep — sequences a native post→apply→review→decide build that was never the confirmed model. Epic A shipped in MVP as discovery + FormSG-extraction only. Do not use for sprint planning.
 ---
 
 # Epic A Build Sequencing — STIPs & Gigs
+
+> ⚠️ **SUPERSEDED, 29 Sep.** This document sequences 14 stories for a native in-app apply/review/decide build. That was never the confirmed model — Epic A's actual, final scope was discovery + FormSG-link extraction, already shipped in MVP. This sequencing plan doesn't correspond to any real build and shouldn't be used for sprint planning. Kept for the record only.
 
 **Why this framing, not a cut-list:** all 14 stories are already scope-locked per the [scope map](../decisions/2026-09-22-W39-stips-gigs-scope-map.md) and [discovery-access brief](../decisions/2026-09-22-W39-stips-gigs-discovery-access-brief.md) — this isn't "which 5 of 14 do we build," it's "in what order." US-A14 is excluded from sequencing entirely; it's blocked on R-27 (no owner for the orphaned-posting fallback), not a scheduling choice.
 

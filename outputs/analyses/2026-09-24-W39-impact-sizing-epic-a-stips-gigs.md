@@ -3,10 +3,12 @@ date: 2026-09-24
 week: 2026-W39
 type: impact-sizing
 topic: R1 Epic A — STIPs & Gigs native apply
-status: draft — one real input (120k WOG officer count), rest are stated assumptions pending validation
+status: SUPERSEDED, 29 Sep — sizes a native in-app apply build that was never the confirmed model, against a WOG-wide denominator R1 also doesn't use. Do not cite these figures.
 ---
 
 # Impact Sizing: R1 Epic A — STIPs & Gigs Native Apply
+
+> ⚠️ **SUPERSEDED, 29 Sep, on two grounds.** (1) This sizes native in-app apply (pre-filled form, poster review table, Offer/Reject) — that was never the confirmed model. Epic A's actual final scope is discovery + FormSG-link extraction, already shipped in MVP; no native apply build exists or is planned. (2) The 120k officer count below assumes a WOG-wide population; R1's actual population is the 6 pilot agencies (PSD, ESG, MDDI, URA, MCCY, CAAS), a materially smaller denominator. Every dollar/count figure in this document is stale on both counts. Kept for the record only.
 
 **What's being sized:** native in-app apply for STIPs & Gigs (pre-filled form, poster review table, Offer/Reject) — replacing the current pattern of officers leaving CareerCompass to apply via external channels (email, FormSG) once they've found a posting.
 

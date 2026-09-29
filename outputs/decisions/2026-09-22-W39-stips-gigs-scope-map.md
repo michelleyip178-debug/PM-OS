@@ -4,11 +4,14 @@ week: 2026-W39
 type: decision-brief
 topic: STIPs & Gigs — In/Out Scope Map, Discovery to Application (R1)
 purpose: reference for the R1 Scope Alignment Workshop with Adrian Ang
+status: SUPERSEDED, 29 Sep — the "who can discover/apply" question this doc flags as pending resolved to the 6 pilot agencies, not WOG-wide parity. Native apply was also never built; STIPs & Gigs shipped as discovery + FormSG-extraction only. See the [Epic A One-Pager](../prds/2026-09-24-W39-epic-a-stips-gigs-one-pager.md) for current state.
 ---
 
 # STIPs & Gigs — Scope Map (Discovery to Application)
 
-**Status:** everything under "In Scope" is locked mechanics, ready to estimate. One item — who can discover/apply — is genuinely open and gates the rest. Nothing here should be read as final until the scope alignment workshop confirms the pending item.
+> ⚠️ **SUPERSEDED, 29 Sep.** This document's pending question ("who can discover/apply") is resolved: the 6 pilot agencies (PSD, ESG, MDDI, URA, MCCY, CAAS), not WOG-wide parity. The native-apply mechanics this doc calls "locked, ready to estimate" were also never built — the confirmed, shipped model is discovery + FormSG-link extraction, live in MVP. Kept as a historical record of the pre-decision options, not current scope.
+
+**Status (historical, 22 Sep):** everything under "In Scope" is locked mechanics, ready to estimate. One item — who can discover/apply — is genuinely open and gates the rest. Nothing here should be read as final until the scope alignment workshop confirms the pending item.
 
 ---
 

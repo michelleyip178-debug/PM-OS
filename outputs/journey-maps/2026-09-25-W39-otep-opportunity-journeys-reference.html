@@ -155,7 +155,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
   <header class="top">
     <div class="eyebrow">OTEP · CareerCompass · Opportunities</div>
     <h1>Opportunity journeys: Today, R1 and beyond</h1>
-    <p>How officers find and apply for STIPs &amp; Gigs, Internal Jobs and SR/SJR across three states, as aligned at OTEP Squad Sync. R1 is a coexistence model, not the first step of migration.</p>
+    <p>How officers find and apply for STIPs &amp; Gigs, Internal Jobs, IJR, Secondment and SR/SJR across three states. STIPs &amp; Gigs discovery and FormSG-extraction apply are already live in MVP, not R1 build scope. R1 is a coexistence model, not the first step of migration.</p>
     <p class="thesis">Centralise <span>discovery</span> now, centralise transactions later.</p>
   </header>
 
@@ -180,19 +180,19 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
 
   <section id="today">
     <div class="sec-head"><h2>1 · Current state</h2><span class="badge known">Today</span></div>
-    <p class="sec-sub">OTG does discovery, posting and apply for STIPs &amp; Gigs. Internal jobs are split across three systems, each with its own rules and application process.</p>
+    <p class="sec-sub">STIPs &amp; Gigs discovery and FormSG-extraction apply are already live in Compass, shipped in MVP. Internal jobs, IJR and Secondment are split across OTG, HRPS, Cumulus and each listing's own hosting HR system, each with its own rules and application process.</p>
     <div id="today-lanes"></div>
   </section>
 
   <section id="r1">
     <div class="sec-head"><h2>2 · R1 Pathfinder</h2><span class="badge agreed">Agreed approach</span><span class="badge known">Target Feb/Mar</span></div>
-    <p class="sec-sub">Compass becomes one discovery layer over OTG, HRPS and Cumulus. Every Apply sends the officer back to the source system.</p>
+    <p class="sec-sub">Compass extends the discovery layer it already has for STIPs &amp; Gigs to Internal Jobs, IJR and Secondment. Every Apply sends the officer back to the source system. Internal Jobs is currently blocked, no committed HRPS API delivery date; IJR and Secondment are groomable now.</p>
     <div id="r1-lanes"></div>
   </section>
 
   <section id="integrations">
     <div class="sec-head"><h2>R1 integration points</h2><span class="badge open">Draft</span></div>
-    <p class="sec-sub">Compass in R1 works like a flight aggregator: listings come in from each system, and Apply sends the officer back to that system. Only the OTG feed for STIPs &amp; Gigs exists today.</p>
+    <p class="sec-sub">Compass in R1 works like a flight aggregator: listings come in from each system, and Apply sends the officer back to that system. The OTG feed for STIPs &amp; Gigs is already live, shipped in MVP; everything below is the remaining R1 build.</p>
 
     <div class="ip-cols">
       <div class="ip-col">
@@ -211,16 +211,17 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
     <div class="prio">
       <h3 class="ip-h">Priority order</h3>
       <ol>
-        <li><strong>HRPS and Cumulus feeds (#3, #4) plus the common job format.</strong> This is R1's whole value. Without it Compass is OTG in a new window.</li>
-        <li><strong>Keeping listings fresh and removing duplicates.</strong> Must be in place before launch.</li>
-        <li><strong>Direct links into HRPS and Cumulus (#6, #7).</strong></li>
-        <li><strong>OTG changes (#1, #2), kept as small as possible.</strong> Ask OTG for a structured FormSG field and internal jobs in the feed. Don't ask OTG to build job-level links. Show the OTG job reference in Compass so officers can paste it into OTG search. This keeps investment in OTG low, which answers Rama's concern.</li>
+        <li><strong>HRPS API committed delivery date.</strong> Hard blocker for Internal Jobs (#3). No date committed yet, escalated to NCS/Lee Koon TEU.</li>
+        <li><strong>IJR-from-OTG and Secondment-from-hosting-system (#2, #9).</strong> Both groomable now, unblocked, and design-independent.</li>
+        <li><strong>Cross-HR-system auth gap.</strong> Needs an R1-scoped interim answer (disclosure on the card, or narrower "consolidated" framing) before Secondment's, Internal Jobs', or IJR's apply flow ships.</li>
+        <li><strong>Direct links into HRPS and Cumulus (#6, #7), once the API date lands.</strong></li>
+        <li><strong>OTG changes (#1, #2 in the feed list), kept as small as possible.</strong> Don't ask OTG to build job-level links. Show the OTG job reference in Compass so officers can paste it into OTG search. This keeps investment in OTG low, which answers Rama's concern.</li>
       </ol>
     </div>
 
     <div class="questions">
-      <div class="q"><div class="who">Open</div><p>Is the existing OTG feed a live API or a scheduled file export?</p><p class="src">Decides whether #1 and #2 are a small change for OTG or a new build request.</p></div>
-      <div class="q"><div class="who">Open</div><p>Does Compass only display ring-fencing rules, or filter jobs by the officer's eligibility?</p><p class="src">Filtering needs officer profile data, which is another integration.</p></div>
+      <div class="q"><div class="who">Open</div><p>Is the existing OTG feed a live API or a scheduled file export?</p><p class="src">OTEP-1693 suggests OTG ingestion may be file-based, not a live feed. Confirm with Thomas.</p></div>
+      <div class="q"><div class="who">Open</div><p>Does Compass only display ring-fencing rules, or filter jobs by the officer's eligibility?</p><p class="src">Filtering needs officer profile data, which is another integration. OTEP-1505 decouples user resolution from POCDEX, not yet reconciled with this document.</p></div>
     </div>
   </section>
 
@@ -241,7 +242,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-si
     </div>
   </section>
 
-  <footer>Source: OTEP Squad Sync discussion. Owner: Opportunities pillar. Update after each sync as future-state decisions land.</footer>
+  <footer>Source: OTEP Squad Sync discussion; updated 29 Sep against the R1 Release One-Pager and R1 Scope Map. Owner: Opportunities pillar. Update after each sync as future-state decisions land.</footer>
 </div>
 
 <script>
@@ -261,7 +262,8 @@ const M = {
   cols:[["Today",""],["R1 Pathfinder","Agreed"],["Future A","If ATS works"],["Future B","If ATS fails"]],
   rows:[
     ["Posting",[["otg","hrps","cumulus"],["otg","hrps","cumulus"],["ats"],["compass"]]],
-    ["Discovery",[["otg","hrps","cumulus"],["compass"],["compass"],["compass"]]],
+    ["Discovery (STIPs &amp; Gigs)",[["compass"],["compass"],["compass"],["compass"]]],
+    ["Discovery (Internal Jobs, IJR, Secondment)",[["otg","hrps","cumulus"],["compass"],["compass"],["compass"]]],
     ["Application",[["otg","formsg","email","hrps","cumulus"],["formsg","hrps","cumulus","otg"],["ats"],["compass"]]],
     ["OTG",[["otg"],["otg"],["otg:x"],["otg:x"]]]
   ]
@@ -294,14 +296,13 @@ function lane(j){
 }
 
 const TODAY = [
-  { name:"STIPs & Gigs", desc:"The MVP model everyone knows.",
-    flow:[ ["actor","Poster creates listing"], ["otg","Posted on OTG"], ["otg","Officer discovers on OTG"],
+  { name:"STIPs & Gigs", desc:"Already live in Compass, shipped in MVP. Not R1 build scope.",
+    flow:[ ["actor","Poster creates listing"], ["otg","Posted on OTG (no change)"], ["compass","Feed pulled into Compass"], ["compass","Officer discovers in Compass"],
       {branch:[
-        {cond:"Apply via FormSG", flow:[["formsg","FormSG link inside the description",{weak:true,flag:"Buried"}]]},
-        {cond:"Apply via email", flow:[["email","Email the poster"]]},
-        {cond:"Apply via OTG", flow:[["otg","Follow OTG instructions"]]}
+        {cond:"FormSG link exists", flow:[["compass","Apply button"],["formsg","Opens FormSG"],["formsg","Officer submits"]]},
+        {cond:"No FormSG link", flow:[["compass","Apply button disabled"],["compass","“Please contact poster”",{end:true}]]}
       ]}],
-    pains:[["OTG-only discovery","Limited visibility"],["FormSG buried in description","Poor UX"],["No central marketplace","Fragmented discovery"]]
+    scope:`<span class="yes">Compass: discovery, live today</span><span class="no">No posting</span><span class="no">No workflow</span><span class="no">No application processing</span>`
   },
   { name:"Internal Jobs", desc:"Agency HR picks one of three systems.",
     flow:[ ["actor","Agency HR posts vacancy"],
@@ -311,30 +312,38 @@ const TODAY = [
         {cond:"Posted on Cumulus", flow:[["cumulus","Officer discovers on Cumulus"],["cumulus","Applies on Cumulus"]]}
       ]}],
     pains:[["Multiple systems","No single marketplace"],["Ring-fencing rules scattered","Hard to understand eligibility"],["Duplicate opportunities","Possible across systems"],["Different application processes","Inconsistent UX"]]
+  },
+  { name:"IJR", desc:"Internal Job Rotation. Agency-defined eligibility on top of OTG.",
+    flow:[ ["actor","Agency HR posts rotation"], ["otg","Posted on OTG"], ["otg","Officer discovers on OTG"], ["otg","Applies on OTG"] ],
+    pains:[["OTG-only discovery","Officer must know to check OTG"],["Per-officer eligibility not surfaced upfront","Officer applies before learning they're ineligible"]]
+  },
+  { name:"Secondment", desc:"Agency-led and officer-initiated paths. Not SJR.",
+    flow:[ ["actor","Hosting HR system posts listing"], ["hrps","Discovered on hosting HR system",{weak:true,flag:"Varies per listing"}], ["hrps","Applies on hosting system"] ],
+    pains:[["No single discovery point","Officer needs to know which HR system hosts each listing"],["Cross-HR-system access gap","Officer may lack login access to the hosting system"]]
   }
 ];
 
 const R1 = [
-  { name:"STIPs & Gigs", desc:"OTG stays the source of truth. Posting unchanged.",
-    flow:[ ["actor","Poster creates listing"], ["otg","Posted on OTG (no change)"], ["compass","Feed pulled into Compass"], ["compass","Officer discovers in Compass"],
-      {branch:[
-        {cond:"FormSG link exists", flow:[["compass","Apply button"],["formsg","Opens FormSG"],["formsg","Officer submits"]]},
-        {cond:"No FormSG link", flow:[["compass","Apply button disabled"],["compass","“Please contact poster”",{end:true}]]}
-      ]}],
-    scope:`<span class="yes">Compass: discovery</span><span class="no">No posting</span><span class="no">No workflow</span><span class="no">No application processing</span>`
-  },
-  { name:"Internal Jobs", desc:"Unified search is the main R1 value proposition.",
-    flow:[ ["actor","Posted in HRPS, Cumulus or OTG"], ["compass","Aggregated into Compass"], ["compass","Officer searches all internal jobs"],
+  { name:"Internal Jobs", desc:"Unified search is the main remaining R1 value proposition. Blocked on HRPS API.",
+    flow:[ ["actor","Posted in HRPS, Cumulus or OTG"], ["compass","Aggregated into Compass",{weak:true,flag:"No committed HRPS API date"}], ["compass","Officer searches all internal jobs"],
       {branch:[
         {cond:"Source: HRPS", flow:[["compass","Apply"],["hrps","Lands on the job in HRPS"]]},
         {cond:"Source: Cumulus", flow:[["compass","Apply"],["cumulus","Lands on the job in Cumulus"]]},
         {cond:"Source: OTG (weakest)", flow:[["compass","Apply"],["otg","OTG landing page",{weak:true,flag:"No deep link"}],["otg","Search again",{weak:true}],["otg","Find the job"],["otg","Apply"]]}
       ]}],
-    pains:[["OTG can’t deep-link to a vacancy","Officer repeats the search they already did in Compass"]]
+    pains:[["No committed HRPS API delivery date","Hard blocker, not sizeable yet"],["OTG can’t deep-link to a vacancy","Officer repeats the search they already did in Compass"]]
   },
-  { name:"SR / SJR", desc:"Unchanged. Entirely on OTG.",
+  { name:"IJR", desc:"Discovery-only, ingested via OTG. Groomable now.",
+    flow:[ ["actor","Posted on OTG"], ["compass","Aggregated into Compass"], ["compass","Officer searches, ringfenced per agency plus eligibility"], ["compass","Apply"], ["otg","Lands on OTG",{weak:true,flag:"Deep-link quality still open"}] ],
+    scope:`<span class="yes">Compass: discovery</span><span class="no">No posting</span><span class="no">No workflow</span><span class="no">No application processing</span>`
+  },
+  { name:"Secondment", desc:"Non-SJR paths. Discovery-only, ingested from each listing's hosting HR system. Groomable now.",
+    flow:[ ["actor","Posted on hosting HR system"], ["compass","Aggregated into Compass"], ["compass","Officer searches, 6 pilot agencies"], ["compass","Apply"], ["hrps","Lands on hosting system",{weak:true,flag:"Cross-HR-system auth gap, no interim answer yet"}] ],
+    scope:`<span class="yes">Compass: discovery</span><span class="no">No posting</span><span class="no">No workflow</span><span class="no">No application processing</span>`
+  },
+  { name:"SJR", desc:"Unchanged. Entirely on OTG through the 2027 cycle.",
     flow:[ ["actor","Officer receives nomination"], ["otg","OTG communication"], ["otg","OTG training"], ["otg","OTG search"], ["otg","OTG application"] ],
-    absent:"Compass absent: no discovery, application, posting or integration."
+    absent:"Compass absent: no discovery, application, posting or integration. Migrates ahead of the 2028 cycle."
   }
 ];
 
@@ -350,23 +359,26 @@ const FUTURE = [
 ];
 
 const GAPS = [
-  ["1 · Posting", [tag("otg")+" posts, "+tag("compass")+" reads"], [tag("compass")+" posts"]],
+  ["1 · Posting", [tag("otg")+" / "+tag("hrps")+" / "+tag("cumulus")+" posts, "+tag("compass")+" reads"], [tag("compass")+" posts"]],
   ["2 · Application processing", [tag("compass")+" <i>redirects</i>"], [tag("compass")+" <i>takes the application</i>"]],
-  ["3 · Internal job rotations (IJR)", ["IJR <i>→</i> "+tag("otg")], ["IJR <i>→</i> "+tag("compass")]],
-  ["4 · STIPs & Gigs creation", ["Created in "+tag("otg")], ["Created in "+tag("compass")]]
+  ["3 · Cross-HR-system authentication", ["No interim answer yet, officer may lack access to hosting system"], [tag("compass")+" <i>owns auth across all sources</i>"]],
+  ["4 · SJR migration", ["Entirely on "+tag("otg")+" through 2027 cycle"], ["Migrates ahead of 2028 cycle"]]
 ];
 
 const IP_IN = [
-  [1,"otg","compass","STIPs & Gigs","exists","Add the FormSG link as its own field. Today it's buried in the description, and it decides whether Apply is on or off."],
-  [2,"otg","compass","Internal jobs","new","Carry OTG vacancies in the same feed as a new listing type."],
-  [3,"hrps","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job."],
-  [4,"cumulus","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job."]
+  [1,"otg","compass","STIPs & Gigs","exists","Already live in MVP. FormSG link is its own field, extracted from the posting description, and decides whether Apply is on or off."],
+  [2,"otg","compass","IJR","new","Carry OTG rotation postings in the same feed as a new listing type. Groomable now, not blocked."],
+  [3,"hrps","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job. Blocked, no committed HRPS API delivery date."],
+  [4,"cumulus","compass","Internal jobs","new","New feed of internal jobs, including a link to each specific job. Same HRPS API blocker applies, since Cumulus pushes into HRPS upstream."],
+  [9,"hrps","compass","Secondment","new","Feed from each listing's own hosting HR system, not a fixed OTG/HRPS/Cumulus set. Groomable now, not blocked."]
 ];
 const IP_OUT = [
-  [5,"compass","formsg","STIPs & Gigs","easy","A simple link, but it only works once #1 gives it a clean field."],
-  [6,"compass","hrps","Internal jobs","new","Link straight to the job. Check whether officers have to log in again."],
-  [7,"compass","cumulus","Internal jobs","new","Link straight to the job. Check whether officers have to log in again."],
-  [8,"compass","otg","Internal jobs","weak","Lands on OTG's home page only. OTG can't link to a specific vacancy. Workaround: show the OTG job reference in Compass."]
+  [5,"compass","formsg","STIPs & Gigs","easy","Already live in MVP. Works because #1 already gives it a clean field."],
+  [6,"compass","hrps","Internal jobs","new","Link straight to the job. Blocked until HRPS API delivers. Check whether officers have to log in again."],
+  [7,"compass","cumulus","Internal jobs","new","Link straight to the job. Same HRPS API blocker. Check whether officers have to log in again."],
+  [8,"compass","otg","Internal jobs","weak","Lands on OTG's home page only. OTG can't link to a specific vacancy. Workaround: show the OTG job reference in Compass."],
+  [10,"compass","otg","IJR","weak","OTG deep-link quality still open. Groomable now even at general-landing-page fidelity."],
+  [11,"compass","hrps","Secondment","weak","Lands on whichever HR system hosts the listing. Cross-HR-system auth gap: officer may lack access to that system, no interim answer yet."]
 ];
 const PILL = {exists:"Exists",new:"New",easy:"Easy",weak:"Weak"};
 const ipRow = ([n,a,b,scope,st,what]) => `<div class="ip-row ${st==="weak"?"weakrow":""}"><span class="n">#${n}</span>
@@ -375,12 +387,13 @@ const ipRow = ([n,a,b,scope,st,what]) => `<div class="ip-row ${st==="weak"?"weak
 document.getElementById("ip-in").innerHTML = IP_IN.map(ipRow).join("");
 document.getElementById("ip-out").innerHTML = IP_OUT.map(ipRow).join("");
 document.getElementById("ip-cross").innerHTML = [
-  ["Common job format","One set of fields across OTG, HRPS and Cumulus: type, agency, grade, closing date, source ID, apply link, ring-fencing."],
+  ["Common job format","One set of fields across OTG, HRPS, Cumulus and each hosting HR system: type, agency, grade, closing date, source ID, apply link, ring-fencing."],
   ["Duplicates","The same job posted in two systems shows once."],
   ["Keeping listings fresh","Closed or withdrawn jobs drop off quickly. Stale listings hurt trust faster than missing features."],
-  ["Ring-fencing","Display the rules, or filter by the officer's profile? Filtering needs profile data."],
-  ["Tracking","Applying happens outside Compass, so R1 measures click-outs only, not applications or outcomes. Tell SteerCo early."],
-  ["SR / SJR","No integration in R1."]
+  ["Ring-fencing","Display the rules, or filter by the officer's profile? Filtering needs profile data. IJR adds a per-officer eligibility layer on top of agency ring-fencing."],
+  ["Cross-HR-system auth","Officer can discover a Secondment or Internal Job listing on an HR system they don't have access to. No R1-scoped interim answer yet, needed before any of these apply flows ship."],
+  ["Tracking","STIPs & Gigs already measures FormSG-click-through in production. Internal Jobs, IJR and Secondment will measure click-outs only once shipped, not applications or outcomes. Tell SteerCo early."],
+  ["SJR","No integration in R1. Migrates to Compass ahead of the 2028 cycle."]
 ].map(([h,p])=>`<div><strong>${h}</strong>${p}</div>`).join("");
 
 document.getElementById("today-lanes").innerHTML = TODAY.map(lane).join("");

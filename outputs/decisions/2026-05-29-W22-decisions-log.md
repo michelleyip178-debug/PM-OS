@@ -16,6 +16,8 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 
 | # | Decision | Date | Area | Status |
 |---|----------|------|------|--------|
+| D-052 | CAM Integration deferred to R2, confirmed by Adrian — resolves the three-way conflict between the Mark-facing scope slide, the release one-pager, and the confirmed-scope doc | 2026-09-29 | Scope / Governance | ✅ Final — closes the CAM half of R-15; do not commit R1 engineering capacity to CAM |
+| D-051 | Secondment (non-SJR) folds into Epic B alongside Internal Jobs and IJR — shared discovery-only shape even though ingestion source (hosting HR system, not OTG or HRPS specifically) and access model differ. Secondment never had a dedicated one-pager; its scattered risk-register/confirmed-scope detail is now consolidated | 2026-09-28 | Process / Scope Tracking | ✅ Final — see [Epic B One-Pager](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md); does not change Secondment's own scope or risk tracking (R-24) |
 | D-050 | IJR's epic documentation folds into Epic B (Internal Jobs) — shared shape (discovery-only, no native build) even though ingestion sources differ. IJR's own one-pager (formerly "Epic D") is superseded, not deleted | 2026-09-25 | Process / Scope Tracking | ✅ Final — see [Epic B One-Pager](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md); does not change IJR's own scope, risk (R-25), or groomability |
 | D-049 | Internal Jobs ingestion moves back to direct HRPS/Cumulus integration, not via OTG — IJR and Secondment are unaffected, still OTG-ingested | 2026-09-25 | Scope / Architecture / Integration | ✅ Final — narrows D-044's ingestion framing for Internal Jobs specifically; reopens HRPS API delivery (D-01) as a live dependency |
 | D-048 | R1 confirmed scope consolidated into a single reference doc, superseding the piecemeal register trail | 2026-09-25 | Process / Governance | ✅ Final — see [R1 Confirmed Scope](../analyses/2026-09-25-W39-r1-confirmed-scope.md) |
@@ -65,6 +67,42 @@ Captures product, technical, and scope decisions made across meetings and syncs.
 ---
 
 ## Decision Detail
+
+---
+
+### D-052 — CAM Integration deferred to R2
+
+**Date:** 2026-09-29
+
+**Area:** Scope / Governance
+
+**Status:** ✅ Final
+
+**Decision:** CAM (Keycloak SCIM connector) is deferred to R2. R1 does not build it, and no R1 engineering capacity should be committed to it.
+
+**Rationale:** This closes a three-way conflict that had been open since at least 25 Sep: the Mark-facing scope slide said "Deferred to R2," the release one-pager listed it as an open R1 item, and the confirmed-scope doc didn't mention CAM at all. Adrian has now given the single written answer this needed — R2.
+
+**Impact:** Closes the CAM half of the CMM/CAM governance risk (R-15) — CMM's half already resolved with ownership moving to Zhikai (27 Sep); CAM's resolution here closes the risk in full. Removes CAM from R1's Engineering Requirements estimation pass and from the Decision Tracker. Epic H in the R1 Release One-Pager's scope table (Section 7) is no longer an open R1 item.
+
+**Source:** Adrian Ang, direct confirmation.
+
+---
+
+### D-051 — Secondment (non-SJR) folds into Epic B alongside Internal Jobs and IJR
+
+**Date:** 2026-09-28
+
+**Area:** Process / Scope Tracking
+
+**Status:** ✅ Final
+
+**Decision:** Secondment (non-SJR paths) gets no separate epic document. Its scope, risks, and stories are now documented as a third discovery source inside [Epic B: Internal Jobs, IJR & Secondment](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md). The prior placeholder scope-table row ("Epic C," which never had a dedicated one-pager) is retired.
+
+**Rationale:** Secondment shares Internal Jobs' and IJR's exact shape — discovery-only, no native creation/apply/review, redirect-to-source — and the same "not blocked, groomable now" status as IJR. Until this decision, Secondment's only documentation existed scattered across the risk register's resolution entry and the confirmed-scope table, with no epic-level home at all. Giving it a fourth standalone one-pager would duplicate most of Epic B's structure for no delivery benefit — the same reasoning D-050 applied to IJR.
+
+**Impact:** No change to Secondment's own scope or risk tracking — the cross-HR-system auth gap (R-24) still applies specifically to Secondment's redirect-to-hosting-system pattern, now documented as its own risk row inside Epic B rather than only living in the parent risk register. Secondment's stories remain groomable now, same as IJR, unlike Internal Jobs' sub-scope of Epic B, which stays blocked on HRPS API delivery (D-01). The [R1 Release One-Pager](../prds/2026-09-23-W39-r1-release-one-pager.md) Section 7 scope table is updated: Epic C is retired (not reassigned), matching how Epic D was retired under D-050.
+
+**Source:** [Epic B One-Pager](../prds/2026-09-25-W39-epic-b-internal-jobs-ijr-one-pager.md), [R1 Confirmed Scope](../analyses/2026-09-25-W39-r1-confirmed-scope.md).
 
 ---
 
